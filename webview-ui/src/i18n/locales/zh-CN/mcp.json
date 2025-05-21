@@ -4,7 +4,7 @@
 	"description": "<0>Model Context Protocol</0> 支持与本地MCP服务通信，提供扩展功能。您可以使用<1>社区服务器</1>，或通过指令创建定制工具（例如：“新增获取最新npm文档的工具”）。",
 	"enableToggle": {
 		"title": "启用MCP服务",
-		"description": "启用后Kilo Code可与MCP服务交互获取高级功能。未使用时建议关闭以节省Token消耗。"
+		"description": "启用后Kilo SSY可与MCP服务交互获取高级功能。未使用时建议关闭以节省Token消耗。"
 	},
 	"enableServerCreation": {
 		"title": "允许创建工具",

@@ -1,13 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Kilo Codeはあなたのために何ができますか？",
+		"greeting": "Kilo SSYはあなたのために何ができますか？",
 		"introText": "私は利用可能な最速のAIモデルでトレーニングされており、あなたのために超高速でコードを生成する準備ができています！",
 		"ctaButton": "胜算云APIキーを登録",
 		"manualModeButton": "自分のAPIキーを使う"
 	},
 	"lowCreditWarning": {
 		"addCredit": "クレジットを追加",
-		"lowBalance": "Kilo Codeの残高が少なくなっています"
+		"lowBalance": "Kilo SSYの残高が少なくなっています"
 	},
 	"notifications": {
 		"toolRequest": "ツールのリクエストが承認待ちです",

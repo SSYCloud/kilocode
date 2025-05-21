@@ -7,7 +7,7 @@
 		"editModesConfig": "모드 구성 편집",
 		"editGlobalModes": "전역 모드 편집",
 		"editProjectModes": "프로젝트 모드 편집 (.kilocodemodes)",
-		"createModeHelpText": "새 커스텀 모드를 만들려면 + 버튼을 클릭하거나, 채팅에서 Kilo Code에게 만들어달라고 요청하세요!",
+		"createModeHelpText": "새 커스텀 모드를 만들려면 + 버튼을 클릭하거나, 채팅에서 Kilo SSY에게 만들어달라고 요청하세요!",
 		"selectMode": "모드 검색"
 	},
 	"apiConfiguration": {
@@ -32,7 +32,7 @@
 	"roleDefinition": {
 		"title": "역할 정의",
 		"resetToDefault": "기본값으로 재설정",
-		"description": "이 모드에 대한 Kilo Code의 전문성과 성격을 정의하세요. 이 설명은 Kilo Code가 자신을 어떻게 표현하고 작업에 접근하는지 형성합니다."
+		"description": "이 모드에 대한 Kilo SSY의 전문성과 성격을 정의하세요. 이 설명은 Kilo SSY가 자신을 어떻게 표현하고 작업에 접근하는지 형성합니다."
 	},
 	"customInstructions": {
 		"title": "모드별 사용자 지정 지침 (선택 사항)",
@@ -42,7 +42,7 @@
 	},
 	"globalCustomInstructions": {
 		"title": "모든 모드에 대한 사용자 지정 지침",
-		"description": "이 지침은 모든 모드에 적용됩니다. 아래의 모드별 지침으로 향상될 수 있는 기본 동작 세트를 제공합니다.\nKilo Code가 에디터 표시 언어({{language}})와 다른 언어로 생각하고 말하기를 원하시면, 여기에 지정할 수 있습니다.",
+		"description": "이 지침은 모든 모드에 적용됩니다. 아래의 모드별 지침으로 향상될 수 있는 기본 동작 세트를 제공합니다.\nKilo SSY가 에디터 표시 언어({{language}})와 다른 언어로 생각하고 말하기를 원하시면, 여기에 지정할 수 있습니다.",
 		"loadFromFile": "지침은 작업 공간의 <span>.kilocode/rules/</span> 폴더에서도 로드할 수 있습니다(.kilocoderules는 더 이상 사용되지 않으며 곧 작동을 중단합니다)."
 	},
 	"systemPrompt": {
@@ -64,7 +64,7 @@
 		"types": {
 			"ENHANCE": {
 				"label": "프롬프트 향상",
-				"description": "입력에 맞춤화된 제안이나 개선을 얻기 위해 프롬프트 향상을 사용하세요. 이를 통해 Kilo Code가 의도를 이해하고 최상의 응답을 제공할 수 있습니다. 채팅에서 ✨ 아이콘을 통해 이용 가능합니다."
+				"description": "입력에 맞춤화된 제안이나 개선을 얻기 위해 프롬프트 향상을 사용하세요. 이를 통해 Kilo SSY가 의도를 이해하고 최상의 응답을 제공할 수 있습니다. 채팅에서 ✨ 아이콘을 통해 이용 가능합니다."
 			},
 			"EXPLAIN": {
 				"label": "코드 설명",
@@ -129,7 +129,7 @@
 		},
 		"roleDefinition": {
 			"label": "역할 정의",
-			"description": "이 모드에 대한 Kilo Code의 전문성과 성격을 정의하세요."
+			"description": "이 모드에 대한 Kilo SSY의 전문성과 성격을 정의하세요."
 		},
 		"tools": {
 			"label": "사용 가능한 도구",

@@ -1,5 +1,5 @@
 {
-	"greeting": "Kilo Code가 당신을 위해 무엇을 할 수 있을까요?",
+	"greeting": "Kilo SSY가 당신을 위해 무엇을 할 수 있을까요?",
 	"task": {
 		"title": "작업",
 		"seeMore": "더 보기",
@@ -73,7 +73,7 @@
 	},
 	"scrollToBottom": "채팅 하단으로 스크롤",
 	"about": "AI 지원으로 코드를 생성, 리팩터링 및 디버깅합니다. 자세한 내용은 <DocsLink>문서</DocsLink>를 확인하세요.",
-	"onboarding": "<strong>이 작업 공간의 작업 목록이 비어 있습니다.</strong> 아래에 작업을 입력하여 시작하세요. 어떻게 시작해야 할지 모르겠나요? Kilo Code가 무엇을 할 수 있는지 <DocsLink>문서</DocsLink>에서 자세히 알아보세요.",
+	"onboarding": "<strong>이 작업 공간의 작업 목록이 비어 있습니다.</strong> 아래에 작업을 입력하여 시작하세요. 어떻게 시작해야 할지 모르겠나요? Kilo SSY가 무엇을 할 수 있는지 <DocsLink>문서</DocsLink>에서 자세히 알아보세요.",
 	"rooTips": {
 		"boomerangTasks": {
 			"title": "부메랑 작업",
@@ -112,7 +112,7 @@
 	"diffError": {
 		"title": "편집 실패"
 	},
-	"troubleMessage": "Kilo Code에 문제가 발생했습니다...",
+	"troubleMessage": "Kilo SSY에 문제가 발생했습니다...",
 	"apiRequest": {
 		"title": "API 요청",
 		"failed": "API 요청 실패",
@@ -138,43 +138,43 @@
 		"current": "현재"
 	},
 	"instructions": {
-		"wantsToFetch": "Kilo Code는 현재 작업을 지원하기 위해 자세한 지침을 가져오려고 합니다"
+		"wantsToFetch": "Kilo SSY는 현재 작업을 지원하기 위해 자세한 지침을 가져오려고 합니다"
 	},
 	"fileOperations": {
-		"wantsToRead": "Kilo Code가 이 파일을 읽고 싶어합니다:",
-		"wantsToReadOutsideWorkspace": "Kilo Code가 워크스페이스 외부의 이 파일을 읽고 싶어합니다:",
-		"didRead": "Kilo Code가 이 파일을 읽었습니다:",
-		"wantsToEdit": "Kilo Code가 이 파일을 편집하고 싶어합니다:",
-		"wantsToEditOutsideWorkspace": "Kilo Code가 워크스페이스 외부의 이 파일을 편집하고 싶어합니다:",
-		"wantsToCreate": "Kilo Code가 새 파일을 만들고 싶어합니다:",
-		"wantsToSearchReplace": "Kilo Code가 이 파일에서 검색 및 바꾸기를 수행하고 싶어합니다:",
-		"didSearchReplace": "Kilo Code가 이 파일에서 검색 및 바꾸기를 수행했습니다:",
-		"wantsToInsert": "Kilo Code가 이 파일에 내용을 삽입하고 싶어합니다:",
-		"wantsToInsertWithLineNumber": "Kilo Code가 이 파일의 {{lineNumber}}번 줄에 내용을 삽입하고 싶어합니다:",
-		"wantsToInsertAtEnd": "Kilo Code가 이 파일의 끝에 내용을 추가하고 싶어합니다:"
+		"wantsToRead": "Kilo SSY가 이 파일을 읽고 싶어합니다:",
+		"wantsToReadOutsideWorkspace": "Kilo SSY가 워크스페이스 외부의 이 파일을 읽고 싶어합니다:",
+		"didRead": "Kilo SSY가 이 파일을 읽었습니다:",
+		"wantsToEdit": "Kilo SSY가 이 파일을 편집하고 싶어합니다:",
+		"wantsToEditOutsideWorkspace": "Kilo SSY가 워크스페이스 외부의 이 파일을 편집하고 싶어합니다:",
+		"wantsToCreate": "Kilo SSY가 새 파일을 만들고 싶어합니다:",
+		"wantsToSearchReplace": "Kilo SSY가 이 파일에서 검색 및 바꾸기를 수행하고 싶어합니다:",
+		"didSearchReplace": "Kilo SSY가 이 파일에서 검색 및 바꾸기를 수행했습니다:",
+		"wantsToInsert": "Kilo SSY가 이 파일에 내용을 삽입하고 싶어합니다:",
+		"wantsToInsertWithLineNumber": "Kilo SSY가 이 파일의 {{lineNumber}}번 줄에 내용을 삽입하고 싶어합니다:",
+		"wantsToInsertAtEnd": "Kilo SSY가 이 파일의 끝에 내용을 추가하고 싶어합니다:"
 	},
 	"directoryOperations": {
-		"wantsToViewTopLevel": "Kilo Code가 이 디렉토리의 최상위 파일을 보고 싶어합니다:",
-		"didViewTopLevel": "Kilo Code가 이 디렉토리의 최상위 파일을 보았습니다:",
-		"wantsToViewRecursive": "Kilo Code가 이 디렉토리의 모든 파일을 재귀적으로 보고 싶어합니다:",
-		"didViewRecursive": "Kilo Code가 이 디렉토리의 모든 파일을 재귀적으로 보았습니다:",
-		"wantsToViewDefinitions": "Kilo Code가 이 디렉토리에서 사용된 소스 코드 정의 이름을 보고 싶어합니다:",
-		"didViewDefinitions": "Kilo Code가 이 디렉토리에서 사용된 소스 코드 정의 이름을 보았습니다:",
-		"wantsToSearch": "Kilo Code가 이 디렉토리에서 <code>{{regex}}</code>을(를) 검색하고 싶어합니다:",
-		"didSearch": "Kilo Code가 이 디렉토리에서 <code>{{regex}}</code>을(를) 검색했습니다:"
+		"wantsToViewTopLevel": "Kilo SSY가 이 디렉토리의 최상위 파일을 보고 싶어합니다:",
+		"didViewTopLevel": "Kilo SSY가 이 디렉토리의 최상위 파일을 보았습니다:",
+		"wantsToViewRecursive": "Kilo SSY가 이 디렉토리의 모든 파일을 재귀적으로 보고 싶어합니다:",
+		"didViewRecursive": "Kilo SSY가 이 디렉토리의 모든 파일을 재귀적으로 보았습니다:",
+		"wantsToViewDefinitions": "Kilo SSY가 이 디렉토리에서 사용된 소스 코드 정의 이름을 보고 싶어합니다:",
+		"didViewDefinitions": "Kilo SSY가 이 디렉토리에서 사용된 소스 코드 정의 이름을 보았습니다:",
+		"wantsToSearch": "Kilo SSY가 이 디렉토리에서 <code>{{regex}}</code>을(를) 검색하고 싶어합니다:",
+		"didSearch": "Kilo SSY가 이 디렉토리에서 <code>{{regex}}</code>을(를) 검색했습니다:"
 	},
 	"commandOutput": "명령 출력",
 	"response": "응답",
 	"arguments": "인수",
 	"mcp": {
-		"wantsToUseTool": "Kilo Code가 {{serverName}} MCP 서버에서 도구를 사용하고 싶어합니다:",
-		"wantsToAccessResource": "Kilo Code가 {{serverName}} MCP 서버에서 리소스에 접근하고 싶어합니다:"
+		"wantsToUseTool": "Kilo SSY가 {{serverName}} MCP 서버에서 도구를 사용하고 싶어합니다:",
+		"wantsToAccessResource": "Kilo SSY가 {{serverName}} MCP 서버에서 리소스에 접근하고 싶어합니다:"
 	},
 	"modes": {
-		"wantsToSwitch": "Kilo Code가 <code>{{mode}}</code> 모드로 전환하고 싶어합니다",
-		"wantsToSwitchWithReason": "Kilo Code가 다음 이유로 <code>{{mode}}</code> 모드로 전환하고 싶어합니다: {{reason}}",
-		"didSwitch": "Kilo Code가 <code>{{mode}}</code> 모드로 전환했습니다",
-		"didSwitchWithReason": "Kilo Code가 다음 이유로 <code>{{mode}}</code> 모드로 전환했습니다: {{reason}}"
+		"wantsToSwitch": "Kilo SSY가 <code>{{mode}}</code> 모드로 전환하고 싶어합니다",
+		"wantsToSwitchWithReason": "Kilo SSY가 다음 이유로 <code>{{mode}}</code> 모드로 전환하고 싶어합니다: {{reason}}",
+		"didSwitch": "Kilo SSY가 <code>{{mode}}</code> 모드로 전환했습니다",
+		"didSwitchWithReason": "Kilo SSY가 다음 이유로 <code>{{mode}}</code> 모드로 전환했습니다: {{reason}}"
 	},
 	"subtasks": {
 		"wantsToCreate": "Kilo SSY <code>{{mode}}</code> 모드에서 새 하위 작업을 만들고 싶어합니다:",
@@ -186,7 +186,7 @@
 		"completionInstructions": "하위 작업 완료! 결과를 검토하고 수정 사항이나 다음 단계를 제안할 수 있습니다. 모든 것이 괜찮아 보이면, 부모 작업에 결과를 반환하기 위해 확인해주세요."
 	},
 	"questions": {
-		"hasQuestion": "Kilo Code에게 질문이 있습니다:"
+		"hasQuestion": "Kilo SSY에게 질문이 있습니다:"
 	},
 	"taskCompleted": "작업 완료",
 	"powershell": {
@@ -195,7 +195,7 @@
 	"autoApprove": {
 		"title": "자동 승인:",
 		"none": "없음",
-		"description": "자동 승인을 사용하면 Kilo Code가 권한을 요청하지 않고 작업을 수행할 수 있습니다. 완전히 신뢰할 수 있는 작업에만 활성화하세요. 더 자세한 구성은 <settingsLink>설정</settingsLink>에서 사용할 수 있습니다."
+		"description": "자동 승인을 사용하면 Kilo SSY가 권한을 요청하지 않고 작업을 수행할 수 있습니다. 완전히 신뢰할 수 있는 작업에만 활성화하세요. 더 자세한 구성은 <settingsLink>설정</settingsLink>에서 사용할 수 있습니다."
 	},
 	"reasoning": {
 		"thinking": "생각 중",
@@ -215,7 +215,7 @@
 		"detailsDiscussLinks": "<discordLink>Discord</discordLink>와 <redditLink>Reddit</redditLink>에서 더 자세한 정보를 확인하고 논의하세요 🚀"
 	},
 	"browser": {
-		"rooWantsToUse": "Kilo Code가 브라우저를 사용하고 싶어합니다:",
+		"rooWantsToUse": "Kilo SSY가 브라우저를 사용하고 싶어합니다:",
 		"consoleLogs": "콘솔 로그",
 		"noNewLogs": "(새 로그 없음)",
 		"screenshot": "브라우저 스크린샷",

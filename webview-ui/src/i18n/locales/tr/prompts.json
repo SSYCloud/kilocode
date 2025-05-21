@@ -42,7 +42,7 @@
 	},
 	"globalCustomInstructions": {
 		"title": "Tüm Modlar için Özel Talimatlar",
-		"description": "Bu talimatlar tüm modlara uygulanır. Aşağıdaki moda özgü talimatlarla geliştirilebilen temel davranış seti sağlarlar.\nKilo Code'un editörünüzün görüntüleme dilinden ({{language}}) farklı bir dilde düşünmesini ve konuşmasını istiyorsanız, burada belirtebilirsiniz.",
+		"description": "Bu talimatlar tüm modlara uygulanır. Aşağıdaki moda özgü talimatlarla geliştirilebilen temel davranış seti sağlarlar.\nKilo SSY'un editörünüzün görüntüleme dilinden ({{language}}) farklı bir dilde düşünmesini ve konuşmasını istiyorsanız, burada belirtebilirsiniz.",
 		"loadFromFile": "Talimatlar ayrıca çalışma alanınızdaki <span>.kilocode/rules/</span> klasöründen de yüklenebilir (.kilocoderules kullanımdan kaldırılmıştır ve yakında çalışmayı durduracaktır)."
 	},
 	"systemPrompt": {

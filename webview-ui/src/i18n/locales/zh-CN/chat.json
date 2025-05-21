@@ -112,7 +112,7 @@
 	"diffError": {
 		"title": "编辑失败"
 	},
-	"troubleMessage": "Kilo Code遇到问题...",
+	"troubleMessage": "Kilo SSY 遇到问题...",
 	"apiRequest": {
 		"title": "API请求",
 		"failed": "API请求失败",
@@ -158,8 +158,8 @@
 		"didViewTopLevel": "已查看目录文件列表:",
 		"wantsToViewRecursive": "需要查看目录所有文件:",
 		"didViewRecursive": "已查看目录所有文件:",
-		"wantsToViewDefinitions": "Kilo Code想查看此目录中使用的源代码定义名称:",
-		"didViewDefinitions": "Kilo Code已查看此目录中使用的源代码定义名称:",
+		"wantsToViewDefinitions": "Kilo SSY想查看此目录中使用的源代码定义名称:",
+		"didViewDefinitions": "Kilo SSY已查看此目录中使用的源代码定义名称:",
 		"wantsToSearch": "需要搜索内容: {{regex}}",
 		"didSearch": "已完成内容搜索: {{regex}}"
 	},
@@ -167,8 +167,8 @@
 	"response": "响应",
 	"arguments": "参数",
 	"mcp": {
-		"wantsToUseTool": "Kilo Code想在{{serverName}} MCP上使用工具:",
-		"wantsToAccessResource": "Kilo Code想访问{{serverName}} MCP服务上的资源:"
+		"wantsToUseTool": "Kilo SSY想在{{serverName}} MCP上使用工具:",
+		"wantsToAccessResource": "Kilo SSY想访问{{serverName}} MCP服务上的资源:"
 	},
 	"modes": {
 		"wantsToSwitch": "即将切换至{{mode}}模式",
@@ -177,8 +177,8 @@
 		"didSwitchWithReason": "已切换至{{mode}}模式（原因：{{reason}}）"
 	},
 	"subtasks": {
-		"wantsToCreate": "Kilo Code想在<code>{{mode}}</code>模式下创建新子任务:",
-		"wantsToFinish": "Kilo Code想完成此子任务",
+		"wantsToCreate": "Kilo SSY想在<code>{{mode}}</code>模式下创建新子任务:",
+		"wantsToFinish": "Kilo SSY想完成此子任务",
 		"newTaskContent": "子任务说明",
 		"completionContent": "子任务已完成",
 		"resultContent": "子任务结果",
@@ -186,7 +186,7 @@
 		"completionInstructions": "子任务已完成！您可以查看结果并提出修改或下一步建议。如果一切正常，请确认以将结果返回给主任务。"
 	},
 	"questions": {
-		"hasQuestion": "Kilo Code有一个问题:"
+		"hasQuestion": "Kilo SSY有一个问题:"
 	},
 	"taskCompleted": "任务完成",
 	"powershell": {
@@ -215,7 +215,7 @@
 		"detailsDiscussLinks": "在 <discordLink>Discord</discordLink> 和 <redditLink>Reddit</redditLink> 获取更多详情并参与讨论 🚀"
 	},
 	"browser": {
-		"rooWantsToUse": "Kilo Code想使用浏览器:",
+		"rooWantsToUse": "Kilo SSY想使用浏览器:",
 		"consoleLogs": "控制台日志",
 		"noNewLogs": "(没有新日志)",
 		"screenshot": "浏览器截图",

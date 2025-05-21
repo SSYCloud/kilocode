@@ -94,7 +94,7 @@
 		"enter_valid_path": "有効なパスを入力してください"
 	},
 	"input": {
-		"task_prompt": "Kilo Codeにどんなことをさせますか？",
+		"task_prompt": "Kilo SSYにどんなことをさせますか？",
 		"task_placeholder": "タスクをここに入力してください"
 	},
 	"settings": {
