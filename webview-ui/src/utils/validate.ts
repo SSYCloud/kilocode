@@ -91,6 +91,11 @@ export function validateApiConfiguration(apiConfiguration: ProviderSettings): st
 			}
 			break
 		// kilocode_change end
+		case "shengsuanyun":
+			if (!apiConfiguration.shengSuanYunApiKey) {
+				return i18next.t("settings:validation.apiKey")
+			}
+			break
 	}
 
 	return undefined
@@ -154,6 +159,9 @@ export function validateModelId(apiConfiguration: ProviderSettings, routerModels
 			break
 		case "litellm":
 			modelId = apiConfiguration.litellmModelId
+			break
+		case "shengsuanyun":
+			modelId = apiConfiguration.shengSuanYunModelId
 			break
 	}
 

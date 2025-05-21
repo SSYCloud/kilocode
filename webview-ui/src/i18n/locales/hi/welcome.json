@@ -5,18 +5,17 @@
 	"start": "चलो शुरू करें!",
 	"chooseProvider": "शुरू करने के लिए एक API प्रदाता चुनें:",
 	"routers": {
-		"requesty": {
-			"description": "आपका अनुकूलित LLM राउटर",
-			"incentive": "$1 मुफ्त क्रेडिट"
+		"kilo": {
+			"description": "LLMs के लिए एक एकीकृत इंटरफेस"
 		},
-		"openrouter": {
+		"shengsuanyun": {
 			"description": "LLMs के लिए एक एकीकृत इंटरफेस"
 		}
 	},
 	"startRouter": "राउटर के माध्यम से तेज़ सेटअप",
 	"startCustom": "अपनी खुद की API कुंजी का उपयोग करें",
 	"telemetry": {
-		"title": "Kilo Code को बेहतर बनाने में मदद करें",
+		"title": "Kilo SSY को बेहतर बनाने में मदद करें",
 		"anonymousTelemetry": "बग ठीक करने और एक्सटेंशन को बेहतर बनाने में हमारी मदद करने के लिए गुमनाम त्रुटि और उपयोग डेटा भेजें। कोड, संकेत या व्यक्तिगत जानकारी कभी नहीं भेजी जाती है।",
 		"changeSettings": "आप इसे हमेशा <settingsLink>सेटिंग्स</settingsLink> के निचले भाग में बदल सकते हैं",
 		"settings": "सेटिंग्स",

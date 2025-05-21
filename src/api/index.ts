@@ -26,6 +26,7 @@ import { GroqHandler } from "./providers/groq"
 import { ChutesHandler } from "./providers/chutes"
 import { LiteLLMHandler } from "./providers/litellm"
 import { KilocodeOpenrouterHandler } from "./providers/kilocode-openrouter"
+import { ShengSuanYunHandler } from "./providers/shengsuanyun"
 
 export interface SingleCompletionHandler {
 	completePrompt(prompt: string): Promise<string>
@@ -33,7 +34,6 @@ export interface SingleCompletionHandler {
 
 export interface ApiHandler {
 	createMessage(systemPrompt: string, messages: Anthropic.Messages.MessageParam[], cacheKey?: string): ApiStream
-
 	getModel(): { id: string; info: ModelInfo }
 
 	/**
@@ -101,6 +101,8 @@ export function buildApiHandler(configuration: ProviderSettings): ApiHandler {
 			return new ChutesHandler(options)
 		case "litellm":
 			return new LiteLLMHandler(options)
+		case "shengsuanyun":
+			return new ShengSuanYunHandler(options)
 		default:
 			return new AnthropicHandler(options)
 	}

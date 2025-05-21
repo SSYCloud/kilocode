@@ -56,6 +56,8 @@
 		"getChutesApiKey": "Chutes API-sleutel ophalen",
 		"deepSeekApiKey": "DeepSeek API-sleutel",
 		"getDeepSeekApiKey": "DeepSeek API-sleutel ophalen",
+		"shengSuanYunApiKey": "ShengSuanYun API-sleutel",
+		"getShengSuanyunApiKey": "ShengSuanYun API-sleutel ophalen",
 		"geminiApiKey": "Gemini API-sleutel",
 		"getGroqApiKey": "Groq API-sleutel ophalen",
 		"groqApiKey": "Groq API-sleutel",

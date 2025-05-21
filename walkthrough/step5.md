@@ -1,10 +1,10 @@
 # Improve your prompt
 
-Click the stars icon to make your prompt clearer and more complete. Kilo Code will rewrite it to get better results.
+Click the stars icon to make your prompt clearer and more complete. Kilo SSY will rewrite it to get better results.
 
 # Add files or folders for context
 
-Mention files or folders in your prompt. Kilo Code will use them to better understand and respond to your request.
+Mention files or folders in your prompt. Kilo SSY will use them to better understand and respond to your request.
 
 Click the paperclip in the text area or use @ to add context.
 

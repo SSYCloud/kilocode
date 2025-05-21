@@ -1,5 +1,5 @@
 export function getCallbackUrl(provider: string, uriScheme?: string) {
-	return encodeURIComponent(`${uriScheme || "vscode"}://kilocode.Kilo-Code/${provider}`)
+	return encodeURIComponent(`${uriScheme || "vscode"}://shengsuan-cloud.kilo-ssy/${provider}`)
 }
 
 export function getGlamaAuthUrl(uriScheme?: string) {
@@ -12,4 +12,8 @@ export function getOpenRouterAuthUrl(uriScheme?: string) {
 
 export function getRequestyAuthUrl(uriScheme?: string) {
 	return `https://app.requesty.ai/oauth/authorize?callback_url=${getCallbackUrl("requesty", uriScheme)}`
+}
+
+export function getShengSuanYunAuthUrl(uriScheme?: string) {
+	return `https://router.shengsuanyun.com/auth?callback_url=${getCallbackUrl("ssy", uriScheme)}`
 }

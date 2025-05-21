@@ -44,7 +44,7 @@ describe("RequestyHandler", () => {
 			apiKey: mockOptions.requestyApiKey,
 			defaultHeaders: {
 				"HTTP-Referer": "https://kilocode.ai",
-				"X-Title": "Kilo Code",
+				"X-Title": "Kilo SSY",
 			},
 		})
 	})

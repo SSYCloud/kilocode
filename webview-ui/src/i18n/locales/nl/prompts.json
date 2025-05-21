@@ -7,7 +7,7 @@
 		"editModesConfig": "Modusconfiguratie bewerken",
 		"editGlobalModes": "Globale modi bewerken",
 		"editProjectModes": "Projectmodi bewerken (.kilocodemodes)",
-		"createModeHelpText": "Klik op + om een nieuwe aangepaste modus te maken, of vraag Kilo Code in de chat om er een voor je te maken!",
+		"createModeHelpText": "Klik op + om een nieuwe aangepaste modus te maken, of vraag Kilo SSY in de chat om er een voor je te maken!",
 		"selectMode": "Modus zoeken"
 	},
 	"apiConfiguration": {
@@ -32,7 +32,7 @@
 	"roleDefinition": {
 		"title": "Roldefinitie",
 		"resetToDefault": "Terugzetten naar standaard",
-		"description": "Definieer Kilo Code's expertise en persoonlijkheid voor deze modus. Deze beschrijving bepaalt hoe Kilo Code zich presenteert en taken benadert."
+		"description": "Definieer Kilo SSY's expertise en persoonlijkheid voor deze modus. Deze beschrijving bepaalt hoe Kilo SSY zich presenteert en taken benadert."
 	},
 	"customInstructions": {
 		"title": "Modusspecifieke instructies (optioneel)",
@@ -42,7 +42,7 @@
 	},
 	"globalCustomInstructions": {
 		"title": "Aangepaste instructies voor alle modi",
-		"description": "Deze instructies gelden voor alle modi. Ze bieden een basisset aan gedragingen die kunnen worden uitgebreid met modusspecifieke instructies hieronder.\nWil je dat Kilo Code in een andere taal denkt en spreekt dan de weergavetaal van je editor ({{language}}), dan kun je dat hier aangeven.",
+		"description": "Deze instructies gelden voor alle modi. Ze bieden een basisset aan gedragingen die kunnen worden uitgebreid met modusspecifieke instructies hieronder.\nWil je dat Kilo SSY in een andere taal denkt en spreekt dan de weergavetaal van je editor ({{language}}), dan kun je dat hier aangeven.",
 		"loadFromFile": "Instructies kunnen ook worden geladen uit de map <span>.kilocode/rules/</span> in je werkruimte (.kilocoderules en .clinerules zijn verouderd en werken binnenkort niet meer)."
 	},
 	"systemPrompt": {
@@ -64,7 +64,7 @@
 		"types": {
 			"ENHANCE": {
 				"label": "Prompt verbeteren",
-				"description": "Gebruik promptverbetering om op maat gemaakte suggesties of verbeteringen voor je invoer te krijgen. Zo begrijpt Kilo Code je intentie en krijg je de best mogelijke antwoorden. Beschikbaar via het ✨-icoon in de chat."
+				"description": "Gebruik promptverbetering om op maat gemaakte suggesties of verbeteringen voor je invoer te krijgen. Zo begrijpt Kilo SSY je intentie en krijg je de best mogelijke antwoorden. Beschikbaar via het ✨-icoon in de chat."
 			},
 			"EXPLAIN": {
 				"label": "Code uitleggen",
@@ -129,7 +129,7 @@
 		},
 		"roleDefinition": {
 			"label": "Roldefinitie",
-			"description": "Definieer Kilo Code's expertise en persoonlijkheid voor deze modus."
+			"description": "Definieer Kilo SSY's expertise en persoonlijkheid voor deze modus."
 		},
 		"tools": {
 			"label": "Beschikbare tools",

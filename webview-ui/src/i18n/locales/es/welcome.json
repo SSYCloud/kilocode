@@ -1,22 +1,21 @@
 {
-	"greeting": "¡Hola, soy Kilo Code!",
-	"introduction": "<strong>Kilo Code es el principal agente de codificación autónomo.</strong> Prepárate para arquitectar, codificar, depurar y aumentar tu productividad como nunca antes. Para continuar, Kilo Code requiere una clave API.",
+	"greeting": "¡Hola, soy Kilo SSY!",
+	"introduction": "<strong>Kilo SSY es el principal agente de codificación autónomo.</strong> Prepárate para arquitectar, codificar, depurar y aumentar tu productividad como nunca antes. Para continuar, Kilo SSY requiere una clave API.",
 	"notice": "Para comenzar, esta extensión necesita un proveedor de API.",
 	"start": "¡Vamos!",
 	"chooseProvider": "Elige un proveedor de API para comenzar:",
 	"routers": {
-		"requesty": {
-			"description": "Tu router LLM optimizado",
-			"incentive": "$1 de crédito gratis"
+		"kilo": {
+			"description": "Una interfaz unificada para LLMs"
 		},
-		"openrouter": {
+		"shengsuanyun": {
 			"description": "Una interfaz unificada para LLMs"
 		}
 	},
 	"startRouter": "Configuración rápida a través de un router",
 	"startCustom": "Usa tu propia clave API",
 	"telemetry": {
-		"title": "Ayuda a mejorar Kilo Code",
+		"title": "Ayuda a mejorar Kilo SSY",
 		"anonymousTelemetry": "Envía datos de uso y errores anónimos para ayudarnos a corregir errores y mejorar la extensión. Nunca se envía código, texto o información personal.",
 		"changeSettings": "Siempre puedes cambiar esto en la parte inferior de la <settingsLink>configuración</settingsLink>",
 		"settings": "configuración",

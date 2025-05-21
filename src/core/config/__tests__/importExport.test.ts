@@ -341,7 +341,7 @@ describe("importExport", () => {
 		it("should export settings to the selected file location", async () => {
 			// Mock successful file location selection
 			;(vscode.window.showSaveDialog as jest.Mock).mockResolvedValue({
-				fsPath: "/mock/path/kilo-code-settings.json",
+				fsPath: "/mock/path/kilo-ssy-settings.json",
 			})
 
 			// Mock providerProfiles data
@@ -379,7 +379,7 @@ describe("importExport", () => {
 			expect(mockContextProxy.export).toHaveBeenCalled()
 			expect(fs.mkdir).toHaveBeenCalledWith("/mock/path", { recursive: true })
 			expect(fs.writeFile).toHaveBeenCalledWith(
-				"/mock/path/kilo-code-settings.json",
+				"/mock/path/kilo-ssy-settings.json",
 				JSON.stringify(
 					{
 						providerProfiles: mockProviderProfiles,
@@ -395,7 +395,7 @@ describe("importExport", () => {
 		it("should handle errors during the export process", async () => {
 			// Mock successful file location selection
 			;(vscode.window.showSaveDialog as jest.Mock).mockResolvedValue({
-				fsPath: "/mock/path/kilo-code-settings.json",
+				fsPath: "/mock/path/kilo-ssy-settings.json",
 			})
 
 			// Mock provider profiles
@@ -437,7 +437,7 @@ describe("importExport", () => {
 		it("should handle errors during directory creation", async () => {
 			// Mock successful file location selection
 			;(vscode.window.showSaveDialog as jest.Mock).mockResolvedValue({
-				fsPath: "/mock/path/kilo-code-settings.json",
+				fsPath: "/mock/path/kilo-ssy-settings.json",
 			})
 
 			// Mock provider profiles
@@ -492,9 +492,7 @@ describe("importExport", () => {
 			})
 
 			// Verify Uri.file was called with the correct path
-			expect(vscode.Uri.file).toHaveBeenCalledWith(
-				path.join("/mock/home", "Documents", "kilo-code-settings.json"),
-			)
+			expect(vscode.Uri.file).toHaveBeenCalledWith(path.join("/mock/home", "Documents", "kilo-ssy-settings.json"))
 		})
 	})
 })

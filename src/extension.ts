@@ -46,9 +46,9 @@ let extensionContext: vscode.ExtensionContext
 // Your extension is activated the very first time the command is executed.
 export async function activate(context: vscode.ExtensionContext) {
 	extensionContext = context
-	outputChannel = vscode.window.createOutputChannel("Kilo-Code")
+	outputChannel = vscode.window.createOutputChannel("kilo-ssy")
 	context.subscriptions.push(outputChannel)
-	outputChannel.appendLine("Kilo Code extension activated")
+	outputChannel.appendLine("Kilo SSY extension activated")
 
 	// Migrate old settings to new
 	await migrateSettings(context, outputChannel)
@@ -60,7 +60,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	TerminalRegistry.initialize()
 
 	// Get default commands from configuration.
-	const defaultCommands = vscode.workspace.getConfiguration("kilo-code").get<string[]>("allowedCommands") || []
+	const defaultCommands = vscode.workspace.getConfiguration("kilo-ssy").get<string[]>("allowedCommands") || []
 
 	// Initialize global state if not already set.
 	if (!context.globalState.get("allowedCommands")) {
@@ -77,14 +77,14 @@ export async function activate(context: vscode.ExtensionContext) {
 	)
 
 	if (!context.globalState.get("firstInstallCompleted")) {
-		outputChannel.appendLine("First installation detected, opening Kilo Code sidebar!")
+		outputChannel.appendLine("First installation detected, opening Kilo SSY sidebar!")
 		try {
-			await vscode.commands.executeCommand("kilo-code.SidebarProvider.focus")
+			await vscode.commands.executeCommand("kilo-ssy.SidebarProvider.focus")
 
-			outputChannel.appendLine("Opening Kilo Code walkthrough")
+			outputChannel.appendLine("Opening Kilo SSY walkthrough")
 			await vscode.commands.executeCommand(
 				"workbench.action.openWalkthrough",
-				"kilocode.kilo-code#kiloCodeWalkthrough",
+				"shengsuan-cloud.kilo-ssy#kiloSSYCodeAgent",
 				false,
 			)
 
@@ -134,8 +134,8 @@ export async function activate(context: vscode.ExtensionContext) {
 	registerCodeActions(context)
 	registerTerminalActions(context)
 
-	// Allows other extensions to activate once Kilo Code is ready.
-	vscode.commands.executeCommand("kilo-code.activationCompleted")
+	// Allows other extensions to activate once Kilo SSY is ready.
+	vscode.commands.executeCommand("kilo-ssy.activationCompleted")
 
 	// Implements the `RooCodeAPI` interface.
 	const socketPath = process.env.ROO_CODE_IPC_SOCKET_PATH
@@ -160,7 +160,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
 // This method is called when your extension is deactivated
 export async function deactivate() {
-	outputChannel.appendLine("Kilo Code extension deactivated")
+	outputChannel.appendLine("Kilo SSY extension deactivated")
 	// Clean up MCP server manager
 	await McpServerManager.cleanup(extensionContext)
 

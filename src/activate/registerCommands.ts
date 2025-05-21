@@ -15,7 +15,7 @@ import { handleNewTask } from "./handleTask"
 export function getVisibleProviderOrLog(outputChannel: vscode.OutputChannel): ClineProvider | undefined {
 	const visibleProvider = ClineProvider.getVisibleInstance()
 	if (!visibleProvider) {
-		outputChannel.appendLine("Cannot find any visible Kilo Code instances.")
+		outputChannel.appendLine("Cannot find any visible Kilo SSY instances.")
 		return undefined
 	}
 	return visibleProvider
@@ -65,8 +65,8 @@ export const registerCommands = (options: RegisterCommandOptions) => {
 
 const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions) => {
 	return {
-		"kilo-code.activationCompleted": () => {},
-		"kilo-code.plusButtonClicked": async () => {
+		"kilo-ssy.activationCompleted": () => {},
+		"kilo-ssy.plusButtonClicked": async () => {
 			const visibleProvider = getVisibleProviderOrLog(outputChannel)
 
 			if (!visibleProvider) {
@@ -77,7 +77,7 @@ const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions) => {
 			await visibleProvider.postStateToWebview()
 			await visibleProvider.postMessageToWebview({ type: "action", action: "chatButtonClicked" })
 		},
-		"kilo-code.promptsButtonClicked": () => {
+		"kilo-ssy.promptsButtonClicked": () => {
 			const visibleProvider = getVisibleProviderOrLog(outputChannel)
 
 			if (!visibleProvider) {
@@ -86,9 +86,9 @@ const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions) => {
 
 			visibleProvider.postMessageToWebview({ type: "action", action: "promptsButtonClicked" })
 		},
-		"kilo-code.popoutButtonClicked": () => openClineInNewTab({ context, outputChannel }),
-		"kilo-code.openInNewTab": () => openClineInNewTab({ context, outputChannel }),
-		"kilo-code.settingsButtonClicked": () => {
+		"kilo-ssy.popoutButtonClicked": () => openClineInNewTab({ context, outputChannel }),
+		"kilo-ssy.openInNewTab": () => openClineInNewTab({ context, outputChannel }),
+		"kilo-ssy.settingsButtonClicked": () => {
 			const visibleProvider = getVisibleProviderOrLog(outputChannel)
 
 			if (!visibleProvider) {
@@ -99,7 +99,7 @@ const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions) => {
 			// Also explicitly post the visibility message to trigger scroll reliably
 			visibleProvider.postMessageToWebview({ type: "action", action: "didBecomeVisible" })
 		},
-		"kilo-code.historyButtonClicked": () => {
+		"kilo-ssy.historyButtonClicked": () => {
 			const visibleProvider = getVisibleProviderOrLog(outputChannel)
 
 			if (!visibleProvider) {
@@ -108,10 +108,10 @@ const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions) => {
 
 			visibleProvider.postMessageToWebview({ type: "action", action: "historyButtonClicked" })
 		},
-		"kilo-code.helpButtonClicked": () => {
+		"kilo-ssy.helpButtonClicked": () => {
 			vscode.env.openExternal(vscode.Uri.parse("https://kilocode.ai"))
 		},
-		"kilo-code.showHumanRelayDialog": (params: { requestId: string; promptText: string }) => {
+		"kilo-ssy.showHumanRelayDialog": (params: { requestId: string; promptText: string }) => {
 			const panel = getPanel()
 
 			if (panel) {
@@ -122,18 +122,18 @@ const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions) => {
 				})
 			}
 		},
-		"kilo-code.registerHumanRelayCallback": registerHumanRelayCallback,
-		"kilo-code.unregisterHumanRelayCallback": unregisterHumanRelayCallback,
-		"kilo-code.handleHumanRelayResponse": handleHumanRelayResponse,
-		"kilo-code.newTask": handleNewTask,
-		"kilo-code.setCustomStoragePath": async () => {
+		"kilo-ssy.registerHumanRelayCallback": registerHumanRelayCallback,
+		"kilo-ssy.unregisterHumanRelayCallback": unregisterHumanRelayCallback,
+		"kilo-ssy.handleHumanRelayResponse": handleHumanRelayResponse,
+		"kilo-ssy.newTask": handleNewTask,
+		"kilo-ssy.setCustomStoragePath": async () => {
 			const { promptForCustomStoragePath } = await import("../shared/storagePathManager")
 			await promptForCustomStoragePath()
 		},
 		// kilocode_change begin
-		"kilo-code.focusChatInput": async () => {
+		"kilo-ssy.focusChatInput": async () => {
 			try {
-				await vscode.commands.executeCommand("kilo-code.SidebarProvider.focus")
+				await vscode.commands.executeCommand("kilo-ssy.SidebarProvider.focus")
 				await delay(100)
 
 				let visibleProvider = getVisibleProviderOrLog(outputChannel)
@@ -154,7 +154,7 @@ const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions) => {
 			}
 		},
 		// kilocode_change end
-		"kilo-code.acceptInput": () => {
+		"kilo-ssy.acceptInput": () => {
 			const visibleProvider = getVisibleProviderOrLog(outputChannel)
 
 			if (!visibleProvider) {
@@ -164,7 +164,7 @@ const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions) => {
 			visibleProvider.postMessageToWebview({ type: "acceptInput" })
 		},
 		// kilocode_change start
-		"kilo-code.importSettings": async () => {
+		"kilo-ssy.importSettings": async () => {
 			const visibleProvider = getVisibleProviderOrLog(outputChannel)
 			if (!visibleProvider) return
 
@@ -180,7 +180,7 @@ const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions) => {
 				await vscode.window.showInformationMessage(t("kilocode:info.settings_imported"))
 			}
 		},
-		"kilo-code.exportSettings": async () => {
+		"kilo-ssy.exportSettings": async () => {
 			const visibleProvider = getVisibleProviderOrLog(outputChannel)
 			if (!visibleProvider) return
 
@@ -212,7 +212,7 @@ export const openClineInNewTab = async ({ context, outputChannel }: Omit<Registe
 
 	const targetCol = hasVisibleEditors ? Math.max(lastCol + 1, 1) : vscode.ViewColumn.Two
 
-	const newPanel = vscode.window.createWebviewPanel(ClineProvider.tabPanelId, "Kilo Code", targetCol, {
+	const newPanel = vscode.window.createWebviewPanel(ClineProvider.tabPanelId, "Kilo SSY", targetCol, {
 		enableScripts: true,
 		retainContextWhenHidden: true,
 		localResourceRoots: [context.extensionUri],

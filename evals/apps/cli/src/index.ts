@@ -73,7 +73,7 @@ const run = async (toolbox: GluegunToolbox) => {
 		run = await createRun({
 			model: rooCodeDefaults.openRouterModelId!,
 			pid: process.pid,
-			socketPath: path.resolve(os.tmpdir(), `kilo-code-evals-${crypto.randomUUID().slice(0, 8)}.sock`),
+			socketPath: path.resolve(os.tmpdir(), `kilo-ssy-evals-${crypto.randomUUID().slice(0, 8)}.sock`),
 		})
 
 		if (language === "all") {
@@ -102,7 +102,7 @@ const run = async (toolbox: GluegunToolbox) => {
 		throw new Error("No tasks found.")
 	}
 
-	await execa({ cwd: exercisesPath })`git config user.name "Kilo Code"`
+	await execa({ cwd: exercisesPath })`git config user.name "Kilo SSY"`
 	await execa({ cwd: exercisesPath })`git config user.email "hi@kilocode.ai"`
 	await execa({ cwd: exercisesPath })`git checkout -f`
 	await execa({ cwd: exercisesPath })`git clean -fd`

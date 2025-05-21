@@ -470,11 +470,11 @@ Some content here.
 
 ## License
 
-[Apache 2.0 © 2025 Kilo Code LLC](./LICENSE)
+[Apache 2.0 © 2025 Kilo SSY LLC](./LICENSE)
 
 ---
 
-**Enjoy Kilo Code!** Whether you keep it on a short leash or let it roam autonomously, we can't wait to see what you build.`
+**Enjoy Kilo SSY!** Whether you keep it on a short leash or let it roam autonomously, we can't wait to see what you build.`
 
 		const captures = parseMarkdown(content)
 		expect(captures).toBeDefined()

@@ -35,6 +35,7 @@ export const providerNames = [
 	"groq",
 	"chutes",
 	"litellm",
+	"shengsuanyun",
 ] as const
 
 export const providerNamesSchema = z.enum(providerNames)
@@ -510,6 +511,12 @@ const kilocodeSchema = baseProviderSettingsSchema.extend({
 })
 // kilocode_change end
 
+const shengSuanYunSchema = baseProviderSettingsSchema.extend({
+	shengSuanYunApiKey: z.string().optional(),
+	shengSuanYunModelId: z.string().optional(),
+	shengSuanYunXToken: z.string().optional(),
+})
+
 const defaultSchema = z.object({
 	apiProvider: z.undefined(),
 })
@@ -537,6 +544,7 @@ export const providerSettingsSchemaDiscriminated = z.discriminatedUnion("apiProv
 	chutesSchema.merge(z.object({ apiProvider: z.literal("chutes") })),
 	litellmSchema.merge(z.object({ apiProvider: z.literal("litellm") })),
 	kilocodeSchema.merge(z.object({ apiProvider: z.literal("kilocode") })), // kilocode_change
+	shengSuanYunSchema.merge(z.object({ apiProvider: z.literal("shengsuanyun") })),
 	defaultSchema,
 ])
 
@@ -566,6 +574,7 @@ export const providerSettingsSchema = z
 	.merge(chutesSchema)
 	.merge(litellmSchema)
 	.merge(kilocodeSchema) // kilocode_change
+	.merge(shengSuanYunSchema)
 
 export type ProviderSettings = z.infer<typeof providerSettingsSchema>
 
@@ -672,6 +681,10 @@ const providerSettingsRecord: ProviderSettingsRecord = {
 	litellmBaseUrl: undefined,
 	litellmApiKey: undefined,
 	litellmModelId: undefined,
+	// ShengSuanYun
+	shengSuanYunApiKey: undefined,
+	shengSuanYunModelId: undefined,
+	shengSuanYunXToken: undefined,
 }
 
 export const PROVIDER_SETTINGS_KEYS = Object.keys(providerSettingsRecord) as Keys<ProviderSettings>[]
@@ -871,6 +884,8 @@ export type SecretState = Pick<
 	| "groqApiKey"
 	| "chutesApiKey"
 	| "litellmApiKey"
+	| "shengSuanYunApiKey"
+	| "shengSuanYunXToken"
 >
 
 type SecretStateRecord = Record<Keys<SecretState>, undefined>
@@ -895,6 +910,8 @@ const secretStateRecord: SecretStateRecord = {
 	groqApiKey: undefined,
 	chutesApiKey: undefined,
 	litellmApiKey: undefined,
+	shengSuanYunApiKey: undefined,
+	shengSuanYunXToken: undefined,
 }
 
 export const SECRET_STATE_KEYS = Object.keys(secretStateRecord) as Keys<SecretState>[]

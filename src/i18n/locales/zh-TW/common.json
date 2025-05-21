@@ -1,6 +1,6 @@
 {
 	"extension": {
-		"name": "Kilo Code",
+		"name": "Kilo SSY",
 		"description": "用於規劃、建置和修復程式碼的開源 AI 編碼助理。"
 	},
 	"number_format": {
@@ -94,7 +94,7 @@
 		"enter_valid_path": "請輸入有效的路徑"
 	},
 	"input": {
-		"task_prompt": "讓 Kilo Code 做什麼？",
+		"task_prompt": "讓 Kilo SSY 做什麼？",
 		"task_placeholder": "在這裡輸入工作"
 	},
 	"settings": {

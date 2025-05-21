@@ -11,7 +11,7 @@ import { SingleCompletionHandler } from "../index"
 import { RouterProvider } from "./router-provider"
 
 const DEFAULT_HEADERS = {
-	"X-Unbound-Metadata": JSON.stringify({ labels: [{ key: "app", value: "kilo-code" }] }),
+	"X-Unbound-Metadata": JSON.stringify({ labels: [{ key: "app", value: "kilo-ssy" }] }),
 }
 
 interface UnboundUsage extends OpenAI.CompletionUsage {

@@ -1,13 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Kilo Code có thể làm gì cho bạn?",
+		"greeting": "Kilo SSY có thể làm gì cho bạn?",
 		"introText": "Tôi đã được đào tạo trên các mô hình AI nhanh nhất hiện có và sẵn sàng tạo mã cho bạn với tốc độ cực nhanh!",
-		"ctaButton": "Dùng thử Kilo Code miễn phí",
+		"ctaButton": "Đăng ký khóa API ShengSuanYun",
 		"manualModeButton": "Sử dụng khóa API của riêng bạn"
 	},
 	"lowCreditWarning": {
 		"addCredit": "Thêm tín dụng",
-		"lowBalance": "Số dư Kilo Code của bạn thấp"
+		"lowBalance": "Số dư Kilo SSY của bạn thấp"
 	},
 	"notifications": {
 		"toolRequest": "Yêu cầu công cụ đang chờ phê duyệt",

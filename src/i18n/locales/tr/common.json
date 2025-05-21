@@ -1,6 +1,6 @@
 {
 	"extension": {
-		"name": "Kilo Code",
+		"name": "Kilo SSY",
 		"description": "Kod planlama, oluşturma ve düzeltme için açık kaynaklı yapay zeka kodlama asistanı."
 	},
 	"number_format": {
@@ -94,7 +94,7 @@
 		"enter_valid_path": "Lütfen geçerli bir yol girin"
 	},
 	"input": {
-		"task_prompt": "Kilo Code ne yapsın?",
+		"task_prompt": "Kilo SSY ne yapsın?",
 		"task_placeholder": "Görevini buraya yaz"
 	},
 	"settings": {

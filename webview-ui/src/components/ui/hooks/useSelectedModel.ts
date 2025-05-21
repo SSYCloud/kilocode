@@ -31,13 +31,14 @@ import {
 	glamaDefaultModelId,
 	unboundDefaultModelId,
 	litellmDefaultModelId,
+	shengSuanYunDefaultModelId,
 } from "@roo/shared/api"
 
 import { useRouterModels } from "./useRouterModels"
 
 export const useSelectedModel = (apiConfiguration?: ProviderSettings) => {
 	const { data: routerModels, isLoading, isError } = useRouterModels()
-	const provider = apiConfiguration?.apiProvider || "anthropic"
+	const provider = apiConfiguration?.apiProvider || "shengsuanyun"
 
 	const { id, info } =
 		apiConfiguration && routerModels
@@ -194,6 +195,13 @@ function getSelectedModel({
 
 			// Fallback to anthropic model if no match found
 			return { id, info: anthropicModels["claude-3-7-sonnet-20250219"] }
+		}
+		case "shengsuanyun": {
+			const id = apiConfiguration.shengSuanYunModelId ?? shengSuanYunDefaultModelId
+			const info = routerModels.shengsuanyun[id]
+			return info
+				? { id, info }
+				: { id: shengSuanYunDefaultModelId, info: routerModels.shengsuanyun[shengSuanYunDefaultModelId] }
 		}
 		// kilocode_change end
 

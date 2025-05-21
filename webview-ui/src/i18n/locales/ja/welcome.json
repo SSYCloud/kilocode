@@ -5,11 +5,10 @@
 	"start": "さあ、始めましょう！",
 	"chooseProvider": "開始するにはAPIプロバイダーを選択してください：",
 	"routers": {
-		"requesty": {
-			"description": "最適化されたLLMルーター",
-			"incentive": "$1の無料クレジット"
+		"kilo": {
+			"description": "LLMsのための統一インターフェース"
 		},
-		"openrouter": {
+		"shengsuanyun": {
 			"description": "LLMsのための統一インターフェース"
 		}
 	},

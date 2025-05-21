@@ -39,6 +39,14 @@ export const handleUri = async (uri: vscode.Uri) => {
 			}
 			break
 		}
+		case "/shengsuanyun":
+		case "/ssy": {
+			const code = query.get("code")
+			if (code) {
+				await visibleProvider.handleShengSuanYunCallback(code)
+			}
+			break
+		}
 		default:
 			break
 	}

@@ -1,10 +1,10 @@
 {
 	"input": {
-		"task_prompt": "O que você quer que o Kilo Code faça?",
+		"task_prompt": "O que você quer que o Kilo SSY faça?",
 		"task_placeholder": "Construir, encontrar, perguntar algo"
 	},
 	"extension": {
-		"name": "Kilo Code",
+		"name": "Kilo SSY",
 		"description": "Assistente de codificação de IA de código aberto para planejamento, construção e correção de código."
 	},
 	"number_format": {

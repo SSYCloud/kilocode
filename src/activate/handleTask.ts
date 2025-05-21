@@ -17,7 +17,7 @@ export const handleNewTask = async (params: { prompt?: string } | null | undefin
 	}
 
 	if (!prompt) {
-		await vscode.commands.executeCommand("kilo-code.SidebarProvider.focus")
+		await vscode.commands.executeCommand("kilo-ssy.SidebarProvider.focus")
 		return
 	}
 

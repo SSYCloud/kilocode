@@ -1,5 +1,5 @@
 {
-  description = "Kilo Code development environment";
+  description = "Kilo SSY development environment";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
@@ -13,7 +13,7 @@
     mkDevShell = system: let
       pkgs = import nixpkgs { inherit system; };
     in pkgs.mkShell {
-      name = "kilo-code";
+      name = "kilo-ssy";
 
       packages = with pkgs; [
         nodejs_20

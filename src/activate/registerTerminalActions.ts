@@ -4,9 +4,9 @@ import { Terminal } from "../integrations/terminal/Terminal"
 import { t } from "../i18n"
 
 const TERMINAL_COMMAND_IDS = {
-	ADD_TO_CONTEXT: "kilo-code.terminalAddToContext",
+	ADD_TO_CONTEXT: "kilo-ssy.terminalAddToContext",
 	FIX: "kilo-codee.terminalFixCommand",
-	EXPLAIN: "kilo-code.terminalExplainCommand",
+	EXPLAIN: "kilo-ssy.terminalExplainCommand",
 } as const
 
 export const registerTerminalActions = (context: vscode.ExtensionContext) => {

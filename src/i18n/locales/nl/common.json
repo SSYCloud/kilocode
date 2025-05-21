@@ -1,6 +1,6 @@
 {
 	"extension": {
-		"name": "Kilo Code",
+		"name": "Kilo SSY",
 		"description": "Een compleet ontwikkelteam van AI-agenten in je editor."
 	},
 	"number_format": {
@@ -94,7 +94,7 @@
 		"enter_valid_path": "Voer een geldig pad in"
 	},
 	"input": {
-		"task_prompt": "Wat moet Kilo Code doen?",
+		"task_prompt": "Wat moet Kilo SSY doen?",
 		"task_placeholder": "Typ hier je taak"
 	}
 }

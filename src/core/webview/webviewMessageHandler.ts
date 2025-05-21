@@ -268,15 +268,23 @@ export const webviewMessageHandler = async (provider: ClineProvider, message: We
 		case "requestRouterModels":
 			const { apiConfiguration } = await provider.getState()
 
-			const [openRouterModels, requestyModels, glamaModels, unboundModels, litellmModels, kilocodeOpenrouter] =
-				await Promise.all([
-					getModels("openrouter", apiConfiguration.openRouterApiKey),
-					getModels("requesty", apiConfiguration.requestyApiKey),
-					getModels("glama", apiConfiguration.glamaApiKey),
-					getModels("unbound", apiConfiguration.unboundApiKey),
-					getModels("litellm", apiConfiguration.litellmApiKey, apiConfiguration.litellmBaseUrl),
-					getModels("kilocode-openrouter"),
-				])
+			const [
+				openRouterModels,
+				requestyModels,
+				glamaModels,
+				unboundModels,
+				litellmModels,
+				kilocodeOpenrouter,
+				shengsuanyunModels,
+			] = await Promise.all([
+				getModels("openrouter", apiConfiguration.openRouterApiKey),
+				getModels("requesty", apiConfiguration.requestyApiKey),
+				getModels("glama", apiConfiguration.glamaApiKey),
+				getModels("unbound", apiConfiguration.unboundApiKey),
+				getModels("litellm", apiConfiguration.litellmApiKey, apiConfiguration.litellmBaseUrl),
+				getModels("kilocode-openrouter"),
+				getModels("shengsuanyun"),
+			])
 
 			provider.postMessageToWebview({
 				type: "routerModels",
@@ -287,6 +295,7 @@ export const webviewMessageHandler = async (provider: ClineProvider, message: We
 					unbound: unboundModels,
 					litellm: litellmModels,
 					"kilocode-openrouter": kilocodeOpenrouter,
+					shengsuanyun: shengsuanyunModels,
 				},
 			})
 			break
@@ -363,7 +372,7 @@ export const webviewMessageHandler = async (provider: ClineProvider, message: We
 
 			// Also update workspace settings.
 			await vscode.workspace
-				.getConfiguration("kilo-code")
+				.getConfiguration("kilo-ssy")
 				.update("allowedCommands", message.commands, vscode.ConfigurationTarget.Global)
 
 			break
@@ -1265,7 +1274,7 @@ export const webviewMessageHandler = async (provider: ClineProvider, message: We
 			break
 		case "humanRelayResponse":
 			if (message.requestId && message.text) {
-				vscode.commands.executeCommand("kilo-code.handleHumanRelayResponse", {
+				vscode.commands.executeCommand("kilo-ssy.handleHumanRelayResponse", {
 					requestId: message.requestId,
 					text: message.text,
 					cancelled: false,
@@ -1275,7 +1284,7 @@ export const webviewMessageHandler = async (provider: ClineProvider, message: We
 
 		case "humanRelayCancel":
 			if (message.requestId) {
-				vscode.commands.executeCommand("kilo-code.handleHumanRelayResponse", {
+				vscode.commands.executeCommand("kilo-ssy.handleHumanRelayResponse", {
 					requestId: message.requestId,
 					cancelled: true,
 				})

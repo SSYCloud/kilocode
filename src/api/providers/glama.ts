@@ -14,7 +14,7 @@ import { RouterProvider } from "./router-provider"
 const GLAMA_DEFAULT_TEMPERATURE = 0
 
 const DEFAULT_HEADERS = {
-	"X-Glama-Metadata": JSON.stringify({ labels: [{ key: "app", value: "vscode.kilocode.Kilo-Code" }] }),
+	"X-Glama-Metadata": JSON.stringify({ labels: [{ key: "app", value: "vscode.shengsuan-cloud.kilo-ssy" }] }),
 }
 
 export class GlamaHandler extends RouterProvider implements SingleCompletionHandler {

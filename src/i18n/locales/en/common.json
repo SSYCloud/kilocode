@@ -1,6 +1,6 @@
 {
 	"extension": {
-		"name": "Kilo Code",
+		"name": "Kilo SSY",
 		"description": "Open Source AI coding assistant for planning, building, and fixing code."
 	},
 	"number_format": {
@@ -94,7 +94,7 @@
 		"enter_valid_path": "Please enter a valid path"
 	},
 	"input": {
-		"task_prompt": "What should Kilo Code do?",
+		"task_prompt": "What should Kilo SSY do?",
 		"task_placeholder": "Build, find, ask something"
 	}
 }

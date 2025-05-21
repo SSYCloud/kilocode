@@ -1,10 +1,10 @@
-# Run Kilo Code Evals
+# Run Kilo SSY Evals
 
 ## Get Started
 
 NOTE: This is MacOS only for now!
 
-Clone the Kilo Code repo:
+Clone the Kilo SSY repo:
 
 ```sh
 git clone https://github.com/Kilo-Org/kilocode.git

@@ -31,6 +31,7 @@ type GlobalSettings = {
 							| "groq"
 							| "chutes"
 							| "litellm"
+							| "shengsuanyun"
 					  )
 					| undefined
 		  }[]
@@ -200,6 +201,7 @@ type ProviderSettings = {
 				| "groq"
 				| "chutes"
 				| "litellm"
+				| "shengsuanyun"
 		  )
 		| undefined
 	includeMaxTokens?: boolean | undefined
@@ -318,6 +320,9 @@ type ProviderSettings = {
 	litellmBaseUrl?: string | undefined
 	litellmApiKey?: string | undefined
 	litellmModelId?: string | undefined
+	shengSuanYunApiKey?: string | undefined
+	shengSuanYunModelId?: string | undefined
+	shengSuanYunXToken?: string | undefined
 }
 
 type ProviderSettingsEntry = {
@@ -348,6 +353,7 @@ type ProviderSettingsEntry = {
 				| "groq"
 				| "chutes"
 				| "litellm"
+				| "shengsuanyun"
 		  )
 		| undefined
 }

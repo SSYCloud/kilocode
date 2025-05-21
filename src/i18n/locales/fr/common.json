@@ -1,6 +1,6 @@
 {
 	"extension": {
-		"name": "Kilo Code",
+		"name": "Kilo SSY",
 		"description": "Assistant de codage d'IA Open Source pour la planification, la création et la correction de code."
 	},
 	"number_format": {
@@ -94,7 +94,7 @@
 		"enter_valid_path": "Veuillez entrer un chemin valide"
 	},
 	"input": {
-		"task_prompt": "Que doit faire Kilo Code?",
+		"task_prompt": "Que doit faire Kilo SSY?",
 		"task_placeholder": "Écris ta tâche ici"
 	},
 	"settings": {

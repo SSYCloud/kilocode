@@ -1,5 +1,5 @@
 {
-	"greeting": "O que o Kilo Code pode fazer por você?",
+	"greeting": "O que o Kilo SSY pode fazer por você?",
 	"task": {
 		"title": "Tarefa",
 		"seeMore": "Ver mais",
@@ -73,7 +73,7 @@
 	},
 	"scrollToBottom": "Rolar para o final do chat",
 	"about": "Gere, refatore e depure código com assistência de IA.<br />Confira nossa <DocsLink>documentação</DocsLink> para saber mais.",
-	"onboarding": "<strong>Sua lista de tarefas neste espaço de trabalho está vazia.</strong> Comece digitando uma tarefa abaixo. Não sabe como começar? Leia mais sobre o que o Kilo Code pode fazer por você nos <DocsLink>documentos</DocsLink>.",
+	"onboarding": "<strong>Sua lista de tarefas neste espaço de trabalho está vazia.</strong> Comece digitando uma tarefa abaixo. Não sabe como começar? Leia mais sobre o que o Kilo SSY pode fazer por você nos <DocsLink>documentos</DocsLink>.",
 	"rooTips": {
 		"boomerangTasks": {
 			"title": "Tarefas Bumerangue",
@@ -112,7 +112,7 @@
 	"diffError": {
 		"title": "Edição mal-sucedida"
 	},
-	"troubleMessage": "Kilo Code está tendo problemas...",
+	"troubleMessage": "Kilo SSY está tendo problemas...",
 	"apiRequest": {
 		"title": "Requisição API",
 		"failed": "Requisição API falhou",
@@ -138,47 +138,47 @@
 		"current": "Atual"
 	},
 	"instructions": {
-		"wantsToFetch": "Kilo Code quer buscar instruções detalhadas para ajudar com a tarefa atual"
+		"wantsToFetch": "Kilo SSY quer buscar instruções detalhadas para ajudar com a tarefa atual"
 	},
 	"fileOperations": {
-		"wantsToRead": "Kilo Code quer ler este arquivo:",
-		"wantsToReadOutsideWorkspace": "Kilo Code quer ler este arquivo fora do espaço de trabalho:",
-		"didRead": "Kilo Code leu este arquivo:",
-		"wantsToEdit": "Kilo Code quer editar este arquivo:",
-		"wantsToEditOutsideWorkspace": "Kilo Code quer editar este arquivo fora do espaço de trabalho:",
-		"wantsToCreate": "Kilo Code quer criar um novo arquivo:",
-		"wantsToSearchReplace": "Kilo Code quer realizar busca e substituição neste arquivo:",
-		"didSearchReplace": "Kilo Code realizou busca e substituição neste arquivo:",
-		"wantsToInsert": "Kilo Code quer inserir conteúdo neste arquivo:",
-		"wantsToInsertWithLineNumber": "Kilo Code quer inserir conteúdo neste arquivo na linha {{lineNumber}}:",
-		"wantsToInsertAtEnd": "Kilo Code quer adicionar conteúdo ao final deste arquivo:"
+		"wantsToRead": "Kilo SSY quer ler este arquivo:",
+		"wantsToReadOutsideWorkspace": "Kilo SSY quer ler este arquivo fora do espaço de trabalho:",
+		"didRead": "Kilo SSY leu este arquivo:",
+		"wantsToEdit": "Kilo SSY quer editar este arquivo:",
+		"wantsToEditOutsideWorkspace": "Kilo SSY quer editar este arquivo fora do espaço de trabalho:",
+		"wantsToCreate": "Kilo SSY quer criar um novo arquivo:",
+		"wantsToSearchReplace": "Kilo SSY quer realizar busca e substituição neste arquivo:",
+		"didSearchReplace": "Kilo SSY realizou busca e substituição neste arquivo:",
+		"wantsToInsert": "Kilo SSY quer inserir conteúdo neste arquivo:",
+		"wantsToInsertWithLineNumber": "Kilo SSY quer inserir conteúdo neste arquivo na linha {{lineNumber}}:",
+		"wantsToInsertAtEnd": "Kilo SSY quer adicionar conteúdo ao final deste arquivo:"
 	},
 	"directoryOperations": {
-		"wantsToViewTopLevel": "Kilo Code quer visualizar os arquivos de nível superior neste diretório:",
-		"didViewTopLevel": "Kilo Code visualizou os arquivos de nível superior neste diretório:",
-		"wantsToViewRecursive": "Kilo Code quer visualizar recursivamente todos os arquivos neste diretório:",
-		"didViewRecursive": "Kilo Code visualizou recursivamente todos os arquivos neste diretório:",
-		"wantsToViewDefinitions": "Kilo Code quer visualizar nomes de definição de código-fonte usados neste diretório:",
-		"didViewDefinitions": "Kilo Code visualizou nomes de definição de código-fonte usados neste diretório:",
-		"wantsToSearch": "Kilo Code quer pesquisar neste diretório por <code>{{regex}}</code>:",
-		"didSearch": "Kilo Code pesquisou neste diretório por <code>{{regex}}</code>:"
+		"wantsToViewTopLevel": "Kilo SSY quer visualizar os arquivos de nível superior neste diretório:",
+		"didViewTopLevel": "Kilo SSY visualizou os arquivos de nível superior neste diretório:",
+		"wantsToViewRecursive": "Kilo SSY quer visualizar recursivamente todos os arquivos neste diretório:",
+		"didViewRecursive": "Kilo SSY visualizou recursivamente todos os arquivos neste diretório:",
+		"wantsToViewDefinitions": "Kilo SSY quer visualizar nomes de definição de código-fonte usados neste diretório:",
+		"didViewDefinitions": "Kilo SSY visualizou nomes de definição de código-fonte usados neste diretório:",
+		"wantsToSearch": "Kilo SSY quer pesquisar neste diretório por <code>{{regex}}</code>:",
+		"didSearch": "Kilo SSY pesquisou neste diretório por <code>{{regex}}</code>:"
 	},
 	"commandOutput": "Saída do comando",
 	"response": "Resposta",
 	"arguments": "Argumentos",
 	"mcp": {
-		"wantsToUseTool": "Kilo Code quer usar uma ferramenta no servidor MCP {{serverName}}:",
-		"wantsToAccessResource": "Kilo Code quer acessar um recurso no servidor MCP {{serverName}}:"
+		"wantsToUseTool": "Kilo SSY quer usar uma ferramenta no servidor MCP {{serverName}}:",
+		"wantsToAccessResource": "Kilo SSY quer acessar um recurso no servidor MCP {{serverName}}:"
 	},
 	"modes": {
-		"wantsToSwitch": "Kilo Code quer mudar para o modo <code>{{mode}}</code>",
-		"wantsToSwitchWithReason": "Kilo Code quer mudar para o modo <code>{{mode}}</code> porque: {{reason}}",
-		"didSwitch": "Kilo Code mudou para o modo <code>{{mode}}</code>",
-		"didSwitchWithReason": "Kilo Code mudou para o modo <code>{{mode}}</code> porque: {{reason}}"
+		"wantsToSwitch": "Kilo SSY quer mudar para o modo <code>{{mode}}</code>",
+		"wantsToSwitchWithReason": "Kilo SSY quer mudar para o modo <code>{{mode}}</code> porque: {{reason}}",
+		"didSwitch": "Kilo SSY mudou para o modo <code>{{mode}}</code>",
+		"didSwitchWithReason": "Kilo SSY mudou para o modo <code>{{mode}}</code> porque: {{reason}}"
 	},
 	"subtasks": {
-		"wantsToCreate": "Kilo Code quer criar uma nova subtarefa no modo <code>{{mode}}</code>:",
-		"wantsToFinish": "Kilo Code quer finalizar esta subtarefa",
+		"wantsToCreate": "Kilo SSY quer criar uma nova subtarefa no modo <code>{{mode}}</code>:",
+		"wantsToFinish": "Kilo SSY quer finalizar esta subtarefa",
 		"newTaskContent": "Instruções da subtarefa",
 		"completionContent": "Subtarefa concluída",
 		"resultContent": "Resultados da subtarefa",
@@ -186,7 +186,7 @@
 		"completionInstructions": "Subtarefa concluída! Você pode revisar os resultados e sugerir correções ou próximos passos. Se tudo parecer bom, confirme para retornar o resultado à tarefa principal."
 	},
 	"questions": {
-		"hasQuestion": "Kilo Code tem uma pergunta:"
+		"hasQuestion": "Kilo SSY tem uma pergunta:"
 	},
 	"taskCompleted": "Tarefa concluída",
 	"powershell": {
@@ -195,7 +195,7 @@
 	"autoApprove": {
 		"title": "Aprovação automática:",
 		"none": "Nenhuma",
-		"description": "A aprovação automática permite que o Kilo Code execute ações sem pedir permissão. Ative apenas para ações nas quais você confia totalmente. Configuração mais detalhada disponível nas <settingsLink>Configurações</settingsLink>."
+		"description": "A aprovação automática permite que o Kilo SSY execute ações sem pedir permissão. Ative apenas para ações nas quais você confia totalmente. Configuração mais detalhada disponível nas <settingsLink>Configurações</settingsLink>."
 	},
 	"reasoning": {
 		"thinking": "Pensando",
@@ -215,7 +215,7 @@
 		"detailsDiscussLinks": "Obtenha mais detalhes e participe da discussão no <discordLink>Discord</discordLink> e <redditLink>Reddit</redditLink> 🚀"
 	},
 	"browser": {
-		"rooWantsToUse": "Kilo Code quer usar o navegador:",
+		"rooWantsToUse": "Kilo SSY quer usar o navegador:",
 		"consoleLogs": "Logs do console",
 		"noNewLogs": "(Sem novos logs)",
 		"screenshot": "Captura de tela do navegador",
@@ -248,7 +248,7 @@
 	"systemPromptWarning": "AVISO: Substituição personalizada de instrução do sistema ativa. Isso pode comprometer gravemente a funcionalidade e causar comportamento imprevisível.",
 	"shellIntegration": {
 		"title": "Aviso de execução de comando",
-		"description": "Seu comando está sendo executado sem a integração de shell do terminal VSCode. Para suprimir este aviso, você pode desativar a integração de shell na seção <strong>Terminal</strong> das <settingsLink>configurações do Kilo Code</settingsLink> ou solucionar problemas de integração do terminal VSCode usando o link abaixo.",
+		"description": "Seu comando está sendo executado sem a integração de shell do terminal VSCode. Para suprimir este aviso, você pode desativar a integração de shell na seção <strong>Terminal</strong> das <settingsLink>configurações do Kilo SSY</settingsLink> ou solucionar problemas de integração do terminal VSCode usando o link abaixo.",
 		"troubleshooting": "Clique aqui para a documentação de integração de shell."
 	}
 }

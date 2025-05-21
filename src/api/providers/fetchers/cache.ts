@@ -13,6 +13,7 @@ import { getRequestyModels } from "./requesty"
 import { getGlamaModels } from "./glama"
 import { getUnboundModels } from "./unbound"
 import { getLiteLLMModels } from "./litellm"
+import { getShengSuanYunModels } from "./shengsuanyun"
 
 const memoryCache = new NodeCache({ stdTTL: 5 * 60, checkperiod: 5 * 60 })
 
@@ -83,6 +84,9 @@ export const getModels = async (
 			}
 
 			models = await getOpenRouterModels(options)
+			break
+		case "shengsuanyun":
+			models = await getShengSuanYunModels()
 			break
 	}
 

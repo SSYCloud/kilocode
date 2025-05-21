@@ -25,6 +25,7 @@ export const providerNames = [
 	"fake-ai",
 	"xai",
 	"kilocode", // kilocode change
+	"shengsuanyun",
 ] as const
 
 export const providerNamesSchema = z.enum(providerNames)
@@ -484,6 +485,11 @@ const kilocodeSchema = z.object({
 })
 // kilocode_change end
 
+const shengSuanYunSchema = z.object({
+	shengSuanYunApiKey: z.string().optional(),
+	shengSuanYunModelId: z.string().optional(),
+})
+
 const defaultSchema = z.object({
 	apiProvider: z.undefined(),
 })
@@ -599,6 +605,11 @@ export const providerSettingsSchemaDiscriminated = z
 		kilocodeSchema.merge(
 			z.object({
 				apiProvider: z.literal("kilocode"),
+			}),
+		),
+		shengSuanYunSchema.merge(
+			z.object({
+				apiProvider: z.literal("shengsuanyun"),
 			}),
 		),
 		// kilocode_change end
@@ -736,6 +747,10 @@ const providerSettingsRecord: ProviderSettingsRecord = {
 	kilocodeToken: undefined,
 	kilocodeModel: undefined,
 	// kilocode_change end
+
+	// ShengSuanYun
+	shengSuanYunApiKey: undefined,
+	shengSuanYunModelId: undefined,
 }
 
 export const PROVIDER_SETTINGS_KEYS = Object.keys(providerSettingsRecord) as Keys<ProviderSettings>[]
@@ -931,6 +946,7 @@ export type SecretState = Pick<
 	| "requestyApiKey"
 	| "xaiApiKey"
 	| "kilocodeToken" // kilocode_change
+	| "shengSuanYunApiKey"
 >
 
 type SecretStateRecord = Record<Keys<SecretState>, undefined>
@@ -951,6 +967,7 @@ const secretStateRecord: SecretStateRecord = {
 	requestyApiKey: undefined,
 	xaiApiKey: undefined,
 	kilocodeToken: undefined, // kilocode_change
+	shengSuanYunApiKey: undefined,
 }
 
 export const SECRET_STATE_KEYS = Object.keys(secretStateRecord) as Keys<SecretState>[]

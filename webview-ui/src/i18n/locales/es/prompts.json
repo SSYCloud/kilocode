@@ -7,7 +7,7 @@
 		"editModesConfig": "Editar configuración de modos",
 		"editGlobalModes": "Editar modos globales",
 		"editProjectModes": "Editar modos del proyecto (.kilocodemodes)",
-		"createModeHelpText": "¡Haz clic en + para crear un nuevo modo personalizado, o simplemente pídele a Kilo Code en el chat que te cree uno!",
+		"createModeHelpText": "¡Haz clic en + para crear un nuevo modo personalizado, o simplemente pídele a Kilo SSY en el chat que te cree uno!",
 		"selectMode": "Buscar modos"
 	},
 	"apiConfiguration": {
@@ -32,7 +32,7 @@
 	"roleDefinition": {
 		"title": "Definición de rol",
 		"resetToDefault": "Restablecer a valores predeterminados",
-		"description": "Define la experiencia y personalidad de Kilo Code para este modo. Esta descripción determina cómo Kilo Code se presenta y aborda las tareas."
+		"description": "Define la experiencia y personalidad de Kilo SSY para este modo. Esta descripción determina cómo Kilo SSY se presenta y aborda las tareas."
 	},
 	"customInstructions": {
 		"title": "Instrucciones personalizadas para el modo (opcional)",
@@ -42,7 +42,7 @@
 	},
 	"globalCustomInstructions": {
 		"title": "Instrucciones personalizadas para todos los modos",
-		"description": "Estas instrucciones se aplican a todos los modos. Proporcionan un conjunto base de comportamientos que pueden ser mejorados por instrucciones específicas de cada modo.\nSi quieres que Kilo Code piense y hable en un idioma diferente al idioma de visualización de tu editor ({{language}}), puedes especificarlo aquí.",
+		"description": "Estas instrucciones se aplican a todos los modos. Proporcionan un conjunto base de comportamientos que pueden ser mejorados por instrucciones específicas de cada modo.\nSi quieres que Kilo SSY piense y hable en un idioma diferente al idioma de visualización de tu editor ({{language}}), puedes especificarlo aquí.",
 		"loadFromFile": "Las instrucciones también se pueden cargar desde la carpeta <span>.kilocode/rules/</span> en tu espacio de trabajo (.kilocoderules está obsoleto y dejará de funcionar pronto)."
 	},
 	"systemPrompt": {
@@ -64,7 +64,7 @@
 		"types": {
 			"ENHANCE": {
 				"label": "Mejorar solicitud",
-				"description": "Utiliza la mejora de solicitudes para obtener sugerencias o mejoras personalizadas para tus entradas. Esto asegura que Kilo Code entienda tu intención y proporcione las mejores respuestas posibles. Disponible a través del icono ✨ en el chat."
+				"description": "Utiliza la mejora de solicitudes para obtener sugerencias o mejoras personalizadas para tus entradas. Esto asegura que Kilo SSY entienda tu intención y proporcione las mejores respuestas posibles. Disponible a través del icono ✨ en el chat."
 			},
 			"EXPLAIN": {
 				"label": "Explicar código",
@@ -129,7 +129,7 @@
 		},
 		"roleDefinition": {
 			"label": "Definición de rol",
-			"description": "Define la experiencia y personalidad de Kilo Code para este modo."
+			"description": "Define la experiencia y personalidad de Kilo SSY para este modo."
 		},
 		"tools": {
 			"label": "Herramientas disponibles",

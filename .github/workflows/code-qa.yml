@@ -1,4 +1,4 @@
-name: Code QA Kilo Code
+name: Code QA Kilo SSY
 
 on:
   workflow_dispatch:

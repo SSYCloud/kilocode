@@ -1,10 +1,10 @@
 {
 	"input": {
-		"task_prompt": "Què vols que faci Kilo Code?",
+		"task_prompt": "Què vols que faci Kilo SSY?",
 		"task_placeholder": "Assistent de codificació de IA de codi obert per planificar, crear i corregir codi."
 	},
 	"extension": {
-		"name": "Kilo Code",
+		"name": "Kilo SSY",
 		"description": "Tot un equip de desenvolupadors d'IA al teu editor."
 	},
 	"number_format": {

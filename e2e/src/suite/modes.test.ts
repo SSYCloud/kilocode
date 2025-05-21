@@ -4,7 +4,7 @@ import type { ClineMessage } from "../../../src/exports/roo-code"
 
 import { waitUntilCompleted } from "./utils"
 
-suite("Kilo Code Modes", () => {
+suite("Kilo SSY Modes", () => {
 	test("Should handle switching modes correctly", async () => {
 		const api = globalThis.api
 

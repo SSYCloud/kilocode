@@ -1,13 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Что может сделать для вас Kilo Code?",
+		"greeting": "Что может сделать для вас Kilo SSY?",
 		"introText": "Я обучен на самых быстрых доступных моделях ИИ и готов генерировать код для вас на сверхскоростях!",
-		"ctaButton": "Попробуйте Kilo Code бесплатно",
+		"ctaButton": "Зарегистрировать API ключ ShengSuanYun",
 		"manualModeButton": "Использовать свой API-ключ"
 	},
 	"lowCreditWarning": {
 		"addCredit": "Добавить кредит",
-		"lowBalance": "Ваш баланс Kilo Code низкий"
+		"lowBalance": "Ваш баланс Kilo SSY низкий"
 	},
 	"notifications": {
 		"toolRequest": "Запрос инструмента ожидает утверждения",

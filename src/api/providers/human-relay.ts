@@ -116,12 +116,12 @@ async function showHumanRelayDialog(promptText: string): Promise<string | undefi
 
 		// Register a global callback function
 		vscode.commands.executeCommand(
-			"kilo-code.registerHumanRelayCallback",
+			"kilo-ssy.registerHumanRelayCallback",
 			requestId,
 			(response: string | undefined) => resolve(response),
 		)
 
 		// Open the dialog box directly using the current panel
-		vscode.commands.executeCommand("kilo-code.showHumanRelayDialog", { requestId, promptText })
+		vscode.commands.executeCommand("kilo-ssy.showHumanRelayDialog", { requestId, promptText })
 	})
 }

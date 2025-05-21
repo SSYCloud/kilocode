@@ -47,7 +47,7 @@ export class API extends EventEmitter<RooCodeEvents> implements RooCodeAPI {
 				console.log(args)
 			}
 
-			this.logfile = path.join(getWorkspacePath(), "kilo-code-messages.log")
+			this.logfile = path.join(getWorkspacePath(), "kilo-ssy-messages.log")
 		} else {
 			this.log = () => {}
 		}
@@ -109,7 +109,7 @@ export class API extends EventEmitter<RooCodeEvents> implements RooCodeAPI {
 			provider = await openClineInNewTab({ context: this.context, outputChannel: this.outputChannel })
 			this.registerListeners(provider)
 		} else {
-			await vscode.commands.executeCommand("kilo-code.SidebarProvider.focus")
+			await vscode.commands.executeCommand("kilo-ssy.SidebarProvider.focus")
 
 			provider = this.sidebarProvider
 		}
@@ -119,7 +119,7 @@ export class API extends EventEmitter<RooCodeEvents> implements RooCodeAPI {
 
 			if (configuration.allowedCommands) {
 				await vscode.workspace
-					.getConfiguration("kilo-code")
+					.getConfiguration("kilo-ssy")
 					.update("allowedCommands", configuration.allowedCommands, vscode.ConfigurationTarget.Global)
 			}
 		}

@@ -8,7 +8,7 @@ import { ButtonPrimary } from "../common/ButtonPrimary"
 import { ButtonSecondary } from "../common/ButtonSecondary"
 import { ButtonLink } from "../common/ButtonLink"
 import ApiOptions from "../../settings/ApiOptions"
-import { getKiloCodeBackendAuthUrl } from "../helpers"
+import { getShengSuanYunAuthUrl } from "../helpers"
 
 const WelcomeView = () => {
 	const { apiConfiguration, currentApiConfigName, setApiConfiguration, uriScheme } = useExtensionState()
@@ -44,8 +44,8 @@ const WelcomeView = () => {
 							setErrorMessage={setErrorMessage}
 							hideKiloCodeButton
 						/>
-						{!apiConfiguration?.apiProvider || apiConfiguration?.apiProvider === "kilocode" ? (
-							<ButtonLink href={getKiloCodeBackendAuthUrl(uriScheme)}>
+						{!apiConfiguration?.apiProvider || apiConfiguration?.apiProvider === "shengsuanyun" ? (
+							<ButtonLink href={getShengSuanYunAuthUrl(uriScheme)}>
 								{t("kilocode:welcome.ctaButton")}
 							</ButtonLink>
 						) : (
@@ -55,7 +55,7 @@ const WelcomeView = () => {
 				) : (
 					<div className="bg-vscode-sideBar-background">
 						<div className="flex flex-col gap-5">
-							<ButtonLink href={getKiloCodeBackendAuthUrl(uriScheme)}>
+							<ButtonLink href={getShengSuanYunAuthUrl(uriScheme)}>
 								{t("kilocode:welcome.ctaButton")}
 							</ButtonLink>
 							<ButtonSecondary onClick={() => setManualConfig(true)}>

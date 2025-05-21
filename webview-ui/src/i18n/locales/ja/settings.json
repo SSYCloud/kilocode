@@ -133,6 +133,8 @@
 		"getChutesApiKey": "Chutes APIキーを取得",
 		"deepSeekApiKey": "DeepSeek APIキー",
 		"getDeepSeekApiKey": "DeepSeek APIキーを取得",
+		"shengSuanYunApiKey": "勝算雲 APIキー",
+		"getShengSuanyunApiKey": "勝算雲 APIキーを取得",
 		"geminiApiKey": "Gemini APIキー",
 		"getGroqApiKey": "Groq APIキーを取得",
 		"groqApiKey": "Groq APIキー",
@@ -462,7 +464,7 @@
 	},
 	"footer": {
 		"feedback": "質問やフィードバックがある場合は、<githubLink>github.com/Kilo-Org/kilocode</githubLink>で問題を開くか、<redditLink>reddit.com/r/kilocode</redditLink>や<discordLink>kilocode.ai/discord</discordLink>に参加してください",
-		"version": "Kilo Code v{{version}}",
+		"version": "Kilo SSY v{{version}}",
 		"telemetry": {
 			"label": "匿名のエラーと使用状況レポートを許可",
 			"description": "匿名の使用データとエラーレポートを送信してKilo Codeの改善にご協力ください。コード、プロンプト、個人情報が送信されることはありません。詳細については、プライバシーポリシーをご覧ください。"

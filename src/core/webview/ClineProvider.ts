@@ -12,7 +12,12 @@ import * as vscode from "vscode"
 import type { GlobalState, ProviderName, ProviderSettings, RooCodeSettings, ProviderSettingsEntry } from "../../schemas"
 import { t } from "../../i18n"
 import { setPanel } from "../../activate/registerCommands"
-import { requestyDefaultModelId, openRouterDefaultModelId, glamaDefaultModelId } from "../../shared/api"
+import {
+	requestyDefaultModelId,
+	openRouterDefaultModelId,
+	glamaDefaultModelId,
+	shengSuanYunDefaultModelId,
+} from "../../shared/api"
 import { findLast } from "../../shared/array"
 import { supportPrompt } from "../../shared/support-prompt"
 import { GlobalFileNames } from "../../shared/globalFileNames"
@@ -57,8 +62,8 @@ export type ClineProviderEvents = {
 }
 
 export class ClineProvider extends EventEmitter<ClineProviderEvents> implements vscode.WebviewViewProvider {
-	public static readonly sideBarId = "kilo-code.SidebarProvider" // used in package.json as the view's id. This value cannot be changed due to how vscode caches views based on their id, and updating the id would break existing instances of the extension.
-	public static readonly tabPanelId = "kilo-code.TabPanelProvider"
+	public static readonly sideBarId = "kilo-ssy.SidebarProvider" // used in package.json as the view's id. This value cannot be changed due to how vscode caches views based on their id, and updating the id would break existing instances of the extension.
+	public static readonly tabPanelId = "kilo-ssy.TabPanelProvider"
 	private static activeInstances: Set<ClineProvider> = new Set()
 	private disposables: vscode.Disposable[] = []
 	private view?: vscode.WebviewView | vscode.WebviewPanel
@@ -224,7 +229,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 
 		// If no visible provider, try to show the sidebar view
 		if (!visibleProvider) {
-			await vscode.commands.executeCommand("kilo-code.SidebarProvider.focus")
+			await vscode.commands.executeCommand("kilo-ssy.SidebarProvider.focus")
 			// Wait briefly for the view to become visible
 			await delay(100)
 			visibleProvider = ClineProvider.getVisibleInstance()
@@ -627,7 +632,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 						window.IMAGES_BASE_URI = "${imagesUri}"
 						window.MATERIAL_ICONS_BASE_URI = "${materialIconsUri}"
 					</script>
-					<title>Kilo Code</title>
+					<title>Kilo SSY</title>
 				</head>
 				<body>
 					<div id="root"></div>
@@ -715,14 +720,14 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
             <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
             <meta name="theme-color" content="#000000">
 			<!-- kilocode_change: add https://*.googleapis.com to img-src -->
-            <meta http-equiv="Content-Security-Policy" content="default-src 'none'; font-src ${webview.cspSource}; style-src ${webview.cspSource} 'unsafe-inline'; img-src ${webview.cspSource} data: https://*.googleapis.com;; script-src ${webview.cspSource} 'wasm-unsafe-eval' 'nonce-${nonce}' https://us-assets.i.posthog.com 'strict-dynamic'; connect-src https://openrouter.ai https://api.requesty.ai https://us.i.posthog.com https://us-assets.i.posthog.com;">
+            <meta http-equiv="Content-Security-Policy" content="default-src 'none'; font-src ${webview.cspSource}; style-src ${webview.cspSource} 'unsafe-inline'; img-src ${webview.cspSource} data: https://*.googleapis.com;; script-src ${webview.cspSource} 'wasm-unsafe-eval' 'nonce-${nonce}' https://us-assets.i.posthog.com 'strict-dynamic'; connect-src https://*.shengsuanyun.com https://openrouter.ai https://api.requesty.ai https://us.i.posthog.com https://us-assets.i.posthog.com;">
             <link rel="stylesheet" type="text/css" href="${stylesUri}">
 			<link href="${codiconsUri}" rel="stylesheet" />
 			<script nonce="${nonce}">
 				window.IMAGES_BASE_URI = "${imagesUri}"
 				window.MATERIAL_ICONS_BASE_URI = "${materialIconsUri}"
 			</script>
-            <title>Kilo Code</title>
+            <title>Kilo SSY</title>
           </head>
           <body>
             <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -969,14 +974,14 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		// Get platform-specific application data directory
 		let mcpServersDir: string
 		if (process.platform === "win32") {
-			// Windows: %APPDATA%\Kilo-Code\MCP
-			mcpServersDir = path.join(os.homedir(), "AppData", "Roaming", "Kilo-Code", "MCP")
+			// Windows: %APPDATA%\kilo-ssy\MCP
+			mcpServersDir = path.join(os.homedir(), "AppData", "Roaming", "kilo-ssy", "MCP")
 		} else if (process.platform === "darwin") {
-			// macOS: ~/Documents/Kilo-Code/MCP
-			mcpServersDir = path.join(os.homedir(), "Documents", "Kilo-Code", "MCP")
+			// macOS: ~/Documents/kilo-ssy/MCP
+			mcpServersDir = path.join(os.homedir(), "Documents", "kilo-ssy", "MCP")
 		} else {
-			// Linux: ~/.local/share/Kilo-Code/MCP
-			mcpServersDir = path.join(os.homedir(), ".local", "share", "Kilo-Code", "MCP")
+			// Linux: ~/.local/share/kilo-ssy/MCP
+			mcpServersDir = path.join(os.homedir(), ".local", "share", "kilo-ssy", "MCP")
 		}
 
 		try {
@@ -1072,6 +1077,33 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		await this.upsertProviderProfile(currentApiConfigName, newConfiguration)
 	}
 
+	// ShengSuanYun
+
+	async handleShengSuanYunCallback(code: string) {
+		let { apiConfiguration, currentApiConfigName } = await this.getState()
+		try {
+			const res = await axios.post("https://api.shengsuanyun.com/auth/keys", {
+				code: code,
+				callback_url: "vscode://shengsuan-cloud.kilo-ssy/ssy",
+			})
+			if (res.data && res.data.data && res.data.data.api_key) {
+				const newConfiguration: ProviderSettings = {
+					...apiConfiguration,
+					apiProvider: "shengsuanyun",
+					shengSuanYunApiKey: res.data.data.api_key,
+					shengSuanYunXToken: res.data.data.jwt_token,
+					shengSuanYunModelId: apiConfiguration?.shengSuanYunModelId || shengSuanYunDefaultModelId,
+				}
+				await this.upsertProviderProfile(currentApiConfigName, newConfiguration)
+			} else {
+				throw new Error("Invalid response from Shengsuanyun API", { cause: res })
+			}
+		} catch (error) {
+			console.error("Error exchanging code for API key:", error)
+			throw error
+		}
+	}
+
 	// kilocode_change:
 	async handleKiloCodeCallback(token: string) {
 		const kilocode: ProviderName = "kilocode"
@@ -1083,7 +1115,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			kilocodeToken: token,
 		})
 
-		vscode.window.showInformationMessage("Kilo Code successfully configured!")
+		vscode.window.showInformationMessage("Kilo SSY successfully configured!")
 
 		if (this.getCurrentCline()) {
 			this.getCurrentCline()!.api = buildApiHandler({
@@ -1277,7 +1309,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		} = await this.getState()
 
 		const machineId = vscode.env.machineId
-		const allowedCommands = vscode.workspace.getConfiguration("kilo-code").get<string[]>("allowedCommands") || []
+		const allowedCommands = vscode.workspace.getConfiguration("kilo-ssy").get<string[]>("allowedCommands") || []
 		const cwd = this.cwd
 
 		// Check if there's a system prompt override for the current mode
@@ -1374,7 +1406,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		const customModes = await this.customModesManager.getCustomModes()
 
 		// Determine apiProvider with the same logic as before.
-		const apiProvider: ProviderName = stateValues.apiProvider ? stateValues.apiProvider : "kilocode" // kilocode_change: fall back to kilocode
+		const apiProvider: ProviderName = stateValues.apiProvider ? stateValues.apiProvider : "shengsuanyun"
 
 		// Build the apiConfiguration object combining state values and secrets.
 		const providerSettings = this.contextProxy.getProviderSettings()

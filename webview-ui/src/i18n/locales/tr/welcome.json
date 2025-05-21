@@ -1,22 +1,21 @@
 {
-	"greeting": "Merhaba, ben Kilo Code!",
-	"introduction": "<strong>Kilo Code, önde gelen otonom kodlama aracıdır.</strong> Daha önce hiç görmediğin şekilde mimari tasarım yapmaya, kod yazmaya, hata ayıklamaya ve üretkenliğini artırmaya hazırlan. Devam etmek için Kilo Code'un bir API anahtarına ihtiyacı var.",
+	"greeting": "Merhaba, ben Kilo SSY!",
+	"introduction": "<strong>Kilo SSY, önde gelen otonom kodlama aracıdır.</strong> Daha önce hiç görmediğin şekilde mimari tasarım yapmaya, kod yazmaya, hata ayıklamaya ve üretkenliğini artırmaya hazırlan. Devam etmek için Kilo SSY'un bir API anahtarına ihtiyacı var.",
 	"notice": "Başlamak için bu eklentinin bir API sağlayıcısına ihtiyacı var.",
 	"start": "Hadi başlayalım!",
 	"chooseProvider": "Başlamak için bir API sağlayıcısı seç:",
 	"routers": {
-		"requesty": {
-			"description": "Optimize edilmiş LLM yönlendiricin",
-			"incentive": "$1 ücretsiz kredi"
+		"kilo": {
+			"description": "Optimize edilmiş LLM yönlendiricin"
 		},
-		"openrouter": {
+		"shengsuan": {
 			"description": "LLM'ler için birleşik bir arayüz"
 		}
 	},
 	"startRouter": "Yönlendirici Üzerinden Hızlı Kurulum",
 	"startCustom": "Kendi API Anahtarını Kullan",
 	"telemetry": {
-		"title": "Kilo Code'u Geliştirmeye Yardım Et",
+		"title": "Kilo SSY'u Geliştirmeye Yardım Et",
 		"anonymousTelemetry": "Hataları düzeltmemize ve eklentiyi geliştirmemize yardımcı olmak için anonim hata ve kullanım verileri gönder. Hiçbir zaman kod, metin veya kişisel bilgi gönderilmez.",
 		"changeSettings": "Bunu her zaman <settingsLink>ayarlar</settingsLink>ın altından değiştirebilirsin",
 		"settings": "ayarlar",

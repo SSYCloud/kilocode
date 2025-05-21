@@ -7,15 +7,13 @@ import ApiOptions from "../settings/ApiOptions"
 import { Tab, TabContent } from "../common/Tab"
 import { Trans } from "react-i18next"
 import { useAppTranslation } from "@src/i18n/TranslationContext"
-import { getRequestyAuthUrl, getOpenRouterAuthUrl } from "@src/oauth/urls"
+import { getShengSuanYunAuthUrl } from "@src/oauth/urls"
 import RooHero from "./RooHero"
-import knuthShuffle from "knuth-shuffle-seeded"
 
 const WelcomeView = () => {
-	const { apiConfiguration, currentApiConfigName, setApiConfiguration, uriScheme, machineId } = useExtensionState()
+	const { apiConfiguration, currentApiConfigName, setApiConfiguration, uriScheme } = useExtensionState()
 	const { t } = useAppTranslation()
 	const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined)
-
 	const handleSubmit = useCallback(() => {
 		const error = apiConfiguration ? validateApiConfiguration(apiConfiguration) : undefined
 
@@ -23,7 +21,6 @@ const WelcomeView = () => {
 			setErrorMessage(error)
 			return
 		}
-
 		setErrorMessage(undefined)
 		vscode.postMessage({ type: "upsertApiConfiguration", text: currentApiConfigName, apiConfiguration })
 	}, [apiConfiguration, currentApiConfigName])
@@ -46,33 +43,19 @@ const WelcomeView = () => {
 
 				<div className="mb-4">
 					<h4 className="mt-3 mb-2 text-center">{t("welcome:startRouter")}</h4>
-
-					<div className="hidden flex gap-4">
-						{/* Define the providers */}
+					<div className="flex gap-4">
 						{(() => {
-							// Provider card configuration
 							const providers = [
 								{
-									slug: "requesty",
-									name: "Requesty",
-									description: t("welcome:routers.requesty.description"),
-									incentive: t("welcome:routers.requesty.incentive"),
-									authUrl: getRequestyAuthUrl(uriScheme),
-								},
-								{
-									slug: "openrouter",
-									name: "OpenRouter",
-									description: t("welcome:routers.openrouter.description"),
-									authUrl: getOpenRouterAuthUrl(uriScheme),
+									slug: "panel_light",
+									name: "胜算云",
+									description: t("welcome:routers.shengsuanyun.description"),
+									authUrl: getShengSuanYunAuthUrl(uriScheme),
 								},
 							]
 
-							// Shuffle providers based on machine ID (will be consistent for the same machine)
-							const orderedProviders = [...providers]
-							knuthShuffle(orderedProviders, (machineId as any) || Date.now())
-
 							// Render the provider cards
-							return orderedProviders.map((provider, index) => (
+							return providers.map((provider, index) => (
 								<a
 									key={index}
 									href={provider.authUrl}
@@ -91,9 +74,6 @@ const WelcomeView = () => {
 										<div className="text-xs text-vscode-descriptionForeground">
 											{provider.description}
 										</div>
-										{provider.incentive && (
-											<div className="text-xs font-bold">{provider.incentive}</div>
-										)}
 									</div>
 								</a>
 							))

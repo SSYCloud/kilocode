@@ -1,5 +1,5 @@
 {
-	"greeting": "Wat kan Kilo Code voor u doen?",
+	"greeting": "Wat kan Kilo SSY voor u doen?",
 	"task": {
 		"title": "Taak",
 		"seeMore": "Meer zien",
@@ -133,47 +133,47 @@
 		"current": "Huidig"
 	},
 	"instructions": {
-		"wantsToFetch": "Kilo Code wil gedetailleerde instructies ophalen om te helpen bij de huidige taak"
+		"wantsToFetch": "Kilo SSY wil gedetailleerde instructies ophalen om te helpen bij de huidige taak"
 	},
 	"fileOperations": {
-		"wantsToRead": "Kilo Code wil dit bestand lezen:",
-		"wantsToReadOutsideWorkspace": "Kilo Code wil dit bestand buiten de werkruimte lezen:",
-		"didRead": "Kilo Code heeft dit bestand gelezen:",
-		"wantsToEdit": "Kilo Code wil dit bestand bewerken:",
-		"wantsToEditOutsideWorkspace": "Kilo Code wil dit bestand buiten de werkruimte bewerken:",
-		"wantsToCreate": "Kilo Code wil een nieuw bestand aanmaken:",
-		"wantsToSearchReplace": "Kilo Code wil zoeken en vervangen in dit bestand:",
-		"didSearchReplace": "Kilo Code heeft zoeken en vervangen uitgevoerd op dit bestand:",
-		"wantsToInsert": "Kilo Code wil inhoud invoegen in dit bestand:",
-		"wantsToInsertWithLineNumber": "Kilo Code wil inhoud invoegen in dit bestand op regel {{lineNumber}}:",
-		"wantsToInsertAtEnd": "Kilo Code wil inhoud toevoegen aan het einde van dit bestand:"
+		"wantsToRead": "Kilo SSY wil dit bestand lezen:",
+		"wantsToReadOutsideWorkspace": "Kilo SSY wil dit bestand buiten de werkruimte lezen:",
+		"didRead": "Kilo SSY heeft dit bestand gelezen:",
+		"wantsToEdit": "Kilo SSY wil dit bestand bewerken:",
+		"wantsToEditOutsideWorkspace": "Kilo SSY wil dit bestand buiten de werkruimte bewerken:",
+		"wantsToCreate": "Kilo SSY wil een nieuw bestand aanmaken:",
+		"wantsToSearchReplace": "Kilo SSY wil zoeken en vervangen in dit bestand:",
+		"didSearchReplace": "Kilo SSY heeft zoeken en vervangen uitgevoerd op dit bestand:",
+		"wantsToInsert": "Kilo SSY wil inhoud invoegen in dit bestand:",
+		"wantsToInsertWithLineNumber": "Kilo SSY wil inhoud invoegen in dit bestand op regel {{lineNumber}}:",
+		"wantsToInsertAtEnd": "Kilo SSY wil inhoud toevoegen aan het einde van dit bestand:"
 	},
 	"directoryOperations": {
-		"wantsToViewTopLevel": "Kilo Code wil de bestanden op het hoogste niveau in deze map bekijken:",
-		"didViewTopLevel": "Kilo Code heeft de bestanden op het hoogste niveau in deze map bekeken:",
-		"wantsToViewRecursive": "Kilo Code wil recursief alle bestanden in deze map bekijken:",
-		"didViewRecursive": "Kilo Code heeft recursief alle bestanden in deze map bekeken:",
-		"wantsToViewDefinitions": "Kilo Code wil broncode definitienamen bekijken die in deze map worden gebruikt:",
-		"didViewDefinitions": "Kilo Code heeft broncode definitienamen bekeken die in deze map worden gebruikt:",
-		"wantsToSearch": "Kilo Code wil deze map doorzoeken op <code>{{regex}}</code>:",
-		"didSearch": "Kilo Code heeft deze map doorzocht op <code>{{regex}}</code>:"
+		"wantsToViewTopLevel": "Kilo SSY wil de bestanden op het hoogste niveau in deze map bekijken:",
+		"didViewTopLevel": "Kilo SSY heeft de bestanden op het hoogste niveau in deze map bekeken:",
+		"wantsToViewRecursive": "Kilo SSY wil recursief alle bestanden in deze map bekijken:",
+		"didViewRecursive": "Kilo SSY heeft recursief alle bestanden in deze map bekeken:",
+		"wantsToViewDefinitions": "Kilo SSY wil broncode definitienamen bekijken die in deze map worden gebruikt:",
+		"didViewDefinitions": "Kilo SSY heeft broncode definitienamen bekeken die in deze map worden gebruikt:",
+		"wantsToSearch": "Kilo SSY wil deze map doorzoeken op <code>{{regex}}</code>:",
+		"didSearch": "Kilo SSY heeft deze map doorzocht op <code>{{regex}}</code>:"
 	},
 	"commandOutput": "Commando Uitvoer",
 	"response": "Antwoord",
 	"arguments": "Argumenten",
 	"mcp": {
-		"wantsToUseTool": "Kilo Code wil een tool gebruiken op de {{serverName}} MCP server:",
-		"wantsToAccessResource": "Kilo Code wil toegang krijgen tot een bron op de {{serverName}} MCP server:"
+		"wantsToUseTool": "Kilo SSY wil een tool gebruiken op de {{serverName}} MCP server:",
+		"wantsToAccessResource": "Kilo SSY wil toegang krijgen tot een bron op de {{serverName}} MCP server:"
 	},
 	"modes": {
-		"wantsToSwitch": "Kilo Code wil overschakelen naar de {{mode}} modus",
-		"wantsToSwitchWithReason": "Kilo Code wil overschakelen naar de {{mode}} modus omdat: {{reason}}",
-		"didSwitch": "Kilo Code is overgeschakeld naar de {{mode}} modus",
-		"didSwitchWithReason": "Kilo Code is overgeschakeld naar de {{mode}} modus omdat: {{reason}}"
+		"wantsToSwitch": "Kilo SSY wil overschakelen naar de {{mode}} modus",
+		"wantsToSwitchWithReason": "Kilo SSY wil overschakelen naar de {{mode}} modus omdat: {{reason}}",
+		"didSwitch": "Kilo SSY is overgeschakeld naar de {{mode}} modus",
+		"didSwitchWithReason": "Kilo SSY is overgeschakeld naar de {{mode}} modus omdat: {{reason}}"
 	},
 	"subtasks": {
-		"wantsToCreate": "Kilo Code wil een nieuwe subtaak aanmaken in de {{mode}} modus:",
-		"wantsToFinish": "Kilo Code wil deze subtaak voltooien",
+		"wantsToCreate": "Kilo SSY wil een nieuwe subtaak aanmaken in de {{mode}} modus:",
+		"wantsToFinish": "Kilo SSY wil deze subtaak voltooien",
 		"newTaskContent": "Subtaak Instructies",
 		"completionContent": "Subtaak Voltooid",
 		"resultContent": "Subtaak Resultaten",
@@ -181,21 +181,21 @@
 		"completionInstructions": "Subtaak voltooid! U kunt de resultaten bekijken en eventuele correcties of volgende stappen voorstellen. Als alles er goed uitziet, bevestig dan om het resultaat terug te sturen naar de hoofdtaak."
 	},
 	"questions": {
-		"hasQuestion": "Kilo Code heeft een vraag:"
+		"hasQuestion": "Kilo SSY heeft een vraag:"
 	},
 	"taskCompleted": "Taak Voltooid",
 	"error": "Fout",
 	"diffError": {
 		"title": "Bewerking Mislukt"
 	},
-	"troubleMessage": "Kilo Code ondervindt problemen...",
+	"troubleMessage": "Kilo SSY ondervindt problemen...",
 	"powershell": {
 		"issues": "Het lijkt erop dat u problemen heeft met Windows PowerShell, zie alstublieft dit"
 	},
 	"autoApprove": {
 		"title": "Automatisch goedkeuren:",
 		"none": "Geen",
-		"description": "Automatisch goedkeuren stelt Kilo Code in staat acties uit te voeren zonder toestemming te vragen. Schakel dit alleen in voor acties die u volledig vertrouwt. Meer gedetailleerde configuratie beschikbaar in <settingsLink>Instellingen</settingsLink>."
+		"description": "Automatisch goedkeuren stelt Kilo SSY in staat acties uit te voeren zonder toestemming te vragen. Schakel dit alleen in voor acties die u volledig vertrouwt. Meer gedetailleerde configuratie beschikbaar in <settingsLink>Instellingen</settingsLink>."
 	},
 	"announcement": {
 		"title": "🎉 Roo Code 3.16 Uitgebracht",
@@ -215,7 +215,7 @@
 		"copyToInput": "Kopieer naar invoer (zelfde als shift + klik)"
 	},
 	"browser": {
-		"rooWantsToUse": "Kilo Code wil de browser gebruiken:",
+		"rooWantsToUse": "Kilo SSY wil de browser gebruiken:",
 		"consoleLogs": "Console Logs",
 		"noNewLogs": "(Geen nieuwe logs)",
 		"screenshot": "Browser screenshot",
@@ -248,7 +248,7 @@
 	"systemPromptWarning": "WAARSCHUWING: Aangepaste systeemprompt-override actief. Dit kan de functionaliteit ernstig verstoren en onvoorspelbaar gedrag veroorzaken.",
 	"shellIntegration": {
 		"title": "Waarschuwing Commando Uitvoering",
-		"description": "Uw commando wordt uitgevoerd zonder VSCode terminal shell-integratie. Om deze waarschuwing te onderdrukken, kunt u shell-integratie uitschakelen in de sectie <strong>Terminal</strong> van de <settingsLink>Kilo Code-instellingen</settingsLink> of problemen met VSCode terminal-integratie oplossen via de onderstaande link.",
+		"description": "Uw commando wordt uitgevoerd zonder VSCode terminal shell-integratie. Om deze waarschuwing te onderdrukken, kunt u shell-integratie uitschakelen in de sectie <strong>Terminal</strong> van de <settingsLink>Kilo SSY-instellingen</settingsLink> of problemen met VSCode terminal-integratie oplossen via de onderstaande link.",
 		"troubleshooting": "Klik hier voor documentatie over shell-integratie."
 	}
 }

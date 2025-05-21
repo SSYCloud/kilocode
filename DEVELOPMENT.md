@@ -1,6 +1,6 @@
-# Kilo Code Development Guide
+# Kilo SSY Development Guide
 
-Welcome to the Kilo Code development guide! This document will help you set up your development environment and understand how to work with the codebase. Whether you're fixing bugs, adding features, or just exploring the code, this guide will get you started.
+Welcome to the Kilo SSY development guide! This document will help you set up your development environment and understand how to work with the codebase. Whether you're fixing bugs, adding features, or just exploring the code, this guide will get you started.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ Before you begin, make sure you have the following installed:
 1. **Fork and Clone the Repository**:
 
     - **Fork the Repository**:
-        - Visit the [Kilo Code GitHub repository](https://github.com/Kilo-Org/kilocode)
+        - Visit the [Kilo SSY GitHub repository](https://github.com/Kilo-Org/kilocode)
         - Click the "Fork" button in the top-right corner to create your own copy.
     - **Clone Your Fork**:
         ```bash
@@ -63,7 +63,7 @@ The project is organized into several key directories:
 To run the extension in development mode:
 
 1. Press `F5` (or select **Run** → **Start Debugging**) in VSCode
-2. This will open a new VSCode window with Kilo Code loaded
+2. This will open a new VSCode window with Kilo SSY loaded
 
 ### Hot Reloading
 
@@ -100,14 +100,14 @@ This will:
 To install your built extension:
 
 ```bash
-code --install-extension "$(ls -1v bin/kilo-code-*.vsix | tail -n1)"
+code --install-extension "$(ls -1v bin/kilo-ssy-*.vsix | tail -n1)"
 ```
 
 Replace `[version]` with the current version number.
 
 ## Testing
 
-Kilo Code uses several types of tests to ensure quality:
+Kilo SSY uses several types of tests to ensure quality:
 
 ### Unit Tests
 
@@ -186,12 +186,12 @@ These hooks help maintain code quality and consistency. If you encounter issues 
 ### Debugging Tips
 
 - Use `console.log()` statements in your code for debugging
-- Check the Output panel in VSCode (View > Output) and select "Kilo Code" from the dropdown
+- Check the Output panel in VSCode (View > Output) and select "Kilo SSY" from the dropdown
 - For webview issues, use the browser developer tools in the webview (right-click > "Inspect Element")
 
 ## Contributing
 
-We welcome contributions to Kilo Code! Here's how you can help:
+We welcome contributions to Kilo SSY! Here's how you can help:
 
 1. **Report an issue** using [GitHub Issues](https://github.com/Kilo-Org/kilocode/issues)
 2. **Find an issue** and submit a Pull Request with your fix

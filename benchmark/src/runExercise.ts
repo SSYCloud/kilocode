@@ -28,7 +28,7 @@ export async function run() {
 	 * Activate the extension.
 	 */
 
-	const extension = vscode.extensions.getExtension<RooCodeAPI>("kilocode.Kilo-Code")
+	const extension = vscode.extensions.getExtension<RooCodeAPI>("shengsuan-cloud.kilo-ssy")
 
 	if (!extension) {
 		throw new Error("Extension not found.")
@@ -37,13 +37,13 @@ export async function run() {
 	const api = extension.isActive ? extension.exports : await extension.activate()
 
 	/**
-	 * Wait for the Kilo Code to be ready to accept tasks.
+	 * Wait for the Kilo SSY to be ready to accept tasks.
 	 */
 
 	await waitUntilReady({ api })
 
 	/**
-	 * Configure Kilo Code as needed.
+	 * Configure Kilo SSY as needed.
 	 *
 	 * Use Claude 3.7 Sonnet via OpenRouter.
 	 * Don't require approval for anything.
@@ -67,7 +67,7 @@ export async function run() {
 	})
 
 	await vscode.workspace
-		.getConfiguration("kilo-code")
+		.getConfiguration("kilo-ssy")
 		.update("allowedCommands", ["*"], vscode.ConfigurationTarget.Global)
 
 	await sleep(2_000)

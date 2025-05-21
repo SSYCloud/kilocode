@@ -5,26 +5,26 @@ import { EditorUtils } from "../integrations/editor/EditorUtils"
 export type CodeActionName = "EXPLAIN" | "FIX" | "IMPROVE" | "ADD_TO_CONTEXT" | "NEW_TASK"
 
 export type CodeActionId =
-	| "kilo-code.explainCode"
-	| "kilo-code.fixCode"
-	| "kilo-code.improveCode"
-	| "kilo-code.addToContext"
-	| "kilo-code.newTask"
+	| "kilo-ssy.explainCode"
+	| "kilo-ssy.fixCode"
+	| "kilo-ssy.improveCode"
+	| "kilo-ssy.addToContext"
+	| "kilo-ssy.newTask"
 
 export const ACTION_TITLES: Record<CodeActionName, string> = {
-	EXPLAIN: "Explain with Kilo Code",
-	FIX: "Fix with Kilo Code",
-	IMPROVE: "Improve with Kilo Code",
-	ADD_TO_CONTEXT: "Add to Kilo Code",
-	NEW_TASK: "New Kilo Code Task",
+	EXPLAIN: "Explain with Kilo SSY",
+	FIX: "Fix with Kilo SSY",
+	IMPROVE: "Improve with Kilo SSY",
+	ADD_TO_CONTEXT: "Add to Kilo SSY",
+	NEW_TASK: "New Kilo SSY Task",
 } as const
 
 export const COMMAND_IDS: Record<CodeActionName, CodeActionId> = {
-	EXPLAIN: "kilo-code.explainCode",
-	FIX: "kilo-code.fixCode",
-	IMPROVE: "kilo-code.improveCode",
-	ADD_TO_CONTEXT: "kilo-code.addToContext",
-	NEW_TASK: "kilo-code.newTask",
+	EXPLAIN: "kilo-ssy.explainCode",
+	FIX: "kilo-ssy.fixCode",
+	IMPROVE: "kilo-ssy.improveCode",
+	ADD_TO_CONTEXT: "kilo-ssy.addToContext",
+	NEW_TASK: "kilo-ssy.newTask",
 } as const
 
 export class CodeActionProvider implements vscode.CodeActionProvider {

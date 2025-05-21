@@ -7,7 +7,7 @@
 		"editModesConfig": "モード設定を編集",
 		"editGlobalModes": "グローバルモードを編集",
 		"editProjectModes": "プロジェクトモードを編集 (.kilocodemodes)",
-		"createModeHelpText": "+ をクリックして新しいカスタムモードを作成するか、チャットで Kilo Code に作成を依頼してください！",
+		"createModeHelpText": "+ をクリックして新しいカスタムモードを作成するか、チャットで Kilo SSY に作成を依頼してください！",
 		"selectMode": "モードを検索"
 	},
 	"apiConfiguration": {
