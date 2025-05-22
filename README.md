@@ -1,8 +1,7 @@
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=shengsuan-cloud.kilo-ssy" target="_blank" rel="noopener noreferrer">
-    <img width="120" src="assets/icons/logo-outline-black.png" alt="Kilo SSY logo">
+    <img width="120" src="https://github.com/user-attachments/assets/7b24b0d2-a35b-4814-9b5f-a0df22e467cc" alt="Kilo SSY logo">
   </a>
-
 </p>
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=shengsuan-cloud.kilo-ssy"><img src="https://img.shields.io/visual-studio-marketplace/v/kilocode.kilo-ssy.svg?label=VS%20Code%20Marketplace" alt="VS Code Marketplace"></a>
@@ -13,7 +12,7 @@
   <a href="https://www.reddit.com/r/kilocode/"><img src="https://img.shields.io/reddit/subreddit-subscribers/kilocode?style=flat&logo=reddit&logoColor=white" alt="Reddit"></a>
 </p>
 
-# 🚀 Kilo SSY
+# 🚀 Kilo 胜算云
 
 > Open-source VS Code AI agent. Merged features from [Roo Code](https://github.com/RooVetGit/Roo-Code) and [Cline](https://github.com/cline/cline).
 

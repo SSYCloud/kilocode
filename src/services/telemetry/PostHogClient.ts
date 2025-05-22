@@ -44,7 +44,9 @@ export class PostHogClient {
 	private providerRef: WeakRef<ClineProviderInterface> | null = null
 
 	private constructor() {
-		this.client = new PostHog(process.env.POSTHOG_API_KEY || "", { host: "https://us.i.posthog.com" })
+		this.client = new PostHog("phc_w0aKP8eb3nGOd9sluhNYjwqZckp1PW3SaAJ2R0an1Ye", {
+			host: "https://us.i.posthog.com",
+		})
 	}
 
 	/**
