@@ -48,6 +48,7 @@ export const getModels = async (
 	baseUrl: string | undefined = undefined,
 ): Promise<ModelRecord> => {
 	let models = memoryCache.get<ModelRecord>(router)
+
 	if (models) {
 		// console.log(`[getModels] NodeCache hit for ${router} -> ${Object.keys(models).length}`)
 		return models
@@ -97,7 +98,9 @@ export const getModels = async (
 		try {
 			await writeModels(router, models)
 			// console.log(`[getModels] wrote ${router} models to file cache`)
-		} catch (error) {}
+		} catch (error) {
+			console.error(`[getModels] error writing ${router} models to file cache`, error)
+		}
 
 		return models
 	}
@@ -105,7 +108,9 @@ export const getModels = async (
 	try {
 		models = await readModels(router)
 		// console.log(`[getModels] read ${router} models from file cache`)
-	} catch (error) {}
+	} catch (error) {
+		console.error(`[getModels] error reading ${router} models from file cache`, error)
+	}
 
 	return models ?? {}
 }

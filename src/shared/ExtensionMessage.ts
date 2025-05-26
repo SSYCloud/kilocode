@@ -16,6 +16,7 @@ import { McpServer } from "./mcp"
 import { McpMarketplaceCatalog, McpDownloadResponse } from "./kilocode/mcp"
 import { Mode } from "./modes"
 import { RouterModels } from "./api"
+import { ProfileDataResponsePayload, BalanceDataResponsePayload } from "./WebviewMessage"
 
 export type { ProviderSettingsEntry, ToolProgressStatus }
 
@@ -73,12 +74,15 @@ export interface ExtensionMessage {
 		| "setHistoryPreviewCollapsed"
 		| "commandExecutionStatus"
 		| "vsCodeSetting"
+		| "profileDataResponse" // kilocode_change
+		| "balanceDataResponse" // kilocode_change
 	text?: string
 	action?:
 		| "chatButtonClicked"
 		| "settingsButtonClicked"
 		| "historyButtonClicked"
 		| "promptsButtonClicked"
+		| "profileButtonClicked"
 		| "didBecomeVisible"
 		| "focusChatInput" // kilocode_change
 	invoke?: "newChat" | "sendMessage" | "primaryButtonClick" | "secondaryButtonClick" | "setChatBoxMessage"
@@ -118,6 +122,7 @@ export interface ExtensionMessage {
 	url?: string // kilocode_change
 	setting?: string
 	value?: any
+	payload?: ProfileDataResponsePayload | BalanceDataResponsePayload // New: Add payload for profile and balance data
 }
 
 export type ExtensionState = Pick<
@@ -180,12 +185,14 @@ export type ExtensionState = Pick<
 	| "customModePrompts"
 	| "customSupportPrompts"
 	| "enhancementApiConfigId"
+	| "workflowToggles" // kilocode_change
 > & {
 	version: string
 	clineMessages: ClineMessage[]
 	currentTaskItem?: HistoryItem
 	apiConfiguration?: ProviderSettings
 	uriScheme?: string
+	uiKind?: string // kilocode_change
 	shouldShowAnnouncement: boolean
 
 	taskHistory: HistoryItem[]

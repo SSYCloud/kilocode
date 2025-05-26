@@ -33,6 +33,11 @@ const vscode = {
 		fs: {
 			stat: jest.fn(),
 		},
+		workspaceState: {
+			get: jest.fn().mockResolvedValue(undefined),
+			update: jest.fn().mockResolvedValue(undefined),
+			keys: jest.fn().mockReturnValue([]),
+		},
 	},
 	Disposable: class {
 		dispose() {}

@@ -148,6 +148,19 @@ export class ContextProxy {
 		return Object.fromEntries(SECRET_STATE_KEYS.map((key) => [key, this.getSecret(key)]))
 	}
 
+	// kilocode_change start
+	/**
+	 * WorkspaceState
+	 */
+	async updateWorkspaceState(context: vscode.ExtensionContext, key: string, value: any) {
+		await context.workspaceState.update(key, value)
+	}
+
+	async getWorkspaceState(context: vscode.ExtensionContext, key: string) {
+		return await context.workspaceState.get(key)
+	}
+	// kilocode_change end
+
 	/**
 	 * GlobalSettings
 	 */

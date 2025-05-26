@@ -61,6 +61,7 @@ jest.mock("vscode", () => {
 	const mockTabGroup = { tabs: [mockTab] }
 
 	return {
+		TabInputTextDiff: jest.fn(),
 		CodeActionKind: {
 			QuickFix: { value: "quickfix" },
 			RefactorRewrite: { value: "refactor.rewrite" },
@@ -72,6 +73,7 @@ jest.mock("vscode", () => {
 			visibleTextEditors: [mockTextEditor],
 			tabGroups: {
 				all: [mockTabGroup],
+				close: jest.fn(),
 				onDidChangeTabs: jest.fn(() => ({ dispose: jest.fn() })),
 			},
 			showErrorMessage: jest.fn(),
@@ -273,13 +275,12 @@ describe("Cline", () => {
 			const cline = new Task({
 				provider: mockProvider,
 				apiConfiguration: mockApiConfig,
-				customInstructions: "custom instructions",
 				fuzzyMatchThreshold: 0.95,
 				task: "test task",
 				startTask: false,
+				context: mockExtensionContext,
 			})
 
-			expect(cline.customInstructions).toBe("custom instructions")
 			expect(cline.diffEnabled).toBe(false)
 		})
 
@@ -287,11 +288,11 @@ describe("Cline", () => {
 			const cline = new Task({
 				provider: mockProvider,
 				apiConfiguration: mockApiConfig,
-				customInstructions: "custom instructions",
 				enableDiff: true,
 				fuzzyMatchThreshold: 0.95,
 				task: "test task",
 				startTask: false,
+				context: mockExtensionContext,
 			})
 
 			expect(cline.diffEnabled).toBe(true)
@@ -302,7 +303,7 @@ describe("Cline", () => {
 
 		it("should require either task or historyItem", () => {
 			expect(() => {
-				new Task({ provider: mockProvider, apiConfiguration: mockApiConfig })
+				new Task({ provider: mockProvider, apiConfiguration: mockApiConfig, context: mockExtensionContext })
 			}).toThrow("Either historyItem or task/images must be provided")
 		})
 	})
@@ -315,6 +316,7 @@ describe("Cline", () => {
 					provider: mockProvider,
 					apiConfiguration: mockApiConfig,
 					task: "test task",
+					context: mockExtensionContext,
 				})
 
 				cline.abandoned = true
@@ -423,6 +425,7 @@ describe("Cline", () => {
 					provider: mockProvider,
 					apiConfiguration: configWithImages,
 					task: "test task",
+					context: mockExtensionContext,
 				})
 
 				// Mock the model info to indicate image support
@@ -446,6 +449,7 @@ describe("Cline", () => {
 					provider: mockProvider,
 					apiConfiguration: configWithoutImages,
 					task: "test task",
+					context: mockExtensionContext,
 				})
 
 				// Mock the model info to indicate no image support
@@ -537,6 +541,7 @@ describe("Cline", () => {
 					provider: mockProvider,
 					apiConfiguration: mockApiConfig,
 					task: "test task",
+					context: mockExtensionContext,
 				})
 
 				// Mock delay to track countdown timing
@@ -661,6 +666,7 @@ describe("Cline", () => {
 					provider: mockProvider,
 					apiConfiguration: mockApiConfig,
 					task: "test task",
+					context: mockExtensionContext,
 				})
 
 				// Mock delay to track countdown timing
@@ -785,6 +791,7 @@ describe("Cline", () => {
 						provider: mockProvider,
 						apiConfiguration: mockApiConfig,
 						task: "test task",
+						context: mockExtensionContext,
 					})
 
 					const userContent = [

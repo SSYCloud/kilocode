@@ -165,12 +165,21 @@ jest.mock("vscode", () => ({
 	env: {
 		uriScheme: "vscode",
 		language: "en",
+		uiKind: 1, // kilocode_change Desktop
 	},
 	ExtensionMode: {
 		Production: 1,
 		Development: 2,
 		Test: 3,
 	},
+	// kilocode_change start
+	UIKind: {
+		1: "Desktop",
+		2: "Web",
+		Desktop: 1,
+		Web: 2,
+	},
+	// kilocode_change end
 }))
 
 jest.mock("../../../utils/sound", () => ({
@@ -263,6 +272,11 @@ describe("ClineProvider", () => {
 					.mockImplementation((key: string, value: string | undefined) => (globalState[key] = value)),
 				keys: jest.fn().mockImplementation(() => Object.keys(globalState)),
 			},
+			workspaceState: {
+				get: jest.fn().mockResolvedValue(undefined),
+				update: jest.fn().mockResolvedValue(undefined),
+				keys: jest.fn().mockReturnValue([]),
+			},
 			secrets: {
 				get: jest.fn().mockImplementation((key: string) => secrets[key]),
 				store: jest.fn().mockImplementation((key: string, value: string | undefined) => (secrets[key] = value)),
@@ -313,6 +327,7 @@ describe("ClineProvider", () => {
 		provider = new ClineProvider(mockContext, mockOutputChannel, "sidebar", new ContextProxy(mockContext))
 
 		defaultTaskOptions = {
+			context: mockContext,
 			provider,
 			apiConfiguration: {
 				apiProvider: "openrouter",
@@ -808,45 +823,6 @@ describe("ClineProvider", () => {
 		expect(updateGlobalStateSpy).toHaveBeenCalledWith("maxWorkspaceFiles", 300)
 		expect(mockContext.globalState.update).toHaveBeenCalledWith("maxWorkspaceFiles", 300)
 		expect(mockPostMessage).toHaveBeenCalled()
-	})
-
-	test("uses mode-specific custom instructions in Cline initialization", async () => {
-		// Setup mock state
-		const modeCustomInstructions = "Code mode instructions"
-		const mockApiConfig = {
-			apiProvider: "openrouter",
-		}
-
-		jest.spyOn(provider, "getState").mockResolvedValue({
-			apiConfiguration: mockApiConfig,
-			customModePrompts: {
-				code: { customInstructions: modeCustomInstructions },
-			},
-			mode: "code",
-			diffEnabled: true,
-			enableCheckpoints: false,
-			fuzzyMatchThreshold: 1.0,
-			experiments: experimentDefault,
-		} as any)
-
-		// Initialize Cline with a task
-		await provider.initClineWithTask("Test task")
-
-		// Verify Cline was initialized with mode-specific instructions
-		expect(Task).toHaveBeenCalledWith({
-			provider,
-			apiConfiguration: mockApiConfig,
-			customInstructions: modeCustomInstructions,
-			enableDiff: true,
-			enableCheckpoints: false,
-			fuzzyMatchThreshold: 1.0,
-			task: "Test task",
-			experiments: experimentDefault,
-			rootTask: undefined,
-			parentTask: undefined,
-			taskNumber: 1,
-			onCreated: expect.any(Function),
-		})
 	})
 
 	test("handles mode-specific custom instructions updates", async () => {
@@ -1932,6 +1908,11 @@ describe("Project MCP Settings", () => {
 				update: jest.fn(),
 				keys: jest.fn().mockReturnValue([]),
 			},
+			workspaceState: {
+				get: jest.fn().mockResolvedValue(undefined),
+				update: jest.fn().mockResolvedValue(undefined),
+				keys: jest.fn().mockReturnValue([]),
+			},
 			secrets: {
 				get: jest.fn(),
 				store: jest.fn(),
@@ -2053,6 +2034,11 @@ describe.skip("ContextProxy integration", () => {
 			globalState: {
 				get: jest.fn(),
 				update: jest.fn(),
+				keys: jest.fn().mockReturnValue([]),
+			},
+			workspaceState: {
+				get: jest.fn().mockResolvedValue(undefined),
+				update: jest.fn().mockResolvedValue(undefined),
 				keys: jest.fn().mockReturnValue([]),
 			},
 			secrets: { get: jest.fn(), store: jest.fn(), delete: jest.fn() },

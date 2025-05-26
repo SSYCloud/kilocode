@@ -8,7 +8,6 @@ import {
 	shengSuanYunDefaultModelId,
 	shengSuanYunDefaultModelInfo,
 	PROMPT_CACHING_MODELS,
-	OPTIONAL_PROMPT_CACHING_MODELS,
 	REASONING_MODELS,
 } from "../../shared/api"
 
@@ -23,7 +22,7 @@ import { DEFAULT_HEADERS, DEEP_SEEK_DEFAULT_TEMPERATURE } from "./constants"
 import { getModelParams } from "../getModelParams"
 
 import { BaseProvider } from "./base-provider"
-import { getModels } from "./fetchers/cache"
+import { getModels } from "./fetchers/modelCache"
 
 // Add custom interface for shengSuanYun params.
 type ShengSuanYunChatCompletionParams = OpenAI.Chat.ChatCompletionCreateParams & {
@@ -87,9 +86,9 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 			openAiMessages = convertToR1Format([{ role: "user", content: systemPrompt }, ...messages])
 		}
 
-		const isCacheAvailable = promptCache.supported && (!promptCache.optional || !this.options.promptCachingDisabled)
+		const isCacheAvailable = promptCache.supported
 
-		// https://shengSuanYun.ai/docs/features/prompt-caching
+		// https://openrouter.ai/docs/features/prompt-caching
 		if (isCacheAvailable) {
 			modelId.startsWith("google")
 				? addGeminiCacheBreakpoints(systemPrompt, openAiMessages)
@@ -175,7 +174,6 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 			topP: isDeepSeekR1 ? 0.95 : undefined,
 			promptCache: {
 				supported: PROMPT_CACHING_MODELS.has(id),
-				optional: OPTIONAL_PROMPT_CACHING_MODELS.has(id),
 			},
 		}
 	}

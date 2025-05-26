@@ -26,7 +26,7 @@ jest.*
 .vite-port
 .nvmrc
 .clinerules*
-.kilocodemodes
+.kilossymodes
 cline_docs/**
 coverage/**
 locales/**
@@ -34,7 +34,7 @@ locales/**
 .rooignore
 .roo/**
 benchmark/**
-cline_docs/**
+docs/**
 e2e/**
 evals/**
 locales/**

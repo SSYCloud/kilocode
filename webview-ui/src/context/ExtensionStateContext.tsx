@@ -25,6 +25,7 @@ export interface ExtensionStateContextType extends ExtensionState {
 	currentCheckpoint?: string
 	filePaths: string[]
 	openedTabs: Array<{ label: string; isActive: boolean; path?: string }>
+	setWorkflowToggles: (toggles: Record<string, boolean>) => void // kilocode_change
 	setApiConfiguration: (config: ProviderSettings) => void
 	setCustomInstructions: (value?: string) => void
 	setAlwaysAllowReadOnly: (value: boolean) => void
@@ -180,6 +181,7 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		terminalZdotdir: false, // Default ZDOTDIR handling setting
 		terminalCompressProgressBar: true, // Default to compress progress bar output
 		historyPreviewCollapsed: false, // Initialize the new state (default to expanded)
+		workflowToggles: {}, // Initialize with empty workflow toggles  // kilocode_change
 	})
 
 	const [didHydrateState, setDidHydrateState] = useState(false)
@@ -365,6 +367,13 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 			}),
 		setHistoryPreviewCollapsed: (value) =>
 			setState((prevState) => ({ ...prevState, historyPreviewCollapsed: value })), // Implement the setter
+
+		// kilocode_change
+		setWorkflowToggles: (toggles) =>
+			setState((prevState) => ({
+				...prevState,
+				workflowToggles: toggles,
+			})),
 	}
 
 	return <ExtensionStateContext.Provider value={contextValue}>{children}</ExtensionStateContext.Provider>

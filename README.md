@@ -14,51 +14,69 @@
 
 # 🚀 Kilo 胜算云
 
-> Open-source VS Code AI agent. Merged features from [Roo Code](https://github.com/RooVetGit/Roo-Code) and [Cline](https://github.com/cline/cline).
+> 开源 VS Code AI 代理。合并了 [Roo Code](https://github.com/RooVetGit/Roo-Code) 和 [Cline](https://github.com/cline/cline) 的功能。
 
-- ✨ Generate code from natural language
-- ✅ Checks its own work
-- 🧪 Run terminal commands
-- 🌐 Automate the browser
-- 🤖 Latest AI models
-- 🎁 API keys optional
-- 💡 **$20 free credits for Gemini 2.5 Pro, Claude 3.7 Sonnet, and GPT-4.1**<br/>Share feedback and earn more credits!
+- ✨ 通过自然语言生成代码
+- ✅ 自我检查工作
+- 🧪 运行终端命令
+- 🌐 自动化浏览器操作
+- 🤖 最新的 AI 模型
+- 🎁 API 密钥可选
+- 💡 **Gemini 2.5 Pro、Gemini 2.5 Flash Preview 05-20 半价！！**<br/>分享反馈可赢取更多额度！
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/Kilo-Org/kilocode/refs/heads/main/kilo.gif" width="100%" />
 </p>
 
-- [VS Code Marketplace](https://kilocode.ai/vscode-marketplace?utm_source=Readme) (download)
-- [Official KiloCode.ai Home page](https://kilocode.ai) (learn more)
+- [VS Code 应用商店](https://marketplace.visualstudio.com/items?itemName=shengsuan-cloud.cline-shengsuan) (下载)
+- [胜算云Router 官方主页](https://router.shengsuanyun.com/) (了解更多)
 
-## Key Features
+## 主要功能
 
-- **Code Generation:** Generate code using natural language.
-- **Task Automation:** Automate repetitive coding tasks.
-- **Automated Refactoring:**: Refactor and improve existing code.
-- **MCP Server Marketplace**: Easily find, and use MCP servers to extend the agent capabilities.
-- **Multi Mode**: Plan with Architect, Code with Coder, and Debug with Debugger, and make your own custom modes.
+- **代码生成：** 使用自然语言生成代码。
+- **任务自动化：** 自动化重复的编码任务。
+- **自动重构：** 重构和改进现有代码。
+- **MCP 服务器市场**：轻松查找和使用 MCP 服务器以扩展代理功能。
+- **多模式**：使用架构师模式进行规划，使用编码器模式进行编码，使用调试器模式进行调试，并创建您自己的自定义模式。
+<br>
+Discord 频道：[SSYRouter API](https://discord.gg/frBHkRKB4x) <br>
+## 赞赏支持
 
-## How to get started with Kilo SSY
+如果您觉得这个项目对您有帮助，欢迎赞赏支持，您的支持是我持续开发的动力 ☕<br>
 
-1.  Install the Kilo SSY extension from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=shengsuan-cloud.kilo-ssy).
-2.  Log in with your Google Account to get $20 in free Claude 3.7 Sonnet credits.
-3.  Start using the extension. Here's a video to help you get started (just click on the image below and you'll be redirected to YouTube):
 
-[![Watch the video](https://img.youtube.com/vi/pqGfYXgrhig/maxresdefault.jpg)](https://youtu.be/pqGfYXgrhig)
+<div align="center" style="display: flex; justify-content: center; gap: 20px;">
 
-## Difference between Roo Code and Cline
+APIRouter进群交流<br>（如果无法加群，请加企业微信客服）<br>
+  <img src="https://github.com/user-attachments/assets/41e6dc76-07c9-4dbf-ac35-d2494ebc9a41" alt="APIRouter企业微信群" width="250" /> <br>
+</div>
 
-We're doing our best to combine the best of both worlds. Kilo SSY combines all features of Cline, Roo, and adds a few of our own additions. It has the best features of both, and we're working on making it even better!
+<div align="center" style="display: flex; justify-content: center; gap: 20px;">
 
-No need to fiddle with API keys, Kilo SSY ships with the latest AI models plugged in, including Claude 3.7 Sonnet and Gemini 2.5 Pro.
+企业客服咨询<br>
+  <img src="https://github.com/user-attachments/assets/c180b033-d62c-4dc0-9c2a-a3ad8c70e5a4" alt="企业微信客服" width="250" />
+</div>
+## 如何开始使用 Kilo SSY
 
-Kilo SSY is a direct fork from Roo Code, but also includes the following features from Cline (and more):
+1.  从 [VS Code 应用商店](https://marketplace.visualstudio.com/items?itemName=shengsuan-cloud.kilo-ssy) 安装 Kilo SSY 扩展。
+2.  使用您的 微信 或 移动手机账号登录，即可享受Gemini 2.5 Pro、Gemini 2.5 Flash Preview 05-20 半价！！以及分享反馈可赢取更多额度！
+3.  开始使用扩展。这里有一个入门视频（点击下方图片即可跳转到 BiliBili）：
 
-- MCP Server Marketplace: Easily find, and use MCP servers to extend the agent capabilities.
-- System notifications: Get notified when the agent is done with a task.
-- Easy model connection: with bigger free tier.
+[![观看视频](https://i2.hdslb.com/bfs/archive/f1cfea32ace7d4ca3f685aa87eea59829908ea2e.jpg@672w_378h_1c.avif)](https://www.bilibili.com/video/BV1KUL2zcEMy/?share_source=copy_web&vd_source=87fcc8ce6c440699696aa63b7b90c729)
 
-## Extension Development
+## Roo Code 和 Cline 的区别
 
-For details on building and developing the extension, see [DEVELOPMENT.md](/DEVELOPMENT.md)
+我们正在尽最大努力结合两者的优点。Kilo SSY 结合了 Cline 和 Roo 的所有功能，并添加了一些我们自己的功能。它拥有两者的最佳特性，并且我们正在努力使其变得更好！
+
+无需费心处理 API 密钥，Kilo SSY 内置了最新的 AI 模型，包括 Claude 3.7 Sonnet 和 Gemini 2.5 Pro。
+
+Kilo SSY 是 Roo Code 的直接分支，但也包含了 Cline 的以下功能（以及更多）：
+
+- MCP 服务器市场：轻松查找和使用 MCP 服务器以扩展代理功能。
+- 系统通知：当代理完成任务时收到通知。
+- 轻松连接模型：提供更大的优惠半价体验。
+
+## 扩展开发
+
+有关构建和开发扩展的详细信息，请参阅 [DEVELOPMENT.md](/DEVELOPMENT.md)
+

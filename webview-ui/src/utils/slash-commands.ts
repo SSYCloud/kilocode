@@ -1,18 +1,31 @@
+// kilocode_change: this file was pulled from Cline and adjusted for us
+
 import { getAllModes } from "@roo/shared/modes"
 
 export interface SlashCommand {
 	name: string
-	description: string
+	description?: string // kilocode_change
+	section?: "default" | "custom" // kilocode_change
 }
 
 // Create a function to get all supported slash commands
-export function getSupportedSlashCommands(customModes?: any[]): SlashCommand[] {
+export function getSupportedSlashCommands(
+	customModes?: any[],
+	workflowToggles: Record<string, boolean> = {}, // kilocode_change
+): SlashCommand[] {
 	// Start with non-mode commands
 	const baseCommands: SlashCommand[] = [
 		{
 			name: "newtask",
 			description: "Create a new task with context from the current task",
 		},
+		{
+			name: "newrule",
+			description: "Create a new Kilo rule with context from your conversation",
+		},
+		{ name: "reportbug", description: "Create a KiloCode GitHub issue" },
+		{ name: "smol", description: "Condenses your current context window" },
+		// kilocode_change end
 	]
 
 	// Add mode-switching commands dynamically
@@ -21,14 +34,16 @@ export function getSupportedSlashCommands(customModes?: any[]): SlashCommand[] {
 		description: `Switch to ${mode.name.replace(/^[💻🏗️❓🪲🪃]+ /, "")} mode`,
 	}))
 
-	return [...baseCommands, ...modeCommands]
+	// add workflow commands
+	const workflowCommands = getWorkflowCommands(workflowToggles) // kilocode_change
+	return [...baseCommands, ...modeCommands, ...workflowCommands] // kilocode_change
 }
 
 // Export a default instance for backward compatibility
 export const SUPPORTED_SLASH_COMMANDS = getSupportedSlashCommands()
 
 // Regex for detecting slash commands in text
-export const slashCommandRegex = /\/([a-zA-Z0-9_-]+)(\s|$)/
+export const slashCommandRegex = /\/([a-zA-Z0-9_.-]+)(\s|$)/ // kilocode_change
 export const slashCommandRegexGlobal = new RegExp(slashCommandRegex.source, "g")
 
 /**
@@ -61,11 +76,32 @@ export function shouldShowSlashCommandsMenu(text: string, cursorPosition: number
 	return true
 }
 
+// kilocode_change start
+export function getWorkflowCommands(workflowToggles: Record<string, boolean>): SlashCommand[] {
+	return Object.entries(workflowToggles)
+		.filter(([_, enabled]) => enabled)
+		.map(([filePath, _]) => {
+			// potentially remove the file extension if there is one, but this would then require
+			// that we prevent users from having the same fname with different extensions
+			const fileName = filePath.replace(/^.*[/\\]/, "")
+
+			return {
+				name: fileName,
+				section: "custom",
+			}
+		})
+}
+// kilocode_change end
+
 /**
  * Gets filtered slash commands that match the current input
  */
-export function getMatchingSlashCommands(query: string, customModes?: any[]): SlashCommand[] {
-	const commands = getSupportedSlashCommands(customModes)
+export function getMatchingSlashCommands(
+	query: string,
+	customModes?: any[],
+	workflowToggles: Record<string, boolean> = {}, // kilocode_change
+): SlashCommand[] {
+	const commands = getSupportedSlashCommands(customModes, workflowToggles)
 
 	if (!query) {
 		return [...commands]
@@ -95,13 +131,17 @@ export function insertSlashCommand(text: string, commandName: string): { newValu
  * Determines the validation state of a slash command
  * Returns partial if we have a partial match against valid commands, or full for full match
  */
-export function validateSlashCommand(command: string, customModes?: any[]): "full" | "partial" | null {
+export function validateSlashCommand(
+	command: string,
+	customModes?: any[],
+	workflowToggles: Record<string, boolean> = {}, // kilocode_change
+): "full" | "partial" | null {
 	if (!command) {
 		return null
 	}
 
 	// case sensitive matching
-	const commands = getSupportedSlashCommands(customModes)
+	const commands = getSupportedSlashCommands(customModes, workflowToggles) // kilocode_change
 
 	const exactMatch = commands.some((cmd) => cmd.name === command)
 

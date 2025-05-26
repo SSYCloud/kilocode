@@ -2,6 +2,7 @@ import * as path from "path"
 import fs from "fs/promises"
 import pWaitFor from "p-wait-for"
 import * as vscode from "vscode"
+import axios from "axios" // kilocode_change
 
 import { ClineProvider } from "./ClineProvider"
 import { Language, ProviderSettings } from "../../schemas"
@@ -33,8 +34,9 @@ import { openMention } from "../mentions"
 import { getWorkspacePath } from "../../utils/path"
 import { Mode, defaultModeSlug } from "../../shared/modes"
 import { GlobalState } from "../../schemas"
-import { getModels, flushModels } from "../../api/providers/fetchers/cache"
+import { getModels, flushModels } from "../../api/providers/fetchers/modelCache"
 import { generateSystemPrompt } from "./generateSystemPrompt"
+import { ClineRulesToggles } from "../../shared/cline-rules" // kilocode_change
 
 const ALLOWED_VSCODE_SETTINGS = new Set(["terminal.integrated.inheritEnv"])
 
@@ -49,6 +51,10 @@ export const webviewMessageHandler = async (provider: ClineProvider, message: We
 			// Load custom modes first
 			const customModes = await provider.customModesManager.getCustomModes()
 			await updateGlobalState("customModes", customModes)
+
+			// Refresh workflow toggles
+			const { refreshWorkflowToggles } = await import("../context/instructions/workflows") // kilocode_change
+			await refreshWorkflowToggles(provider.context, provider.cwd) // kilocode_change
 
 			provider.postStateToWebview()
 			provider.workspaceTracker?.initializeFilePaths() // Don't await.
@@ -118,6 +124,11 @@ export const webviewMessageHandler = async (provider: ClineProvider, message: We
 			// task. This essentially creates a fresh slate for the new task.
 			await provider.initClineWithTask(message.text, message.images)
 			break
+		// kilocode_change start
+		case "condense":
+			provider.getCurrentCline()?.handleWebviewAskResponse("yesButtonClicked")
+			break
+		// kilocode_change end
 		case "customInstructions":
 			await provider.updateCustomInstructions(message.text)
 			break
@@ -1292,6 +1303,80 @@ export const webviewMessageHandler = async (provider: ClineProvider, message: We
 			break
 
 		// kilocode_change_start
+		case "fetchProfileDataRequest":
+			try {
+				const { apiConfiguration } = await provider.getState()
+				const kilocodeToken = apiConfiguration?.kilocodeToken
+
+				if (!kilocodeToken) {
+					provider.log("KiloCode token not found in extension state.")
+					provider.postMessageToWebview({
+						type: "profileDataResponse",
+						payload: { success: false, error: "KiloCode API token not configured." },
+					})
+					break
+				}
+
+				// Changed to /api/profile
+				const response = await axios.get("https://kilocode.ai/api/profile", {
+					headers: {
+						Authorization: `Bearer ${kilocodeToken}`,
+						"Content-Type": "application/json",
+					},
+				})
+
+				provider.postMessageToWebview({
+					type: "profileDataResponse", // Assuming this response type is still appropriate for /api/profile
+					payload: { success: true, data: response.data },
+				})
+			} catch (error: any) {
+				const errorMessage =
+					error.response?.data?.message ||
+					error.message ||
+					"Failed to fetch general profile data from backend."
+				provider.log(`Error fetching general profile data: ${errorMessage}`)
+				provider.postMessageToWebview({
+					type: "profileDataResponse",
+					payload: { success: false, error: errorMessage },
+				})
+			}
+			break
+		case "fetchBalanceDataRequest": // New handler
+			try {
+				const { apiConfiguration } = await provider.getState()
+				const kilocodeToken = apiConfiguration?.kilocodeToken
+
+				if (!kilocodeToken) {
+					provider.log("KiloCode token not found in extension state for balance data.")
+					provider.postMessageToWebview({
+						type: "balanceDataResponse", // New response type
+						payload: { success: false, error: "KiloCode API token not configured." },
+					})
+					break
+				}
+
+				const response = await axios.get("https://kilocode.ai/api/profile/balance", {
+					// Original path for balance
+					headers: {
+						Authorization: `Bearer ${kilocodeToken}`,
+						"Content-Type": "application/json",
+					},
+				})
+				provider.postMessageToWebview({
+					type: "balanceDataResponse", // New response type
+					payload: { success: true, data: response.data },
+				})
+			} catch (error: any) {
+				const errorMessage =
+					error.response?.data?.message || error.message || "Failed to fetch balance data from backend."
+				provider.log(`Error fetching balance data: ${errorMessage}`)
+				provider.postMessageToWebview({
+					type: "balanceDataResponse", // New response type
+					payload: { success: false, error: errorMessage },
+				})
+			}
+			break
+
 		case "fetchMcpMarketplace": {
 			await provider.fetchMcpMarketplace(message.bool)
 			break
@@ -1308,6 +1393,25 @@ export const webviewMessageHandler = async (provider: ClineProvider, message: We
 			await provider.silentlyRefreshMcpMarketplace()
 			break
 		}
+
+		case "toggleWorkflow": {
+			const { workflowPath, enabled } = message
+			if (workflowPath && typeof enabled === "boolean") {
+				const toggles =
+					((await provider.contextProxy.getWorkspaceState(
+						provider.context,
+						"workflowToggles",
+					)) as ClineRulesToggles) || {}
+				toggles[workflowPath] = enabled
+				await provider.contextProxy.updateWorkspaceState(provider.context, "workflowToggles", toggles)
+				await provider.postStateToWebview()
+			}
+			break
+		}
+
+		case "reportBug":
+			provider.getCurrentCline()?.handleWebviewAskResponse("yesButtonClicked")
+			break
 		// end kilocode_change
 	}
 }

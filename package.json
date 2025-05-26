@@ -3,7 +3,7 @@
 	"displayName": "%extension.displayName%",
 	"description": "%extension.description%",
 	"publisher": "shengsuan-cloud",
-	"version": "4.24.0",
+	"version": "4.28.1",
 	"icon": "assets/images/panel_light.png",
 	"galleryBanner": {
 		"color": "#FFFFFF",
@@ -233,6 +233,12 @@
 				"command": "kilo-ssy.acceptInput",
 				"title": "%command.acceptInput.title%",
 				"category": "%configuration.title%"
+			},
+			{
+				"command": "kilo-ssy.profileButtonClicked",
+				"title": "%command.profile.title%",
+				"icon": "$(account)",
+				"category": "%configuration.title%"
 			}
 		],
 		"keybindings": [
@@ -301,23 +307,33 @@
 					"when": "view == kilo-ssy.SidebarProvider"
 				},
 				{
-					"command": "kilo-ssy.historyButtonClicked",
+					"command": "kilo-ssy.promptsButtonClicked",
 					"group": "navigation@2",
 					"when": "view == kilo-ssy.SidebarProvider"
 				},
 				{
-					"command": "kilo-ssy.settingsButtonClicked",
+					"command": "kilo-ssy.historyButtonClicked",
+					"group": "navigation@3",
+					"when": "view == kilo-ssy.SidebarProvider"
+				},
+				{
+					"command": "kilo-ssy.profileButtonClicked",
 					"group": "navigation@4",
 					"when": "view == kilo-ssy.SidebarProvider"
 				},
 				{
-					"command": "kilo-ssy.popoutButtonClicked",
+					"command": "kilo-ssy.settingsButtonClicked",
 					"group": "navigation@5",
 					"when": "view == kilo-ssy.SidebarProvider"
 				},
 				{
-					"command": "kilo-ssy.helpButtonClicked",
+					"command": "kilo-ssy.popoutButtonClicked",
 					"group": "navigation@6",
+					"when": "view == kilo-ssy.SidebarProvider"
+				},
+				{
+					"command": "kilo-ssy.helpButtonClicked",
+					"group": "navigation@7",
 					"when": "false && view == kilo-ssy.SidebarProvider"
 				}
 			],
@@ -419,7 +435,7 @@
 		"test:extension-esm": "vitest run",
 		"test:webview": "cd webview-ui && npm run test",
 		"prepare": "husky",
-		"publish:marketplace": "vsce publish && ovsx publish",
+		"publish:marketplace": "npx vsce publish && npx ovsx publish",
 		"publish": "npm run build && changeset publish && npm install --package-lock-only",
 		"version-packages": "changeset version && npm install --package-lock-only",
 		"vscode:prepublish": "npm run package",
@@ -441,13 +457,13 @@
 		"generate-types": "tsx scripts/generate-types.mts"
 	},
 	"dependencies": {
-		"@anthropic-ai/bedrock-sdk": "^0.10.2",
-		"@anthropic-ai/sdk": "^0.37.0",
-		"@anthropic-ai/vertex-sdk": "^0.7.0",
-		"@aws-sdk/client-bedrock-runtime": "^3.779.0",
+		"@anthropic-ai/bedrock-sdk": "^0.22.0",
+		"@anthropic-ai/sdk": "^0.51.0",
+		"@anthropic-ai/vertex-sdk": "^0.11.3",
+		"@aws-sdk/client-bedrock-runtime": "^3.812.0",
 		"@google/genai": "^0.13.0",
-		"@mistralai/mistralai": "^1.3.6",
-		"@modelcontextprotocol/sdk": "^1.9.0",
+		"@mistralai/mistralai": "^1.6.0",
+		"@modelcontextprotocol/sdk": "^1.11.4",
 		"@types/clone-deep": "^4.0.4",
 		"@types/pdf-parse": "^1.1.4",
 		"@types/tmp": "^0.2.6",
@@ -473,7 +489,7 @@
 		"monaco-vscode-textmate-theme-converter": "^0.1.7",
 		"node-cache": "^5.1.2",
 		"node-ipc": "^12.0.0",
-		"openai": "^4.78.1",
+		"openai": "^4.100.0",
 		"os-name": "^6.0.0",
 		"p-wait-for": "^5.0.2",
 		"pdf-parse": "^1.1.1",
@@ -484,6 +500,7 @@
 		"puppeteer-chromium-resolver": "^23.0.0",
 		"puppeteer-core": "^23.4.0",
 		"reconnecting-eventsource": "^1.6.4",
+		"sanitize-filename": "^1.6.3",
 		"say": "^0.16.0",
 		"serialize-error": "^11.0.3",
 		"simple-git": "^3.27.0",
@@ -519,7 +536,7 @@
 		"@typescript-eslint/eslint-plugin": "^7.14.1",
 		"@typescript-eslint/parser": "^7.11.0",
 		"@vscode/test-electron": "^2.5.2",
-		"@vscode/vsce": "^3.3.2",
+		"@vscode/vsce": "^3.4.1",
 		"esbuild": "^0.25.0",
 		"eslint": "^8.57.0",
 		"execa": "^9.5.2",
@@ -532,6 +549,7 @@
 		"mkdirp": "^3.0.1",
 		"nock": "^14.0.4",
 		"npm-run-all2": "^8.0.1",
+		"ovsx": "0.10.2",
 		"prettier": "^3.4.2",
 		"rimraf": "^6.0.1",
 		"ts-jest": "^29.2.5",

@@ -11,7 +11,8 @@ import { getShengSuanYunAuthUrl } from "@src/oauth/urls"
 import RooHero from "./RooHero"
 
 const WelcomeView = () => {
-	const { apiConfiguration, currentApiConfigName, setApiConfiguration, uriScheme } = useExtensionState()
+	const { apiConfiguration, currentApiConfigName, setApiConfiguration, uriScheme, uiKind /* kilocode_change */ } =
+		useExtensionState()
 	const { t } = useAppTranslation()
 	const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined)
 	const handleSubmit = useCallback(() => {
@@ -86,6 +87,7 @@ const WelcomeView = () => {
 						fromWelcomeView
 						apiConfiguration={apiConfiguration || {}}
 						uriScheme={uriScheme}
+						uiKind={uiKind /* kilocode_change */}
 						setApiConfigurationField={(field, value) => setApiConfiguration({ [field]: value })}
 						errorMessage={errorMessage}
 						setErrorMessage={setErrorMessage}
