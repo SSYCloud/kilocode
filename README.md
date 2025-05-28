@@ -22,6 +22,48 @@
 - 🌐 自动化浏览器操作
 - 🤖 最新的 AI 模型
 - 🎁 API 密钥可选
+## 胜算云Router的模型折扣活动开始啦！<br>
+【API超市】2025-05-28模型折扣活动开始啦！<br>
+Anthropic / Claude-Opus-4(折扣)<br>
+模型值：anthropic/claude-opus-4-discount<br>
+现在官方及各个平台此模型都有不稳定情况，如遇报错，优先切换至sonnet4折扣模型，这个稳定。<br>
+200K 上下文<br>
+$ 3.00 (¥21.56)原价15美元 / M 输入 tokens<br>
+$ 15.00 (¥107.81) 原价75美元 / M 输出 tokens<br>
+---<br>
+Anthropic / Claude-3.7-sonnet（折扣）<br>
+模型值：anthropic/claude-3.7-sonnet-discount<br>
+200K 上下文<br>
+$ 0.40 (¥2.87) 原价 3美元/ M 输入 tokens<br>
+$ 5.00 (¥35.94) 原价 15美元/ M 输出 tokens<br>
+---<br>
+Google / Gemini-2.5-pro-preview（折扣）<br>
+模型值：google/gemini-2.5-pro-preview-discount<br>
+1049K 上下文<br>
+$ 0.42 (¥3.02) 原价 1.25to2.50美元/ M 输入 tokens<br>
+$ 3.34 (¥24.01) 原价 10to15美元/ M 输出 tokens<br>
+---<br>
+Anthropic / Claude-Sonnet-4(折扣)<br>
+模型值：anthropic/claude-sonnet-4-discount<br>
+200K 上下文<br>
+$ 0.40 (¥2.87) 原价 3美元/ M 输入 tokens<br>
+$ 5.00 (¥35.94) 原价 15美元/ M 输出 tokens<br>
+---<br>
+XAI / Grok-3-beta（折扣）<br>
+模型值：x-ai/grok-3-beta-discount<br>
+131K 上下文<br>
+$ 0.50 (¥3.59) 原价 3美元 / M 输入 tokens<br>
+$ 5.00 (¥35.94) 原价 15美元 / M 输出 tokens<br>
+<br>
+以上模型需要手动修改模型值，对您造成的麻烦请多见谅。如您使用 <br>
+Cline-中文版<br>
+https://marketplace.visualstudio.com/items?itemName=shengsuan-cloud.cline-shengsuan<br>
+Kilo SSY Code Agent<br>
+https://marketplace.visualstudio.com/items?itemName=shengsuan-cloud.kilo-ssy<br>
+Roo Code Chinese SSY<br>
+https://marketplace.visualstudio.com/items?itemName=shengsuan-cloud.roo-vibecoding<br>
+以上三种插件，可以直接在供应商中选择折扣模型<br>
+详情点击[胜算云Router](https://router.shengsuanyun.com/)<br>
 - 💡 **Gemini 2.5 Pro、Gemini 2.5 Flash Preview 05-20 半价！！**<br/>分享反馈可赢取更多额度！
 
 <p align="center">
