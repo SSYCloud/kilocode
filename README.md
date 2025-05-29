@@ -13,7 +13,7 @@
   <a href="https://www.reddit.com/r/kilocode/"><img src="https://img.shields.io/reddit/subreddit-subscribers/kilocode?style=flat&logo=reddit&logoColor=white" alt="Reddit"></a>
 </p>
 
-# 🚀 Kilo Code
+# 🚀 Kilo 中文版 
 
 ##  Kilo-中文版核心优势
 ✅ **中文代码生成精准度提升200%**
@@ -44,6 +44,62 @@ APIRouter进群交流<br>（如果无法加群，请加企业微信客服）<br>
   <img src="https://github.com/user-attachments/assets/c180b033-d62c-4dc0-9c2a-a3ad8c70e5a4" alt="企业微信客服" width="250" />
 </div>
 
+好的，这是您提供的关于 Kilo Code 开源 VS Code AI 助手的中文翻译：
+
+---
+
+> 开源 VS Code AI 助手。融合了 [Roo Code](https://github.com/RooVetGit/Roo-Code) 和 [Cline](https://github.com/cline/cline) 的功能特性。
+
+*   ✨ **自然语言生成代码**
+*   ✅ **自我检查工作成果**
+*   🧪 **运行终端命令**
+*   🌐 **自动化浏览器操作**
+*   🤖 **集成最新 AI 模型**
+*   🎁 **无需 API 密钥（可选）**
+*   💡 **免费赠送价值20美元额度，可用于 Gemini 2.5 Pro、Claude 3.7 Sonnet 和 GPT-4.1**<br/>分享反馈可赚取更多额度！
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Kilo-Org/kilocode/refs/heads/main/kilo.gif" width="100%" />
+</p>
+
+*   [VS Code 市场](https://kilocode.ai/vscode-marketplace?utm_source=Readme) (下载)
+*   [KiloCode.ai 官方网站](https://kilocode.ai) (了解更多)
+
+## 主要功能
+
+*   **代码生成：** 使用自然语言生成代码。
+*   **任务自动化：** 自动化重复性编码任务。
+*   **自动重构：** 重构并改进现有代码。
+*   **MCP 服务器市场：** 轻松查找并使用 MCP 服务器来扩展助手功能。
+*   **多模式协作：** 使用“规划师 (Architect)”进行设计规划，使用“编码员 (Coder)”编写代码，使用“调试员 (Debugger)”进行调试，并可创建您自己的自定义模式。
+
+## 如何开始使用 Kilo Code
+
+1.  从 [VS Code 市场](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code) 安装 Kilo Code 扩展。
+2.  使用您的 Google 账户登录，即可获得价值20美元的 Claude 3.7 Sonnet 免费额度。
+3.  开始使用该扩展。以下视频可帮助您快速上手（点击下方图片即可跳转至 YouTube 观看）：
+
+[![观看视频](https://img.youtube.com/vi/pqGfYXgrhig/maxresdefault.jpg)](https://youtu.be/pqGfYXgrhig)
+
+## Roo Code 与 Cline 的区别
+
+我们致力于融合两者的精华。Kilo Code 整合了 Cline 和 Roo 的所有功能，并加入了一些我们自己的创新。它兼具两者的最佳特性，并且我们正在努力使其更加强大！
+
+无需费心配置 API 密钥，Kilo Code 开箱即用，内置了最新的 AI 模型，包括 Claude 3.7 Sonnet 和 Gemini 2.5 Pro。
+
+Kilo Code 直接派生自 Roo Code，但也包含了来自 Cline 的以下功能（以及更多）：
+
+*   **MCP 服务器市场：** 轻松查找并使用 MCP 服务器来扩展助手功能。
+*   **系统通知：** 在助手完成任务时收到通知。
+*   **便捷模型连接：** 提供更大的免费额度。
+
+## 扩展开发
+
+有关构建和开发此扩展的详细信息，请参阅 [DEVELOPMENT.md](/DEVELOPMENT.md)
+
+---
+
+# 🚀 English introduction of Kilo SSY Chinese 
 > Open-source VS Code AI agent. Merged features from [Roo Code](https://github.com/RooVetGit/Roo-Code) and [Cline](https://github.com/cline/cline).
 
 - ✨ Generate code from natural language
