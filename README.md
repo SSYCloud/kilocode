@@ -86,6 +86,21 @@ APIRouter进群交流<br>（如果无法加群，请加企业微信客服）<br>
 
 - [VS Code 应用商店](https://marketplace.visualstudio.com/items?itemName=shengsuan-cloud.cline-shengsuan) (下载)
 - [胜算云Router 官方主页](https://router.shengsuanyun.com/) (了解更多)
+- 
+
+## 背景
+
+Cline 中文版 开发初衷<br>
+我们推出 Cline 中文版，旨在为国内开发者提供更便捷、高效的 AI 接入体验。在并行 Cline 主线功能开发的同时，「胜算云 Router」特别开放独家专属模型折扣，全面支持国内用户免魔法接入，实现真正的即用即连。<br>
+
+「胜算云 Router」致力于成为国内 AI 开发者首选工具，让每一个创意都能高效落地，真正实现 开发有胜算，落地有保障。<br>
+
+## 欢迎关注我的自媒体账号
+
+欢迎关注我的自媒体账号，获取更多AI开发和技术分享：
+
+- 知乎：[胜算云](https://zhihu.com/people/shengsuanyunrouter)
+- B站： [胜算云](https://space.bilibili.com/3546885937695051)
 
 ## 主要功能
 
