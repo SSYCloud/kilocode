@@ -12,7 +12,36 @@
   <a href="https://www.reddit.com/r/kilocode/"><img src="https://img.shields.io/reddit/subreddit-subscribers/kilocode?style=flat&logo=reddit&logoColor=white" alt="Reddit"></a>
 </p>
 
-# 🚀 Kilo 胜算云
+# 🚀 Kilo-中文版
+
+##  Kilo-中文版核心优势
+✅ **中文代码生成精准度提升200%**
+
+✅ **零门槛接入，国内直连无需魔法**
+
+✅ **企业用户可开具正规发票**
+
+✅ **独家专属模型折扣**
+
+
+
+
+## ✨进群交流
+### 进群福利
+- **注册新用户赠送10元**
+- **我们的专业客服及时为您答疑解惑**
+- **开发票**
+<div align="center" style="display: flex; justify-content: center; gap: 20px;">
+
+APIRouter进群交流<br>（如果无法加群，请加企业微信客服）<br>
+  <img src="https://github.com/user-attachments/assets/41e6dc76-07c9-4dbf-ac35-d2494ebc9a41" alt="APIRouter企业微信群" width="250" /> <br>
+</div>
+
+<div align="center" style="display: flex; justify-content: center; gap: 20px;">
+
+企业客服咨询<br>
+  <img src="https://github.com/user-attachments/assets/c180b033-d62c-4dc0-9c2a-a3ad8c70e5a4" alt="企业微信客服" width="250" />
+</div>
 
 > 开源 VS Code AI 代理。合并了 [Roo Code](https://github.com/RooVetGit/Roo-Code) 和 [Cline](https://github.com/cline/cline) 的功能。
 
