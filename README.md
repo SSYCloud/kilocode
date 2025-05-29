@@ -44,8 +44,6 @@ APIRouter进群交流<br>（如果无法加群，请加企业微信客服）<br>
   <img src="https://github.com/user-attachments/assets/c180b033-d62c-4dc0-9c2a-a3ad8c70e5a4" alt="企业微信客服" width="250" />
 </div>
 
-好的，这是您提供的关于 Kilo Code 开源 VS Code AI 助手的中文翻译：
-
 ---
 
 > 开源 VS Code AI 助手。融合了 [Roo Code](https://github.com/RooVetGit/Roo-Code) 和 [Cline](https://github.com/cline/cline) 的功能特性。
@@ -78,7 +76,6 @@ APIRouter进群交流<br>（如果无法加群，请加企业微信客服）<br>
 1.  从 [VS Code 市场](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code) 安装 Kilo Code 扩展。
 2.  使用您的 Google 账户登录，即可获得价值20美元的 Claude 3.7 Sonnet 免费额度。
 3.  开始使用该扩展。以下视频可帮助您快速上手（点击下方图片即可跳转至 YouTube 观看）：
-
 [![观看视频](https://img.youtube.com/vi/pqGfYXgrhig/maxresdefault.jpg)](https://youtu.be/pqGfYXgrhig)
 
 ## Roo Code 与 Cline 的区别
@@ -93,9 +90,7 @@ Kilo Code 直接派生自 Roo Code，但也包含了来自 Cline 的以下功能
 *   **系统通知：** 在助手完成任务时收到通知。
 *   **便捷模型连接：** 提供更大的免费额度。
 
-## 扩展开发
 
-有关构建和开发此扩展的详细信息，请参阅 [DEVELOPMENT.md](/DEVELOPMENT.md)
 
 ---
 
@@ -145,6 +140,3 @@ Kilo Code is a direct fork from Roo Code, but also includes the following featur
 - System notifications: Get notified when the agent is done with a task.
 - Easy model connection: with bigger free tier.
 
-## Extension Development
-
-For details on building and developing the extension, see [DEVELOPMENT.md](/DEVELOPMENT.md)
