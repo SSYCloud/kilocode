@@ -1,14 +1,15 @@
-# Kilo SSY Development Guide
+# Kilo Code Development Guide
 
-Welcome to the Kilo SSY development guide! This document will help you set up your development environment and understand how to work with the codebase. Whether you're fixing bugs, adding features, or just exploring the code, this guide will get you started.
+Welcome to the Kilo Code development guide! This document will help you set up your development environment and understand how to work with the codebase. Whether you're fixing bugs, adding features, or just exploring the code, this guide will get you started.
 
 ## Prerequisites
 
 Before you begin, make sure you have the following installed:
 
 1. **Git** - For version control
-2. **Node.js** (version [v20.18.1](https://github.com/Kilo-Org/kilocode/blob/main/.nvmrc) or higher recommended) and npm
-3. **Visual Studio Code** - Our recommended IDE for development
+2. **Node.js** (version [v20.18.1](https://github.com/Kilo-Org/kilocode/blob/main/.nvmrc) recommended)
+3. **pnpm** - Package manager (https://pnpm.io/)
+4. **Visual Studio Code** - Our recommended IDE for development
 
 ## Getting Started
 
@@ -17,7 +18,7 @@ Before you begin, make sure you have the following installed:
 1. **Fork and Clone the Repository**:
 
     - **Fork the Repository**:
-        - Visit the [Kilo SSY GitHub repository](https://github.com/Kilo-Org/kilocode)
+        - Visit the [Kilo Code GitHub repository](https://github.com/Kilo-Org/kilocode)
         - Click the "Fork" button in the top-right corner to create your own copy.
     - **Clone Your Fork**:
         ```bash
@@ -29,7 +30,7 @@ Before you begin, make sure you have the following installed:
 2. **Install dependencies**:
 
     ```bash
-    npm run install:all
+    pnpm install
     ```
 
     This command will install dependencies for the main extension, webview UI, and e2e tests.
@@ -63,7 +64,7 @@ The project is organized into several key directories:
 To run the extension in development mode:
 
 1. Press `F5` (or select **Run** → **Start Debugging**) in VSCode
-2. This will open a new VSCode window with Kilo SSY loaded
+2. This will open a new VSCode window with Kilo Code loaded
 
 ### Hot Reloading
 
@@ -85,7 +86,7 @@ In development mode (NODE_ENV="development"), changing the core code will trigge
 To build a production-ready `.vsix` file:
 
 ```bash
-npm run build
+pnpm build
 ```
 
 This will:
@@ -107,49 +108,29 @@ Replace `[version]` with the current version number.
 
 ## Testing
 
-Kilo SSY uses several types of tests to ensure quality:
+Kilo Code uses several types of tests to ensure quality:
 
 ### Unit Tests
 
 Run unit tests with:
 
 ```bash
-npm test
+pnpm test
 ```
 
 This runs both extension and webview tests.
 
-To run specific test suites:
-
-```bash
-npm run test:extension  # Run only extension tests
-npm run test:webview    # Run only webview tests
-```
-
 ### End-to-End Tests
 
-E2E tests verify the extension works correctly within VSCode:
-
-1. Create a `.env.local` file in the root with required API keys:
-
-    ```
-    OPENROUTER_API_KEY=sk-or-v1-...
-    ```
-
-2. Run the integration tests:
-    ```bash
-    npm run test:integration
-    ```
-
-For more details on E2E tests, see [e2e/VSCODE_INTEGRATION_TESTS.md](e2e/VSCODE_INTEGRATION_TESTS.md).
+For more details on E2E tests, see [apps/vscode-e2e](apps/vscode-e2e/).
 
 ## Linting and Type Checking
 
 Ensure your code meets our quality standards:
 
 ```bash
-npm run lint          # Run ESLint
-npm run check-types   # Run TypeScript type checking
+pnpm lint          # Run ESLint
+pnpm check-types   # Run TypeScript type checking
 ```
 
 ## Git Hooks
@@ -161,7 +142,7 @@ This project uses [Husky](https://typicode.github.io/husky/) to manage Git hooks
 Before a commit is finalized, the `.husky/pre-commit` hook runs:
 
 1.  **Branch Check**: Prevents committing directly to the `main` branch.
-2.  **Type Generation**: Runs `npm run generate-types`.
+2.  **Type Generation**: Runs `pnpm --filter kilo-code generate-types`.
 3.  **Type File Check**: Ensures that any changes made to `src/exports/roo-code.d.ts` by the type generation are staged.
 4.  **Linting**: Runs `lint-staged` to lint and format staged files.
 
@@ -170,7 +151,7 @@ Before a commit is finalized, the `.husky/pre-commit` hook runs:
 Before changes are pushed to the remote repository, the `.husky/pre-push` hook runs:
 
 1.  **Branch Check**: Prevents pushing directly to the `main` branch.
-2.  **Compilation**: Runs `npm run compile` to ensure the project builds successfully.
+2.  **Compilation**: Runs `pnpm run check-types` to ensure typing is correct.
 3.  **Changeset Check**: Checks if a changeset file exists in `.changeset/` and reminds you to create one using `npm run changeset` if necessary.
 
 These hooks help maintain code quality and consistency. If you encounter issues with commits or pushes, check the output from these hooks for error messages.
@@ -181,17 +162,17 @@ These hooks help maintain code quality and consistency. If you encounter issues 
 
 1. **Extension not loading**: Check the VSCode Developer Tools (Help > Toggle Developer Tools) for errors
 2. **Webview not updating**: Try reloading the window (Developer: Reload Window)
-3. **Build errors**: Make sure all dependencies are installed with `npm run install:all`
+3. **Build errors**: Make sure all dependencies are installed with `pnpm install`
 
 ### Debugging Tips
 
 - Use `console.log()` statements in your code for debugging
-- Check the Output panel in VSCode (View > Output) and select "Kilo SSY" from the dropdown
+- Check the Output panel in VSCode (View > Output) and select "Kilo Code" from the dropdown
 - For webview issues, use the browser developer tools in the webview (right-click > "Inspect Element")
 
 ## Contributing
 
-We welcome contributions to Kilo SSY! Here's how you can help:
+We welcome contributions to Kilo Code! Here's how you can help:
 
 1. **Report an issue** using [GitHub Issues](https://github.com/Kilo-Org/kilocode/issues)
 2. **Find an issue** and submit a Pull Request with your fix

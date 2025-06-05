@@ -1,13 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Què pot fer Kilo SSY per tu?",
+		"greeting": "Què pot fer Kilo Code per tu?",
 		"introText": "He estat entrenat amb els models d'IA més ràpids disponibles i estic preparat per generar codi per a tu a velocitat de vertigen!",
 		"ctaButton": "Registra la clau API de ShengSuanYun",
 		"manualModeButton": "Utilitza la teva pròpia clau API"
 	},
 	"lowCreditWarning": {
 		"addCredit": "Afegir crèdit",
-		"lowBalance": "El teu saldo de Kilo SSY és baix"
+		"lowBalance": "El teu saldo de Kilo Code és baix"
 	},
 	"notifications": {
 		"toolRequest": "Sol·licitud d'eina pendent d'aprovació",
@@ -17,6 +17,11 @@
 	"settings": {
 		"sections": {
 			"mcp": "Servidors MCP"
+		},
+		"provider": {
+			"apiKey": "Clau API de Kilo Code",
+			"login": "Iniciar sessió a Kilo Code",
+			"logout": "Tancar sessió de Kilo Code"
 		}
 	},
 	"profile": {

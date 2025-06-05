@@ -1,5 +1,5 @@
 {
-	"greeting": "Kilo SSY 能为您做什么？",
+	"greeting": "Kilo Code 能为您做什么？",
 	"task": {
 		"title": "任务",
 		"seeMore": "展开",
@@ -10,7 +10,8 @@
 		"contextWindow": "上下文长度：",
 		"closeAndStart": "关闭任务并开始新任务",
 		"export": "导出任务历史",
-		"delete": "删除任务（Shift + 点击跳过确认）"
+		"delete": "删除任务（Shift + 点击跳过确认）",
+		"condenseContext": "智能压缩上下文"
 	},
 	"history": {
 		"title": "历史"
@@ -76,7 +77,7 @@
 	},
 	"scrollToBottom": "滚动到聊天底部",
 	"about": "通过 AI 辅助生成、重构和调试代码。<br />查看我们的 <DocsLink>文档</DocsLink> 了解更多信息。",
-	"onboarding": "<strong>此工作区中的任务列表为空。</strong> 请在下方输入任务开始。 不确定如何开始？ 在 <DocsLink>文档</DocsLink> 中阅读更多关于 Kilo SSY 可以为您做什么的信息。",
+	"onboarding": "<strong>此工作区中的任务列表为空。</strong> 请在下方输入任务开始。 不确定如何开始？ 在 <DocsLink>文档</DocsLink> 中阅读更多关于 Kilo Code  可以为您做什么的信息。",
 	"rooTips": {
 		"boomerangTasks": {
 			"title": "任务拆分",
@@ -115,7 +116,7 @@
 	"diffError": {
 		"title": "编辑失败"
 	},
-	"troubleMessage": "Kilo SSY 遇到问题...",
+	"troubleMessage": "Kilo Code  遇到问题...",
 	"apiRequest": {
 		"title": "API请求",
 		"failed": "API请求失败",
@@ -141,7 +142,7 @@
 		"current": "当前"
 	},
 	"instructions": {
-		"wantsToFetch": "Kilo SSY 想要获取详细指示以协助当前任务"
+		"wantsToFetch": "Kilo Code  想要获取详细指示以协助当前任务"
 	},
 	"fileOperations": {
 		"wantsToRead": "需要读取文件:",
@@ -161,8 +162,8 @@
 		"didViewTopLevel": "已查看目录文件列表:",
 		"wantsToViewRecursive": "需要查看目录所有文件:",
 		"didViewRecursive": "已查看目录所有文件:",
-		"wantsToViewDefinitions": "Kilo SSY想查看此目录中使用的源代码定义名称:",
-		"didViewDefinitions": "Kilo SSY已查看此目录中使用的源代码定义名称:",
+		"wantsToViewDefinitions": "Kilo Code 想查看此目录中使用的源代码定义名称:",
+		"didViewDefinitions": "Kilo Code 已查看此目录中使用的源代码定义名称:",
 		"wantsToSearch": "需要搜索内容: {{regex}}",
 		"didSearch": "已完成内容搜索: {{regex}}"
 	},
@@ -170,8 +171,8 @@
 	"response": "响应",
 	"arguments": "参数",
 	"mcp": {
-		"wantsToUseTool": "Kilo SSY想在{{serverName}} MCP上使用工具:",
-		"wantsToAccessResource": "Kilo SSY想访问{{serverName}} MCP服务上的资源:"
+		"wantsToUseTool": "Kilo Code 想在{{serverName}} MCP上使用工具:",
+		"wantsToAccessResource": "Kilo Code 想访问{{serverName}} MCP服务上的资源:"
 	},
 	"modes": {
 		"wantsToSwitch": "即将切换至{{mode}}模式",
@@ -180,8 +181,8 @@
 		"didSwitchWithReason": "已切换至{{mode}}模式（原因：{{reason}}）"
 	},
 	"subtasks": {
-		"wantsToCreate": "Kilo SSY想在<code>{{mode}}</code>模式下创建新子任务:",
-		"wantsToFinish": "Kilo SSY想完成此子任务",
+		"wantsToCreate": "Kilo Code 想在<code>{{mode}}</code>模式下创建新子任务:",
+		"wantsToFinish": "Kilo Code 想完成此子任务",
 		"newTaskContent": "子任务说明",
 		"completionContent": "子任务已完成",
 		"resultContent": "子任务结果",
@@ -189,7 +190,7 @@
 		"completionInstructions": "子任务已完成！您可以查看结果并提出修改或下一步建议。如果一切正常，请确认以将结果返回给主任务。"
 	},
 	"questions": {
-		"hasQuestion": "Kilo SSY有一个问题:"
+		"hasQuestion": "Kilo Code 有一个问题:"
 	},
 	"taskCompleted": "任务完成",
 	"powershell": {
@@ -204,21 +205,26 @@
 		"thinking": "思考中",
 		"seconds": "{{count}}秒"
 	},
+	"contextCondense": {
+		"title": "上下文已压缩",
+		"condensing": "正在压缩上下文...",
+		"tokens": "tokens"
+	},
 	"followUpSuggest": {
 		"copyToInput": "复制到输入框（或按住Shift点击）"
 	},
 	"announcement": {
-		"title": "🎉 Roo Code 3.17 已发布",
-		"description": "Roo Code 3.17 带来基于您反馈的强大新功能和改进。",
+		"title": "🎉 Roo Code {{version}} 已发布",
+		"description": "Roo Code {{version}} 带来基于您反馈的强大新功能和改进。",
 		"whatsNew": "新特性",
-		"feature1": "<bold>Gemini 的隐式缓存</bold>: Gemini API 调用现在会自动缓存，降低 API 费用",
-		"feature2": "<bold>更智能的模式选择</bold>: 模式定义现在可以包含何时使用每种模式的指导，实现更好的协调",
-		"feature3": "<bold>智能上下文压缩</bold>: 当上下文填满时，智能汇总对话历史而非截断（在设置 -> 实验性功能中启用）",
+		"feature1": "<bold>Gemini 2.5 Flash 预览模型</bold>: 访问最新的 Gemini Flash 模型，获得更快速高效的响应",
+		"feature2": "<bold>智能上下文压缩</bold>: 任务标题中的新按钮让您能够智能压缩内容并提供可视化反馈",
+		"feature3": "<bold>模式定义的 YAML 支持</bold>: 通过 YAML 支持更轻松地创建和自定义模式",
 		"hideButton": "隐藏公告",
 		"detailsDiscussLinks": "在 <discordLink>Discord</discordLink> 和 <redditLink>Reddit</redditLink> 获取更多详情并参与讨论 🚀"
 	},
 	"browser": {
-		"rooWantsToUse": "Kilo SSY想使用浏览器:",
+		"rooWantsToUse": "Kilo Code 想使用浏览器:",
 		"consoleLogs": "控制台日志",
 		"noNewLogs": "(没有新日志)",
 		"screenshot": "浏览器截图",
@@ -251,7 +257,19 @@
 	"systemPromptWarning": "警告：自定义系统提示词覆盖已激活。这可能严重破坏功能并导致不可预测的行为。",
 	"shellIntegration": {
 		"title": "命令执行警告",
-		"description": "您的命令正在没有 VSCode 终端 shell 集成的情况下执行。要隐藏此警告，您可以在 <settingsLink>Kilo SSY 设置</settingsLink>的 <strong>Terminal</strong> 部分禁用 shell 集成，或使用下方链接排查 VSCode 终端集成问题。",
+		"description": "您的命令正在没有 VSCode 终端 shell 集成的情况下执行。要隐藏此警告，您可以在 <settingsLink>Kilo Code  设置</settingsLink>的 <strong>Terminal</strong> 部分禁用 shell 集成，或使用下方链接排查 VSCode 终端集成问题。",
 		"troubleshooting": "点击此处查看 shell 集成文档。"
+	},
+	"ask": {
+		"autoApprovedRequestLimitReached": {
+			"title": "已达自动批准请求限制",
+			"description": "Kilo Code 已达到 {{count}} 次 API 请求的自动批准限制。您想重置计数并继续任务吗？",
+			"button": "重置并继续"
+		}
+	},
+	"codebaseSearch": {
+		"wantsToSearch": "Kilo Code 需要搜索代码库: <code>{{query}}</code>",
+		"wantsToSearchWithPath": "Kilo Code 需要在 <code>{{path}}</code> 中搜索: <code>{{query}}</code>",
+		"didSearch": "找到 {{count}} 个结果: <code>{{query}}</code>"
 	}
 }

@@ -1,6 +1,6 @@
 {
 	"extension": {
-		"name": "Kilo SSY",
+		"name": "Kilo Code",
 		"description": "Asystent kodowania AI o otwartym kodzie źródłowym do planowania, tworzenia i naprawiania kodu."
 	},
 	"number_format": {
@@ -58,7 +58,9 @@
 		"failed_delete_repo": "Nie udało się usunąć powiązanego repozytorium lub gałęzi pomocniczej: {{error}}",
 		"failed_remove_directory": "Nie udało się usunąć katalogu zadania: {{error}}",
 		"custom_storage_path_unusable": "Niestandardowa ścieżka przechowywania \"{{path}}\" nie jest użyteczna, zostanie użyta domyślna ścieżka",
-		"cannot_access_path": "Nie można uzyskać dostępu do ścieżki {{path}}: {{error}}"
+		"cannot_access_path": "Nie można uzyskać dostępu do ścieżki {{path}}: {{error}}",
+		"settings_import_failed": "Nie udało się zaimportować ustawień: {{error}}.",
+		"mistake_limit_guidance": "To może wskazywać na błąd w procesie myślowym modelu lub niezdolność do prawidłowego użycia narzędzia, co można złagodzić poprzez wskazówki użytkownika (np. \"Spróbuj podzielić zadanie na mniejsze kroki\")."
 	},
 	"warnings": {
 		"no_terminal_content": "Nie wybrano zawartości terminala",
@@ -94,7 +96,7 @@
 		"enter_valid_path": "Wprowadź prawidłową ścieżkę"
 	},
 	"input": {
-		"task_prompt": "Co ma zrobić Kilo SSY?",
+		"task_prompt": "Co ma zrobić Kilo Code?",
 		"task_placeholder": "Wpisz swoje zadanie tutaj"
 	},
 	"settings": {

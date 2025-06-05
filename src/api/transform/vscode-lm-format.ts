@@ -18,12 +18,12 @@ function asObjectSafe(value: any): object {
 
 		// Handle pre-existing objects
 		if (typeof value === "object") {
-			return Object.assign({}, value)
+			return { ...value }
 		}
 
 		return {}
 	} catch (error) {
-		console.warn("Kilo SSY <Language Model API>: Failed to parse object:", error)
+		console.warn("Kilo Code <Language Model API>: Failed to parse object:", error)
 		return {}
 	}
 }
@@ -73,7 +73,9 @@ export function convertToVsCodeLmMessages(
 								: (toolMessage.content?.map((part) => {
 										if (part.type === "image") {
 											return new vscode.LanguageModelTextPart(
+												// kilocode_change begin support type==url
 												`[Image (${part.source?.type || "Unknown source-type"}): ${part.source?.type === "url" ? "URL" : part.source?.media_type || "unknown media-type"} not supported by VSCode LM API]`,
+												// kilocode_change end
 											)
 										}
 										return new vscode.LanguageModelTextPart(part.text)
@@ -86,7 +88,9 @@ export function convertToVsCodeLmMessages(
 					...nonToolMessages.map((part) => {
 						if (part.type === "image") {
 							return new vscode.LanguageModelTextPart(
+								// kilocode_change begin support type==url
 								`[Image (${part.source?.type || "Unknown source-type"}): ${part.source?.type === "url" ? "URL" : part.source?.media_type || "unknown media-type"} not supported by VSCode LM API]`,
+								// kilocode_change end
 							)
 						}
 						return new vscode.LanguageModelTextPart(part.text)

@@ -1,6 +1,6 @@
 {
 	"extension": {
-		"name": "Kilo SSY",
+		"name": "Kilo Code",
 		"description": "Open-Source-KI-Codierungsassistent zum Planen, Erstellen und Korrigieren von Code."
 	},
 	"number_format": {
@@ -58,7 +58,9 @@
 		"failed_delete_repo": "Fehler beim Löschen des zugehörigen Shadow-Repositorys oder -Zweigs: {{error}}",
 		"failed_remove_directory": "Fehler beim Entfernen des Aufgabenverzeichnisses: {{error}}",
 		"custom_storage_path_unusable": "Benutzerdefinierter Speicherpfad \"{{path}}\" ist nicht verwendbar, Standardpfad wird verwendet",
-		"cannot_access_path": "Zugriff auf Pfad {{path}} nicht möglich: {{error}}"
+		"cannot_access_path": "Zugriff auf Pfad {{path}} nicht möglich: {{error}}",
+		"settings_import_failed": "Fehler beim Importieren der Einstellungen: {{error}}.",
+		"mistake_limit_guidance": "Dies kann auf einen Fehler im Denkprozess des Modells oder die Unfähigkeit hinweisen, ein Tool richtig zu verwenden, was durch Benutzerführung behoben werden kann (z.B. \"Versuche, die Aufgabe in kleinere Schritte zu unterteilen\")."
 	},
 	"warnings": {
 		"no_terminal_content": "Kein Terminal-Inhalt ausgewählt",
@@ -94,7 +96,7 @@
 		"enter_valid_path": "Bitte gib einen gültigen Pfad ein"
 	},
 	"input": {
-		"task_prompt": "Was soll Kilo SSY tun?",
+		"task_prompt": "Was soll Kilo Code tun?",
 		"task_placeholder": "Gib deine Aufgabe hier ein"
 	},
 	"settings": {

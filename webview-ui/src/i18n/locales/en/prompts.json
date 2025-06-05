@@ -7,7 +7,7 @@
 		"editModesConfig": "Edit modes configuration",
 		"editGlobalModes": "Edit Global Modes",
 		"editProjectModes": "Edit Project Modes (.kilossymodes)",
-		"createModeHelpText": "Modes are specialized personas that tailor Kilo SSY's behavior. <0>Learn about Using Modes</0> or <1>Customizing Modes.</1>",
+		"createModeHelpText": "Modes are specialized personas that tailor Kilo Code's behavior. <0>Learn about Using Modes</0> or <1>Customizing Modes.</1>",
 		"selectMode": "Search modes"
 	},
 	"apiConfiguration": {
@@ -32,7 +32,7 @@
 	"roleDefinition": {
 		"title": "Role Definition",
 		"resetToDefault": "Reset to default",
-		"description": "Define Kilo SSY's expertise and personality for this mode. This description shapes how Kilo SSY presents itself and approaches tasks."
+		"description": "Define Kilo Code's expertise and personality for this mode. This description shapes how Kilo Code presents itself and approaches tasks."
 	},
 	"whenToUse": {
 		"title": "When to Use (optional)",
@@ -69,7 +69,7 @@
 		"types": {
 			"ENHANCE": {
 				"label": "Enhance Prompt",
-				"description": "Use prompt enhancement to get tailored suggestions or improvements for your inputs. This ensures Kilo SSY understands your intent and provides the best possible responses. Available via the ✨ icon in chat."
+				"description": "Use prompt enhancement to get tailored suggestions or improvements for your inputs. This ensures Kilo Code understands your intent and provides the best possible responses. Available via the ✨ icon in chat."
 			},
 			"EXPLAIN": {
 				"label": "Explain Code",
@@ -134,7 +134,7 @@
 		},
 		"roleDefinition": {
 			"label": "Role Definition",
-			"description": "Define Kilo SSY's expertise and personality for this mode."
+			"description": "Define Kilo Code's expertise and personality for this mode."
 		},
 		"whenToUse": {
 			"label": "When to Use (optional)",

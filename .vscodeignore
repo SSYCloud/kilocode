@@ -72,3 +72,7 @@ assets/docs/**
 
 # Include .env file for telemetry
 !.env
+
+# Ignore IntelliJ and Qodo plugin folders
+.idea/**
+.qodo/**

@@ -30,16 +30,40 @@
 		"terminal": "Terminal",
 		"experimental": "Experimental",
 		"language": "Idioma",
-		"about": "Acerca de Kilo SSY"
+		"about": "Acerca de Kilo Code"
+	},
+	"codeIndex": {
+		"title": "Indexación de código",
+		"enableLabel": "Habilitar indexación de código",
+		"enableDescription": "<0>La indexación de código</0> es una función experimental que crea un índice de búsqueda semántica de tu proyecto usando embeddings de IA. Esto permite a Kilo Code entender mejor y navegar grandes bases de código encontrando código relevante basado en significado en lugar de solo palabras clave.",
+		"providerLabel": "Proveedor de embeddings",
+		"selectProviderPlaceholder": "Seleccionar proveedor",
+		"openaiProvider": "OpenAI",
+		"ollamaProvider": "Ollama",
+		"openaiKeyLabel": "Clave de OpenAI:",
+		"modelLabel": "Modelo",
+		"selectModelPlaceholder": "Seleccionar modelo",
+		"ollamaUrlLabel": "URL de Ollama:",
+		"qdrantUrlLabel": "URL de Qdrant",
+		"qdrantKeyLabel": "Clave de Qdrant:",
+		"startIndexingButton": "Iniciar indexación",
+		"clearIndexDataButton": "Borrar datos de índice",
+		"unsavedSettingsMessage": "Por favor guarda tus ajustes antes de iniciar el proceso de indexación.",
+		"clearDataDialog": {
+			"title": "¿Estás seguro?",
+			"description": "Esta acción no se puede deshacer. Esto eliminará permanentemente los datos de índice de tu base de código.",
+			"cancelButton": "Cancelar",
+			"confirmButton": "Borrar datos"
+		}
 	},
 	"autoApprove": {
-		"description": "Permitir que Kilo SSY realice operaciones automáticamente sin requerir aprobación. Habilite esta configuración solo si confía plenamente en la IA y comprende los riesgos de seguridad asociados.",
+		"description": "Permitir que Kilo Code realice operaciones automáticamente sin requerir aprobación. Habilite esta configuración solo si confía plenamente en la IA y comprende los riesgos de seguridad asociados.",
 		"readOnly": {
 			"label": "Lectura",
-			"description": "Cuando está habilitado, Kilo SSY verá automáticamente el contenido del directorio y leerá archivos sin que necesite hacer clic en el botón Aprobar.",
+			"description": "Cuando está habilitado, Kilo Code verá automáticamente el contenido del directorio y leerá archivos sin que necesite hacer clic en el botón Aprobar.",
 			"outsideWorkspace": {
 				"label": "Incluir archivos fuera del espacio de trabajo",
-				"description": "Permitir a Kilo SSY leer archivos fuera del espacio de trabajo actual sin requerir aprobación."
+				"description": "Permitir a Kilo Code leer archivos fuera del espacio de trabajo actual sin requerir aprobación."
 			}
 		},
 		"write": {
@@ -48,7 +72,7 @@
 			"delayLabel": "Retraso después de escritura para permitir que los diagnósticos detecten posibles problemas",
 			"outsideWorkspace": {
 				"label": "Incluir archivos fuera del espacio de trabajo",
-				"description": "Permitir a Kilo SSY crear y editar archivos fuera del espacio de trabajo actual sin requerir aprobación."
+				"description": "Permitir a Kilo Code crear y editar archivos fuera del espacio de trabajo actual sin requerir aprobación."
 			}
 		},
 		"browser": {
@@ -83,6 +107,11 @@
 		"showMenu": {
 			"label": "Mostrar menú de aprobación automática en la vista de chat",
 			"description": "Cuando está habilitado, el menú de aprobación automática se mostrará en la parte inferior de la vista de chat, permitiendo un acceso rápido a la configuración de aprobación automática"
+		},
+		"apiRequestLimit": {
+			"title": "Solicitudes máximas",
+			"description": "Realizar automáticamente esta cantidad de solicitudes a la API antes de pedir aprobación para continuar con la tarea.",
+			"unlimited": "Ilimitado"
 		}
 	},
 	"providers": {
@@ -113,6 +142,7 @@
 		"glamaApiKey": "Clave API de Glama",
 		"getGlamaApiKey": "Obtener clave API de Glama",
 		"useCustomBaseUrl": "Usar URL base personalizada",
+		"useReasoning": "Habilitar razonamiento",
 		"useHostHeader": "Usar encabezado Host personalizado",
 		"useLegacyFormat": "Usar formato API de OpenAI heredado",
 		"customHeaders": "Encabezados personalizados",
@@ -122,7 +152,10 @@
 		"requestyApiKey": "Clave API de Requesty",
 		"refreshModels": {
 			"label": "Actualizar modelos",
-			"hint": "Por favor, vuelve a abrir la configuración para ver los modelos más recientes."
+			"hint": "Por favor, vuelve a abrir la configuración para ver los modelos más recientes.",
+			"loading": "Actualizando lista de modelos...",
+			"success": "¡Lista de modelos actualizada correctamente!",
+			"error": "Error al actualizar la lista de modelos. Por favor, inténtalo de nuevo."
 		},
 		"getRequestyApiKey": "Obtener clave API de Requesty",
 		"openRouterTransformsText": "Comprimir prompts y cadenas de mensajes al tamaño del contexto (<a>Transformaciones de OpenRouter</a>)",
@@ -181,16 +214,18 @@
 			"draftModelDesc": "El modelo borrador debe ser de la misma familia de modelos para que la decodificación especulativa funcione correctamente.",
 			"selectDraftModel": "Seleccionar modelo borrador",
 			"noModelsFound": "No se encontraron modelos borrador. Asegúrese de que LM Studio esté ejecutándose con el Modo Servidor habilitado.",
-			"description": "LM Studio le permite ejecutar modelos localmente en su computadora. Para obtener instrucciones sobre cómo comenzar, consulte su <a>guía de inicio rápido</a>. También necesitará iniciar la función de <b>servidor local</b> de LM Studio para usarlo con esta extensión. <span>Nota:</span> Kilo SSY utiliza prompts complejos y funciona mejor con modelos Claude. Los modelos menos capaces pueden no funcionar como se espera."
+			"description": "LM Studio le permite ejecutar modelos localmente en su computadora. Para obtener instrucciones sobre cómo comenzar, consulte su <a>guía de inicio rápido</a>. También necesitará iniciar la función de <b>servidor local</b> de LM Studio para usarlo con esta extensión. <span>Nota:</span> Kilo Code utiliza prompts complejos y funciona mejor con modelos Claude. Los modelos menos capaces pueden no funcionar como se espera."
 		},
 		"ollama": {
 			"baseUrl": "URL base (opcional)",
 			"modelId": "ID del modelo",
 			"description": "Ollama le permite ejecutar modelos localmente en su computadora. Para obtener instrucciones sobre cómo comenzar, consulte la guía de inicio rápido.",
-			"warning": "Nota: Kilo SSY utiliza prompts complejos y funciona mejor con modelos Claude. Los modelos menos capaces pueden no funcionar como se espera."
+			"warning": "Nota: Kilo Code utiliza prompts complejos y funciona mejor con modelos Claude. Los modelos menos capaces pueden no funcionar como se espera."
 		},
 		"unboundApiKey": "Clave API de Unbound",
 		"getUnboundApiKey": "Obtener clave API de Unbound",
+		"unboundRefreshModelsSuccess": "¡Lista de modelos actualizada! Ahora puede seleccionar entre los últimos modelos.",
+		"unboundInvalidApiKey": "Clave API inválida. Por favor, verifique su clave API e inténtelo de nuevo.",
 		"humanRelay": {
 			"description": "No se requiere clave API, pero el usuario necesita ayudar a copiar y pegar la información en el chat web de IA.",
 			"instructions": "Durante el uso, aparecerá un cuadro de diálogo y el mensaje actual se copiará automáticamente al portapapeles. Debe pegarlo en las versiones web de IA (como ChatGPT o Claude), luego copiar la respuesta de la IA de vuelta al cuadro de diálogo y hacer clic en el botón de confirmar."
@@ -203,7 +238,7 @@
 			}
 		},
 		"customModel": {
-			"capabilities": "Configure las capacidades y precios para su modelo personalizado compatible con OpenAI. Tenga cuidado al especificar las capacidades del modelo, ya que pueden afectar cómo funciona Kilo SSY.",
+			"capabilities": "Configure las capacidades y precios para su modelo personalizado compatible con OpenAI. Tenga cuidado al especificar las capacidades del modelo, ya que pueden afectar cómo funciona Kilo Code.",
 			"maxTokens": {
 				"label": "Tokens máximos de salida",
 				"description": "Número máximo de tokens que el modelo puede generar en una respuesta. (Especifique -1 para permitir que el servidor establezca los tokens máximos.)"
@@ -259,7 +294,7 @@
 	"browser": {
 		"enable": {
 			"label": "Habilitar herramienta de navegador",
-			"description": "Cuando está habilitado, Kilo SSY puede usar un navegador para interactuar con sitios web cuando se utilizan modelos que admiten el uso del ordenador. <0>Más información</0>"
+			"description": "Cuando está habilitado, Kilo Code puede usar un navegador para interactuar con sitios web cuando se utilizan modelos que admiten el uso del ordenador. <0>Más información</0>"
 		},
 		"viewport": {
 			"label": "Tamaño del viewport",
@@ -293,12 +328,12 @@
 	"notifications": {
 		"sound": {
 			"label": "Habilitar efectos de sonido",
-			"description": "Cuando está habilitado, Kilo SSY reproducirá efectos de sonido para notificaciones y eventos.",
+			"description": "Cuando está habilitado, Kilo Code reproducirá efectos de sonido para notificaciones y eventos.",
 			"volumeLabel": "Volumen"
 		},
 		"tts": {
 			"label": "Habilitar texto a voz",
-			"description": "Cuando está habilitado, Kilo SSY leerá en voz alta sus respuestas usando texto a voz.",
+			"description": "Cuando está habilitado, Kilo Code leerá en voz alta sus respuestas usando texto a voz.",
 			"speedLabel": "Velocidad"
 		}
 	},
@@ -318,7 +353,7 @@
 		},
 		"maxReadFile": {
 			"label": "Umbral de auto-truncado de lectura de archivos",
-			"description": "Kilo SSY lee este número de líneas cuando el modelo omite valores de inicio/fin. Si este número es menor que el total del archivo, Kilo SSY genera un índice de números de línea de las definiciones de código. Casos especiales: -1 indica a Kilo SSY que lea el archivo completo (sin indexación), y 0 indica que no lea líneas y proporcione solo índices de línea para un contexto mínimo. Valores más bajos minimizan el uso inicial de contexto, permitiendo lecturas posteriores de rangos de líneas precisos. Las solicitudes con inicio/fin explícitos no están limitadas por esta configuración.",
+			"description": "Kilo Code lee este número de líneas cuando el modelo omite valores de inicio/fin. Si este número es menor que el total del archivo, Kilo Code genera un índice de números de línea de las definiciones de código. Casos especiales: -1 indica a Kilo Code que lea el archivo completo (sin indexación), y 0 indica que no lea líneas y proporcione solo índices de línea para un contexto mínimo. Valores más bajos minimizan el uso inicial de contexto, permitiendo lecturas posteriores de rangos de líneas precisos. Las solicitudes con inicio/fin explícitos no están limitadas por esta configuración.",
 			"lines": "líneas",
 			"always_full_read": "Siempre leer el archivo completo"
 		}
@@ -380,7 +415,7 @@
 	"advanced": {
 		"diff": {
 			"label": "Habilitar edición a través de diffs",
-			"description": "Cuando está habilitado, Kilo SSY podrá editar archivos más rápidamente y rechazará automáticamente escrituras completas de archivos truncados. Funciona mejor con el último modelo Claude 3.7 Sonnet.",
+			"description": "Cuando está habilitado, Kilo Code podrá editar archivos más rápidamente y rechazará automáticamente escrituras completas de archivos truncados. Funciona mejor con el último modelo Claude 3.7 Sonnet.",
 			"strategy": {
 				"label": "Estrategia de diff",
 				"options": {
@@ -401,10 +436,25 @@
 		}
 	},
 	"experimental": {
-		"warning": "⚠️",
+		"autoCondenseContextPercent": {
+			"label": "Umbral para activar la condensación inteligente de contexto",
+			"description": "Cuando la ventana de contexto alcanza este umbral, Kilo Code la condensará automáticamente."
+		},
+		"condensingApiConfiguration": {
+			"label": "Configuración de API para condensación de contexto",
+			"description": "Seleccione qué configuración de API usar para operaciones de condensación de contexto. Deje sin seleccionar para usar la configuración activa actual.",
+			"useCurrentConfig": "Usar configuración actual"
+		},
+		"customCondensingPrompt": {
+			"label": "Prompt personalizado para condensación de contexto",
+			"description": "Personalice el prompt del sistema utilizado para la condensación de contexto. Deje vacío para usar el prompt predeterminado.",
+			"placeholder": "Ingrese su prompt de condensación personalizado aquí...\n\nPuede usar la misma estructura que el prompt predeterminado:\n- Conversación anterior\n- Trabajo actual\n- Conceptos técnicos clave\n- Archivos y código relevantes\n- Resolución de problemas\n- Tareas pendientes y próximos pasos",
+			"reset": "Restablecer a predeterminado",
+			"hint": "Vacío = usar prompt predeterminado"
+		},
 		"AUTO_CONDENSE_CONTEXT": {
-			"name": "Condensar inteligentemente la ventana de contexto",
-			"description": "Utiliza una llamada LLM para resumir la conversación anterior cuando la ventana de contexto de la tarea está casi llena, en lugar de eliminar mensajes antiguos. Aviso: el costo de resumir actualmente no está incluido en los costos de API mostrados en la interfaz."
+			"name": "Activar automáticamente la condensación inteligente de contexto",
+			"description": "La condensación inteligente de contexto utiliza una llamada LLM para resumir la conversación anterior cuando la ventana de contexto de la tarea alcanza un umbral preestablecido, en lugar de eliminar mensajes antiguos cuando el contexto se llena."
 		},
 		"DIFF_STRATEGY_UNIFIED": {
 			"name": "Usar estrategia de diff unificada experimental",
@@ -412,24 +462,28 @@
 		},
 		"SEARCH_AND_REPLACE": {
 			"name": "Usar herramienta experimental de búsqueda y reemplazo",
-			"description": "Habilitar la herramienta experimental de búsqueda y reemplazo, permitiendo a Kilo SSY reemplazar múltiples instancias de un término de búsqueda en una sola solicitud."
+			"description": "Habilitar la herramienta experimental de búsqueda y reemplazo, permitiendo a Kilo Code reemplazar múltiples instancias de un término de búsqueda en una sola solicitud."
 		},
 		"INSERT_BLOCK": {
 			"name": "Usar herramienta experimental de inserción de contenido",
-			"description": "Habilitar la herramienta experimental de inserción de contenido, permitiendo a Kilo SSY insertar contenido en números de línea específicos sin necesidad de crear un diff."
+			"description": "Habilitar la herramienta experimental de inserción de contenido, permitiendo a Kilo Code insertar contenido en números de línea específicos sin necesidad de crear un diff."
 		},
 		"POWER_STEERING": {
 			"name": "Usar modo experimental de \"dirección asistida\"",
-			"description": "Cuando está habilitado, Kilo SSY recordará al modelo los detalles de su definición de modo actual con más frecuencia. Esto llevará a una mayor adherencia a las definiciones de roles e instrucciones personalizadas, pero usará más tokens por mensaje."
+			"description": "Cuando está habilitado, Kilo Code recordará al modelo los detalles de su definición de modo actual con más frecuencia. Esto llevará a una mayor adherencia a las definiciones de roles e instrucciones personalizadas, pero usará más tokens por mensaje."
+		},
+		"AUTOCOMPLETE": {
+			"name": "Usar la función experimental de \"autocompletar\"",
+			"description": "Cuando está activado, Kilo Code proporcionará sugerencias de código en línea mientras escribes."
 		},
 		"MULTI_SEARCH_AND_REPLACE": {
 			"name": "Usar herramienta experimental de diff de bloques múltiples",
-			"description": "Cuando está habilitado, Kilo SSY usará la herramienta de diff de bloques múltiples. Esto intentará actualizar múltiples bloques de código en el archivo en una sola solicitud."
+			"description": "Cuando está habilitado, Kilo Code usará la herramienta de diff de bloques múltiples. Esto intentará actualizar múltiples bloques de código en el archivo en una sola solicitud."
 		}
 	},
 	"promptCaching": {
 		"label": "Desactivar caché de prompts",
-		"description": "Cuando está marcado, Kilo SSY no utilizará el caché de prompts para este modelo."
+		"description": "Cuando está marcado, Kilo Code no utilizará el caché de prompts para este modelo."
 	},
 	"temperature": {
 		"useCustom": "Usar temperatura personalizada",
@@ -460,17 +514,17 @@
 		}
 	},
 	"modelPicker": {
-		"automaticFetch": "La extensión obtiene automáticamente la lista más reciente de modelos disponibles en <serviceLink>{{serviceName}}</serviceLink>. Si no está seguro de qué modelo elegir, Kilo SSY funciona mejor con <defaultModelLink>{{defaultModelId}}</defaultModelLink>. También puede buscar \"free\" para opciones sin costo actualmente disponibles.",
+		"automaticFetch": "La extensión obtiene automáticamente la lista más reciente de modelos disponibles en <serviceLink>{{serviceName}}</serviceLink>. Si no está seguro de qué modelo elegir, Kilo Code funciona mejor con <defaultModelLink>{{defaultModelId}}</defaultModelLink>. También puede buscar \"free\" para opciones sin costo actualmente disponibles.",
 		"label": "Modelo",
 		"searchPlaceholder": "Buscar",
 		"noMatchFound": "No se encontraron coincidencias",
 		"useCustomModel": "Usar personalizado: {{modelId}}"
 	},
 	"footer": {
-		"feedback": "Si tiene alguna pregunta o comentario, no dude en abrir un issue en <githubLink>github.com/Kilo-Org/kilocode</githubLink> o unirse a <redditLink>reddit.com/r/kilocode</redditLink> o <discordLink>kilocode.ai/discord</discordLink>",
+		"feedback": "Si tiene alguna pregunta o comentario, no dude en abrir un issue en <githubLink>github.com/SSYCloud/kilocode/tree/ssy</githubLink> o unirse a <redditLink>reddit.com/r/kilocode</redditLink> o <discordLink>kilocode.ai/discord</discordLink>",
 		"telemetry": {
 			"label": "Permitir informes anónimos de errores y uso",
-			"description": "Ayude a mejorar Kilo SSY enviando datos de uso anónimos e informes de errores. Nunca se envía código, prompts o información personal. Consulte nuestra política de privacidad para más detalles."
+			"description": "Ayude a mejorar Kilo Code enviando datos de uso anónimos e informes de errores. Nunca se envía código, prompts o información personal. Consulte nuestra política de privacidad para más detalles."
 		},
 		"settings": {
 			"import": "Importar",

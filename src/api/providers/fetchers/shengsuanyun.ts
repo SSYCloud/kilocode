@@ -1,5 +1,5 @@
 import axios from "axios"
-import { ModelInfo } from "../../../shared/api"
+import { type ModelInfo } from "@roo-code/types"
 
 export async function getShengSuanYunModels(): Promise<Record<string, ModelInfo>> {
 	const models: Record<string, ModelInfo> = {}

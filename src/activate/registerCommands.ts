@@ -1,6 +1,9 @@
 import * as vscode from "vscode"
 import delay from "delay"
 
+import type { CommandId } from "@roo-code/types"
+
+import { getCommand } from "../utils/commands"
 import { ClineProvider } from "../core/webview/ClineProvider"
 import { t } from "../i18n" // kilocode_change
 import { importSettings, exportSettings } from "../core/config/importExport" // kilocode_change
@@ -8,6 +11,7 @@ import { ContextProxy } from "../core/config/ContextProxy"
 
 import { registerHumanRelayCallback, unregisterHumanRelayCallback, handleHumanRelayResponse } from "./humanRelay"
 import { handleNewTask } from "./handleTask"
+import { CodeIndexManager } from "../services/code-index/manager"
 
 /**
  * Helper to get the visible ClineProvider instance or log if not found.
@@ -15,7 +19,7 @@ import { handleNewTask } from "./handleTask"
 export function getVisibleProviderOrLog(outputChannel: vscode.OutputChannel): ClineProvider | undefined {
 	const visibleProvider = ClineProvider.getVisibleInstance()
 	if (!visibleProvider) {
-		outputChannel.appendLine("Cannot find any visible Kilo SSY instances.")
+		outputChannel.appendLine("Cannot find any visible Kilo Code instances.")
 		return undefined
 	}
 	return visibleProvider
@@ -58,151 +62,149 @@ export type RegisterCommandOptions = {
 export const registerCommands = (options: RegisterCommandOptions) => {
 	const { context } = options
 
-	for (const [command, callback] of Object.entries(getCommandsMap(options))) {
+	for (const [id, callback] of Object.entries(getCommandsMap(options))) {
+		const command = getCommand(id as CommandId)
 		context.subscriptions.push(vscode.commands.registerCommand(command, callback))
 	}
 }
 
-const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions) => {
-	return {
-		"kilo-ssy.activationCompleted": () => {},
-		"kilo-ssy.plusButtonClicked": async () => {
-			const visibleProvider = getVisibleProviderOrLog(outputChannel)
+const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions): Record<CommandId, any> => ({
+	activationCompleted: () => {},
+	plusButtonClicked: async () => {
+		const visibleProvider = getVisibleProviderOrLog(outputChannel)
+
+		if (!visibleProvider) {
+			return
+		}
+
+		await visibleProvider.removeClineFromStack()
+		await visibleProvider.postStateToWebview()
+		await visibleProvider.postMessageToWebview({ type: "action", action: "chatButtonClicked" })
+	},
+	promptsButtonClicked: () => {
+		const visibleProvider = getVisibleProviderOrLog(outputChannel)
+
+		if (!visibleProvider) {
+			return
+		}
+
+		visibleProvider.postMessageToWebview({ type: "action", action: "promptsButtonClicked" })
+	},
+	popoutButtonClicked: () => {
+		return openClineInNewTab({ context, outputChannel })
+	},
+	openInNewTab: () => openClineInNewTab({ context, outputChannel }),
+	settingsButtonClicked: () => {
+		const visibleProvider = getVisibleProviderOrLog(outputChannel)
+
+		if (!visibleProvider) {
+			return
+		}
+
+		visibleProvider.postMessageToWebview({ type: "action", action: "settingsButtonClicked" })
+		// Also explicitly post the visibility message to trigger scroll reliably
+		visibleProvider.postMessageToWebview({ type: "action", action: "didBecomeVisible" })
+	},
+	historyButtonClicked: () => {
+		const visibleProvider = getVisibleProviderOrLog(outputChannel)
+
+		if (!visibleProvider) {
+			return
+		}
+
+		visibleProvider.postMessageToWebview({ type: "action", action: "historyButtonClicked" })
+	},
+	// kilocode_change begin
+	profileButtonClicked: () => {
+		const visibleProvider = getVisibleProviderOrLog(outputChannel)
+
+		if (!visibleProvider) {
+			return
+		}
+
+		visibleProvider.postMessageToWebview({ type: "action", action: "profileButtonClicked" })
+	},
+	helpButtonClicked: () => {
+		vscode.env.openExternal(vscode.Uri.parse("https://kilocode.ai"))
+	},
+	// kilocode_change end
+	showHumanRelayDialog: (params: { requestId: string; promptText: string }) => {
+		const panel = getPanel()
+
+		if (panel) {
+			panel?.webview.postMessage({
+				type: "showHumanRelayDialog",
+				requestId: params.requestId,
+				promptText: params.promptText,
+			})
+		}
+	},
+	registerHumanRelayCallback: registerHumanRelayCallback,
+	unregisterHumanRelayCallback: unregisterHumanRelayCallback,
+	handleHumanRelayResponse: handleHumanRelayResponse,
+	newTask: handleNewTask,
+	setCustomStoragePath: async () => {
+		const { promptForCustomStoragePath } = await import("../utils/storage")
+		await promptForCustomStoragePath()
+	},
+	acceptInput: () => {
+		const visibleProvider = getVisibleProviderOrLog(outputChannel)
+
+		if (!visibleProvider) {
+			return
+		}
+
+		visibleProvider.postMessageToWebview({ type: "acceptInput" })
+	}, // kilocode_change begin
+	focusChatInput: async () => {
+		try {
+			await vscode.commands.executeCommand("kilo-code.SidebarProvider.focus")
+			await delay(100)
+
+			let visibleProvider = getVisibleProviderOrLog(outputChannel)
 
 			if (!visibleProvider) {
-				return
-			}
-
-			await visibleProvider.removeClineFromStack()
-			await visibleProvider.postStateToWebview()
-			await visibleProvider.postMessageToWebview({ type: "action", action: "chatButtonClicked" })
-		},
-		"kilo-ssy.promptsButtonClicked": () => {
-			const visibleProvider = getVisibleProviderOrLog(outputChannel)
-
-			if (!visibleProvider) {
-				return
-			}
-
-			visibleProvider.postMessageToWebview({ type: "action", action: "promptsButtonClicked" })
-		},
-		"kilo-ssy.popoutButtonClicked": () => openClineInNewTab({ context, outputChannel }),
-		"kilo-ssy.openInNewTab": () => openClineInNewTab({ context, outputChannel }),
-		"kilo-ssy.settingsButtonClicked": () => {
-			const visibleProvider = getVisibleProviderOrLog(outputChannel)
-
-			if (!visibleProvider) {
-				return
-			}
-
-			visibleProvider.postMessageToWebview({ type: "action", action: "settingsButtonClicked" })
-			// Also explicitly post the visibility message to trigger scroll reliably
-			visibleProvider.postMessageToWebview({ type: "action", action: "didBecomeVisible" })
-		},
-		"kilo-ssy.historyButtonClicked": () => {
-			const visibleProvider = getVisibleProviderOrLog(outputChannel)
-
-			if (!visibleProvider) {
-				return
-			}
-
-			visibleProvider.postMessageToWebview({ type: "action", action: "historyButtonClicked" })
-		},
-		// kilocode_change begin
-		"kilo-ssy.profileButtonClicked": () => {
-			const visibleProvider = getVisibleProviderOrLog(outputChannel)
-
-			if (!visibleProvider) {
-				return
-			}
-
-			visibleProvider.postMessageToWebview({ type: "action", action: "profileButtonClicked" })
-		},
-		// kilocode_change end
-		"kilo-ssy.helpButtonClicked": () => {
-			vscode.env.openExternal(vscode.Uri.parse("https://kilocode.ai"))
-		},
-		"kilo-ssy.showHumanRelayDialog": (params: { requestId: string; promptText: string }) => {
-			const panel = getPanel()
-
-			if (panel) {
-				panel?.webview.postMessage({
-					type: "showHumanRelayDialog",
-					requestId: params.requestId,
-					promptText: params.promptText,
-				})
-			}
-		},
-		"kilo-ssy.registerHumanRelayCallback": registerHumanRelayCallback,
-		"kilo-ssy.unregisterHumanRelayCallback": unregisterHumanRelayCallback,
-		"kilo-ssy.handleHumanRelayResponse": handleHumanRelayResponse,
-		"kilo-ssy.newTask": handleNewTask,
-		"kilo-ssy.setCustomStoragePath": async () => {
-			const { promptForCustomStoragePath } = await import("../shared/storagePathManager")
-			await promptForCustomStoragePath()
-		},
-		// kilocode_change begin
-		"kilo-ssy.focusChatInput": async () => {
-			try {
-				await vscode.commands.executeCommand("kilo-ssy.SidebarProvider.focus")
+				// If still no visible provider, try opening in a new tab
+				const tabProvider = await openClineInNewTab({ context, outputChannel })
 				await delay(100)
-
-				let visibleProvider = getVisibleProviderOrLog(outputChannel)
-
-				if (!visibleProvider) {
-					// If still no visible provider, try opening in a new tab
-					const tabProvider = await openClineInNewTab({ context, outputChannel })
-					await delay(100)
-					visibleProvider = tabProvider
-				}
-
-				visibleProvider?.postMessageToWebview({
-					type: "action",
-					action: "focusChatInput",
-				})
-			} catch (error) {
-				outputChannel.appendLine(`Error in focusChatInput: ${error}`)
-			}
-		},
-		// kilocode_change end
-		"kilo-ssy.acceptInput": () => {
-			const visibleProvider = getVisibleProviderOrLog(outputChannel)
-
-			if (!visibleProvider) {
-				return
+				visibleProvider = tabProvider
 			}
 
-			visibleProvider.postMessageToWebview({ type: "acceptInput" })
-		},
-		// kilocode_change start
-		"kilo-ssy.importSettings": async () => {
-			const visibleProvider = getVisibleProviderOrLog(outputChannel)
-			if (!visibleProvider) return
-
-			const { success } = await importSettings({
-				providerSettingsManager: visibleProvider.providerSettingsManager,
-				contextProxy: visibleProvider.contextProxy,
-				customModesManager: visibleProvider.customModesManager,
+			visibleProvider?.postMessageToWebview({
+				type: "action",
+				action: "focusChatInput",
 			})
+		} catch (error) {
+			outputChannel.appendLine(`Error in focusChatInput: ${error}`)
+		}
+	},
+	importSettings: async () => {
+		const visibleProvider = getVisibleProviderOrLog(outputChannel)
+		if (!visibleProvider) return
 
-			if (success) {
-				visibleProvider.settingsImportedAt = Date.now()
-				await visibleProvider.postStateToWebview()
-				await vscode.window.showInformationMessage(t("kilocode:info.settings_imported"))
-			}
-		},
-		"kilo-ssy.exportSettings": async () => {
-			const visibleProvider = getVisibleProviderOrLog(outputChannel)
-			if (!visibleProvider) return
+		const { success } = await importSettings({
+			providerSettingsManager: visibleProvider.providerSettingsManager,
+			contextProxy: visibleProvider.contextProxy,
+			customModesManager: visibleProvider.customModesManager,
+		})
 
-			await exportSettings({
-				providerSettingsManager: visibleProvider.providerSettingsManager,
-				contextProxy: visibleProvider.contextProxy,
-			})
-		},
-		// kilocode_change end
-	}
-}
+		if (success) {
+			visibleProvider.settingsImportedAt = Date.now()
+			await visibleProvider.postStateToWebview()
+			await vscode.window.showInformationMessage(t("kilocode:info.settings_imported"))
+		}
+	},
+	exportSettings: async () => {
+		const visibleProvider = getVisibleProviderOrLog(outputChannel)
+		if (!visibleProvider) return
+
+		await exportSettings({
+			providerSettingsManager: visibleProvider.providerSettingsManager,
+			contextProxy: visibleProvider.contextProxy,
+		})
+	},
+	// kilocode_change end
+})
 
 export const openClineInNewTab = async ({ context, outputChannel }: Omit<RegisterCommandOptions, "provider">) => {
 	// (This example uses webviewProvider activation event which is necessary to
@@ -210,7 +212,8 @@ export const openClineInNewTab = async ({ context, outputChannel }: Omit<Registe
 	// don't need to use that event).
 	// https://github.com/microsoft/vscode-extension-samples/blob/main/webview-sample/src/extension.ts
 	const contextProxy = await ContextProxy.getInstance(context)
-	const tabProvider = new ClineProvider(context, outputChannel, "editor", contextProxy)
+	const codeIndexManager = CodeIndexManager.getInstance(context)
+	const tabProvider = new ClineProvider(context, outputChannel, "editor", contextProxy, codeIndexManager)
 	const lastCol = Math.max(...vscode.window.visibleTextEditors.map((editor) => editor.viewColumn || 0))
 
 	// Check if there are any visible text editors, otherwise open a new group
@@ -223,7 +226,7 @@ export const openClineInNewTab = async ({ context, outputChannel }: Omit<Registe
 
 	const targetCol = hasVisibleEditors ? Math.max(lastCol + 1, 1) : vscode.ViewColumn.Two
 
-	const newPanel = vscode.window.createWebviewPanel(ClineProvider.tabPanelId, "Kilo SSY", targetCol, {
+	const newPanel = vscode.window.createWebviewPanel(ClineProvider.tabPanelId, "Kilo Code", targetCol, {
 		enableScripts: true,
 		retainContextWhenHidden: true,
 		localResourceRoots: [context.extensionUri],
@@ -235,8 +238,8 @@ export const openClineInNewTab = async ({ context, outputChannel }: Omit<Registe
 	// TODO: Use better svg icon with light and dark variants (see
 	// https://stackoverflow.com/questions/58365687/vscode-extension-iconpath).
 	newPanel.iconPath = {
-		light: vscode.Uri.joinPath(context.extensionUri, "assets", "icons", "kilo.png"),
-		dark: vscode.Uri.joinPath(context.extensionUri, "assets", "icons", "kilo.png"),
+		light: vscode.Uri.joinPath(context.extensionUri, "assets", "images", "panel_light.png"),
+		dark: vscode.Uri.joinPath(context.extensionUri, "assets", "images", "panel_light.png"),
 	}
 
 	await tabProvider.resolveWebviewView(newPanel)

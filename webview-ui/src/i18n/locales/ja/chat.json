@@ -1,5 +1,5 @@
 {
-	"greeting": "Kilo SSY は何をお手伝いできますか？",
+	"greeting": "Kilo Code は何をお手伝いできますか？",
 	"task": {
 		"title": "タスク",
 		"seeMore": "もっと見る",
@@ -10,7 +10,8 @@
 		"contextWindow": "コンテキストウィンドウ:",
 		"closeAndStart": "タスクを閉じて新しいタスクを開始",
 		"export": "タスク履歴をエクスポート",
-		"delete": "タスクを削除（Shift + クリックで確認をスキップ）"
+		"delete": "タスクを削除（Shift + クリックで確認をスキップ）",
+		"condenseContext": "コンテキストをインテリジェントに圧縮"
 	},
 	"history": {
 		"title": "履歴"
@@ -115,7 +116,7 @@
 	"diffError": {
 		"title": "編集に失敗しました"
 	},
-	"troubleMessage": "Kilo SSYに問題が発生しています...",
+	"troubleMessage": "Kilo Codeに問題が発生しています...",
 	"apiRequest": {
 		"title": "APIリクエスト",
 		"failed": "APIリクエスト失敗",
@@ -141,47 +142,47 @@
 		"current": "現在"
 	},
 	"instructions": {
-		"wantsToFetch": "Kilo SSYは現在のタスクを支援するための詳細な指示を取得したい"
+		"wantsToFetch": "Kilo Codeは現在のタスクを支援するための詳細な指示を取得したい"
 	},
 	"fileOperations": {
-		"wantsToRead": "Kilo SSYはこのファイルを読みたい:",
-		"wantsToReadOutsideWorkspace": "Kilo SSYはワークスペース外のこのファイルを読みたい:",
-		"didRead": "Kilo SSYはこのファイルを読みました:",
-		"wantsToEdit": "Kilo SSYはこのファイルを編集したい:",
-		"wantsToEditOutsideWorkspace": "Kilo SSYはワークスペース外のこのファイルを編集したい:",
-		"wantsToCreate": "Kilo SSYは新しいファイルを作成したい:",
-		"wantsToSearchReplace": "Kilo SSYはこのファイルで検索と置換を行う:",
-		"didSearchReplace": "Kilo SSYはこのファイルで検索と置換を実行しました:",
-		"wantsToInsert": "Kilo SSYはこのファイルにコンテンツを挿入したい:",
-		"wantsToInsertWithLineNumber": "Kilo SSYはこのファイルの{{lineNumber}}行目にコンテンツを挿入したい:",
-		"wantsToInsertAtEnd": "Kilo SSYはこのファイルの末尾にコンテンツを追加したい:"
+		"wantsToRead": "Kilo Codeはこのファイルを読みたい:",
+		"wantsToReadOutsideWorkspace": "Kilo Codeはワークスペース外のこのファイルを読みたい:",
+		"didRead": "Kilo Codeはこのファイルを読みました:",
+		"wantsToEdit": "Kilo Codeはこのファイルを編集したい:",
+		"wantsToEditOutsideWorkspace": "Kilo Codeはワークスペース外のこのファイルを編集したい:",
+		"wantsToCreate": "Kilo Codeは新しいファイルを作成したい:",
+		"wantsToSearchReplace": "Kilo Codeはこのファイルで検索と置換を行う:",
+		"didSearchReplace": "Kilo Codeはこのファイルで検索と置換を実行しました:",
+		"wantsToInsert": "Kilo Codeはこのファイルにコンテンツを挿入したい:",
+		"wantsToInsertWithLineNumber": "Kilo Codeはこのファイルの{{lineNumber}}行目にコンテンツを挿入したい:",
+		"wantsToInsertAtEnd": "Kilo Codeはこのファイルの末尾にコンテンツを追加したい:"
 	},
 	"directoryOperations": {
-		"wantsToViewTopLevel": "Kilo SSYはこのディレクトリのトップレベルファイルを表示したい:",
-		"didViewTopLevel": "Kilo SSYはこのディレクトリのトップレベルファイルを表示しました:",
-		"wantsToViewRecursive": "Kilo SSYはこのディレクトリのすべてのファイルを再帰的に表示したい:",
-		"didViewRecursive": "Kilo SSYはこのディレクトリのすべてのファイルを再帰的に表示しました:",
-		"wantsToViewDefinitions": "Kilo SSYはこのディレクトリで使用されているソースコード定義名を表示したい:",
-		"didViewDefinitions": "Kilo SSYはこのディレクトリで使用されているソースコード定義名を表示しました:",
-		"wantsToSearch": "Kilo SSYはこのディレクトリで <code>{{regex}}</code> を検索したい:",
-		"didSearch": "Kilo SSYはこのディレクトリで <code>{{regex}}</code> を検索しました:"
+		"wantsToViewTopLevel": "Kilo Codeはこのディレクトリのトップレベルファイルを表示したい:",
+		"didViewTopLevel": "Kilo Codeはこのディレクトリのトップレベルファイルを表示しました:",
+		"wantsToViewRecursive": "Kilo Codeはこのディレクトリのすべてのファイルを再帰的に表示したい:",
+		"didViewRecursive": "Kilo Codeはこのディレクトリのすべてのファイルを再帰的に表示しました:",
+		"wantsToViewDefinitions": "Kilo Codeはこのディレクトリで使用されているソースコード定義名を表示したい:",
+		"didViewDefinitions": "Kilo Codeはこのディレクトリで使用されているソースコード定義名を表示しました:",
+		"wantsToSearch": "Kilo Codeはこのディレクトリで <code>{{regex}}</code> を検索したい:",
+		"didSearch": "Kilo Codeはこのディレクトリで <code>{{regex}}</code> を検索しました:"
 	},
 	"commandOutput": "コマンド出力",
 	"response": "応答",
 	"arguments": "引数",
 	"mcp": {
-		"wantsToUseTool": "Kilo SSYはMCPサーバー{{serverName}}でツールを使用したい:",
-		"wantsToAccessResource": "Kilo SSYはMCPサーバー{{serverName}}のリソースにアクセスしたい:"
+		"wantsToUseTool": "Kilo CodeはMCPサーバー{{serverName}}でツールを使用したい:",
+		"wantsToAccessResource": "Kilo CodeはMCPサーバー{{serverName}}のリソースにアクセスしたい:"
 	},
 	"modes": {
-		"wantsToSwitch": "Kilo SSYは<code>{{mode}}</code>モードに切り替えたい",
-		"wantsToSwitchWithReason": "Kilo SSYは次の理由で<code>{{mode}}</code>モードに切り替えたい: {{reason}}",
-		"didSwitch": "Kilo SSYは<code>{{mode}}</code>モードに切り替えました",
-		"didSwitchWithReason": "Kilo SSYは次の理由で<code>{{mode}}</code>モードに切り替えました: {{reason}}"
+		"wantsToSwitch": "Kilo Codeは<code>{{mode}}</code>モードに切り替えたい",
+		"wantsToSwitchWithReason": "Kilo Codeは次の理由で<code>{{mode}}</code>モードに切り替えたい: {{reason}}",
+		"didSwitch": "Kilo Codeは<code>{{mode}}</code>モードに切り替えました",
+		"didSwitchWithReason": "Kilo Codeは次の理由で<code>{{mode}}</code>モードに切り替えました: {{reason}}"
 	},
 	"subtasks": {
-		"wantsToCreate": "Kilo SSY<code>{{mode}}</code>モードで新しいサブタスクを作成したい:",
-		"wantsToFinish": "Kilo SSYはこのサブタスクを終了したい",
+		"wantsToCreate": "Kilo Code<code>{{mode}}</code>モードで新しいサブタスクを作成したい:",
+		"wantsToFinish": "Kilo Codeはこのサブタスクを終了したい",
 		"newTaskContent": "サブタスク指示",
 		"completionContent": "サブタスク完了",
 		"resultContent": "サブタスク結果",
@@ -189,7 +190,7 @@
 		"completionInstructions": "サブタスク完了！結果を確認し、修正や次のステップを提案できます。問題なければ、親タスクに結果を返すために確認してください。"
 	},
 	"questions": {
-		"hasQuestion": "Kilo SSYは質問があります:"
+		"hasQuestion": "Kilo Codeは質問があります:"
 	},
 	"taskCompleted": "タスク完了",
 	"powershell": {
@@ -198,27 +199,32 @@
 	"autoApprove": {
 		"title": "自動承認:",
 		"none": "なし",
-		"description": "自動承認はKilo SSYに許可を求めずに操作を実行する権限を与えます。完全に信頼できる操作のみ有効にしてください。より詳細な設定は<settingsLink>設定</settingsLink>で利用できます。"
+		"description": "自動承認はKilo Codeに許可を求めずに操作を実行する権限を与えます。完全に信頼できる操作のみ有効にしてください。より詳細な設定は<settingsLink>設定</settingsLink>で利用できます。"
 	},
 	"reasoning": {
 		"thinking": "考え中",
 		"seconds": "{{count}}秒"
 	},
+	"contextCondense": {
+		"title": "コンテキスト要約",
+		"condensing": "コンテキストを圧縮中...",
+		"tokens": "トークン"
+	},
 	"followUpSuggest": {
 		"copyToInput": "入力欄にコピー（またはShift + クリック）"
 	},
 	"announcement": {
-		"title": "🎉 Roo Code 3.17 リリース",
-		"description": "Roo Code 3.17は、あなたのフィードバックに基づく強力な新機能と改善をもたらします。",
+		"title": "🎉 Roo Code {{version}} リリース",
+		"description": "Roo Code {{version}}は、あなたのフィードバックに基づく強力な新機能と改善をもたらします。",
 		"whatsNew": "新機能",
-		"feature1": "<bold>Geminiの暗黙的キャッシング</bold>: Gemini APIコールが自動的にキャッシュされるようになり、APIコストが削減されます",
-		"feature2": "<bold>よりスマートなモード選択</bold>: モード定義に各モードをいつ使用すべきかの指針を含めることができるようになり、より優れた調整が可能になります",
-		"feature3": "<bold>インテリジェントなコンテキスト圧縮</bold>: コンテキストが一杯になったときに切り捨てる代わりに、会話履歴をインテリジェントに要約します（設定 -> 実験的機能で有効化）",
+		"feature1": "<bold>Gemini 2.5 Flash プレビューモデル</bold>: より高速かつ効率的な応答のために最新のGemini Flashモデルにアクセス",
+		"feature2": "<bold>インテリジェントなコンテキスト圧縮</bold>: タスクヘッダーの新しいボタンで視覚的なフィードバックを得ながらコンテンツをインテリジェントに圧縮可能",
+		"feature3": "<bold>モード定義のYAMLサポート</bold>: YAMLサポートによりモードをより簡単に作成・カスタマイズ可能",
 		"hideButton": "通知を非表示",
 		"detailsDiscussLinks": "詳細は<discordLink>Discord</discordLink>と<redditLink>Reddit</redditLink>でご確認・ディスカッションください 🚀"
 	},
 	"browser": {
-		"rooWantsToUse": "Kilo SSYはブラウザを使用したい:",
+		"rooWantsToUse": "Kilo Codeはブラウザを使用したい:",
 		"consoleLogs": "コンソールログ",
 		"noNewLogs": "(新しいログはありません)",
 		"screenshot": "ブラウザのスクリーンショット",
@@ -251,7 +257,19 @@
 	"systemPromptWarning": "警告：カスタムシステムプロンプトの上書きが有効です。これにより機能が深刻に損なわれ、予測不可能な動作が発生する可能性があります。",
 	"shellIntegration": {
 		"title": "コマンド実行警告",
-		"description": "コマンドはVSCodeターミナルシェル統合なしで実行されています。この警告を非表示にするには、<settingsLink>Kilo SSY設定</settingsLink>の<strong>Terminal</strong>セクションでシェル統合を無効にするか、以下のリンクを使用してVSCodeターミナル統合のトラブルシューティングを行ってください。",
+		"description": "コマンドはVSCodeターミナルシェル統合なしで実行されています。この警告を非表示にするには、<settingsLink>Kilo Code設定</settingsLink>の<strong>Terminal</strong>セクションでシェル統合を無効にするか、以下のリンクを使用してVSCodeターミナル統合のトラブルシューティングを行ってください。",
 		"troubleshooting": "シェル統合のドキュメントはこちらをクリック"
+	},
+	"ask": {
+		"autoApprovedRequestLimitReached": {
+			"title": "自動承認リクエスト制限に達しました",
+			"description": "Kilo Codeは{{count}}件のAPI自動承認リクエスト制限に達しました。カウントをリセットしてタスクを続行しますか？",
+			"button": "リセットして続行"
+		}
+	},
+	"codebaseSearch": {
+		"wantsToSearch": "Kilo Codeはコードベースで <code>{{query}}</code> を検索したい:",
+		"wantsToSearchWithPath": "Kilo Codeは <code>{{path}}</code> 内のコードベースで <code>{{query}}</code> を検索したい:",
+		"didSearch": "<code>{{query}}</code> の検索結果: {{count}} 件"
 	}
 }

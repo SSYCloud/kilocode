@@ -1,14 +1,14 @@
 {
 	"title": "Serveurs MCP",
 	"done": "Terminé",
-	"description": "Active le Model Context Protocol (MCP) pour permettre à Kilo SSY d'utiliser des outils et services supplémentaires depuis des serveurs externes. Cela élargit ce que Kilo Code peut faire pour toi. <0>En savoir plus</0>",
+	"description": "Active le Model Context Protocol (MCP) pour permettre à Kilo Code d'utiliser des outils et services supplémentaires depuis des serveurs externes. Cela élargit ce que Kilo Code peut faire pour toi. <0>En savoir plus</0>",
 	"enableToggle": {
 		"title": "Activer les serveurs MCP",
-		"description": "Active cette option pour que Kilo SSY puisse utiliser des outils provenant de serveurs MCP connectés. Cela donne plus de capacités à Kilo Code. Si tu ne comptes pas utiliser ces outils supplémentaires, désactive-la pour réduire les coûts de tokens API."
+		"description": "Active cette option pour que Kilo Code puisse utiliser des outils provenant de serveurs MCP connectés. Cela donne plus de capacités à Kilo Code. Si tu ne comptes pas utiliser ces outils supplémentaires, désactive-la pour réduire les coûts de tokens API."
 	},
 	"enableServerCreation": {
 		"title": "Activer la création de serveurs MCP",
-		"description": "Active cette option pour que Kilo SSY t'aide à créer de <1>nouveaux</1> serveurs MCP personnalisés. <0>En savoir plus sur la création de serveurs</0>",
+		"description": "Active cette option pour que Kilo Code t'aide à créer de <1>nouveaux</1> serveurs MCP personnalisés. <0>En savoir plus sur la création de serveurs</0>",
 		"hint": "Astuce : Pour réduire les coûts de tokens API, désactive cette option quand tu ne demandes pas à Kilo Code de créer un nouveau serveur MCP."
 	},
 	"editGlobalMCP": "Modifier le MCP global",

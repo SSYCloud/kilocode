@@ -1,13 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Co Kilo SSY może dla Ciebie zrobić?",
+		"greeting": "Co Kilo Code może dla Ciebie zrobić?",
 		"introText": "Zostałem przeszkolony najszybszymi dostępnymi modelami AI i jestem gotowy generować dla Ciebie kod z zawrotną prędkością!",
 		"ctaButton": "Zarejestruj klucz API ShengSuanYun",
 		"manualModeButton": "Użyj własnego klucza API"
 	},
 	"lowCreditWarning": {
 		"addCredit": "Dodaj kredyt",
-		"lowBalance": "Twój stan konta Kilo SSY jest niski"
+		"lowBalance": "Twój stan konta Kilo Code jest niski"
 	},
 	"notifications": {
 		"toolRequest": "Żądanie narzędzia oczekuje na zatwierdzenie",
@@ -17,6 +17,11 @@
 	"settings": {
 		"sections": {
 			"mcp": "Serwery MCP"
+		},
+		"provider": {
+			"apiKey": "Klucz API Kilo Code",
+			"login": "Zaloguj się do Kilo Code",
+			"logout": "Wyloguj się z Kilo Code"
 		}
 	},
 	"chat": {

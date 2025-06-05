@@ -1,6 +1,6 @@
 {
 	"extension": {
-		"name": "Kilo SSY",
+		"name": "Kilo Code",
 		"description": "Trợ lý mã hóa AI nguồn mở để lập kế hoạch, xây dựng và sửa mã."
 	},
 	"number_format": {
@@ -58,7 +58,9 @@
 		"failed_delete_repo": "Không thể xóa kho lưu trữ hoặc nhánh liên quan: {{error}}",
 		"failed_remove_directory": "Không thể xóa thư mục nhiệm vụ: {{error}}",
 		"custom_storage_path_unusable": "Đường dẫn lưu trữ tùy chỉnh \"{{path}}\" không thể sử dụng được, sẽ sử dụng đường dẫn mặc định",
-		"cannot_access_path": "Không thể truy cập đường dẫn {{path}}: {{error}}"
+		"cannot_access_path": "Không thể truy cập đường dẫn {{path}}: {{error}}",
+		"settings_import_failed": "Nhập cài đặt thất bại: {{error}}.",
+		"mistake_limit_guidance": "Điều này có thể cho thấy sự thất bại trong quá trình suy nghĩ của mô hình hoặc không thể sử dụng công cụ đúng cách, có thể được giảm thiểu bằng hướng dẫn của người dùng (ví dụ: \"Hãy thử chia nhỏ nhiệm vụ thành các bước nhỏ hơn\")."
 	},
 	"warnings": {
 		"no_terminal_content": "Không có nội dung terminal được chọn",
@@ -94,7 +96,7 @@
 		"enter_valid_path": "Vui lòng nhập đường dẫn hợp lệ"
 	},
 	"input": {
-		"task_prompt": "Bạn muốn Kilo SSY làm gì?",
+		"task_prompt": "Bạn muốn Kilo Code làm gì?",
 		"task_placeholder": "Nhập nhiệm vụ của bạn ở đây"
 	},
 	"settings": {

@@ -9,9 +9,23 @@ import axios from "axios"
 import pWaitFor from "p-wait-for"
 import * as vscode from "vscode"
 
-import type { GlobalState, ProviderName, ProviderSettings, RooCodeSettings, ProviderSettingsEntry } from "../../schemas"
+import type {
+	GlobalState,
+	ProviderName,
+	ProviderSettings,
+	RooCodeSettings,
+	ProviderSettingsEntry,
+	TelemetryProperties,
+	CodeActionId,
+	CodeActionName,
+	TerminalActionId,
+	TerminalActionPromptType,
+	HistoryItem,
+} from "@roo-code/types"
+
 import { t } from "../../i18n"
 import { setPanel } from "../../activate/registerCommands"
+import { Package } from "../../shared/package"
 import {
 	requestyDefaultModelId,
 	openRouterDefaultModelId,
@@ -21,7 +35,6 @@ import {
 import { findLast } from "../../shared/array"
 import { supportPrompt } from "../../shared/support-prompt"
 import { GlobalFileNames } from "../../shared/globalFileNames"
-import { HistoryItem } from "../../shared/HistoryItem"
 import { ExtensionMessage } from "../../shared/ExtensionMessage"
 import { Mode, defaultModeSlug } from "../../shared/modes"
 import { experimentDefault } from "../../shared/experiments"
@@ -33,14 +46,14 @@ import WorkspaceTracker from "../../integrations/workspace/WorkspaceTracker"
 import { McpHub } from "../../services/mcp/McpHub"
 import { McpServerManager } from "../../services/mcp/McpServerManager"
 import { ShadowCheckpointService } from "../../services/checkpoints/ShadowCheckpointService"
+import { CodeIndexManager } from "../../services/code-index/manager"
+import type { IndexProgressUpdate } from "../../services/code-index/interfaces/manager"
 import { fileExistsAtPath } from "../../utils/fs"
-import { setSoundEnabled } from "../../utils/sound"
 import { setTtsEnabled, setTtsSpeed } from "../../utils/tts"
 import { ContextProxy } from "../config/ContextProxy"
 import { ProviderSettingsManager } from "../config/ProviderSettingsManager"
 import { CustomModesManager } from "../config/CustomModesManager"
 import { buildApiHandler } from "../../api"
-import { CodeActionName } from "../../activate/CodeActionProvider"
 import { Task, TaskOptions } from "../task/Task"
 import { getNonce } from "./getNonce"
 import { getUri } from "./getUri"
@@ -48,6 +61,7 @@ import { getSystemPromptFilePath } from "../prompts/sections/custom-system-promp
 import { getWorkspacePath } from "../../utils/path"
 import { webviewMessageHandler } from "./webviewMessageHandler"
 import { WebviewMessage } from "../../shared/WebviewMessage"
+import { EMBEDDING_MODEL_PROFILES } from "../../shared/embeddingModels"
 
 import { McpDownloadResponse, McpMarketplaceCatalog } from "../../shared/kilocode/mcp" //kilocode_change
 import { McpServer } from "../../shared/mcp" // kilocode_change
@@ -62,12 +76,16 @@ export type ClineProviderEvents = {
 }
 
 export class ClineProvider extends EventEmitter<ClineProviderEvents> implements vscode.WebviewViewProvider {
-	public static readonly sideBarId = "kilo-ssy.SidebarProvider" // used in package.json as the view's id. This value cannot be changed due to how vscode caches views based on their id, and updating the id would break existing instances of the extension.
-	public static readonly tabPanelId = "kilo-ssy.TabPanelProvider"
+	// Used in package.json as the view's id. This value cannot be changed due
+	// to how VSCode caches views based on their id, and updating the id would
+	// break existing instances of the extension.
+	public static readonly sideBarId = `${Package.name}.SidebarProvider`
+	public static readonly tabPanelId = `${Package.name}.TabPanelProvider`
 	private static activeInstances: Set<ClineProvider> = new Set()
 	private disposables: vscode.Disposable[] = []
 	private view?: vscode.WebviewView | vscode.WebviewPanel
 	private clineStack: Task[] = []
+	private codeIndexStatusSubscription?: vscode.Disposable
 	private _workspaceTracker?: WorkspaceTracker // workSpaceTracker read-only for access outside this class
 	public get workspaceTracker(): WorkspaceTracker | undefined {
 		return this._workspaceTracker
@@ -76,7 +94,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 
 	public isViewLaunched = false
 	public settingsImportedAt?: number
-	public readonly latestAnnouncementId = "may-14-2025-3-17" // Update for v3.17.0 announcement
+	public readonly latestAnnouncementId = "may-21-2025-3-18" // Update for v3.18.0 announcement
 	public readonly providerSettingsManager: ProviderSettingsManager
 	public readonly customModesManager: CustomModesManager
 
@@ -85,11 +103,18 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		private readonly outputChannel: vscode.OutputChannel,
 		private readonly renderContext: "sidebar" | "editor" = "sidebar",
 		public readonly contextProxy: ContextProxy,
+		public readonly codeIndexManager?: CodeIndexManager,
 	) {
 		super()
 
 		this.log("ClineProvider instantiated")
 		ClineProvider.activeInstances.add(this)
+
+		this.codeIndexManager = codeIndexManager
+		this.updateGlobalState("codebaseIndexModels", EMBEDDING_MODEL_PROFILES)
+
+		// Start configuration loading (which might trigger indexing) in the background.
+		// Don't await, allowing activation to continue immediately.
 
 		this._workspaceTracker = new WorkspaceTracker(this)
 
@@ -135,7 +160,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		}
 
 		// Pop the top Cline instance from the stack.
-		var cline = this.clineStack.pop()
+		let cline = this.clineStack.pop()
 
 		if (cline) {
 			console.log(`[subtasks] removing task ${cline.taskId}.${cline.instanceId} from stack`)
@@ -229,7 +254,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 
 		// If no visible provider, try to show the sidebar view
 		if (!visibleProvider) {
-			await vscode.commands.executeCommand("kilo-ssy.SidebarProvider.focus")
+			await vscode.commands.executeCommand(`${Package.name}.SidebarProvider.focus`)
 			// Wait briefly for the view to become visible
 			await delay(100)
 			visibleProvider = ClineProvider.getVisibleInstance()
@@ -258,7 +283,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 	}
 
 	public static async handleCodeAction(
-		command: string,
+		command: CodeActionId,
 		promptType: CodeActionName,
 		params: Record<string, string | any[]>,
 	): Promise<void> {
@@ -273,7 +298,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		// TODO: Improve type safety for promptType.
 		const prompt = supportPrompt.create(promptType, params, customSupportPrompts)
 
-		if (command.endsWith("addToContext")) {
+		if (command === "addToContext") {
 			await visibleProvider.postMessageToWebview({ type: "invoke", invoke: "setChatBoxMessage", text: prompt })
 			return
 		}
@@ -282,8 +307,8 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 	}
 
 	public static async handleTerminalAction(
-		command: string,
-		promptType: "TERMINAL_ADD_TO_CONTEXT" | "TERMINAL_FIX" | "TERMINAL_EXPLAIN",
+		command: TerminalActionId,
+		promptType: TerminalActionPromptType,
 		params: Record<string, string | any[]>,
 	): Promise<void> {
 		const visibleProvider = await ClineProvider.getInstance()
@@ -293,10 +318,9 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		}
 
 		const { customSupportPrompts } = await visibleProvider.getState()
-
 		const prompt = supportPrompt.create(promptType, params, customSupportPrompts)
 
-		if (command.endsWith("AddToContext")) {
+		if (command === "terminalAddToContext") {
 			await visibleProvider.postMessageToWebview({ type: "invoke", invoke: "setChatBoxMessage", text: prompt })
 			return
 		}
@@ -307,25 +331,23 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 	async resolveWebviewView(webviewView: vscode.WebviewView | vscode.WebviewPanel) {
 		this.log("Resolving webview view")
 
-		if (!this.contextProxy.isInitialized) {
-			await this.contextProxy.initialize()
-		}
-
 		this.view = webviewView
 
+		// kilocode_change start: extract constant inTabMode
 		// Set panel reference according to webview type
-		if ("onDidChangeViewState" in webviewView) {
+		const inTabMode = "onDidChangeViewState" in webviewView
+		if (inTabMode) {
 			// Tag page type
 			setPanel(webviewView, "tab")
 		} else if ("onDidChangeVisibility" in webviewView) {
 			// Sidebar Type
 			setPanel(webviewView, "sidebar")
 		}
+		// kilocode_change end
 
 		// Initialize out-of-scope variables that need to recieve persistent global state values
 		this.getState().then(
 			({
-				soundEnabled = false,
 				terminalShellIntegrationTimeout = Terminal.defaultShellIntegrationTimeout,
 				terminalShellIntegrationDisabled = false,
 				terminalCommandDelay = 0,
@@ -335,7 +357,6 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 				terminalPowershellCounter = false,
 				terminalZdotdir = false,
 			}) => {
-				setSoundEnabled(soundEnabled)
 				Terminal.setShellIntegrationTimeout(terminalShellIntegrationTimeout)
 				Terminal.setShellIntegrationDisabled(terminalShellIntegrationDisabled)
 				Terminal.setCommandDelay(terminalCommandDelay)
@@ -372,6 +393,18 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		// and executes code based on the message that is recieved
 		this.setWebviewMessageListener(webviewView.webview)
 
+		// Subscribe to code index status updates if the manager exists
+		if (this.codeIndexManager) {
+			this.codeIndexStatusSubscription = this.codeIndexManager.onProgressUpdate((update: IndexProgressUpdate) => {
+				this.postMessageToWebview({
+					type: "indexingStatusUpdate",
+					values: update,
+				})
+			})
+			// Add the subscription to the main disposables array
+			this.disposables.push(this.codeIndexStatusSubscription)
+		}
+
 		// Logs show up in bottom panel > Debug Console
 		//console.log("registering listener")
 
@@ -406,7 +439,14 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		// This happens when the user closes the view or when the view is closed programmatically
 		webviewView.onDidDispose(
 			async () => {
-				await this.dispose()
+				// kilocode_change start: only dispose in tab mode
+				if (inTabMode) {
+					this.log("Disposing ClineProvider because it was in tab mode.")
+					await this.dispose()
+				} else {
+					this.log("NOT disposing ClineProvider because it is in sidebar mode and can be reused.")
+				}
+				// kilocode_change end
 			},
 			null,
 			this.disposables,
@@ -528,7 +568,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		try {
 			const fs = require("fs")
 			const path = require("path")
-			const portFilePath = path.resolve(__dirname, "../.vite-port")
+			const portFilePath = path.resolve(__dirname, "../../.vite-port")
 
 			if (fs.existsSync(portFilePath)) {
 				localPort = fs.readFileSync(portFilePath, "utf8").trim()
@@ -563,22 +603,14 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			"index.css",
 		])
 
-		const codiconsUri = getUri(webview, this.contextProxy.extensionUri, [
-			"node_modules",
-			"@vscode",
-			"codicons",
-			"dist",
-			"codicon.css",
-		])
-
+		const codiconsUri = getUri(webview, this.contextProxy.extensionUri, ["assets", "codicons", "codicon.css"])
 		const materialIconsUri = getUri(webview, this.contextProxy.extensionUri, [
-			"node_modules",
+			"assets",
 			"vscode-material-icons",
-			"generated",
 			"icons",
 		])
-
 		const imagesUri = getUri(webview, this.contextProxy.extensionUri, ["assets", "images"])
+		const audioUri = getUri(webview, this.contextProxy.extensionUri, ["webview-ui", "audio"])
 
 		const file = "src/index.tsx"
 		const scriptUri = `http://${localServerUrl}/${file}`
@@ -597,9 +629,10 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			"default-src 'none'",
 			`font-src ${webview.cspSource}`,
 			`style-src ${webview.cspSource} 'unsafe-inline' https://* http://${localServerUrl} http://0.0.0.0:${localPort}`,
-			`img-src ${webview.cspSource} https://*.googleusercontent.com data: https://*.googleapis.com`, // kilocode_change: add https://*.googleusercontent.com and https://*.googleapis.com
+			`img-src ${webview.cspSource} data: https://*.googleusercontent.com https://*.googleapis.com`, // kilocode_change: add https://*.googleusercontent.com and https://*.googleapis.com
+			`media-src ${webview.cspSource}`,
 			`script-src 'unsafe-eval' ${webview.cspSource} https://* https://*.posthog.com http://${localServerUrl} http://0.0.0.0:${localPort} 'nonce-${nonce}'`,
-			`connect-src https://* https://*.posthog.com ws://${localServerUrl} ws://0.0.0.0:${localPort} http://${localServerUrl} http://0.0.0.0:${localPort}`,
+			`connect-src ${webview.cspSource} https://* https://*.posthog.com ws://${localServerUrl} ws://0.0.0.0:${localPort} http://${localServerUrl} http://0.0.0.0:${localPort}`,
 		]
 
 		return /*html*/ `
@@ -613,9 +646,10 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 					<link href="${codiconsUri}" rel="stylesheet" />
 					<script nonce="${nonce}">
 						window.IMAGES_BASE_URI = "${imagesUri}"
+						window.AUDIO_BASE_URI = "${audioUri}"
 						window.MATERIAL_ICONS_BASE_URI = "${materialIconsUri}"
 					</script>
-					<title>Kilo SSY</title>
+					<title>Kilo Code</title>
 				</head>
 				<body>
 					<div id="root"></div>
@@ -648,38 +682,16 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			"assets",
 			"index.css",
 		])
-		// The JS file from the React build output
+
 		const scriptUri = getUri(webview, this.contextProxy.extensionUri, ["webview-ui", "build", "assets", "index.js"])
-
-		// The codicon font from the React build output
-		// https://github.com/microsoft/vscode-extension-samples/blob/main/webview-codicons-sample/src/extension.ts
-		// we installed this package in the extension so that we can access it how its intended from the extension (the font file is likely bundled in vscode), and we just import the css fileinto our react app we don't have access to it
-		// don't forget to add font-src ${webview.cspSource};
-		const codiconsUri = getUri(webview, this.contextProxy.extensionUri, [
-			"node_modules",
-			"@vscode",
-			"codicons",
-			"dist",
-			"codicon.css",
-		])
-
-		// The material icons from the React build output
+		const codiconsUri = getUri(webview, this.contextProxy.extensionUri, ["assets", "codicons", "codicon.css"])
 		const materialIconsUri = getUri(webview, this.contextProxy.extensionUri, [
-			"node_modules",
+			"assets",
 			"vscode-material-icons",
-			"generated",
 			"icons",
 		])
-
 		const imagesUri = getUri(webview, this.contextProxy.extensionUri, ["assets", "images"])
-
-		// const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, "assets", "main.js"))
-
-		// const styleResetUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, "assets", "reset.css"))
-		// const styleVSCodeUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, "assets", "vscode.css"))
-
-		// // Same for stylesheet
-		// const stylesheetUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, "assets", "main.css"))
+		const audioUri = getUri(webview, this.contextProxy.extensionUri, ["webview-ui", "audio"])
 
 		// Use a nonce to only allow a specific script to be run.
 		/*
@@ -703,14 +715,15 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
             <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
             <meta name="theme-color" content="#000000">
 			<!-- kilocode_change: add https://*.googleusercontent.com https://*.googleapis.com to img-src -->
-            <meta http-equiv="Content-Security-Policy" content="default-src 'none'; font-src ${webview.cspSource}; style-src ${webview.cspSource} 'unsafe-inline'; img-src ${webview.cspSource} https://*.googleusercontent.com data: https://*.googleapis.com; script-src ${webview.cspSource} 'wasm-unsafe-eval' 'nonce-${nonce}' https://us-assets.i.posthog.com 'strict-dynamic'; connect-src https://*.shengsuanyun.com https://openrouter.ai https://api.requesty.ai https://us.i.posthog.com https://us-assets.i.posthog.com;">
+            <meta http-equiv="Content-Security-Policy" content="default-src 'none'; font-src ${webview.cspSource}; style-src ${webview.cspSource} 'unsafe-inline'; img-src ${webview.cspSource} https://*.googleusercontent.com data: https://*.googleapis.com; media-src ${webview.cspSource}; script-src ${webview.cspSource} 'wasm-unsafe-eval' 'nonce-${nonce}' https://us-assets.i.posthog.com 'strict-dynamic'; connect-src ${webview.cspSource} https://*.shengsuanyun.com https://openrouter.ai https://api.requesty.ai https://us.i.posthog.com https://us-assets.i.posthog.com;">
             <link rel="stylesheet" type="text/css" href="${stylesUri}">
 			<link href="${codiconsUri}" rel="stylesheet" />
 			<script nonce="${nonce}">
 				window.IMAGES_BASE_URI = "${imagesUri}"
+				window.AUDIO_BASE_URI = "${audioUri}"
 				window.MATERIAL_ICONS_BASE_URI = "${materialIconsUri}"
 			</script>
-            <title>Kilo SSY</title>
+            <title>Kilo Code</title>
           </head>
           <body>
             <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -822,6 +835,11 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 					this.providerSettingsManager.setModeConfig(mode, id),
 					this.contextProxy.setProviderSettings(providerSettings),
 				])
+
+				// Notify CodeIndexManager about the settings change
+				if (this.codeIndexManager) {
+					await this.codeIndexManager.handleExternalSettingsChange()
+				}
 
 				// Change the provider for the current task.
 				// TODO: We should rename `buildApiHandler` for clarity (e.g. `getProviderClient`).
@@ -972,7 +990,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 	}
 
 	async ensureSettingsDirectoryExists(): Promise<string> {
-		const { getSettingsDirectoryPath } = await import("../../shared/storagePathManager")
+		const { getSettingsDirectoryPath } = await import("../../utils/storage")
 		const globalStoragePath = this.contextProxy.globalStorageUri.fsPath
 		return getSettingsDirectoryPath(globalStoragePath)
 	}
@@ -1093,7 +1111,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			kilocodeToken: token,
 		})
 
-		vscode.window.showInformationMessage("Kilo SSY successfully configured!")
+		vscode.window.showInformationMessage("Kilo Code successfully configured!")
 
 		if (this.getCurrentCline()) {
 			this.getCurrentCline()!.api = buildApiHandler({
@@ -1116,7 +1134,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		const historyItem = history.find((item) => item.id === id)
 
 		if (historyItem) {
-			const { getTaskDirectoryPath } = await import("../../shared/storagePathManager")
+			const { getTaskDirectoryPath } = await import("../../utils/storage")
 			const globalStoragePath = this.contextProxy.globalStorageUri.fsPath
 			const taskDirPath = await getTaskDirectoryPath(globalStoragePath, id)
 			const apiConversationHistoryFilePath = path.join(taskDirPath, GlobalFileNames.apiConversationHistory)
@@ -1155,6 +1173,22 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 	async exportTaskWithId(id: string) {
 		const { historyItem, apiConversationHistory } = await this.getTaskWithId(id)
 		await downloadTask(historyItem.ts, apiConversationHistory)
+	}
+
+	/* Condenses a task's message history to use fewer tokens. */
+	async condenseTaskContext(taskId: string) {
+		let task: Task | undefined
+		for (let i = this.clineStack.length - 1; i >= 0; i--) {
+			if (this.clineStack[i].taskId === taskId) {
+				task = this.clineStack[i]
+				break
+			}
+		}
+		if (!task) {
+			throw new Error(`Task with id ${taskId} not found in stack`)
+		}
+		await task.condenseContext()
+		await this.postMessageToWebview({ type: "condenseTaskContextResponse", text: taskId })
 	}
 
 	// this function deletes a task from task hidtory, and deletes it's checkpoints and delete the task folder
@@ -1238,6 +1272,8 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			alwaysAllowMcp,
 			alwaysAllowModeSwitch,
 			alwaysAllowSubtasks,
+			allowedMaxRequests,
+			autoCondenseContextPercent,
 			soundEnabled,
 			ttsEnabled,
 			ttsSpeed,
@@ -1284,10 +1320,14 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			maxReadFileLine,
 			terminalCompressProgressBar,
 			historyPreviewCollapsed,
+			condensingApiConfigId,
+			customCondensingPrompt,
+			codebaseIndexConfig,
+			codebaseIndexModels,
 		} = await this.getState()
 
 		const machineId = vscode.env.machineId
-		const allowedCommands = vscode.workspace.getConfiguration("kilo-ssy").get<string[]>("allowedCommands") || []
+		const allowedCommands = vscode.workspace.getConfiguration(Package.name).get<string[]>("allowedCommands") || []
 		const cwd = this.cwd
 
 		// kilocode_change start
@@ -1315,6 +1355,8 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			alwaysAllowMcp: alwaysAllowMcp ?? true,
 			alwaysAllowModeSwitch: alwaysAllowModeSwitch ?? true,
 			alwaysAllowSubtasks: alwaysAllowSubtasks ?? true,
+			allowedMaxRequests,
+			autoCondenseContextPercent: autoCondenseContextPercent ?? 100,
 			uriScheme: vscode.env.uriScheme,
 			uiKind: vscode.UIKind[vscode.env.uiKind], // kilocode_change
 			currentTaskItem: this.getCurrentCline()?.taskId
@@ -1372,12 +1414,22 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			showAutoApproveMenu: showAutoApproveMenu ?? false, // kilocode_change
 			language, // kilocode_change
 			renderContext: this.renderContext,
-			maxReadFileLine: maxReadFileLine ?? 500,
+			maxReadFileLine: maxReadFileLine ?? -1,
 			settingsImportedAt: this.settingsImportedAt,
 			terminalCompressProgressBar: terminalCompressProgressBar ?? true,
 			hasSystemPromptOverride,
 			historyPreviewCollapsed: historyPreviewCollapsed ?? false,
 			workflowToggles, // kilocode_change
+			condensingApiConfigId,
+			customCondensingPrompt,
+			codebaseIndexModels: codebaseIndexModels ?? EMBEDDING_MODEL_PROFILES,
+			codebaseIndexConfig: codebaseIndexConfig ?? {
+				codebaseIndexEnabled: false,
+				codebaseIndexQdrantUrl: "http://localhost:6333",
+				codebaseIndexEmbedderProvider: "openai",
+				codebaseIndexEmbedderBaseUrl: "",
+				codebaseIndexEmbedderModelId: "",
+			},
 		}
 	}
 
@@ -1389,7 +1441,6 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 
 	async getState() {
 		const stateValues = this.contextProxy.getValues()
-
 		const customModes = await this.customModesManager.getCustomModes()
 
 		// Determine apiProvider with the same logic as before.
@@ -1418,6 +1469,8 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			alwaysAllowMcp: stateValues.alwaysAllowMcp ?? true,
 			alwaysAllowModeSwitch: stateValues.alwaysAllowModeSwitch ?? true,
 			alwaysAllowSubtasks: stateValues.alwaysAllowSubtasks ?? true,
+			allowedMaxRequests: stateValues.allowedMaxRequests,
+			autoCondenseContextPercent: stateValues.autoCondenseContextPercent ?? 100,
 			taskHistory: stateValues.taskHistory,
 			allowedCommands: stateValues.allowedCommands,
 			soundEnabled: stateValues.soundEnabled ?? false,
@@ -1466,8 +1519,19 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			browserToolEnabled: stateValues.browserToolEnabled ?? true,
 			showRooIgnoredFiles: stateValues.showRooIgnoredFiles ?? true,
 			showAutoApproveMenu: stateValues.showAutoApproveMenu ?? false, // kilocode_change
-			maxReadFileLine: stateValues.maxReadFileLine ?? 500,
+			maxReadFileLine: stateValues.maxReadFileLine ?? -1,
 			historyPreviewCollapsed: stateValues.historyPreviewCollapsed ?? false,
+			// Explicitly add condensing settings
+			condensingApiConfigId: stateValues.condensingApiConfigId,
+			customCondensingPrompt: stateValues.customCondensingPrompt,
+			codebaseIndexModels: stateValues.codebaseIndexModels ?? EMBEDDING_MODEL_PROFILES,
+			codebaseIndexConfig: stateValues.codebaseIndexConfig ?? {
+				codebaseIndexEnabled: false,
+				codebaseIndexQdrantUrl: "http://localhost:6333",
+				codebaseIndexEmbedderProvider: "openai",
+				codebaseIndexEmbedderBaseUrl: "",
+				codebaseIndexEmbedderModelId: "",
+			},
 		}
 	}
 

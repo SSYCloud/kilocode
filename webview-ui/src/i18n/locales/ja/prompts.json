@@ -7,7 +7,7 @@
 		"editModesConfig": "モード設定を編集",
 		"editGlobalModes": "グローバルモードを編集",
 		"editProjectModes": "プロジェクトモードを編集 (.kilossymodes)",
-		"createModeHelpText": "モードはKilo SSYの振る舞いを調整する専門的なペルソナです。<0>モードの使用について学ぶ</0>か、<1>モードのカスタマイズについて学ぶ</1>。",
+		"createModeHelpText": "モードはKilo Codeの振る舞いを調整する専門的なペルソナです。<0>モードの使用について学ぶ</0>か、<1>モードのカスタマイズについて学ぶ</1>。",
 		"selectMode": "モードを検索"
 	},
 	"apiConfiguration": {
@@ -32,7 +32,7 @@
 	"roleDefinition": {
 		"title": "役割の定義",
 		"resetToDefault": "デフォルトにリセット",
-		"description": "このモードのKilo SSYの専門知識と個性を定義します。この説明は、Kilo SSYが自身をどのように表現し、タスクにどのように取り組むかを形作ります。"
+		"description": "このモードのKilo Codeの専門知識と個性を定義します。この説明は、Kilo Codeが自身をどのように表現し、タスクにどのように取り組むかを形作ります。"
 	},
 	"whenToUse": {
 		"title": "使用タイミング（オプション）",
@@ -69,7 +69,7 @@
 		"types": {
 			"ENHANCE": {
 				"label": "プロンプトを強化",
-				"description": "プロンプト強化を使用して、入力に合わせたカスタマイズされた提案や改善を得ることができます。これにより、Kilo SSYがあなたの意図を理解し、最適な回答を提供できます。チャットの✨アイコンから利用できます。"
+				"description": "プロンプト強化を使用して、入力に合わせたカスタマイズされた提案や改善を得ることができます。これにより、Kilo Codeがあなたの意図を理解し、最適な回答を提供できます。チャットの✨アイコンから利用できます。"
 			},
 			"EXPLAIN": {
 				"label": "コードを説明",
@@ -134,7 +134,7 @@
 		},
 		"roleDefinition": {
 			"label": "役割の定義",
-			"description": "このモードのKilo SSYの専門知識と個性を定義します。"
+			"description": "このモードのKilo Codeの専門知識と個性を定義します。"
 		},
 		"whenToUse": {
 			"label": "使用タイミング（オプション）",

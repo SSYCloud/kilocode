@@ -1,11 +1,17 @@
+// npx jest src/shared/__tests__/modes.test.ts
+
+import type { ModeConfig } from "@roo-code/types"
+
 // Mock setup must come before imports
 jest.mock("vscode")
+
 const mockAddCustomInstructions = jest.fn().mockResolvedValue("Combined instructions")
+
 jest.mock("../../core/prompts/sections/custom-instructions", () => ({
 	addCustomInstructions: mockAddCustomInstructions,
 }))
 
-import { isToolAllowedForMode, FileRestrictionError, ModeConfig, getFullModeDetails, modes } from "../modes"
+import { isToolAllowedForMode, FileRestrictionError, getFullModeDetails, modes } from "../modes"
 import { addCustomInstructions } from "../../core/prompts/sections/custom-instructions"
 
 describe("isToolAllowedForMode", () => {
@@ -273,7 +279,7 @@ describe("FileRestrictionError", () => {
 				slug: "debug",
 				name: "Debug", // kilocode_change
 				roleDefinition:
-					"You are Kilo SSY, an expert software debugger specializing in systematic problem diagnosis and resolution.",
+					"You are Kilo Code, an expert software debugger specializing in systematic problem diagnosis and resolution.",
 				groups: ["read", "edit", "browser", "command", "mcp"],
 			})
 			expect(debugMode?.customInstructions).toContain(
@@ -294,7 +300,7 @@ describe("FileRestrictionError", () => {
 				slug: "debug",
 				name: "Debug", // kilocode_change
 				roleDefinition:
-					"You are Kilo SSY, an expert software debugger specializing in systematic problem diagnosis and resolution.",
+					"You are Kilo Code, an expert software debugger specializing in systematic problem diagnosis and resolution.",
 			})
 		})
 

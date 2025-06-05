@@ -5,9 +5,10 @@ import { VSCodeBadge } from "@vscode/webview-ui-toolkit/react"
 import { CloudUpload, CloudDownload } from "lucide-react"
 import { validateSlashCommand } from "@/utils/slash-commands"
 
-import { ClineMessage } from "@roo/shared/ExtensionMessage"
+import type { ClineMessage } from "@roo-code/types"
 
-import { getMaxTokensForModel } from "@src/utils/model-utils"
+import { getModelMaxOutputTokens } from "@roo/api"
+
 import { formatLargeNumber } from "@src/utils/format"
 import { cn } from "@src/lib/utils"
 import { Button } from "@src/components/ui"
@@ -18,7 +19,7 @@ import Thumbnails from "../common/Thumbnails"
 
 import { TaskActions } from "./TaskActions"
 import { ContextWindowProgress } from "./ContextWindowProgress"
-import { mentionRegexGlobal } from "@roo/shared/context-mentions"
+import { mentionRegexGlobal } from "@roo/context-mentions"
 
 import { vscode } from "@/utils/vscode" // kilocode_change: pull slash commands from Cline
 
@@ -31,6 +32,8 @@ export interface TaskHeaderProps {
 	cacheReads?: number
 	totalCost: number
 	contextTokens: number
+	buttonsDisabled: boolean
+	handleCondenseContext: (taskId: string) => void
 	onClose: () => void
 }
 
@@ -43,11 +46,13 @@ const TaskHeader = ({
 	cacheReads,
 	totalCost,
 	contextTokens,
+	buttonsDisabled,
+	handleCondenseContext,
 	onClose,
 }: TaskHeaderProps) => {
 	const { t } = useTranslation()
 	const { apiConfiguration, currentTaskItem, customModes } = useExtensionState()
-	const { info: model } = useSelectedModel(apiConfiguration)
+	const { id: modelId, info: model } = useSelectedModel(apiConfiguration)
 	const [isTaskExpanded, setIsTaskExpanded] = useState(false)
 
 	const textContainerRef = useRef<HTMLDivElement>(null)
@@ -61,7 +66,7 @@ const TaskHeader = ({
 			<div
 				className={cn(
 					"rounded-xs p-2.5 flex flex-col gap-1.5 relative z-1 border",
-					!!isTaskExpanded
+					isTaskExpanded
 						? "border-vscode-panel-border text-vscode-foreground"
 						: "border-vscode-panel-border/80 text-vscode-foreground/80",
 				)}>
@@ -98,7 +103,11 @@ const TaskHeader = ({
 						<ContextWindowProgress
 							contextWindow={contextWindow}
 							contextTokens={contextTokens || 0}
-							maxTokens={getMaxTokensForModel(model, apiConfiguration)}
+							maxTokens={
+								model
+									? getModelMaxOutputTokens({ modelId, model, settings: apiConfiguration })
+									: undefined
+							}
 						/>
 						{!!totalCost && <VSCodeBadge>${totalCost.toFixed(2)}</VSCodeBadge>}
 					</div>
@@ -135,7 +144,15 @@ const TaskHeader = ({
 									<ContextWindowProgress
 										contextWindow={contextWindow}
 										contextTokens={contextTokens || 0}
-										maxTokens={getMaxTokensForModel(model, apiConfiguration)}
+										maxTokens={
+											model
+												? getModelMaxOutputTokens({
+														modelId,
+														model,
+														settings: apiConfiguration,
+													})
+												: undefined
+										}
 									/>
 								</div>
 							)}
@@ -155,7 +172,13 @@ const TaskHeader = ({
 										</span>
 									)}
 								</div>
-								{!totalCost && <TaskActions item={currentTaskItem} />}
+								{!totalCost && (
+									<TaskActions
+										item={currentTaskItem}
+										buttonsDisabled={buttonsDisabled}
+										handleCondenseContext={handleCondenseContext}
+									/>
+								)}
 							</div>
 
 							{doesModelSupportPromptCache &&
@@ -184,7 +207,11 @@ const TaskHeader = ({
 										<span className="font-bold">{t("chat:task.apiCost")}</span>
 										<span>${totalCost?.toFixed(2)}</span>
 									</div>
-									<TaskActions item={currentTaskItem} />
+									<TaskActions
+										item={currentTaskItem}
+										buttonsDisabled={buttonsDisabled}
+										handleCondenseContext={handleCondenseContext}
+									/>
 								</div>
 							)}
 						</div>

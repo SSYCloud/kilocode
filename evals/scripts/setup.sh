@@ -25,14 +25,11 @@ has_asdf_plugin() {
 }
 
 build_extension() {
-  echo "🔨 Building the Kilo SSY extension..."
+  echo "🔨 Building the Kilo Code extension..."
   cd ..
   mkdir -p bin
-  npm run install-extension -- --silent --no-audit || exit 1
-  npm run install-webview -- --silent --no-audit || exit 1
-  npm run install-e2e -- --silent --no-audit || exit 1
-  npx vsce package --out bin/kilo-ssy-latest.vsix || exit 1
-  code --install-extension bin/kilo-ssy-latest.vsix || exit 1
+  pnpm build -- --out ../bin/kilo-ssy-$(git rev-parse --short HEAD).vsix || exit 1
+  code --install-extension bin/kilo-ssy-$(git rev-parse --short HEAD).vsix || exit 1
   cd evals
 }
 
@@ -325,7 +322,7 @@ if [[ ! -s .env ]]; then
   cp .env.sample .env || exit 1
 fi
 
-echo -n "🗄️ Syncing Kilo SSY evals database... "
+echo -n "🗄️ Syncing Kilo Code evals database... "
 pnpm --filter @evals/db db:push &>/dev/null || exit 1
 pnpm --filter @evals/db db:enable-wal &>/dev/null || exit 1
 echo "✅ Done"
@@ -338,7 +335,7 @@ if ! grep -q "OPENROUTER_API_KEY" .env; then
 fi
 
 current_version=$(code --list-extensions --show-versions 2>/dev/null | grep kilocode)
-read -p "💻 Do you want to build a new version of the Kilo SSY extension? [currently $current_version] (y/N): " build_extension
+read -p "💻 Do you want to build a new version of the Kilo Code extension? [currently $current_version] (y/N): " build_extension
 
 if [[ "$build_extension" =~ ^[Yy]$ ]]; then
   build_extension

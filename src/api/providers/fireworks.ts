@@ -1,14 +1,9 @@
 import { Anthropic } from "@anthropic-ai/sdk"
 import OpenAI from "openai"
 import { ApiHandler, SingleCompletionHandler } from "../"
-import {
-	ApiHandlerOptions,
-	FireworksModelId,
-	ModelInfo,
-	fireworksDefaultModelId,
-	fireworksModels,
-} from "../../shared/api"
-import { calculateApiCostOpenAI } from "../../utils/cost"
+import { ApiHandlerOptions, FireworksModelId, fireworksDefaultModelId, fireworksModels } from "../../shared/api"
+import { type ModelInfo } from "@roo-code/types"
+import { calculateApiCostOpenAI } from "../../shared/cost"
 import { convertToOpenAiMessages } from "../transform/openai-format"
 import { ApiStream } from "../transform/stream"
 import { BaseProvider } from "./base-provider"
@@ -101,7 +96,6 @@ export class FireworksHandler extends BaseProvider implements ApiHandler, Single
 				const delta = chunk.choices[0]?.delta
 				if (delta?.content) {
 					contentStarted = true
-					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					accumulatedText += delta.content
 					yield {
 						type: "text",

@@ -1,15 +1,15 @@
 {
 	"title": "MCP Sunucuları",
 	"done": "Bitti",
-	"description": "Kilo SSY'un harici sunuculardan ek araçlar ve servisler kullanabilmesi için Model Context Protocol (MCP)'yi etkinleştir. Böylece Kilo SSY senin için daha fazlasını yapabilir. <0>Daha fazla bilgi</0>",
+	"description": "Kilo Code'un harici sunuculardan ek araçlar ve servisler kullanabilmesi için Model Context Protocol (MCP)'yi etkinleştir. Böylece Kilo Code senin için daha fazlasını yapabilir. <0>Daha fazla bilgi</0>",
 	"enableToggle": {
 		"title": "MCP Sunucularını Etkinleştir",
-		"description": "Bunu AÇ, böylece Kilo SSY bağlı MCP sunucularından araçlar kullanabilir. Kilo SSY'ya daha fazla yetenek kazandırır. Ekstra araçları kullanmayacaksan, API token maliyetini azaltmak için bunu KAPAT."
+		"description": "Bunu AÇ, böylece Kilo Code bağlı MCP sunucularından araçlar kullanabilir. Kilo Code'ya daha fazla yetenek kazandırır. Ekstra araçları kullanmayacaksan, API token maliyetini azaltmak için bunu KAPAT."
 	},
 	"enableServerCreation": {
 		"title": "MCP Sunucu Oluşturmayı Etkinleştir",
-		"description": "Bunu AÇ, Kilo SSY'nun <1>yeni</1> özel MCP sunucuları oluşturmanda sana yardımcı olmasını sağlar. <0>Sunucu oluşturma hakkında bilgi al</0>",
-		"hint": "İpucu: API token maliyetini azaltmak için Kilo SSY'dan yeni bir MCP sunucusu oluşturmasını istemediğinde bu ayarı kapat."
+		"description": "Bunu AÇ, Kilo Code'nun <1>yeni</1> özel MCP sunucuları oluşturmanda sana yardımcı olmasını sağlar. <0>Sunucu oluşturma hakkında bilgi al</0>",
+		"hint": "İpucu: API token maliyetini azaltmak için Kilo Code'dan yeni bir MCP sunucusu oluşturmasını istemediğinde bu ayarı kapat."
 	},
 	"editGlobalMCP": "Global MCP'yi Düzenle",
 	"editProjectMCP": "Proje MCP'sini Düzenle",

@@ -1,6 +1,6 @@
 {
 	"extension": {
-		"name": "Kilo SSY",
+		"name": "Kilo Code",
 		"description": "Kod planlama, oluşturma ve düzeltme için açık kaynaklı yapay zeka kodlama asistanı."
 	},
 	"number_format": {
@@ -58,7 +58,9 @@
 		"failed_delete_repo": "İlişkili gölge depo veya dal silinemedi: {{error}}",
 		"failed_remove_directory": "Görev dizini kaldırılamadı: {{error}}",
 		"custom_storage_path_unusable": "Özel depolama yolu \"{{path}}\" kullanılamıyor, varsayılan yol kullanılacak",
-		"cannot_access_path": "{{path}} yoluna erişilemiyor: {{error}}"
+		"cannot_access_path": "{{path}} yoluna erişilemiyor: {{error}}",
+		"settings_import_failed": "Ayarlar içe aktarılamadı: {{error}}.",
+		"mistake_limit_guidance": "Bu, modelin düşünce sürecindeki bir başarısızlığı veya bir aracı düzgün kullanamama durumunu gösterebilir, bu da kullanıcı rehberliği ile hafifletilebilir (örn. \"Görevi daha küçük adımlara bölmeyi deneyin\")."
 	},
 	"warnings": {
 		"no_terminal_content": "Seçili terminal içeriği yok",
@@ -94,7 +96,7 @@
 		"enter_valid_path": "Lütfen geçerli bir yol girin"
 	},
 	"input": {
-		"task_prompt": "Kilo SSY ne yapsın?",
+		"task_prompt": "Kilo Code ne yapsın?",
 		"task_placeholder": "Görevini buraya yaz"
 	},
 	"settings": {

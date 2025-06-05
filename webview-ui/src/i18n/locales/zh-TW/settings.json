@@ -30,16 +30,40 @@
 		"terminal": "終端機",
 		"experimental": "實驗性",
 		"language": "語言",
-		"about": "關於 Kilo SSY"
+		"about": "關於 Kilo Code 中文版"
+	},
+	"codeIndex": {
+		"title": "程式碼庫索引",
+		"enableLabel": "啟用程式碼庫索引",
+		"enableDescription": "<0>程式碼庫索引</0>是一個實驗性功能，使用 AI 嵌入為您的專案建立語義搜尋索引。這使 Kilo Code 能夠透過基於含義而非僅僅關鍵詞來尋找相關程式碼，從而更好地理解和導覽大型程式碼庫。",
+		"providerLabel": "嵌入提供者",
+		"selectProviderPlaceholder": "選擇提供者",
+		"openaiProvider": "OpenAI",
+		"ollamaProvider": "Ollama",
+		"openaiKeyLabel": "OpenAI 金鑰：",
+		"modelLabel": "模型",
+		"selectModelPlaceholder": "選擇模型",
+		"ollamaUrlLabel": "Ollama URL：",
+		"qdrantUrlLabel": "Qdrant URL",
+		"qdrantKeyLabel": "Qdrant 金鑰：",
+		"startIndexingButton": "開始索引",
+		"clearIndexDataButton": "清除索引資料",
+		"unsavedSettingsMessage": "請先儲存設定再開始索引程序。",
+		"clearDataDialog": {
+			"title": "確定要繼續嗎？",
+			"description": "此操作無法復原。這將永久刪除您的程式碼庫索引資料。",
+			"cancelButton": "取消",
+			"confirmButton": "清除資料"
+		}
 	},
 	"autoApprove": {
-		"description": "允許 Kilo SSY 無需核准即執行操作。僅在您完全信任 AI 並了解相關安全風險時啟用這些設定。",
+		"description": "允許 Kilo Code 中文版無需核准即執行操作。僅在您完全信任 AI 並了解相關安全風險時啟用這些設定。",
 		"readOnly": {
 			"label": "讀取",
-			"description": "啟用後，Kilo SSY 將自動檢視目錄內容並讀取檔案，無需點選核准按鈕。",
+			"description": "啟用後，Kilo Code 中文版將自動檢視目錄內容並讀取檔案，無需點選核准按鈕。",
 			"outsideWorkspace": {
 				"label": "包含工作區外的檔案",
-				"description": "允許 Kilo SSY 讀取目前工作區外的檔案，無需核准。"
+				"description": "允許 Kilo Code 中文版讀取目前工作區外的檔案，無需核准。"
 			}
 		},
 		"write": {
@@ -48,7 +72,7 @@
 			"delayLabel": "寫入後延遲以允許診斷偵測潛在問題",
 			"outsideWorkspace": {
 				"label": "包含工作區外的檔案",
-				"description": "允許 Kilo SSY 在目前工作區外建立和編輯檔案，無需核准。"
+				"description": "允許 Kilo Code 中文版在目前工作區外建立和編輯檔案，無需核准。"
 			}
 		},
 		"browser": {
@@ -83,6 +107,11 @@
 		"showMenu": {
 			"label": "在聊天視圖中顯示自動核准選單",
 			"description": "啟用後，自動核准選單將顯示在聊天視圖底部，提供快速存取自動核准設定"
+		},
+		"apiRequestLimit": {
+			"title": "最大請求數",
+			"description": "在請求批准以繼續執行工作之前，自動發出此數量的 API 請求。",
+			"unlimited": "無限制"
 		}
 	},
 	"providers": {
@@ -113,6 +142,7 @@
 		"glamaApiKey": "Glama API 金鑰",
 		"getGlamaApiKey": "取得 Glama API 金鑰",
 		"useCustomBaseUrl": "使用自訂基礎 URL",
+		"useReasoning": "啟用推理",
 		"useHostHeader": "使用自訂 Host 標頭",
 		"useLegacyFormat": "使用舊版 OpenAI API 格式",
 		"customHeaders": "自訂標頭",
@@ -122,7 +152,10 @@
 		"requestyApiKey": "Requesty API 金鑰",
 		"refreshModels": {
 			"label": "重新整理模型",
-			"hint": "請重新開啟設定以查看最新模型。"
+			"hint": "請重新開啟設定以查看最新模型。",
+			"loading": "正在重新整理模型列表...",
+			"success": "模型列表重新整理成功！",
+			"error": "重新整理模型列表失敗。請再試一次。"
 		},
 		"getRequestyApiKey": "取得 Requesty API 金鑰",
 		"openRouterTransformsText": "將提示和訊息鏈壓縮到上下文大小 (<a>OpenRouter 轉換</a>)",
@@ -181,16 +214,18 @@
 			"draftModelDesc": "草稿模型必須來自相同模型系列才能正確運作。",
 			"selectDraftModel": "選擇草稿模型",
 			"noModelsFound": "未找到草稿模型。請確保 LM Studio 以伺服器模式執行。",
-			"description": "LM Studio 允許您在本機電腦執行模型。詳細資訊請參閱快速入門指南。您需要啟動 LM Studio 的本機伺服器功能才能與此擴充功能搭配使用。<span>注意：</span> Kilo SSY 使用複雜提示，與 Claude 模型搭配最佳。功能較弱的模型可能無法正常運作。"
+			"description": "LM Studio 允許您在本機電腦執行模型。詳細資訊請參閱快速入門指南。您需要啟動 LM Studio 的本機伺服器功能才能與此擴充功能搭配使用。<span>注意：</span> Kilo Code 中文版使用複雜提示，與 Claude 模型搭配最佳。功能較弱的模型可能無法正常運作。"
 		},
 		"ollama": {
 			"baseUrl": "基礎 URL（選用）",
 			"modelId": "模型 ID",
 			"description": "Ollama 允許您在本機電腦執行模型。請參閱快速入門指南。",
-			"warning": "注意：Kilo SSY 使用複雜提示，與 Claude 模型搭配最佳。功能較弱的模型可能無法正常運作。"
+			"warning": "注意：Kilo Code 中文版使用複雜提示，與 Claude 模型搭配最佳。功能較弱的模型可能無法正常運作。"
 		},
 		"unboundApiKey": "Unbound API 金鑰",
 		"getUnboundApiKey": "取得 Unbound API 金鑰",
+		"unboundRefreshModelsSuccess": "模型列表已更新！您現在可以從最新模型中選擇。",
+		"unboundInvalidApiKey": "無效的API金鑰。請檢查您的API金鑰並重試。",
 		"humanRelay": {
 			"description": "不需要 API 金鑰，但使用者需要協助將資訊複製並貼上到網頁聊天 AI。",
 			"instructions": "使用期間會彈出對話框，並自動將目前訊息複製到剪貼簿。您需要將這些內容貼上到網頁版 AI（如 ChatGPT 或 Claude），然後將 AI 的回覆複製回對話框並點選確認按鈕。"
@@ -203,7 +238,7 @@
 			}
 		},
 		"customModel": {
-			"capabilities": "設定自訂 OpenAI 相容模型的功能和定價。請謹慎設定模型功能，因為這會影響 Kilo SSY 的運作方式。",
+			"capabilities": "設定自訂 OpenAI 相容模型的功能和定價。請謹慎設定模型功能，因為這會影響 Kilo Code 中文版的運作方式。",
 			"maxTokens": {
 				"label": "最大輸出 Token",
 				"description": "模型能在一則回應中產生的最大 Token 數量。（設為 -1 則由伺服器決定最大值）"
@@ -293,12 +328,12 @@
 	"notifications": {
 		"sound": {
 			"label": "啟用音效",
-			"description": "啟用後，Kilo SSY 將為通知和事件播放音效。",
+			"description": "啟用後，Kilo Code 中文版將為通知和事件播放音效。",
 			"volumeLabel": "音量"
 		},
 		"tts": {
 			"label": "啟用文字轉語音",
-			"description": "啟用後，Kilo SSY 將使用文字轉語音功能朗讀其回應。",
+			"description": "啟用後，Kilo Code 中文版將使用文字轉語音功能朗讀其回應。",
 			"speedLabel": "速度"
 		}
 	},
@@ -380,7 +415,7 @@
 	"advanced": {
 		"diff": {
 			"label": "透過差異比對編輯",
-			"description": "啟用後，Kilo SSY 可更快速地編輯檔案，並自動拒絕不完整的整檔覆寫。搭配最新的 Claude 3.7 Sonnet 模型效果最佳。",
+			"description": "啟用後，Kilo Code 中文版可更快速地編輯檔案，並自動拒絕不完整的整檔覆寫。搭配最新的 Claude 3.7 Sonnet 模型效果最佳。",
 			"strategy": {
 				"label": "差異比對策略",
 				"options": {
@@ -401,10 +436,25 @@
 		}
 	},
 	"experimental": {
-		"warning": "⚠️",
+		"condensingApiConfiguration": {
+			"label": "API Configuration for Context Condensing",
+			"description": "Select which API configuration to use for context condensing operations. Leave unselected to use the current active configuration.",
+			"useCurrentConfig": "Default"
+		},
+		"customCondensingPrompt": {
+			"label": "自訂上下文壓縮提示",
+			"description": "自訂用於上下文壓縮的系統提示。留空則使用預設提示。",
+			"placeholder": "請在此輸入您的自訂上下文壓縮提示...\n\n您可以參考預設提示的結構：\n- 先前對話\n- 目前工作\n- 主要技術概念\n- 相關檔案與程式碼\n- 問題解決\n- 未完成的任務與後續步驟",
+			"reset": "重設為預設值",
+			"hint": "Empty = use default prompt"
+		},
+		"autoCondenseContextPercent": {
+			"label": "觸發智慧上下文壓縮的閾值",
+			"description": "當上下文視窗達到此閾值時，Kilo Code 中文版 將自動壓縮它。"
+		},
 		"AUTO_CONDENSE_CONTEXT": {
-			"name": "智慧壓縮上下文視窗",
-			"description": "當工作的上下文視窗接近填滿時，使用 LLM 呼叫來摘要過去的對話，而非捨棄舊訊息。注意：目前 UI 中顯示的 API 費用並未包含摘要的成本。"
+			"name": "自動觸發智慧上下文壓縮",
+			"description": "智慧上下文壓縮使用 LLM 呼叫來摘要過去的對話，在工作的上下文視窗達到預設閾值時進行，而非在上下文填滿時捨棄舊訊息。"
 		},
 		"DIFF_STRATEGY_UNIFIED": {
 			"name": "使用實驗性統一差異比對策略",
@@ -412,24 +462,28 @@
 		},
 		"SEARCH_AND_REPLACE": {
 			"name": "使用實驗性搜尋與取代工具",
-			"description": "啟用實驗性的搜尋與取代工具，允許 Kilo SSY 在單一請求中取代多個符合的內容。"
+			"description": "啟用實驗性的搜尋與取代工具，允許 Kilo Code 中文版在單一請求中取代多個符合的內容。"
 		},
 		"INSERT_BLOCK": {
 			"name": "使用實驗性插入內容工具",
-			"description": "啟用實驗性的插入內容工具，允許 Kilo SSY 直接在指定行號插入內容，而無需產生差異比對。"
+			"description": "啟用實驗性的插入內容工具，允許 Kilo Code 中文版直接在指定行號插入內容，而無需產生差異比對。"
 		},
 		"POWER_STEERING": {
 			"name": "使用實驗性「動力輔助」模式",
-			"description": "啟用後，Kilo SSY 將更頻繁地提醒模型目前模式的詳細設定。這能讓模型更嚴格遵守角色定義和自訂指令，但每則訊息會使用更多 token。"
+			"description": "啟用後，Kilo Code 中文版將更頻繁地提醒模型目前模式的詳細設定。這能讓模型更嚴格遵守角色定義和自訂指令，但每則訊息會使用更多 token。"
+		},
+		"AUTOCOMPLETE": {
+			"name": "使用實驗性「自動完成」功能",
+			"description": "啟用後，Kilo Code中文版 會在您輸入時提供內嵌程式碼建議。"
 		},
 		"MULTI_SEARCH_AND_REPLACE": {
 			"name": "使用實驗性多區塊差異比對工具",
-			"description": "啟用後，Kilo SSY 將使用多區塊差異比對工具，嘗試在單一請求中更新檔案內的多個程式碼區塊。"
+			"description": "啟用後，Kilo Code 中文版將使用多區塊差異比對工具，嘗試在單一請求中更新檔案內的多個程式碼區塊。"
 		}
 	},
 	"promptCaching": {
 		"label": "停用提示詞快取",
-		"description": "勾選後，Kilo SSY 將不會為此模型使用提示詞快取。"
+		"description": "勾選後，Kilo Code 中文版將不會為此模型使用提示詞快取。"
 	},
 	"temperature": {
 		"useCustom": "使用自訂溫度",
@@ -460,17 +514,17 @@
 		}
 	},
 	"modelPicker": {
-		"automaticFetch": "此擴充功能會自動從 <serviceLink>{{serviceName}}</serviceLink> 取得最新的可用模型清單。如果不確定要選哪個模型，建議使用 <defaultModelLink>{{defaultModelId}}</defaultModelLink>，這是與 Kilo SSY 最佳搭配的模型。您也可以搜尋「free」來檢視目前可用的免費選項。",
+		"automaticFetch": "此擴充功能會自動從 <serviceLink>{{serviceName}}</serviceLink> 取得最新的可用模型清單。如果不確定要選哪個模型，建議使用 <defaultModelLink>{{defaultModelId}}</defaultModelLink>，這是與 Kilo Code 中文版最佳搭配的模型。您也可以搜尋「free」來檢視目前可用的免費選項。",
 		"label": "模型",
 		"searchPlaceholder": "搜尋",
 		"noMatchFound": "找不到符合的項目",
 		"useCustomModel": "使用自訂模型：{{modelId}}"
 	},
 	"footer": {
-		"feedback": "若您有任何問題或建議，歡迎至 <githubLink>github.com/Kilo-Org/kilocode</githubLink> 提出 issue，或加入 <redditLink>reddit.com/r/kilocode</redditLink> 或 <discordLink>kilocode.ai/discord</discordLink> 討論。",
+		"feedback": "若您有任何問題或建議，歡迎至 <githubLink>github.com/SSYCloud/kilocode/tree/ssy</githubLink> 提出 issue，或加入 <redditLink>reddit.com/r/kilocode</redditLink> 或 <discordLink>kilocode.ai/discord</discordLink> 討論。",
 		"telemetry": {
 			"label": "允許匿名錯誤與使用情況回報",
-			"description": "透過傳送匿名的使用資料與錯誤回報，協助改善 Kilo SSY。我們絕不會傳送您的程式碼、提示或個人資訊。詳細資訊請參閱我們的隱私權政策。"
+			"description": "透過傳送匿名的使用資料與錯誤回報，協助改善 Kilo Code 中文版我們絕不會傳送您的程式碼、提示或個人資訊。詳細資訊請參閱我們的隱私權政策。"
 		},
 		"settings": {
 			"import": "匯入",

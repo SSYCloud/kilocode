@@ -1,10 +1,10 @@
 {
 	"input": {
-		"task_prompt": "O que você quer que o Kilo SSY faça?",
+		"task_prompt": "O que você quer que o Kilo Code faça?",
 		"task_placeholder": "Construir, encontrar, perguntar algo"
 	},
 	"extension": {
-		"name": "Kilo SSY",
+		"name": "Kilo Code",
 		"description": "Assistente de codificação de IA de código aberto para planejamento, construção e correção de código."
 	},
 	"number_format": {
@@ -62,7 +62,9 @@
 		"failed_delete_repo": "Falha ao excluir o repositório ou ramificação associada: {{error}}",
 		"failed_remove_directory": "Falha ao remover o diretório de tarefas: {{error}}",
 		"custom_storage_path_unusable": "O caminho de armazenamento personalizado \"{{path}}\" não pode ser usado, será usado o caminho padrão",
-		"cannot_access_path": "Não é possível acessar o caminho {{path}}: {{error}}"
+		"cannot_access_path": "Não é possível acessar o caminho {{path}}: {{error}}",
+		"settings_import_failed": "Falha ao importar configurações: {{error}}",
+		"mistake_limit_guidance": "Isso pode indicar uma falha no processo de pensamento do modelo ou incapacidade de usar uma ferramenta adequadamente, o que pode ser mitigado com orientação do usuário (ex. \"Tente dividir a tarefa em etapas menores\")."
 	},
 	"warnings": {
 		"no_terminal_content": "Nenhum conteúdo do terminal selecionado",

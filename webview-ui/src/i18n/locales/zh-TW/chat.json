@@ -1,5 +1,5 @@
 {
-	"greeting": "Kilo SSY 能為您做什麼？",
+	"greeting": "Kilo Code 能為您做什麼？",
 	"task": {
 		"title": "工作",
 		"seeMore": "顯示更多",
@@ -10,7 +10,8 @@
 		"contextWindow": "上下文長度：",
 		"closeAndStart": "關閉現有工作並開始一項新的工作",
 		"export": "匯出工作紀錄",
-		"delete": "刪除工作（按住 Shift 並點選可跳過確認）"
+		"delete": "刪除工作（按住 Shift 並點選可跳過確認）",
+		"condenseContext": "智慧壓縮上下文"
 	},
 	"history": {
 		"title": "歷史"
@@ -76,7 +77,7 @@
 	},
 	"scrollToBottom": "捲動至對話框底部",
 	"about": "透過 AI 輔助產生、重構和偵錯程式碼。<br />查看我們的 <DocsLink>說明文件</DocsLink> 以瞭解更多資訊。",
-	"onboarding": "<strong>您在此工作區中的工作清單是空的。</strong> 請在下方輸入工作以開始。 不確定如何開始？ 在 <DocsLink>說明文件</DocsLink> 中閱讀更多關於 Kilo SSY 能為您做什麼的資訊。",
+	"onboarding": "<strong>您在此工作區中的工作清單是空的。</strong> 請在下方輸入工作以開始。 不確定如何開始？ 在 <DocsLink>說明文件</DocsLink> 中閱讀更多關於 Kilo Code 能為您做什麼的資訊。",
 	"rooTips": {
 		"boomerangTasks": {
 			"title": "任務拆分",
@@ -115,7 +116,7 @@
 	"diffError": {
 		"title": "編輯失敗"
 	},
-	"troubleMessage": "Kilo SSY 遇到問題...",
+	"troubleMessage": "Kilo Code 遇到問題...",
 	"apiRequest": {
 		"title": "API 請求",
 		"failed": "API 請求失敗",
@@ -141,47 +142,47 @@
 		"current": "目前"
 	},
 	"instructions": {
-		"wantsToFetch": "Kilo SSY 想要取得詳細指示以協助目前任務"
+		"wantsToFetch": "Kilo Code 想要取得詳細指示以協助目前任務"
 	},
 	"fileOperations": {
-		"wantsToRead": "Kilo SSY 想要讀取此檔案：",
-		"wantsToReadOutsideWorkspace": "Kilo SSY 想要讀取此工作區外的檔案：",
-		"didRead": "Kilo SSY 已讀取此檔案：",
-		"wantsToEdit": "Kilo SSY 想要編輯此檔案：",
-		"wantsToEditOutsideWorkspace": "Kilo SSY 想要編輯此工作區外的檔案：",
-		"wantsToCreate": "Kilo SSY 想要建立新檔案：",
-		"wantsToSearchReplace": "Kilo SSY 想要在此檔案中搜尋和取代：",
-		"didSearchReplace": "Kilo SSY 已在此檔案執行搜尋和取代：",
-		"wantsToInsert": "Kilo SSY 想要在此檔案中插入內容：",
-		"wantsToInsertWithLineNumber": "Kilo SSY 想要在此檔案第 {{lineNumber}} 行插入內容：",
-		"wantsToInsertAtEnd": "Kilo SSY 想要在此檔案末尾新增內容："
+		"wantsToRead": "Kilo Code 想要讀取此檔案：",
+		"wantsToReadOutsideWorkspace": "Kilo Code 想要讀取此工作區外的檔案：",
+		"didRead": "Kilo Code 已讀取此檔案：",
+		"wantsToEdit": "Kilo Code 想要編輯此檔案：",
+		"wantsToEditOutsideWorkspace": "Kilo Code 想要編輯此工作區外的檔案：",
+		"wantsToCreate": "Kilo Code 想要建立新檔案：",
+		"wantsToSearchReplace": "Kilo Code 想要在此檔案中搜尋和取代：",
+		"didSearchReplace": "Kilo Code 已在此檔案執行搜尋和取代：",
+		"wantsToInsert": "Kilo Code 想要在此檔案中插入內容：",
+		"wantsToInsertWithLineNumber": "Kilo Code 想要在此檔案第 {{lineNumber}} 行插入內容：",
+		"wantsToInsertAtEnd": "Kilo Code 想要在此檔案末尾新增內容："
 	},
 	"directoryOperations": {
-		"wantsToViewTopLevel": "Kilo SSY 想要檢視此目錄中最上層的檔案：",
-		"didViewTopLevel": "Kilo SSY 已檢視此目錄中最上層的檔案：",
-		"wantsToViewRecursive": "Kilo SSY 想要遞迴檢視此目錄中的所有檔案：",
-		"didViewRecursive": "Kilo SSY 已遞迴檢視此目錄中的所有檔案：",
-		"wantsToViewDefinitions": "Kilo SSY 想要檢視此目錄中使用的原始碼定義名稱：",
-		"didViewDefinitions": "Kilo SSY 已檢視此目錄中使用的原始碼定義名稱：",
-		"wantsToSearch": "Kilo SSY 想要在此目錄中搜尋 <code>{{regex}}</code>：",
-		"didSearch": "Kilo SSY 已在此目錄中搜尋 <code>{{regex}}</code>："
+		"wantsToViewTopLevel": "Kilo Code 想要檢視此目錄中最上層的檔案：",
+		"didViewTopLevel": "Kilo Code 已檢視此目錄中最上層的檔案：",
+		"wantsToViewRecursive": "Kilo Code 想要遞迴檢視此目錄中的所有檔案：",
+		"didViewRecursive": "Kilo Code 已遞迴檢視此目錄中的所有檔案：",
+		"wantsToViewDefinitions": "Kilo Code 想要檢視此目錄中使用的原始碼定義名稱：",
+		"didViewDefinitions": "Kilo Code 已檢視此目錄中使用的原始碼定義名稱：",
+		"wantsToSearch": "Kilo Code 想要在此目錄中搜尋 <code>{{regex}}</code>：",
+		"didSearch": "Kilo Code 已在此目錄中搜尋 <code>{{regex}}</code>："
 	},
 	"commandOutput": "命令輸出",
 	"response": "回應",
 	"arguments": "參數",
 	"mcp": {
-		"wantsToUseTool": "Kilo SSY 想要在 {{serverName}} MCP 伺服器上使用工具：",
-		"wantsToAccessResource": "Kilo SSY 想要存取 {{serverName}} MCP 伺服器上的資源："
+		"wantsToUseTool": "Kilo Code 想要在 {{serverName}} MCP 伺服器上使用工具：",
+		"wantsToAccessResource": "Kilo Code 想要存取 {{serverName}} MCP 伺服器上的資源："
 	},
 	"modes": {
-		"wantsToSwitch": "Kilo SSY 想要切換至 <code>{{mode}}</code> 模式",
-		"wantsToSwitchWithReason": "Kilo SSY 想要切換至 <code>{{mode}}</code> 模式，原因：{{reason}}",
-		"didSwitch": "Kilo SSY 已切換至 <code>{{mode}}</code> 模式",
-		"didSwitchWithReason": "Kilo SSY 已切換至 <code>{{mode}}</code> 模式，原因：{{reason}}"
+		"wantsToSwitch": "Kilo Code 想要切換至 <code>{{mode}}</code> 模式",
+		"wantsToSwitchWithReason": "Kilo Code 想要切換至 <code>{{mode}}</code> 模式，原因：{{reason}}",
+		"didSwitch": "Kilo Code 已切換至 <code>{{mode}}</code> 模式",
+		"didSwitchWithReason": "Kilo Code 已切換至 <code>{{mode}}</code> 模式，原因：{{reason}}"
 	},
 	"subtasks": {
-		"wantsToCreate": "Kilo SSY 想要在 <code>{{mode}}</code> 模式下建立新的子工作：",
-		"wantsToFinish": "Kilo SSY 想要完成此子工作",
+		"wantsToCreate": "Kilo Code 想要在 <code>{{mode}}</code> 模式下建立新的子工作：",
+		"wantsToFinish": "Kilo Code 想要完成此子工作",
 		"newTaskContent": "子工作指示",
 		"completionContent": "子工作已完成",
 		"resultContent": "子工作結果",
@@ -189,7 +190,7 @@
 		"completionInstructions": "子工作已完成！您可以檢閱結果並提出修正或下一步建議。如果一切看起來良好，請確認以將結果傳回主工作。"
 	},
 	"questions": {
-		"hasQuestion": "Kilo SSY 有一個問題："
+		"hasQuestion": "Kilo Code 有一個問題："
 	},
 	"taskCompleted": "工作完成",
 	"powershell": {
@@ -198,27 +199,32 @@
 	"autoApprove": {
 		"title": "自動核准：",
 		"none": "無",
-		"description": "自動核准讓 Kilo SSY 可以在無需徵求您同意的情況下執行動作。請僅對您完全信任的動作啟用此功能。您可以在<settingsLink>設定</settingsLink>中進行更詳細的調整。"
+		"description": "自動核准讓 Kilo Code 可以在無需徵求您同意的情況下執行動作。請僅對您完全信任的動作啟用此功能。您可以在<settingsLink>設定</settingsLink>中進行更詳細的調整。"
 	},
 	"reasoning": {
 		"thinking": "思考中",
 		"seconds": "{{count}}秒"
 	},
+	"contextCondense": {
+		"title": "上下文已壓縮",
+		"condensing": "正在壓縮上下文...",
+		"tokens": "tokens"
+	},
 	"followUpSuggest": {
 		"copyToInput": "複製到輸入框（或按住 Shift 並點選）"
 	},
 	"announcement": {
-		"title": "🎉 Roo Code 3.17 已發布",
-		"description": "Roo Code 3.17 帶來基於您意見回饋的強大新功能與改進。",
+		"title": "🎉 Roo Code {{version}} 已發布",
+		"description": "Roo Code {{version}} 帶來基於您意見回饋的強大新功能與改進。",
 		"whatsNew": "新功能",
-		"feature1": "<bold>Gemini 的隱式快取</bold>: Gemini API 呼叫現在自動快取，降低 API 費用",
-		"feature2": "<bold>更智慧的模式選擇</bold>: 模式定義現在可以包含何時應使用各個模式的指引，實現更好的協調",
-		"feature3": "<bold>智慧上下文壓縮</bold>: 當上下文填滿時，智慧地摘要對話歷史而非截斷（在設定 -> 實驗性功能中啟用）",
+		"feature1": "<bold>Gemini 2.5 Flash 預覽模型</bold>: 存取最新的 Gemini Flash 模型，獲得更快速高效的回應",
+		"feature2": "<bold>智慧上下文壓縮</bold>: 工作標題中的新按鈕讓您能夠智慧壓縮內容並提供視覺回饋",
+		"feature3": "<bold>模式定義的 YAML 支援</bold>: 透過 YAML 支援更輕鬆地建立和自訂模式",
 		"hideButton": "隱藏公告",
 		"detailsDiscussLinks": "在 <discordLink>Discord</discordLink> 和 <redditLink>Reddit</redditLink> 取得更多詳細資訊並參與討論 🚀"
 	},
 	"browser": {
-		"rooWantsToUse": "Kilo SSY 想要使用瀏覽器：",
+		"rooWantsToUse": "Kilo Code 想要使用瀏覽器：",
 		"consoleLogs": "主控台記錄",
 		"noNewLogs": "（沒有新記錄）",
 		"screenshot": "瀏覽器螢幕擷圖",
@@ -251,7 +257,19 @@
 	"systemPromptWarning": "警告：自訂系統提示詞覆蓋已啟用。這可能嚴重破壞功能並導致不可預測的行為。",
 	"shellIntegration": {
 		"title": "命令執行警告",
-		"description": "您的命令正在沒有 VSCode 終端機 shell 整合的情況下執行。要隱藏此警告，您可以在 <settingsLink>Kilo SSY 設定</settingsLink>的 <strong>Terminal</strong> 部分停用 shell 整合，或使用下方連結排查 VSCode 終端機整合問題。",
+		"description": "您的命令正在沒有 VSCode 終端機 shell 整合的情況下執行。要隱藏此警告，您可以在 <settingsLink>Kilo Code 設定</settingsLink>的 <strong>Terminal</strong> 部分停用 shell 整合，或使用下方連結排查 VSCode 終端機整合問題。",
 		"troubleshooting": "點擊此處查看 shell 整合文件。"
+	},
+	"ask": {
+		"autoApprovedRequestLimitReached": {
+			"title": "已達自動核准請求限制",
+			"description": "Kilo Code 已達到 {{count}} 次 API 請求的自動核准限制。您想要重設計數並繼續工作嗎？",
+			"button": "重設並繼續"
+		}
+	},
+	"codebaseSearch": {
+		"wantsToSearch": "Kilo Code 想要搜尋程式碼庫：<code>{{query}}</code>",
+		"wantsToSearchWithPath": "Kilo Code 想要在 <code>{{path}}</code> 中搜尋：<code>{{query}}</code>",
+		"didSearch": "找到 {{count}} 個結果：<code>{{query}}</code>"
 	}
 }

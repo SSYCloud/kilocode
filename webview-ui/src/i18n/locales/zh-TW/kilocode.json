@@ -1,13 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Kilo SSY 可以為你做什麼？",
+		"greeting": "Kilo Code 中文版可以為你做什麼？",
 		"introText": "我已經在最快的 AI 模型上受過訓練，準備以極快的速度為你產生程式碼！",
 		"ctaButton": "註冊勝算雲API KEY",
 		"manualModeButton": "使用你自己的 API 金鑰"
 	},
 	"lowCreditWarning": {
 		"addCredit": "添加額度",
-		"lowBalance": "你的 Kilo SSY 餘額不足"
+		"lowBalance": "你的 Kilo Code 中文版餘額不足"
 	},
 	"notifications": {
 		"toolRequest": "工具請求等待核准",
@@ -17,6 +17,11 @@
 	"settings": {
 		"sections": {
 			"mcp": "MCP 伺服器"
+		},
+		"provider": {
+			"apiKey": "Kilo Code API 金鑰",
+			"login": "登入 Kilo Code",
+			"logout": "登出 Kilo Code"
 		}
 	},
 	"chat": {

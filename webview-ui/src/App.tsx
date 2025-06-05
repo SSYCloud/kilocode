@@ -2,9 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { useEvent } from "react-use"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
-import { ExtensionMessage } from "@roo/shared/ExtensionMessage"
-import TranslationProvider from "./i18n/TranslationContext"
+import { ExtensionMessage } from "@roo/ExtensionMessage"
 
+import TranslationProvider from "./i18n/TranslationContext"
 import { vscode } from "./utils/vscode"
 import { ExtensionStateContextProvider, useExtensionState } from "./context/ExtensionStateContext"
 import ChatView, { ChatViewRef } from "./components/chat/ChatView"
@@ -12,7 +12,7 @@ import HistoryView from "./components/history/HistoryView"
 import SettingsView, { SettingsViewRef } from "./components/settings/SettingsView"
 import WelcomeView from "./components/welcome/WelcomeView" // kilocode_change
 import PromptsView from "./components/prompts/PromptsView"
-import ProfileView from "./components/kilocode/profile/ProfileView"
+import Profile from "./components/kilocode/profile/Profile"
 import { HumanRelayDialog } from "./components/human-relay/HumanRelayDialog"
 import BottomControls from "./components/chat/BottomControls"
 
@@ -121,7 +121,7 @@ const App = () => {
 			{tab === "settings" && (
 				<SettingsView ref={settingsRef} onDone={() => switchTab("chat")} targetSection={currentSection} /> // kilocode_change
 			)}
-			{tab === "profile" && <ProfileView onDone={() => switchTab("chat")} />}
+			{tab === "profile" && <Profile onDone={() => switchTab("chat")} />}
 			<ChatView
 				ref={chatViewRef}
 				isHidden={tab !== "chat"}

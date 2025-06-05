@@ -32,7 +32,7 @@
 	"roleDefinition": {
 		"title": "Definició de rol",
 		"resetToDefault": "Restablir a valors predeterminats",
-		"description": "Definiu l'experiència i personalitat de Kilo SSY per a aquest mode. Aquesta descripció determina com Kilo SSY es presenta i aborda les tasques."
+		"description": "Definiu l'experiència i personalitat de Kilo Code per a aquest mode. Aquesta descripció determina com Kilo Code es presenta i aborda les tasques."
 	},
 	"whenToUse": {
 		"title": "Quan utilitzar (opcional)",
@@ -69,7 +69,7 @@
 		"types": {
 			"ENHANCE": {
 				"label": "Millorar prompt",
-				"description": "Utilitzeu la millora de prompts per obtenir suggeriments o millores personalitzades per a les vostres entrades. Això assegura que Kilo SSY entengui la vostra intenció i proporcioni les millors respostes possibles. Disponible a través de la icona ✨ al xat."
+				"description": "Utilitzeu la millora de prompts per obtenir suggeriments o millores personalitzades per a les vostres entrades. Això assegura que Kilo Code entengui la vostra intenció i proporcioni les millors respostes possibles. Disponible a través de la icona ✨ al xat."
 			},
 			"EXPLAIN": {
 				"label": "Explicar codi",
@@ -134,7 +134,7 @@
 		},
 		"roleDefinition": {
 			"label": "Definició de rol",
-			"description": "Definiu l'experiència i personalitat de Kilo SSY per a aquest mode."
+			"description": "Definiu l'experiència i personalitat de Kilo Code per a aquest mode."
 		},
 		"whenToUse": {
 			"label": "Quan utilitzar (opcional)",

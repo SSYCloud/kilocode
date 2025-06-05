@@ -1,13 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Kilo SSYはあなたのために何ができますか？",
+		"greeting": "Kilo Codeはあなたのために何ができますか？",
 		"introText": "私は利用可能な最速のAIモデルでトレーニングされており、あなたのために超高速でコードを生成する準備ができています！",
 		"ctaButton": "胜算云APIキーを登録",
 		"manualModeButton": "自分のAPIキーを使う"
 	},
 	"lowCreditWarning": {
 		"addCredit": "クレジットを追加",
-		"lowBalance": "Kilo SSYの残高が少なくなっています"
+		"lowBalance": "Kilo Codeの残高が少なくなっています"
 	},
 	"notifications": {
 		"toolRequest": "ツールのリクエストが承認待ちです",
@@ -17,6 +17,11 @@
 	"settings": {
 		"sections": {
 			"mcp": "MCPサーバー"
+		},
+		"provider": {
+			"apiKey": "Kilo Code APIキー",
+			"login": "Kilo Codeにログイン",
+			"logout": "Kilo Codeからログアウト"
 		}
 	},
 	"chat": {

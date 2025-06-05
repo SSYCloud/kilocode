@@ -1,15 +1,15 @@
 {
 	"title": "MCPサーバー",
 	"done": "完了",
-	"description": "Model Context Protocol (MCP) Kilo SSY が外部サーバーから追加のツールやサービスを利用できるようになります。これで Kilo Code ができることが広がるよ。<0>詳細はこちら</0>",
+	"description": "Model Context Protocol (MCP) Kilo Code が外部サーバーから追加のツールやサービスを利用できるようになります。これで Kilo Code ができることが広がるよ。<0>詳細はこちら</0>",
 	"enableToggle": {
 		"title": "MCPサーバーを有効化",
-		"description": "これをONにすると、Kilo SSYが接続されたMCPサーバーのツールを使えるようになるよ。Kilo Codeの機能が増える！追加ツールを使わないなら、APIトークンのコストを抑えるためにOFFにしてね。"
+		"description": "これをONにすると、Kilo Codeが接続されたMCPサーバーのツールを使えるようになるよ。Kilo Codeの機能が増える！追加ツールを使わないなら、APIトークンのコストを抑えるためにOFFにしてね。"
 	},
 	"enableServerCreation": {
 		"title": "MCPサーバー作成を有効化",
-		"description": "これをONにすると、Kilo SSYが<1>新しい</1>カスタムMCPサーバーを作るのを手伝ってくれるよ。<0>サーバー作成について詳しく</0>",
-		"hint": "ヒント: APIトークンのコストを抑えたいときは、Kilo SSYに新しいMCPサーバーを作らせないときにこの設定をOFFにしてね。"
+		"description": "これをONにすると、Kilo Codeが<1>新しい</1>カスタムMCPサーバーを作るのを手伝ってくれるよ。<0>サーバー作成について詳しく</0>",
+		"hint": "ヒント: APIトークンのコストを抑えたいときは、Kilo Codeに新しいMCPサーバーを作らせないときにこの設定をOFFにしてね。"
 	},
 	"editGlobalMCP": "グローバルMCPを編集",
 	"editProjectMCP": "プロジェクトMCPを編集",

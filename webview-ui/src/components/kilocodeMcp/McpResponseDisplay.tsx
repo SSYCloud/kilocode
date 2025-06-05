@@ -254,7 +254,7 @@ const McpResponseDisplay: React.FC<McpResponseDisplayProps> = ({ responseText })
 
 				// Start the background processing
 				processImageChecks()
-			} catch (error) {
+			} catch (_error) {
 				setError("Failed to process response content. Switch to plain text mode to view safely.")
 				setIsLoading(false)
 			}
@@ -348,7 +348,7 @@ const McpResponseDisplay: React.FC<McpResponseDisplayProps> = ({ responseText })
 								embedCount++
 								// console.log(`Added link preview for ${url}, embed count: ${embedCount}`);
 							}
-						} catch (e) {
+						} catch (_e) {
 							console.log("Link preview could not be created")
 							// Show error message for failed link preview
 							segments.push(
@@ -405,7 +405,7 @@ const McpResponseDisplay: React.FC<McpResponseDisplayProps> = ({ responseText })
 				<div className="response-content">{renderContent()}</div>
 			</ResponseContainer>
 		)
-	} catch (error) {
+	} catch (_error) {
 		console.log("Error rendering MCP response - falling back to plain text")
 		return (
 			<ResponseContainer>

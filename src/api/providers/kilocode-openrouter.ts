@@ -1,7 +1,9 @@
-import { ApiHandlerOptions, PROMPT_CACHING_MODELS, ModelRecord } from "../../shared/api"
+import { ApiHandlerOptions, ModelRecord } from "../../shared/api"
 import { OpenRouterHandler } from "./openrouter"
-import { getModelParams } from "../getModelParams"
+import { getModelParams } from "../transform/model-params"
 import { getModels } from "./fetchers/modelCache"
+import { DEEP_SEEK_DEFAULT_TEMPERATURE } from "./constants"
+import { getKiloBaseUriFromToken } from "../../utils/kilocode-token"
 
 /**
  * A custom OpenRouter handler that overrides the getModel function
@@ -25,7 +27,6 @@ export class KilocodeOpenrouterHandler extends OpenRouterHandler {
 		let id
 		let info
 		let defaultTemperature = 0
-		let topP = undefined
 
 		const selectedModel = this.options.kilocodeModel ?? "gemini25"
 
@@ -50,32 +51,31 @@ export class KilocodeOpenrouterHandler extends OpenRouterHandler {
 			throw new Error(`Unsupported model: ${selectedModel}`)
 		}
 
-		return {
-			id,
-			info,
-			...getModelParams({ options: this.options, model: info, defaultTemperature }),
-			topP,
-			promptCache: {
-				supported: PROMPT_CACHING_MODELS.has(id),
-			},
-		}
+		const isDeepSeekR1 = id.startsWith("deepseek/deepseek-r1") || id === "perplexity/sonar-reasoning"
+
+		const params = getModelParams({
+			format: "openrouter",
+			modelId: id,
+			model: info,
+			settings: this.options,
+			defaultTemperature: isDeepSeekR1 ? DEEP_SEEK_DEFAULT_TEMPERATURE : defaultTemperature,
+		})
+
+		return { id, info, topP: isDeepSeekR1 ? 0.95 : undefined, ...params }
 	}
 
 	public override async fetchModel() {
-		this.models = await getModels("kilocode-openrouter")
+		if (!this.options.kilocodeToken || !this.options.openRouterBaseUrl) {
+			throw new Error("KiloCode toke + baseUrl is required to fetch models")
+		}
+		this.models = await getModels({
+			provider: "kilocode-openrouter",
+			kilocodeToken: this.options.kilocodeToken,
+		})
 		return this.getModel()
 	}
 }
 
 function getKiloBaseUri(options: ApiHandlerOptions) {
-	try {
-		const token = options.kilocodeToken as string
-		const payload_string = token.split(".")[1]
-		const payload = JSON.parse(Buffer.from(payload_string, "base64").toString())
-		//note: this is UNTRUSTED, so we need to make sure we're OK with this being manipulated by an attacker; e.g. we should not read uri's from the JWT directly.
-		if (payload.env === "development") return "http://localhost:3000"
-	} catch (_error) {
-		console.warn("Failed to get base URL from Kilo SSY token")
-	}
-	return "https://kilocode.ai"
+	return getKiloBaseUriFromToken(options.kilocodeToken ?? "")
 }

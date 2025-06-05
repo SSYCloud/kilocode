@@ -5,10 +5,9 @@ import OpenAI from "openai"
 import {
 	ApiHandlerOptions,
 	ModelRecord,
+	OPEN_ROUTER_PROMPT_CACHING_MODELS,
 	shengSuanYunDefaultModelId,
 	shengSuanYunDefaultModelInfo,
-	PROMPT_CACHING_MODELS,
-	REASONING_MODELS,
 } from "../../shared/api"
 
 import { convertToOpenAiMessages } from "../transform/openai-format"
@@ -19,7 +18,7 @@ import { addCacheBreakpoints as addGeminiCacheBreakpoints } from "../transform/c
 
 import { SingleCompletionHandler } from "../index"
 import { DEFAULT_HEADERS, DEEP_SEEK_DEFAULT_TEMPERATURE } from "./constants"
-import { getModelParams } from "../getModelParams"
+import { getModelParams } from "../transform/model-params"
 
 import { BaseProvider } from "./base-provider"
 import { getModels } from "./fetchers/modelCache"
@@ -72,8 +71,8 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 		systemPrompt: string,
 		messages: Anthropic.Messages.MessageParam[],
 	): AsyncGenerator<ApiStreamChunk> {
-		this.models = await getModels("shengsuanyun")
-		let { id: modelId, maxTokens, thinking, temperature, topP, reasoningEffort, promptCache } = this.getModel()
+		this.models = await getModels({ provider: "shengsuanyun" })
+		let { id: modelId, maxTokens, temperature, topP } = this.getModel()
 
 		// Convert Anthropic messages to OpenAI format.
 		let openAiMessages: OpenAI.Chat.ChatCompletionMessageParam[] = [
@@ -86,13 +85,14 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 			openAiMessages = convertToR1Format([{ role: "user", content: systemPrompt }, ...messages])
 		}
 
-		const isCacheAvailable = promptCache.supported
-
 		// https://openrouter.ai/docs/features/prompt-caching
-		if (isCacheAvailable) {
-			modelId.startsWith("google")
-				? addGeminiCacheBreakpoints(systemPrompt, openAiMessages)
-				: addAnthropicCacheBreakpoints(systemPrompt, openAiMessages)
+		// TODO: Add a `promptCacheStratey` field to `ModelInfo`.
+		if (OPEN_ROUTER_PROMPT_CACHING_MODELS.has(modelId)) {
+			if (modelId.startsWith("google")) {
+				addGeminiCacheBreakpoints(systemPrompt, openAiMessages)
+			} else {
+				addAnthropicCacheBreakpoints(systemPrompt, openAiMessages)
+			}
 		}
 
 		// https://shengSuanYun.ai/docs/transforms
@@ -100,7 +100,6 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 			model: modelId,
 			...(maxTokens && maxTokens > 0 && { max_tokens: maxTokens }),
 			temperature,
-			thinking, // shengSuanYun is temporarily supporting this.
 			top_p: topP,
 			messages: openAiMessages,
 			stream: true,
@@ -108,7 +107,6 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 
 			// This way, the transforms field will only be included in the parameters when shengSuanYunUseMiddleOutTransform is true.
 			...((this.options.openRouterUseMiddleOutTransform ?? true) && { transforms: ["middle-out"] }),
-			...(REASONING_MODELS.has(modelId) && reasoningEffort && { reasoning: { effort: reasoningEffort } }),
 		}
 		let stream
 		stream = await this.client.chat.completions.create(completionParams)
@@ -162,30 +160,28 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 		const info = this.models[id] ?? shengSuanYunDefaultModelInfo
 		const isDeepSeekR1 = id.startsWith("deepseek/deepseek-r1") || id === "perplexity/sonar-reasoning"
 
+		const params = getModelParams({
+			format: "openrouter",
+			modelId: id,
+			model: info,
+			settings: this.options,
+			defaultTemperature: isDeepSeekR1 ? DEEP_SEEK_DEFAULT_TEMPERATURE : 0,
+		})
 		return {
 			id,
 			info,
-			// maxTokens, thinking, temperature, reasoningEffort
-			...getModelParams({
-				options: this.options,
-				model: info,
-				defaultTemperature: isDeepSeekR1 ? DEEP_SEEK_DEFAULT_TEMPERATURE : 0,
-			}),
+			...params,
 			topP: isDeepSeekR1 ? 0.95 : undefined,
-			promptCache: {
-				supported: PROMPT_CACHING_MODELS.has(id),
-			},
 		}
 	}
 
 	async completePrompt(prompt: string) {
-		this.models = await getModels("shengsuanyun")
-		let { id: modelId, maxTokens, thinking, temperature } = this.getModel()
+		this.models = await getModels({ provider: "shengsuanyun" })
+		let { id: modelId, maxTokens, temperature } = this.getModel()
 
 		const completionParams: ShengSuanYunChatCompletionParams = {
 			model: modelId,
 			max_tokens: maxTokens,
-			thinking,
 			temperature,
 			messages: [{ role: "user", content: prompt }],
 			stream: false,

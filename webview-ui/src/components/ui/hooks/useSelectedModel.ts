@@ -1,8 +1,7 @@
+import type { ProviderName, ProviderSettings, ModelInfo } from "@roo-code/types"
+
 import {
-	type ProviderName,
-	type ProviderSettings,
-	type RouterModels,
-	type ModelInfo,
+	RouterModels,
 	anthropicDefaultModelId,
 	anthropicModels,
 	bedrockDefaultModelId,
@@ -32,7 +31,7 @@ import {
 	unboundDefaultModelId,
 	litellmDefaultModelId,
 	shengSuanYunDefaultModelId,
-} from "@roo/shared/api"
+} from "@roo/api"
 
 import { useRouterModels } from "./useRouterModels"
 import { useOpenRouterModelProviders } from "./useOpenRouterModelProviders"
@@ -83,7 +82,12 @@ function getSelectedModel({
 			const specificProvider = apiConfiguration.openRouterSpecificProvider
 
 			if (specificProvider && openRouterModelProviders[specificProvider]) {
-				info = openRouterModelProviders[specificProvider]
+				// Overwrite the info with the specific provider info. Some
+				// fields are missing the model info for `openRouterModelProviders`
+				// so we need to merge the two.
+				info = info
+					? { ...info, ...openRouterModelProviders[specificProvider] }
+					: openRouterModelProviders[specificProvider]
 			}
 
 			return info
@@ -210,11 +214,15 @@ function getSelectedModel({
 				// Find the model in the fetched models
 				const modelEntries = Object.entries(routerModels["kilocode-openrouter"])
 
-				// Try to find a model with a matching ID or name
-				for (const [modelId, modelInfo] of modelEntries) {
-					if (modelId.toLowerCase().includes(apiConfiguration.kilocodeModel.toLowerCase())) {
-						return { id: modelId, info: modelInfo }
-					}
+				const selectedModelId = apiConfiguration.kilocodeModel.toLowerCase()
+
+				// Prefer exact match
+				const selectedModel =
+					modelEntries.find((model) => model[0].toLowerCase() === selectedModelId) ??
+					modelEntries.find((model) => model[0].toLowerCase().includes(selectedModelId))
+
+				if (selectedModel) {
+					return { id: selectedModel[0], info: selectedModel[1] }
 				}
 			}
 

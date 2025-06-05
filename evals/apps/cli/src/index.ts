@@ -102,7 +102,7 @@ const run = async (toolbox: GluegunToolbox) => {
 		throw new Error("No tasks found.")
 	}
 
-	await execa({ cwd: exercisesPath })`git config user.name "Kilo SSY"`
+	await execa({ cwd: exercisesPath })`git config user.name "Kilo Code"`
 	await execa({ cwd: exercisesPath })`git config user.email "hi@kilocode.ai"`
 	await execa({ cwd: exercisesPath })`git checkout -f`
 	await execa({ cwd: exercisesPath })`git clean -fd`
@@ -177,6 +177,15 @@ const runExercise = async ({ run, task, server }: { run: Run; task: Task; server
 	const dirname = path.dirname(run.socketPath)
 	const workspacePath = path.resolve(exercisesPath, language, exercise)
 	const taskSocketPath = path.resolve(dirname, `${dirname}/task-${task.id}.sock`)
+
+	// Inject foot gun system prompt if present
+	if (process.env.FOOTGUN_SYSTEM_PROMPT) {
+		const rooDir = path.join(workspacePath, ".roo")
+		if (!fs.existsSync(rooDir)) {
+			fs.mkdirSync(rooDir, { recursive: true })
+		}
+		fs.writeFileSync(path.join(rooDir, "system-prompt-code"), process.env.FOOTGUN_SYSTEM_PROMPT)
+	}
 
 	// If debugging:
 	// Use --wait --log trace or --verbose.

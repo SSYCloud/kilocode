@@ -5,6 +5,9 @@ import { Info, Download, Upload, TriangleAlert } from "lucide-react"
 
 import { VSCodeLink } from "@vscode/webview-ui-toolkit/react"
 
+import { Package } from "@roo/package"
+import { TelemetrySetting } from "@roo/TelemetrySetting"
+
 import { vscode } from "@/utils/vscode"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui"
@@ -13,15 +16,21 @@ import { SectionHeader } from "./SectionHeader"
 import { Section } from "./Section"
 
 type AboutProps = HTMLAttributes<HTMLDivElement> & {
-	version: string
+	telemetrySetting: TelemetrySetting
+	setTelemetrySetting: (setting: TelemetrySetting) => void
 }
 
-export const About = ({ version, className, ...props }: AboutProps) => {
+export const About = ({ telemetrySetting, setTelemetrySetting, className, ...props }: AboutProps) => {
 	const { t } = useAppTranslation()
 
 	return (
 		<div className={cn("flex flex-col gap-2", className)} {...props}>
-			<SectionHeader description={`Version: ${version}`}>
+			<SectionHeader
+				description={
+					Package.sha
+						? `Version: ${Package.version} (${Package.sha.slice(0, 8)})`
+						: `Version: ${Package.version}`
+				}>
 				<div className="flex items-center gap-2">
 					<Info className="w-4" />
 					<div>{t("settings:sections.about")}</div>
@@ -33,7 +42,7 @@ export const About = ({ version, className, ...props }: AboutProps) => {
 					<Trans
 						i18nKey="settings:footer.feedback"
 						components={{
-							githubLink: <VSCodeLink href="https://github.com/Kilo-Org/kilocode" />,
+							githubLink: <VSCodeLink href="https://github.com/SSYCloud/kilocode/tree/ssy" />,
 							redditLink: <VSCodeLink href="https://reddit.com/r/kilocode" />,
 							discordLink: <VSCodeLink href="https://kilocode.ai/discord" />,
 						}}

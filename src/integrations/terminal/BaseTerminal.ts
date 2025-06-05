@@ -50,7 +50,7 @@ export abstract class BaseTerminal implements RooTerminal {
 				this.running = false
 
 				console.warn(
-					`[Terminal ${this.provider}/${this.id}] process is undefined, so cannot set terminal stream (probably user-initiated non-Kilo SSY command)`,
+					`[Terminal ${this.provider}/${this.id}] process is undefined, so cannot set terminal stream (probably user-initiated non-Kilo Code command)`,
 				)
 
 				return
@@ -170,7 +170,7 @@ export abstract class BaseTerminal implements RooTerminal {
 	}
 
 	public static getShellIntegrationTimeout(): number {
-		return Math.min(BaseTerminal.shellIntegrationTimeout, BaseTerminal.defaultShellIntegrationTimeout)
+		return BaseTerminal.shellIntegrationTimeout
 	}
 
 	public static setShellIntegrationDisabled(disabled: boolean): void {

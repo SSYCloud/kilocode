@@ -1,15 +1,15 @@
 {
 	"title": "MCP 服务器",
 	"done": "完成",
-	"description": "启用 Model Context Protocol (MCP)，让 Kilo SSY 可用外部服务器的工具和服务，扩展 Kilo SSY 的能力。<0>了解更多</0>",
+	"description": "启用 Model Context Protocol (MCP)，让 Kilo Code 可用外部服务器的工具和服务，扩展 Kilo Code 的能力。<0>了解更多</0>",
 	"enableToggle": {
 		"title": "启用 MCP 服务器",
-		"description": "开启后 Kilo SSY 可用已连接 MCP 服务器的工具，能力更强。不用这些工具时建议关闭，节省 API Token 费用。"
+		"description": "开启后 Kilo Code 可用已连接 MCP 服务器的工具，能力更强。不用这些工具时建议关闭，节省 API Token 费用。"
 	},
 	"enableServerCreation": {
 		"title": "启用 MCP 服务器创建",
-		"description": "开启后 Kilo SSY 可帮你创建<1>新</1>自定义 MCP 服务器。<0>了解服务器创建</0>",
-		"hint": "提示：不需要 Kilo SSY 创建新 MCP 服务器时建议关闭，减少 API Token 费用。"
+		"description": "开启后 Kilo Code 可帮你创建<1>新</1>自定义 MCP 服务器。<0>了解服务器创建</0>",
+		"hint": "提示：不需要 Kilo Code 创建新 MCP 服务器时建议关闭，减少 API Token 费用。"
 	},
 	"editGlobalMCP": "编辑全局 MCP",
 	"editProjectMCP": "编辑项目 MCP",

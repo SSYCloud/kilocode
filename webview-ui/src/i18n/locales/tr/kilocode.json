@@ -1,13 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Kilo SSY sizin için ne yapabilir?",
+		"greeting": "Kilo Code sizin için ne yapabilir?",
 		"introText": "En hızlı mevcut yapay zeka modelleriyle eğitildim ve sizin için ışık hızında kod üretmeye hazırım!",
 		"ctaButton": "ShengSuanYun API Anahtarını Kaydet",
 		"manualModeButton": "Kendi API anahtarınızı kullanın"
 	},
 	"lowCreditWarning": {
 		"addCredit": "Kredi Ekle",
-		"lowBalance": "Kilo SSY bakiyeniz düşük"
+		"lowBalance": "Kilo Code bakiyeniz düşük"
 	},
 	"notifications": {
 		"toolRequest": "Araç isteği onay bekliyor",
@@ -17,6 +17,11 @@
 	"settings": {
 		"sections": {
 			"mcp": "MCP Sunucuları"
+		},
+		"provider": {
+			"apiKey": "Kilo Code API Anahtarı",
+			"login": "Kilo Code'a giriş yap",
+			"logout": "Kilo Code'dan çıkış yap"
 		}
 	},
 	"chat": {

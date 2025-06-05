@@ -1,5 +1,5 @@
 {
-	"greeting": "Was kann Kilo SSY für dich tun?",
+	"greeting": "Was kann Kilo Code für dich tun?",
 	"task": {
 		"title": "Aufgabe",
 		"seeMore": "Mehr anzeigen",
@@ -10,7 +10,8 @@
 		"contextWindow": "Kontextfenster:",
 		"closeAndStart": "Aufgabe schließen und neue starten",
 		"export": "Aufgabenverlauf exportieren",
-		"delete": "Aufgabe löschen (Shift + Klick zum Überspringen der Bestätigung)"
+		"delete": "Aufgabe löschen (Shift + Klick zum Überspringen der Bestätigung)",
+		"condenseContext": "Kontext intelligent komprimieren"
 	},
 	"history": {
 		"title": "Verlauf"
@@ -76,7 +77,7 @@
 	},
 	"scrollToBottom": "Zum Chat-Ende scrollen",
 	"about": "Generiere, überarbeite und debugge Code mit KI-Unterstützung.<br />Weitere Informationen findest du in unserer <DocsLink>Dokumentation</DocsLink>.",
-	"onboarding": "<strong>Deine Aufgabenliste in diesem Arbeitsbereich ist leer.</strong> Beginne mit der Eingabe einer Aufgabe unten. Du bist dir nicht sicher, wie du anfangen sollst? Lies mehr darüber, was Kilo SSY für dich tun kann, in <DocsLink>den Dokumenten</DocsLink>.",
+	"onboarding": "<strong>Deine Aufgabenliste in diesem Arbeitsbereich ist leer.</strong> Beginne mit der Eingabe einer Aufgabe unten. Du bist dir nicht sicher, wie du anfangen sollst? Lies mehr darüber, was Kilo Code für dich tun kann, in <DocsLink>den Dokumenten</DocsLink>.",
 	"rooTips": {
 		"boomerangTasks": {
 			"title": "Bumerang-Aufgaben",
@@ -115,7 +116,7 @@
 	"diffError": {
 		"title": "Bearbeitung fehlgeschlagen"
 	},
-	"troubleMessage": "Kilo SSY hat Probleme...",
+	"troubleMessage": "Kilo Code hat Probleme...",
 	"apiRequest": {
 		"title": "API-Anfrage",
 		"failed": "API-Anfrage fehlgeschlagen",
@@ -141,47 +142,47 @@
 		"current": "Aktuell"
 	},
 	"instructions": {
-		"wantsToFetch": "Kilo SSY möchte detaillierte Anweisungen abrufen, um bei der aktuellen Aufgabe zu helfen"
+		"wantsToFetch": "Kilo Code möchte detaillierte Anweisungen abrufen, um bei der aktuellen Aufgabe zu helfen"
 	},
 	"fileOperations": {
-		"wantsToRead": "Kilo SSY möchte diese Datei lesen:",
-		"wantsToReadOutsideWorkspace": "Kilo SSY möchte diese Datei außerhalb des Arbeitsbereichs lesen:",
-		"didRead": "Kilo SSY hat diese Datei gelesen:",
-		"wantsToEdit": "Kilo SSY möchte diese Datei bearbeiten:",
-		"wantsToEditOutsideWorkspace": "Kilo SSY möchte diese Datei außerhalb des Arbeitsbereichs bearbeiten:",
-		"wantsToCreate": "Kilo SSY möchte eine neue Datei erstellen:",
-		"wantsToSearchReplace": "Kilo SSY möchte in dieser Datei suchen und ersetzen:",
-		"didSearchReplace": "Kilo SSY hat Suchen und Ersetzen in dieser Datei durchgeführt:",
-		"wantsToInsert": "Kilo SSY möchte Inhalte in diese Datei einfügen:",
-		"wantsToInsertWithLineNumber": "Kilo SSY möchte Inhalte in diese Datei in Zeile {{lineNumber}} einfügen:",
-		"wantsToInsertAtEnd": "Kilo SSY möchte Inhalte am Ende dieser Datei anhängen:"
+		"wantsToRead": "Kilo Code möchte diese Datei lesen:",
+		"wantsToReadOutsideWorkspace": "Kilo Code möchte diese Datei außerhalb des Arbeitsbereichs lesen:",
+		"didRead": "Kilo Code hat diese Datei gelesen:",
+		"wantsToEdit": "Kilo Code möchte diese Datei bearbeiten:",
+		"wantsToEditOutsideWorkspace": "Kilo Code möchte diese Datei außerhalb des Arbeitsbereichs bearbeiten:",
+		"wantsToCreate": "Kilo Code möchte eine neue Datei erstellen:",
+		"wantsToSearchReplace": "Kilo Code möchte in dieser Datei suchen und ersetzen:",
+		"didSearchReplace": "Kilo Code hat Suchen und Ersetzen in dieser Datei durchgeführt:",
+		"wantsToInsert": "Kilo Code möchte Inhalte in diese Datei einfügen:",
+		"wantsToInsertWithLineNumber": "Kilo Code möchte Inhalte in diese Datei in Zeile {{lineNumber}} einfügen:",
+		"wantsToInsertAtEnd": "Kilo Code möchte Inhalte am Ende dieser Datei anhängen:"
 	},
 	"directoryOperations": {
-		"wantsToViewTopLevel": "Kilo SSY möchte die Dateien auf oberster Ebene in diesem Verzeichnis anzeigen:",
-		"didViewTopLevel": "Kilo SSY hat die Dateien auf oberster Ebene in diesem Verzeichnis angezeigt:",
-		"wantsToViewRecursive": "Kilo SSY möchte rekursiv alle Dateien in diesem Verzeichnis anzeigen:",
-		"didViewRecursive": "Kilo SSY hat rekursiv alle Dateien in diesem Verzeichnis angezeigt:",
-		"wantsToViewDefinitions": "Kilo SSY möchte Quellcode-Definitionsnamen in diesem Verzeichnis anzeigen:",
-		"didViewDefinitions": "Kilo SSY hat Quellcode-Definitionsnamen in diesem Verzeichnis angezeigt:",
-		"wantsToSearch": "Kilo SSY möchte dieses Verzeichnis nach <code>{{regex}}</code> durchsuchen:",
-		"didSearch": "Kilo SSY hat dieses Verzeichnis nach <code>{{regex}}</code> durchsucht:"
+		"wantsToViewTopLevel": "Kilo Code möchte die Dateien auf oberster Ebene in diesem Verzeichnis anzeigen:",
+		"didViewTopLevel": "Kilo Code hat die Dateien auf oberster Ebene in diesem Verzeichnis angezeigt:",
+		"wantsToViewRecursive": "Kilo Code möchte rekursiv alle Dateien in diesem Verzeichnis anzeigen:",
+		"didViewRecursive": "Kilo Code hat rekursiv alle Dateien in diesem Verzeichnis angezeigt:",
+		"wantsToViewDefinitions": "Kilo Code möchte Quellcode-Definitionsnamen in diesem Verzeichnis anzeigen:",
+		"didViewDefinitions": "Kilo Code hat Quellcode-Definitionsnamen in diesem Verzeichnis angezeigt:",
+		"wantsToSearch": "Kilo Code möchte dieses Verzeichnis nach <code>{{regex}}</code> durchsuchen:",
+		"didSearch": "Kilo Code hat dieses Verzeichnis nach <code>{{regex}}</code> durchsucht:"
 	},
 	"commandOutput": "Befehlsausgabe",
 	"response": "Antwort",
 	"arguments": "Argumente",
 	"mcp": {
-		"wantsToUseTool": "Kilo SSY möchte ein Tool auf dem {{serverName}} MCP-Server verwenden:",
-		"wantsToAccessResource": "Kilo SSY möchte auf eine Ressource auf dem {{serverName}} MCP-Server zugreifen:"
+		"wantsToUseTool": "Kilo Code möchte ein Tool auf dem {{serverName}} MCP-Server verwenden:",
+		"wantsToAccessResource": "Kilo Code möchte auf eine Ressource auf dem {{serverName}} MCP-Server zugreifen:"
 	},
 	"modes": {
-		"wantsToSwitch": "Kilo SSY möchte zum <code>{{mode}}</code>-Modus wechseln",
-		"wantsToSwitchWithReason": "Kilo SSY möchte zum <code>{{mode}}</code>-Modus wechseln, weil: {{reason}}",
-		"didSwitch": "Kilo SSY hat zum <code>{{mode}}</code>-Modus gewechselt",
-		"didSwitchWithReason": "Kilo SSY hat zum <code>{{mode}}</code>-Modus gewechselt, weil: {{reason}}"
+		"wantsToSwitch": "Kilo Code möchte zum <code>{{mode}}</code>-Modus wechseln",
+		"wantsToSwitchWithReason": "Kilo Code möchte zum <code>{{mode}}</code>-Modus wechseln, weil: {{reason}}",
+		"didSwitch": "Kilo Code hat zum <code>{{mode}}</code>-Modus gewechselt",
+		"didSwitchWithReason": "Kilo Code hat zum <code>{{mode}}</code>-Modus gewechselt, weil: {{reason}}"
 	},
 	"subtasks": {
-		"wantsToCreate": "Kilo SSY möchte eine neue Teilaufgabe im <code>{{mode}}</code>-Modus erstellen:",
-		"wantsToFinish": "Kilo SSY möchte diese Teilaufgabe abschließen",
+		"wantsToCreate": "Kilo Code möchte eine neue Teilaufgabe im <code>{{mode}}</code>-Modus erstellen:",
+		"wantsToFinish": "Kilo Code möchte diese Teilaufgabe abschließen",
 		"newTaskContent": "Teilaufgabenanweisungen",
 		"completionContent": "Teilaufgabe abgeschlossen",
 		"resultContent": "Teilaufgabenergebnisse",
@@ -189,7 +190,7 @@
 		"completionInstructions": "Teilaufgabe abgeschlossen! Du kannst die Ergebnisse überprüfen und Korrekturen oder nächste Schritte vorschlagen. Wenn alles gut aussieht, bestätige, um das Ergebnis an die übergeordnete Aufgabe zurückzugeben."
 	},
 	"questions": {
-		"hasQuestion": "Kilo SSY hat eine Frage:"
+		"hasQuestion": "Kilo Code hat eine Frage:"
 	},
 	"taskCompleted": "Aufgabe abgeschlossen",
 	"powershell": {
@@ -198,27 +199,32 @@
 	"autoApprove": {
 		"title": "Automatische Genehmigung:",
 		"none": "Keine",
-		"description": "Automatische Genehmigung erlaubt Kilo SSY, Aktionen ohne Nachfrage auszuführen. Aktiviere dies nur für Aktionen, denen du vollständig vertraust. Detailliertere Konfiguration verfügbar in den <settingsLink>Einstellungen</settingsLink>."
+		"description": "Automatische Genehmigung erlaubt Kilo Code, Aktionen ohne Nachfrage auszuführen. Aktiviere dies nur für Aktionen, denen du vollständig vertraust. Detailliertere Konfiguration verfügbar in den <settingsLink>Einstellungen</settingsLink>."
 	},
 	"reasoning": {
 		"thinking": "Denke nach",
 		"seconds": "{{count}}s"
 	},
+	"contextCondense": {
+		"title": "Kontext komprimiert",
+		"condensing": "Kontext wird komprimiert...",
+		"tokens": "Tokens"
+	},
 	"followUpSuggest": {
 		"copyToInput": "In Eingabefeld kopieren (oder Shift + Klick)"
 	},
 	"announcement": {
-		"title": "🎉 Roo Code 3.17 veröffentlicht",
-		"description": "Roo Code 3.17 bringt leistungsstarke neue Funktionen und Verbesserungen basierend auf deinem Feedback.",
+		"title": "🎉 Roo Code {{version}} veröffentlicht",
+		"description": "Roo Code {{version}} bringt leistungsstarke neue Funktionen und Verbesserungen basierend auf deinem Feedback.",
 		"whatsNew": "Was ist neu",
-		"feature1": "<bold>Implizites Caching für Gemini</bold>: Gemini API-Aufrufe werden jetzt automatisch zwischengespeichert, wodurch API-Kosten reduziert werden",
-		"feature2": "<bold>Intelligentere Modusauswahl</bold>: Modusdefinitionen können jetzt Hinweise enthalten, wann jeder Modus verwendet werden sollte, was eine bessere Orchestrierung ermöglicht",
-		"feature3": "<bold>Intelligente Kontextkomprimierung</bold>: Fasst Gesprächsverlauf intelligent zusammen, wenn der Kontext voll wird, anstatt ihn abzuschneiden (aktiviere dies in Einstellungen -> Experimentell)",
+		"feature1": "<bold>Gemini 2.5 Flash Vorschaumodelle</bold>: Zugriff auf die neuesten Gemini Flash-Modelle für schnellere und effizientere Antworten",
+		"feature2": "<bold>Intelligente Kontextverdichtung</bold>: Neuer Button in der Aufgabenleiste ermöglicht dir die intelligente Verdichtung von Inhalten mit visueller Rückmeldung",
+		"feature3": "<bold>YAML-Unterstützung für Modusdefinitionen</bold>: Erstelle und passe Modi einfacher mit YAML-Unterstützung an",
 		"hideButton": "Ankündigung ausblenden",
 		"detailsDiscussLinks": "Erhalte mehr Details und diskutiere auf <discordLink>Discord</discordLink> und <redditLink>Reddit</redditLink> 🚀"
 	},
 	"browser": {
-		"rooWantsToUse": "Kilo SSY möchte den Browser verwenden:",
+		"rooWantsToUse": "Kilo Code möchte den Browser verwenden:",
 		"consoleLogs": "Konsolenprotokolle",
 		"noNewLogs": "(Keine neuen Protokolle)",
 		"screenshot": "Browser-Screenshot",
@@ -251,7 +257,19 @@
 	"systemPromptWarning": "WARNUNG: Benutzerdefinierte Systemaufforderung aktiv. Dies kann die Funktionalität erheblich beeinträchtigen und zu unvorhersehbarem Verhalten führen.",
 	"shellIntegration": {
 		"title": "Befehlsausführungswarnung",
-		"description": "Dein Befehl wird ohne VSCode Terminal-Shell-Integration ausgeführt. Um diese Warnung zu unterdrücken, kannst du die Shell-Integration im Abschnitt <strong>Terminal</strong> der <settingsLink>Kilo SSY Einstellungen</settingsLink> deaktivieren oder die VSCode Terminal-Integration mit dem Link unten beheben.",
+		"description": "Dein Befehl wird ohne VSCode Terminal-Shell-Integration ausgeführt. Um diese Warnung zu unterdrücken, kannst du die Shell-Integration im Abschnitt <strong>Terminal</strong> der <settingsLink>Kilo Code Einstellungen</settingsLink> deaktivieren oder die VSCode Terminal-Integration mit dem Link unten beheben.",
 		"troubleshooting": "Klicke hier für die Shell-Integrationsdokumentation."
+	},
+	"ask": {
+		"autoApprovedRequestLimitReached": {
+			"title": "Limit für automatisch genehmigte Anfragen erreicht",
+			"description": "Kilo Code hat das automatisch genehmigte Limit von {{count}} API-Anfrage(n) erreicht. Möchtest du den Zähler zurücksetzen und mit der Aufgabe fortfahren?",
+			"button": "Zurücksetzen und fortfahren"
+		}
+	},
+	"codebaseSearch": {
+		"wantsToSearch": "Kilo Code möchte den Codebase nach <code>{{query}}</code> durchsuchen:",
+		"wantsToSearchWithPath": "Kilo Code möchte den Codebase nach <code>{{query}}</code> in <code>{{path}}</code> durchsuchen:",
+		"didSearch": "{{count}} Ergebnis(se) für <code>{{query}}</code> gefunden:"
 	}
 }

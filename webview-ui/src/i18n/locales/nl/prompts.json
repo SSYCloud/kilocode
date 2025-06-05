@@ -7,7 +7,7 @@
 		"editModesConfig": "Modusconfiguratie bewerken",
 		"editGlobalModes": "Globale modi bewerken",
 		"editProjectModes": "Projectmodi bewerken (.kilossymodes)",
-		"createModeHelpText": "Modi zijn gespecialiseerde persona's die het gedrag van Kilo SSY aanpassen. <0>Meer informatie over het gebruik van modi</0> of <1>het aanpassen van modi.</1>",
+		"createModeHelpText": "Modi zijn gespecialiseerde persona's die het gedrag van Kilo Code aanpassen. <0>Meer informatie over het gebruik van modi</0> of <1>het aanpassen van modi.</1>",
 		"selectMode": "Modus zoeken"
 	},
 	"apiConfiguration": {
@@ -32,7 +32,7 @@
 	"roleDefinition": {
 		"title": "Roldefinitie",
 		"resetToDefault": "Terugzetten naar standaard",
-		"description": "Definieer Kilo SSY's expertise en persoonlijkheid voor deze modus. Deze beschrijving bepaalt hoe Kilo SSY zich presenteert en taken benadert."
+		"description": "Definieer Kilo Code's expertise en persoonlijkheid voor deze modus. Deze beschrijving bepaalt hoe Kilo Code zich presenteert en taken benadert."
 	},
 	"whenToUse": {
 		"title": "Wanneer te gebruiken (optioneel)",
@@ -69,7 +69,7 @@
 		"types": {
 			"ENHANCE": {
 				"label": "Prompt verbeteren",
-				"description": "Gebruik promptverbetering om op maat gemaakte suggesties of verbeteringen voor je invoer te krijgen. Zo begrijpt Kilo SSY je intentie en krijg je de best mogelijke antwoorden. Beschikbaar via het ✨-icoon in de chat."
+				"description": "Gebruik promptverbetering om op maat gemaakte suggesties of verbeteringen voor je invoer te krijgen. Zo begrijpt Kilo Code je intentie en krijg je de best mogelijke antwoorden. Beschikbaar via het ✨-icoon in de chat."
 			},
 			"EXPLAIN": {
 				"label": "Code uitleggen",
@@ -134,7 +134,7 @@
 		},
 		"roleDefinition": {
 			"label": "Roldefinitie",
-			"description": "Definieer Kilo SSY's expertise en persoonlijkheid voor deze modus."
+			"description": "Definieer Kilo Code's expertise en persoonlijkheid voor deze modus."
 		},
 		"whenToUse": {
 			"label": "Wanneer te gebruiken (optioneel)",

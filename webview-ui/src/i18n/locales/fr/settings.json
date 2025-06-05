@@ -30,16 +30,40 @@
 		"terminal": "Terminal",
 		"experimental": "Expérimental",
 		"language": "Langue",
-		"about": "À propos de Kilo SSY"
+		"about": "À propos de Kilo Code"
+	},
+	"codeIndex": {
+		"title": "Indexation de la base de code",
+		"enableLabel": "Activer l'indexation de la base de code",
+		"enableDescription": "<0>L'indexation de la base de code</0> est une fonctionnalité expérimentale qui crée un index de recherche sémantique de votre projet en utilisant des embeddings IA. Cela permet à Kilo Code de mieux comprendre et naviguer dans de grandes bases de code en trouvant du code pertinent basé sur le sens plutôt que seulement sur des mots-clés.",
+		"providerLabel": "Fournisseur d'embeddings",
+		"selectProviderPlaceholder": "Sélectionner un fournisseur",
+		"openaiProvider": "OpenAI",
+		"ollamaProvider": "Ollama",
+		"openaiKeyLabel": "Clé OpenAI :",
+		"modelLabel": "Modèle",
+		"selectModelPlaceholder": "Sélectionner un modèle",
+		"ollamaUrlLabel": "URL Ollama :",
+		"qdrantUrlLabel": "URL Qdrant",
+		"qdrantKeyLabel": "Clé Qdrant :",
+		"startIndexingButton": "Démarrer l'indexation",
+		"clearIndexDataButton": "Effacer les données d'index",
+		"unsavedSettingsMessage": "Merci d'enregistrer tes paramètres avant de démarrer le processus d'indexation.",
+		"clearDataDialog": {
+			"title": "Êtes-vous sûr ?",
+			"description": "Cette action ne peut pas être annulée. Cela supprimera définitivement les données d'index de votre base de code.",
+			"cancelButton": "Annuler",
+			"confirmButton": "Effacer les données"
+		}
 	},
 	"autoApprove": {
-		"description": "Permettre à Kilo SSY d'effectuer automatiquement des opérations sans requérir d'approbation. Activez ces paramètres uniquement si vous faites entièrement confiance à l'IA et que vous comprenez les risques de sécurité associés.",
+		"description": "Permettre à Kilo Code d'effectuer automatiquement des opérations sans requérir d'approbation. Activez ces paramètres uniquement si vous faites entièrement confiance à l'IA et que vous comprenez les risques de sécurité associés.",
 		"readOnly": {
 			"label": "Lecture",
-			"description": "Lorsque cette option est activée, Kilo SSY affichera automatiquement le contenu des répertoires et lira les fichiers sans que vous ayez à cliquer sur le bouton Approuver.",
+			"description": "Lorsque cette option est activée, Kilo Code affichera automatiquement le contenu des répertoires et lira les fichiers sans que vous ayez à cliquer sur le bouton Approuver.",
 			"outsideWorkspace": {
 				"label": "Inclure les fichiers en dehors de l'espace de travail",
-				"description": "Permettre à Kilo SSY de lire des fichiers en dehors de l'espace de travail actuel sans nécessiter d'approbation."
+				"description": "Permettre à Kilo Code de lire des fichiers en dehors de l'espace de travail actuel sans nécessiter d'approbation."
 			}
 		},
 		"write": {
@@ -48,7 +72,7 @@
 			"delayLabel": "Délai après les écritures pour permettre aux diagnostics de détecter les problèmes potentiels",
 			"outsideWorkspace": {
 				"label": "Inclure les fichiers en dehors de l'espace de travail",
-				"description": "Permettre à Kilo SSY de créer et modifier des fichiers en dehors de l'espace de travail actuel sans nécessiter d'approbation."
+				"description": "Permettre à Kilo Code de créer et modifier des fichiers en dehors de l'espace de travail actuel sans nécessiter d'approbation."
 			}
 		},
 		"browser": {
@@ -83,6 +107,11 @@
 		"showMenu": {
 			"label": "Afficher le menu d'approbation automatique dans la vue de chat",
 			"description": "Lorsque cette option est activée, le menu d'approbation automatique sera affiché en bas de la vue de chat, permettant un accès rapide aux paramètres d'approbation automatique"
+		},
+		"apiRequestLimit": {
+			"title": "Requêtes maximales",
+			"description": "Effectuer automatiquement ce nombre de requêtes API avant de demander l'approbation pour continuer la tâche.",
+			"unlimited": "Illimité"
 		}
 	},
 	"providers": {
@@ -113,6 +142,7 @@
 		"glamaApiKey": "Clé API Glama",
 		"getGlamaApiKey": "Obtenir la clé API Glama",
 		"useCustomBaseUrl": "Utiliser une URL de base personnalisée",
+		"useReasoning": "Activer le raisonnement",
 		"useHostHeader": "Utiliser un en-tête Host personnalisé",
 		"useLegacyFormat": "Utiliser le format API OpenAI hérité",
 		"customHeaders": "En-têtes personnalisés",
@@ -122,7 +152,10 @@
 		"requestyApiKey": "Clé API Requesty",
 		"refreshModels": {
 			"label": "Actualiser les modèles",
-			"hint": "Veuillez rouvrir les paramètres pour voir les modèles les plus récents."
+			"hint": "Veuillez rouvrir les paramètres pour voir les modèles les plus récents.",
+			"loading": "Actualisation de la liste des modèles...",
+			"success": "Liste des modèles actualisée avec succès !",
+			"error": "Échec de l'actualisation de la liste des modèles. Veuillez réessayer."
 		},
 		"getRequestyApiKey": "Obtenir la clé API Requesty",
 		"openRouterTransformsText": "Compresser les prompts et chaînes de messages à la taille du contexte (<a>Transformations OpenRouter</a>)",
@@ -181,16 +214,18 @@
 			"draftModelDesc": "Le modèle brouillon doit être de la même famille de modèles pour que le décodage spéculatif fonctionne correctement.",
 			"selectDraftModel": "Sélectionner le modèle brouillon",
 			"noModelsFound": "Aucun modèle brouillon trouvé. Veuillez vous assurer que LM Studio est en cours d'exécution avec le mode serveur activé.",
-			"description": "LM Studio vous permet d'exécuter des modèles localement sur votre ordinateur. Pour obtenir des instructions sur la mise en route, consultez leur <a>guide de démarrage rapide</a>. Vous devrez également démarrer la fonction <b>serveur local</b> de LM Studio pour l'utiliser avec cette extension. <span>Remarque :</span> Kilo SSY utilise des prompts complexes et fonctionne mieux avec les modèles Claude. Les modèles moins performants peuvent ne pas fonctionner comme prévu."
+			"description": "LM Studio vous permet d'exécuter des modèles localement sur votre ordinateur. Pour obtenir des instructions sur la mise en route, consultez leur <a>guide de démarrage rapide</a>. Vous devrez également démarrer la fonction <b>serveur local</b> de LM Studio pour l'utiliser avec cette extension. <span>Remarque :</span> Kilo Code utilise des prompts complexes et fonctionne mieux avec les modèles Claude. Les modèles moins performants peuvent ne pas fonctionner comme prévu."
 		},
 		"ollama": {
 			"baseUrl": "URL de base (optionnel)",
 			"modelId": "ID du modèle",
 			"description": "Ollama vous permet d'exécuter des modèles localement sur votre ordinateur. Pour obtenir des instructions sur la mise en route, consultez le guide de démarrage rapide.",
-			"warning": "Remarque : Kilo SSY utilise des prompts complexes et fonctionne mieux avec les modèles Claude. Les modèles moins performants peuvent ne pas fonctionner comme prévu."
+			"warning": "Remarque : Kilo Code utilise des prompts complexes et fonctionne mieux avec les modèles Claude. Les modèles moins performants peuvent ne pas fonctionner comme prévu."
 		},
 		"unboundApiKey": "Clé API Unbound",
 		"getUnboundApiKey": "Obtenir la clé API Unbound",
+		"unboundRefreshModelsSuccess": "Liste des modèles mise à jour ! Vous pouvez maintenant sélectionner parmi les derniers modèles.",
+		"unboundInvalidApiKey": "Clé API invalide. Veuillez vérifier votre clé API et réessayer.",
 		"humanRelay": {
 			"description": "Aucune clé API n'est requise, mais l'utilisateur doit aider à copier et coller les informations dans le chat web de l'IA.",
 			"instructions": "Pendant l'utilisation, une boîte de dialogue apparaîtra et le message actuel sera automatiquement copié dans le presse-papiers. Vous devez le coller dans les versions web de l'IA (comme ChatGPT ou Claude), puis copier la réponse de l'IA dans la boîte de dialogue et cliquer sur le bouton de confirmation."
@@ -203,7 +238,7 @@
 			}
 		},
 		"customModel": {
-			"capabilities": "Configurez les capacités et les prix pour votre modèle personnalisé compatible OpenAI. Soyez prudent lors de la spécification des capacités du modèle, car elles peuvent affecter le fonctionnement de Kilo SSY.",
+			"capabilities": "Configurez les capacités et les prix pour votre modèle personnalisé compatible OpenAI. Soyez prudent lors de la spécification des capacités du modèle, car elles peuvent affecter le fonctionnement de Kilo Code.",
 			"maxTokens": {
 				"label": "Tokens de sortie maximum",
 				"description": "Nombre maximum de tokens que le modèle peut générer dans une réponse. (Spécifiez -1 pour permettre au serveur de définir les tokens maximum.)"
@@ -259,7 +294,7 @@
 	"browser": {
 		"enable": {
 			"label": "Activer l'outil de navigateur",
-			"description": "Lorsque cette option est activée, Kilo SSY peut utiliser un navigateur pour interagir avec des sites web lors de l'utilisation de modèles qui prennent en charge l'utilisation de l'ordinateur."
+			"description": "Lorsque cette option est activée, Kilo Code peut utiliser un navigateur pour interagir avec des sites web lors de l'utilisation de modèles qui prennent en charge l'utilisation de l'ordinateur."
 		},
 		"viewport": {
 			"label": "Taille de la fenêtre d'affichage",
@@ -287,18 +322,18 @@
 	"checkpoints": {
 		"enable": {
 			"label": "Activer les points de contrôle automatiques",
-			"description": "Lorsque cette option est activée, Kilo SSY créera automatiquement des points de contrôle pendant l'exécution des tâches, facilitant la révision des modifications ou le retour à des états antérieurs."
+			"description": "Lorsque cette option est activée, Kilo Code créera automatiquement des points de contrôle pendant l'exécution des tâches, facilitant la révision des modifications ou le retour à des états antérieurs."
 		}
 	},
 	"notifications": {
 		"sound": {
 			"label": "Activer les effets sonores",
-			"description": "Lorsque cette option est activée, Kilo SSY jouera des effets sonores pour les notifications et les événements.",
+			"description": "Lorsque cette option est activée, Kilo Code jouera des effets sonores pour les notifications et les événements.",
 			"volumeLabel": "Volume"
 		},
 		"tts": {
 			"label": "Activer la synthèse vocale",
-			"description": "Lorsque cette option est activée, Kilo SSY lira ses réponses à haute voix en utilisant la synthèse vocale.",
+			"description": "Lorsque cette option est activée, Kilo Code lira ses réponses à haute voix en utilisant la synthèse vocale.",
 			"speedLabel": "Vitesse"
 		}
 	},
@@ -318,7 +353,7 @@
 		},
 		"maxReadFile": {
 			"label": "Seuil d'auto-troncature de lecture de fichier",
-			"description": "Kilo SSY lit ce nombre de lignes lorsque le modèle omet les valeurs de début/fin. Si ce nombre est inférieur au total du fichier, Kilo SSY génère un index des numéros de ligne des définitions de code. Cas spéciaux : -1 indique à Kilo SSY de lire le fichier entier (sans indexation), et 0 indique de ne lire aucune ligne et de fournir uniquement les index de ligne pour un contexte minimal. Des valeurs plus basses minimisent l'utilisation initiale du contexte, permettant des lectures ultérieures de plages de lignes précises. Les requêtes avec début/fin explicites ne sont pas limitées par ce paramètre.",
+			"description": "Kilo Code lit ce nombre de lignes lorsque le modèle omet les valeurs de début/fin. Si ce nombre est inférieur au total du fichier, Kilo Code génère un index des numéros de ligne des définitions de code. Cas spéciaux : -1 indique à Kilo Code de lire le fichier entier (sans indexation), et 0 indique de ne lire aucune ligne et de fournir uniquement les index de ligne pour un contexte minimal. Des valeurs plus basses minimisent l'utilisation initiale du contexte, permettant des lectures ultérieures de plages de lignes précises. Les requêtes avec début/fin explicites ne sont pas limitées par ce paramètre.",
 			"lines": "lignes",
 			"always_full_read": "Toujours lire le fichier entier"
 		}
@@ -380,7 +415,7 @@
 	"advanced": {
 		"diff": {
 			"label": "Activer l'édition via des diffs",
-			"description": "Lorsque cette option est activée, Kilo SSY pourra éditer des fichiers plus rapidement et rejettera automatiquement les écritures de fichiers complets tronqués. Fonctionne mieux avec le dernier modèle Claude 3.7 Sonnet.",
+			"description": "Lorsque cette option est activée, Kilo Code pourra éditer des fichiers plus rapidement et rejettera automatiquement les écritures de fichiers complets tronqués. Fonctionne mieux avec le dernier modèle Claude 3.7 Sonnet.",
 			"strategy": {
 				"label": "Stratégie de diff",
 				"options": {
@@ -401,10 +436,25 @@
 		}
 	},
 	"experimental": {
-		"warning": "⚠️",
+		"autoCondenseContextPercent": {
+			"label": "Seuil pour déclencher la condensation intelligente du contexte",
+			"description": "Lorsque la fenêtre de contexte atteint ce seuil, Kilo Code la condensera automatiquement."
+		},
+		"condensingApiConfiguration": {
+			"label": "Configuration API pour la condensation du contexte",
+			"description": "Sélectionnez quelle configuration API utiliser pour les opérations de condensation du contexte. Laissez non sélectionné pour utiliser la configuration active actuelle.",
+			"useCurrentConfig": "Utiliser la configuration actuelle"
+		},
+		"customCondensingPrompt": {
+			"label": "Prompt personnalisé pour la condensation du contexte",
+			"description": "Personnalisez le prompt système utilisé pour la condensation du contexte. Laissez vide pour utiliser le prompt par défaut.",
+			"placeholder": "Entrez votre prompt de condensation personnalisé ici...\n\nVous pouvez utiliser la même structure que le prompt par défaut :\n- Conversation précédente\n- Travail actuel\n- Concepts techniques clés\n- Fichiers et code pertinents\n- Résolution de problèmes\n- Tâches en attente et prochaines étapes",
+			"reset": "Réinitialiser par défaut",
+			"hint": "Vide = utiliser le prompt par défaut"
+		},
 		"AUTO_CONDENSE_CONTEXT": {
-			"name": "Condenser intelligemment la fenêtre de contexte",
-			"description": "Utilise un appel LLM pour résumer la conversation précédente lorsque la fenêtre de contexte de la tâche est presque pleine, plutôt que de supprimer les anciens messages. Avertissement : le coût de la synthèse n'est actuellement pas inclus dans les coûts API affichés dans l'interface."
+			"name": "Déclencher automatiquement la condensation intelligente du contexte",
+			"description": "La condensation intelligente du contexte utilise un appel LLM pour résumer la conversation passée lorsque la fenêtre de contexte de la tâche atteint un seuil prédéfini, plutôt que de supprimer les anciens messages lorsque le contexte est plein."
 		},
 		"DIFF_STRATEGY_UNIFIED": {
 			"name": "Utiliser la stratégie diff unifiée expérimentale",
@@ -412,24 +462,28 @@
 		},
 		"SEARCH_AND_REPLACE": {
 			"name": "Utiliser l'outil de recherche et remplacement expérimental",
-			"description": "Activer l'outil de recherche et remplacement expérimental, permettant à Kilo SSY de remplacer plusieurs occurrences d'un terme de recherche en une seule requête."
+			"description": "Activer l'outil de recherche et remplacement expérimental, permettant à Kilo Code de remplacer plusieurs occurrences d'un terme de recherche en une seule requête."
 		},
 		"INSERT_BLOCK": {
 			"name": "Utiliser l'outil d'insertion de contenu expérimental",
-			"description": "Activer l'outil d'insertion de contenu expérimental, permettant à Kilo SSY d'insérer du contenu à des numéros de ligne spécifiques sans avoir besoin de créer un diff."
+			"description": "Activer l'outil d'insertion de contenu expérimental, permettant à Kilo Code d'insérer du contenu à des numéros de ligne spécifiques sans avoir besoin de créer un diff."
 		},
 		"POWER_STEERING": {
 			"name": "Utiliser le mode \"direction assistée\" expérimental",
-			"description": "Lorsqu'il est activé, Kilo SSY rappellera plus fréquemment au modèle les détails de sa définition de mode actuelle. Cela conduira à une adhérence plus forte aux définitions de rôles et aux instructions personnalisées, mais utilisera plus de tokens par message."
+			"description": "Lorsqu'il est activé, Kilo Code rappellera plus fréquemment au modèle les détails de sa définition de mode actuelle. Cela conduira à une adhérence plus forte aux définitions de rôles et aux instructions personnalisées, mais utilisera plus de tokens par message."
+		},
+		"AUTOCOMPLETE": {
+			"name": "Utiliser la fonctionnalité expérimentale de \"saisie semi-automatique\"",
+			"description": "Lorsque cette option est activée, Kilo Code fournira des suggestions de code en ligne pendant que vous tapez."
 		},
 		"MULTI_SEARCH_AND_REPLACE": {
 			"name": "Utiliser l'outil diff multi-blocs expérimental",
-			"description": "Lorsqu'il est activé, Kilo SSY utilisera l'outil diff multi-blocs. Cela tentera de mettre à jour plusieurs blocs de code dans le fichier en une seule requête."
+			"description": "Lorsqu'il est activé, Kilo Code utilisera l'outil diff multi-blocs. Cela tentera de mettre à jour plusieurs blocs de code dans le fichier en une seule requête."
 		}
 	},
 	"promptCaching": {
 		"label": "Désactiver la mise en cache des prompts",
-		"description": "Lorsque cette option est cochée, Kilo SSY n'utilisera pas la mise en cache des prompts pour ce modèle."
+		"description": "Lorsque cette option est cochée, Kilo Code n'utilisera pas la mise en cache des prompts pour ce modèle."
 	},
 	"temperature": {
 		"useCustom": "Utiliser une température personnalisée",
@@ -460,17 +514,17 @@
 		}
 	},
 	"modelPicker": {
-		"automaticFetch": "L'extension récupère automatiquement la liste la plus récente des modèles disponibles sur <serviceLink>{{serviceName}}</serviceLink>. Si vous ne savez pas quel modèle choisir, Kilo SSY fonctionne mieux avec <defaultModelLink>{{defaultModelId}}</defaultModelLink>. Vous pouvez également rechercher \"free\" pour les options gratuites actuellement disponibles.",
+		"automaticFetch": "L'extension récupère automatiquement la liste la plus récente des modèles disponibles sur <serviceLink>{{serviceName}}</serviceLink>. Si vous ne savez pas quel modèle choisir, Kilo Code fonctionne mieux avec <defaultModelLink>{{defaultModelId}}</defaultModelLink>. Vous pouvez également rechercher \"free\" pour les options gratuites actuellement disponibles.",
 		"label": "Modèle",
 		"searchPlaceholder": "Rechercher",
 		"noMatchFound": "Aucune correspondance trouvée",
 		"useCustomModel": "Utiliser personnalisé : {{modelId}}"
 	},
 	"footer": {
-		"feedback": "Si vous avez des questions ou des commentaires, n'hésitez pas à ouvrir un problème sur <githubLink>github.com/Kilo-Org/kilocode</githubLink> ou à rejoindre <redditLink>reddit.com/r/kilocode</redditLink> ou <discordLink>kilocode.ai/discord</discordLink>",
+		"feedback": "Si vous avez des questions ou des commentaires, n'hésitez pas à ouvrir un problème sur <githubLink>github.com/SSYCloud/kilocode/tree/ssy</githubLink> ou à rejoindre <redditLink>reddit.com/r/kilocode</redditLink> ou <discordLink>kilocode.ai/discord</discordLink>",
 		"telemetry": {
 			"label": "Autoriser les rapports anonymes d'erreurs et d'utilisation",
-			"description": "Aidez à améliorer Kilo SSY en envoyant des données d'utilisation anonymes et des rapports d'erreurs. Aucun code, prompt ou information personnelle n'est jamais envoyé. Consultez notre politique de confidentialité pour plus de détails."
+			"description": "Aidez à améliorer Kilo Code en envoyant des données d'utilisation anonymes et des rapports d'erreurs. Aucun code, prompt ou information personnelle n'est jamais envoyé. Consultez notre politique de confidentialité pour plus de détails."
 		},
 		"settings": {
 			"import": "Importer",

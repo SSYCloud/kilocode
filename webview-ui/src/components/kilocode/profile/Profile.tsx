@@ -1,0 +1,146 @@
+// import { useExtensionState } from "@/context/ExtensionStateContext" // No longer needed
+import React, { useEffect } from "react"
+import { Trans } from "react-i18next"
+import { vscode } from "@/utils/vscode"
+
+import { ProfileDataResponsePayload, WebviewMessage } from "@roo/WebviewMessage"
+import { VSCodeButtonLink } from "@/components/common/VSCodeButtonLink"
+import { VSCodeButton, VSCodeDivider, VSCodeLink } from "@vscode/webview-ui-toolkit/react"
+import { useExtensionState } from "@/context/ExtensionStateContext"
+import { useAppTranslation } from "@/i18n/TranslationContext"
+
+interface ProfileProps {
+	onDone: () => void
+}
+
+const Profile: React.FC<ProfileProps> = ({ onDone: _onDone }) => {
+	const { apiConfiguration, currentApiConfigName } = useExtensionState()
+	const { t } = useAppTranslation()
+	const [profileData, setProfileData] = React.useState<any>(null)
+	const [isLoadingUser, setIsLoadingUser] = React.useState(true)
+
+	useEffect(() => {
+		vscode.postMessage({
+			type: "fetchProfileDataRequest",
+		})
+	}, [apiConfiguration?.shengSuanYunXToken])
+
+	useEffect(() => {
+		const handleMessage = (event: MessageEvent<WebviewMessage>) => {
+			const message = event.data
+			if (message.type === "profileDataResponse") {
+				const payload = message.payload as ProfileDataResponsePayload
+				if (payload.success) {
+					setProfileData(payload.data)
+				} else {
+					console.error("Error fetching profile data:", payload.error)
+					setProfileData(null)
+				}
+				setIsLoadingUser(false)
+			}
+		}
+
+		window.addEventListener("message", handleMessage)
+		return () => {
+			window.removeEventListener("message", handleMessage)
+		}
+	}, [])
+
+	function handleLogout(): void {
+		console.info("Logging out...", apiConfiguration)
+		vscode.postMessage({
+			type: "upsertApiConfiguration",
+			text: currentApiConfigName,
+			apiConfiguration: {
+				...apiConfiguration,
+				shengSuanYunXToken: "",
+			},
+		})
+	}
+
+	if (isLoadingUser) {
+		return <></>
+	}
+	const userName = profileData?.Username || profileData?.Nickname || null
+	return (
+		<div className="h-full flex flex-col">
+			{profileData ? (
+				<div className="flex flex-col pr-3 h-full">
+					<div className="flex flex-col w-full">
+						<div className="flex items-center mb-6 flex-wrap gap-y-4">
+							{profileData.HeadImg ? (
+								<img src={profileData.HeadImg} alt="Profile" className="size-16 rounded-full mr-4" />
+							) : (
+								<div className="size-16 rounded-full bg-[var(--vscode-button-background)] flex items-center justify-center text-3xl text-[var(--vscode-button-foreground)] mr-4">
+									{userName?.[0] || "?"}
+								</div>
+							)}
+
+							<div className="flex flex-col">
+								{userName && (
+									<h2 className="text-[var(--vscode-foreground)] m-0 mb-1 text-lg font-medium">
+										{userName}
+									</h2>
+								)}
+
+								{profileData.Email && (
+									<div className="text-sm text-[var(--vscode-descriptionForeground)]">
+										{profileData.Email}
+									</div>
+								)}
+							</div>
+						</div>
+					</div>
+
+					<div className="w-full flex gap-2 flex-col min-[225px]:flex-row">
+						<div className="w-full min-[225px]:w-1/2">
+							<VSCodeButtonLink
+								href="https://router.shengsuanyun.com/user/recharge"
+								appearance="primary"
+								className="w-full">
+								{t("kilocode:profile.dashboard")}
+							</VSCodeButtonLink>
+						</div>
+						<VSCodeButton
+							appearance="secondary"
+							onClick={handleLogout}
+							className="w-full min-[225px]:w-1/2">
+							{t("kilocode:profile.logOut")}
+						</VSCodeButton>
+					</div>
+
+					<VSCodeDivider className="w-full my-6" />
+
+					<div className="w-full flex flex-col items-center">
+						<div className="text-sm text-[var(--vscode-descriptionForeground)] mb-3">
+							{t("kilocode:profile.currentBalance")}
+						</div>
+						<div className="text-2xl font-bold text-[var(--vscode-foreground)] mb-6 flex items-center gap-2">
+							<span>￥{(profileData.Wallet.Assets / 10000).toFixed(2)}</span>
+						</div>
+					</div>
+				</div>
+			) : (
+				<div className="flex flex-col items-center pr-3">
+					<p className="text-center">{t("kilocode:profile.signUp.description")}</p>
+					<VSCodeButtonLink
+						href={`https://router.shengsuanyun.com/auth?callback_url=vscode://shengsuan-cloud.kilo-ssy/ssy`}
+						className="w-full mb-4">
+						{t("kilocode:profile.signUp.title")}
+					</VSCodeButtonLink>
+					<p className="text-[var(--vscode-descriptionForeground)] text-xs text-center m-0">
+						<Trans
+							i18nKey="kilocode:profile.signUp.termsAndPrivacy"
+							components={{
+								termsLink: <VSCodeLink href="https://kilocode.ai/terms" />,
+								privacyLink: <VSCodeLink href="https://kilocode.ai/privacy" />,
+							}}
+						/>
+					</p>
+				</div>
+			)}
+		</div>
+	)
+}
+
+export default Profile

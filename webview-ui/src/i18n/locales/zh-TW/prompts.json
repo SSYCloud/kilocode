@@ -7,7 +7,7 @@
 		"editModesConfig": "編輯模式設定",
 		"editGlobalModes": "編輯全域模式",
 		"editProjectModes": "編輯專案模式 (.kilossymodes)",
-		"createModeHelpText": "模式是 Kilo SSY 的專屬角色，用於客製化其行為。<0>了解如何使用模式</0>或<1>自訂模式。</1>",
+		"createModeHelpText": "模式是 Kilo Code 的專屬角色，用於客製化其行為。<0>了解如何使用模式</0>或<1>自訂模式。</1>",
 		"selectMode": "搜尋模式"
 	},
 	"apiConfiguration": {
@@ -32,7 +32,7 @@
 	"roleDefinition": {
 		"title": "角色定義",
 		"resetToDefault": "重設為預設值",
-		"description": "定義此模式下 Kilo SSY 的專業知識和個性。此描述會形塑 Kilo SSY 如何展現自己並處理工作。"
+		"description": "定義此模式下 Kilo Code 的專業知識和個性。此描述會形塑 Kilo Code 如何展現自己並處理工作。"
 	},
 	"whenToUse": {
 		"title": "使用時機（選用）",
@@ -69,7 +69,7 @@
 		"types": {
 			"ENHANCE": {
 				"label": "增強提示詞",
-				"description": "使用提示詞增強功能取得針對您輸入的客製化建議或改進。這確保 Kilo SSY 能理解您的意圖並提供最佳的回應。可透過聊天中的 ✨ 圖示使用。"
+				"description": "使用提示詞增強功能取得針對您輸入的客製化建議或改進。這確保 Kilo Code 能理解您的意圖並提供最佳的回應。可透過聊天中的 ✨ 圖示使用。"
 			},
 			"EXPLAIN": {
 				"label": "解釋程式碼",
@@ -134,7 +134,7 @@
 		},
 		"roleDefinition": {
 			"label": "角色定義",
-			"description": "定義此模式下 Kilo SSY 的專業知識和個性。"
+			"description": "定義此模式下 Kilo Code 的專業知識和個性。"
 		},
 		"whenToUse": {
 			"label": "使用時機（選用）",

@@ -1,5 +1,5 @@
 {
-	"greeting": "Cosa può fare Kilo SSY per te?",
+	"greeting": "Cosa può fare Kilo Code per te?",
 	"task": {
 		"title": "Attività",
 		"seeMore": "Vedi altro",
@@ -10,7 +10,8 @@
 		"contextWindow": "Lunghezza del contesto:",
 		"closeAndStart": "Chiudi attività e iniziane una nuova",
 		"export": "Esporta cronologia attività",
-		"delete": "Elimina attività (Shift + Clic per saltare la conferma)"
+		"delete": "Elimina attività (Shift + Clic per saltare la conferma)",
+		"condenseContext": "Condensa contesto in modo intelligente"
 	},
 	"history": {
 		"title": "Cronologia"
@@ -75,7 +76,7 @@
 		"tooltip": "Annulla l'operazione corrente"
 	},
 	"scrollToBottom": "Scorri fino alla fine della chat",
-	"about": "Genera, refactor e debug del codice con l'assistenza dell'IA.<br />Consulta la nostra <DocsLink>documentazione</DocsLink> per saperne di più.",
+	"about": "Genera, refactor e debug del codice con l'assistenza dell'IA. Consulta la nostra <DocsLink>documentazione</DocsLink> per saperne di più.",
 	"onboarding": "Grazie alle più recenti innovazioni nelle capacità di codifica agentica, posso gestire complesse attività di sviluppo software passo dopo passo. Con strumenti che mi permettono di creare e modificare file, esplorare progetti complessi, utilizzare il browser ed eseguire comandi da terminale (dopo la tua autorizzazione), posso aiutarti in modi che vanno oltre il completamento del codice o il supporto tecnico. Posso persino usare MCP per creare nuovi strumenti ed estendere le mie capacità.",
 	"rooTips": {
 		"boomerangTasks": {
@@ -112,13 +113,13 @@
 	"edit": "Modifica...",
 	"forNextMode": "per la prossima modalità",
 	"instructions": {
-		"wantsToFetch": "Kilo SSY vuole recuperare istruzioni dettagliate per aiutare con l'attività corrente"
+		"wantsToFetch": "Kilo Code vuole recuperare istruzioni dettagliate per aiutare con l'attività corrente"
 	},
 	"error": "Errore",
 	"diffError": {
 		"title": "Modifica non riuscita"
 	},
-	"troubleMessage": "Kilo SSY sta avendo problemi...",
+	"troubleMessage": "Kilo Code sta avendo problemi...",
 	"apiRequest": {
 		"title": "Richiesta API",
 		"failed": "Richiesta API fallita",
@@ -144,44 +145,44 @@
 		"current": "Corrente"
 	},
 	"fileOperations": {
-		"wantsToRead": "Kilo SSY vuole leggere questo file:",
-		"wantsToReadOutsideWorkspace": "Kilo SSY vuole leggere questo file al di fuori dell'area di lavoro:",
-		"didRead": "Kilo SSY ha letto questo file:",
-		"wantsToEdit": "Kilo SSY vuole modificare questo file:",
-		"wantsToEditOutsideWorkspace": "Kilo SSY vuole modificare questo file al di fuori dell'area di lavoro:",
-		"wantsToCreate": "Kilo SSY vuole creare un nuovo file:",
-		"wantsToSearchReplace": "Kilo SSY vuole eseguire ricerca e sostituzione in questo file:",
-		"didSearchReplace": "Kilo SSY ha eseguito ricerca e sostituzione in questo file:",
-		"wantsToInsert": "Kilo SSY vuole inserire contenuto in questo file:",
-		"wantsToInsertWithLineNumber": "Kilo SSY vuole inserire contenuto in questo file alla riga {{lineNumber}}:",
-		"wantsToInsertAtEnd": "Kilo SSY vuole aggiungere contenuto alla fine di questo file:"
+		"wantsToRead": "Kilo Code vuole leggere questo file:",
+		"wantsToReadOutsideWorkspace": "Kilo Code vuole leggere questo file al di fuori dell'area di lavoro:",
+		"didRead": "Kilo Code ha letto questo file:",
+		"wantsToEdit": "Kilo Code vuole modificare questo file:",
+		"wantsToEditOutsideWorkspace": "Kilo Code vuole modificare questo file al di fuori dell'area di lavoro:",
+		"wantsToCreate": "Kilo Code vuole creare un nuovo file:",
+		"wantsToSearchReplace": "Kilo Code vuole eseguire ricerca e sostituzione in questo file:",
+		"didSearchReplace": "Kilo Code ha eseguito ricerca e sostituzione in questo file:",
+		"wantsToInsert": "Kilo Code vuole inserire contenuto in questo file:",
+		"wantsToInsertWithLineNumber": "Kilo Code vuole inserire contenuto in questo file alla riga {{lineNumber}}:",
+		"wantsToInsertAtEnd": "Kilo Code vuole aggiungere contenuto alla fine di questo file:"
 	},
 	"directoryOperations": {
-		"wantsToViewTopLevel": "Kilo SSY vuole visualizzare i file di primo livello in questa directory:",
-		"didViewTopLevel": "Kilo SSY ha visualizzato i file di primo livello in questa directory:",
-		"wantsToViewRecursive": "Kilo SSY vuole visualizzare ricorsivamente tutti i file in questa directory:",
-		"didViewRecursive": "Kilo SSY ha visualizzato ricorsivamente tutti i file in questa directory:",
-		"wantsToViewDefinitions": "Kilo SSY vuole visualizzare i nomi delle definizioni di codice sorgente utilizzate in questa directory:",
-		"didViewDefinitions": "Kilo SSY ha visualizzato i nomi delle definizioni di codice sorgente utilizzate in questa directory:",
-		"wantsToSearch": "Kilo SSY vuole cercare in questa directory <code>{{regex}}</code>:",
-		"didSearch": "Kilo SSY ha cercato in questa directory <code>{{regex}}</code>:"
+		"wantsToViewTopLevel": "Kilo Code vuole visualizzare i file di primo livello in questa directory:",
+		"didViewTopLevel": "Kilo Code ha visualizzato i file di primo livello in questa directory:",
+		"wantsToViewRecursive": "Kilo Code vuole visualizzare ricorsivamente tutti i file in questa directory:",
+		"didViewRecursive": "Kilo Code ha visualizzato ricorsivamente tutti i file in questa directory:",
+		"wantsToViewDefinitions": "Kilo Code vuole visualizzare i nomi delle definizioni di codice sorgente utilizzate in questa directory:",
+		"didViewDefinitions": "Kilo Code ha visualizzato i nomi delle definizioni di codice sorgente utilizzate in questa directory:",
+		"wantsToSearch": "Kilo Code vuole cercare in questa directory <code>{{regex}}</code>:",
+		"didSearch": "Kilo Code ha cercato in questa directory <code>{{regex}}</code>:"
 	},
 	"commandOutput": "Output del comando",
 	"response": "Risposta",
 	"arguments": "Argomenti",
 	"mcp": {
-		"wantsToUseTool": "Kilo SSY vuole utilizzare uno strumento sul server MCP {{serverName}}:",
-		"wantsToAccessResource": "Kilo SSY vuole accedere a una risorsa sul server MCP {{serverName}}:"
+		"wantsToUseTool": "Kilo Code vuole utilizzare uno strumento sul server MCP {{serverName}}:",
+		"wantsToAccessResource": "Kilo Code vuole accedere a una risorsa sul server MCP {{serverName}}:"
 	},
 	"modes": {
-		"wantsToSwitch": "Kilo SSY vuole passare alla modalità <code>{{mode}}</code>",
-		"wantsToSwitchWithReason": "Kilo SSY vuole passare alla modalità <code>{{mode}}</code> perché: {{reason}}",
-		"didSwitch": "Kilo SSY è passato alla modalità <code>{{mode}}</code>",
-		"didSwitchWithReason": "Kilo SSY è passato alla modalità <code>{{mode}}</code> perché: {{reason}}"
+		"wantsToSwitch": "Kilo Code vuole passare alla modalità <code>{{mode}}</code>",
+		"wantsToSwitchWithReason": "Kilo Code vuole passare alla modalità <code>{{mode}}</code> perché: {{reason}}",
+		"didSwitch": "Kilo Code è passato alla modalità <code>{{mode}}</code>",
+		"didSwitchWithReason": "Kilo Code è passato alla modalità <code>{{mode}}</code> perché: {{reason}}"
 	},
 	"subtasks": {
-		"wantsToCreate": "Kilo SSY vuole creare una nuova sottoattività in modalità <code>{{mode}}</code>:",
-		"wantsToFinish": "Kilo SSY vuole completare questa sottoattività",
+		"wantsToCreate": "Kilo Code vuole creare una nuova sottoattività in modalità <code>{{mode}}</code>:",
+		"wantsToFinish": "Kilo Code vuole completare questa sottoattività",
 		"newTaskContent": "Istruzioni sottoattività",
 		"completionContent": "Sottoattività completata",
 		"resultContent": "Risultati sottoattività",
@@ -189,7 +190,7 @@
 		"completionInstructions": "Sottoattività completata! Puoi rivedere i risultati e suggerire correzioni o prossimi passi. Se tutto sembra a posto, conferma per restituire il risultato all'attività principale."
 	},
 	"questions": {
-		"hasQuestion": "Kilo SSY ha una domanda:"
+		"hasQuestion": "Kilo Code ha una domanda:"
 	},
 	"taskCompleted": "Attività completata",
 	"powershell": {
@@ -198,27 +199,32 @@
 	"autoApprove": {
 		"title": "Auto-approvazione:",
 		"none": "Nessuna",
-		"description": "L'auto-approvazione permette a Kilo SSY di eseguire azioni senza chiedere permesso. Abilita solo per azioni di cui ti fidi completamente. Configurazione più dettagliata disponibile nelle <settingsLink>Impostazioni</settingsLink>."
+		"description": "L'auto-approvazione permette a Kilo Code di eseguire azioni senza chiedere permesso. Abilita solo per azioni di cui ti fidi completamente. Configurazione più dettagliata disponibile nelle <settingsLink>Impostazioni</settingsLink>."
 	},
 	"reasoning": {
 		"thinking": "Sto pensando",
 		"seconds": "{{count}}s"
 	},
+	"contextCondense": {
+		"title": "Contesto condensato",
+		"condensing": "Condensazione del contesto...",
+		"tokens": "token"
+	},
 	"followUpSuggest": {
 		"copyToInput": "Copia nell'input (o Shift + clic)"
 	},
 	"announcement": {
-		"title": "🎉 Rilasciato Roo Code 3.17",
-		"description": "Roo Code 3.17 introduce potenti nuove funzionalità e miglioramenti basati sui tuoi feedback.",
+		"title": "🎉 Rilasciato Roo Code {{version}}",
+		"description": "Roo Code {{version}} introduce potenti nuove funzionalità e miglioramenti basati sui tuoi feedback.",
 		"whatsNew": "Novità",
-		"feature1": "<bold>Caching implicito per Gemini</bold>: Le chiamate API Gemini vengono ora memorizzate automaticamente nella cache, riducendo i costi API",
-		"feature2": "<bold>Selezione della modalità più intelligente</bold>: Le definizioni delle modalità possono ora includere indicazioni su quando ogni modalità dovrebbe essere utilizzata, permettendo una migliore orchestrazione",
-		"feature3": "<bold>Condensazione intelligente del contesto</bold>: Riassume in modo intelligente la cronologia delle conversazioni quando il contesto si riempie invece di troncarla (abilitare in Impostazioni -> Sperimentale)",
+		"feature1": "<bold>Modelli di anteprima Gemini 2.5 Flash</bold>: Accedi agli ultimi modelli Gemini Flash per risposte più veloci ed efficienti",
+		"feature2": "<bold>Condensazione intelligente del contesto</bold>: Nuovo pulsante nell'intestazione dell'attività che ti permette di condensare intelligentemente il contenuto con feedback visivo",
+		"feature3": "<bold>Supporto YAML per definizioni di modalità</bold>: Crea e personalizza le modalità più facilmente con il supporto YAML",
 		"hideButton": "Nascondi annuncio",
 		"detailsDiscussLinks": "Ottieni maggiori dettagli e partecipa alle discussioni su <discordLink>Discord</discordLink> e <redditLink>Reddit</redditLink> 🚀"
 	},
 	"browser": {
-		"rooWantsToUse": "Kilo SSY vuole utilizzare il browser:",
+		"rooWantsToUse": "Kilo Code vuole utilizzare il browser:",
 		"consoleLogs": "Log della console",
 		"noNewLogs": "(Nessun nuovo log)",
 		"screenshot": "Screenshot del browser",
@@ -251,7 +257,19 @@
 	"systemPromptWarning": "ATTENZIONE: Sovrascrittura personalizzata delle istruzioni di sistema attiva. Questo può compromettere gravemente le funzionalità e causare comportamenti imprevedibili.",
 	"shellIntegration": {
 		"title": "Avviso di esecuzione comando",
-		"description": "Il tuo comando viene eseguito senza l'integrazione shell del terminale VSCode. Per sopprimere questo avviso puoi disattivare l'integrazione shell nella sezione <strong>Terminal</strong> delle <settingsLink>impostazioni di Kilo SSY</settingsLink> o risolvere i problemi di integrazione del terminale VSCode utilizzando il link qui sotto.",
+		"description": "Il tuo comando viene eseguito senza l'integrazione shell del terminale VSCode. Per sopprimere questo avviso puoi disattivare l'integrazione shell nella sezione <strong>Terminal</strong> delle <settingsLink>impostazioni di Kilo Code</settingsLink> o risolvere i problemi di integrazione del terminale VSCode utilizzando il link qui sotto.",
 		"troubleshooting": "Clicca qui per la documentazione sull'integrazione shell."
+	},
+	"ask": {
+		"autoApprovedRequestLimitReached": {
+			"title": "Limite di Richieste Auto-approvate Raggiunto",
+			"description": "Kilo Code ha raggiunto il limite auto-approvato di {{count}} richiesta/e API. Vuoi reimpostare il contatore e procedere con l'attività?",
+			"button": "Reimposta e Continua"
+		}
+	},
+	"codebaseSearch": {
+		"wantsToSearch": "Kilo Code vuole cercare nella base di codice <code>{{query}}</code>:",
+		"wantsToSearchWithPath": "Kilo Code vuole cercare nella base di codice <code>{{query}}</code> in <code>{{path}}</code>:",
+		"didSearch": "Trovato {{count}} risultato/i per <code>{{query}}</code>:"
 	}
 }

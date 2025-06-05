@@ -1,6 +1,6 @@
 export const DEFAULT_HEADERS = {
 	"HTTP-Referer": "vscode://shengsuan-cloud.kilo-ssy/ssy",
-	"X-Title": "Kilo SSY",
+	"X-Title": "Kilo Code",
 }
 
 export const ANTHROPIC_DEFAULT_MAX_TOKENS = 8192

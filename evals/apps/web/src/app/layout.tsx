@@ -11,7 +11,7 @@ const fontSans = Geist({ variable: "--font-sans", subsets: ["latin"] })
 const fontMono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] })
 
 export const metadata: Metadata = {
-	title: "Kilo SSY Evals",
+	title: "Kilo Code Evals",
 }
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased pb-12`}>
-				<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+				<ThemeProvider attribute="class" forcedTheme="dark" disableTransitionOnChange>
 					<ReactQueryProvider>
 						<Header />
 						{children}

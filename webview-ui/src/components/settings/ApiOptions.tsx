@@ -6,16 +6,16 @@ import { VSCodeLink, VSCodeTextField } from "@vscode/webview-ui-toolkit/react"
 
 import { getKiloCodeBackendAuthUrl } from "../kilocode/helpers" // kilocode_change
 
+import type { ProviderName, ProviderSettings } from "@roo-code/types"
+
 import {
-	type ProviderName,
-	type ProviderSettings,
 	openRouterDefaultModelId,
 	requestyDefaultModelId,
 	glamaDefaultModelId,
 	unboundDefaultModelId,
 	litellmDefaultModelId,
 	shengSuanYunDefaultModelId,
-} from "@roo/shared/api"
+} from "@roo/api"
 
 import { vscode } from "@src/utils/vscode"
 import { validateApiConfiguration, validateModelId } from "@src/utils/validate"
@@ -54,13 +54,12 @@ import {
 	ShengSuanYun,
 } from "./providers"
 
-import { MODELS_BY_PROVIDER, PROVIDERS, REASONING_MODELS } from "./constants"
+import { MODELS_BY_PROVIDER, PROVIDERS } from "./constants"
 import { inputEventTransform, noTransform } from "./transforms"
 import { ModelPicker } from "./ModelPicker"
 import { ModelInfoView } from "./ModelInfoView"
 import { ApiErrorMessage } from "./ApiErrorMessage"
 import { ThinkingBudget } from "./ThinkingBudget"
-import { ReasoningEffort } from "./ReasoningEffort"
 import { DiffSettingsControl } from "./DiffSettingsControl"
 import { TemperatureControl } from "./TemperatureControl"
 import { RateLimitSecondsControl } from "./RateLimitSecondsControl"
@@ -75,6 +74,7 @@ export interface ApiOptionsProps {
 	errorMessage: string | undefined
 	setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>
 	hideKiloCodeButton?: boolean // kilocode_change
+	currentApiConfigName?: string // kilocode_change
 }
 
 const ApiOptions = ({
@@ -86,6 +86,7 @@ const ApiOptions = ({
 	errorMessage,
 	setErrorMessage,
 	hideKiloCodeButton = false,
+	currentApiConfigName, // kilocode_change
 }: ApiOptionsProps) => {
 	const { t } = useAppTranslation()
 
@@ -247,6 +248,11 @@ const ApiOptions = ({
 						setApiConfigurationField("shengSuanYunModelId", shengSuanYunDefaultModelId)
 					}
 					break
+				case "kilocode":
+					if (!apiConfiguration.kilocodeModel) {
+						setApiConfigurationField("kilocodeModel", "claude37")
+					}
+					break
 			}
 
 			setApiConfigurationField("apiProvider", value)
@@ -259,6 +265,7 @@ const ApiOptions = ({
 			apiConfiguration.requestyModelId,
 			apiConfiguration.litellmModelId,
 			apiConfiguration.shengSuanYunModelId,
+			apiConfiguration.kilocodeModel,
 		],
 	)
 
@@ -298,10 +305,10 @@ const ApiOptions = ({
 						value={apiConfiguration?.kilocodeToken || ""}
 						type="password"
 						onInput={handleInputChange("kilocodeToken")}
-						placeholder="KiloCode API Key"
+						placeholder={t("kilocode:settings.provider.apiKey")}
 						className="w-full">
 						<div className="flex justify-between items-center mb-1">
-							<label className="block font-medium">KiloCode API Key</label>
+							<label className="block font-medium">{t("kilocode:settings.provider.apiKey")}</label>
 						</div>
 					</VSCodeTextField>
 
@@ -311,7 +318,7 @@ const ApiOptions = ({
 						defaultModelId="claude37"
 						models={routerModels?.["kilocode-openrouter"] ?? {}}
 						modelIdKey="kilocodeModel"
-						serviceName="Kilo SSY"
+						serviceName="Kilo Code"
 						serviceUrl="https://kilocode.ai"
 					/>
 
@@ -325,18 +332,19 @@ const ApiOptions = ({
 
 										vscode.postMessage({
 											type: "upsertApiConfiguration",
+											text: currentApiConfigName,
 											apiConfiguration: {
 												...apiConfiguration,
 												kilocodeToken: "",
 											},
 										})
 									}}>
-									Log out from Kilo Code
+									{t("kilocode:settings.provider.logout")}
 								</Button>
 							</div>
 						) : (
 							<VSCodeButtonLink variant="secondary" href={getKiloCodeBackendAuthUrl(uriScheme, uiKind)}>
-								Log in at Kilo Code
+								{t("kilocode:settings.provider.login")}
 							</VSCodeButtonLink>
 						))}
 				</>
@@ -473,11 +481,7 @@ const ApiOptions = ({
 			)}
 
 			{selectedProvider === "litellm" && (
-				<LiteLLM
-					apiConfiguration={apiConfiguration}
-					setApiConfigurationField={setApiConfigurationField}
-					routerModels={routerModels}
-				/>
+				<LiteLLM apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
 			)}
 
 			{selectedProvider === "human-relay" && (
@@ -544,22 +548,15 @@ const ApiOptions = ({
 						isDescriptionExpanded={isDescriptionExpanded}
 						setIsDescriptionExpanded={setIsDescriptionExpanded}
 					/>
-
-					<ThinkingBudget
-						key={`${selectedProvider}-${selectedModelId}`}
-						apiConfiguration={apiConfiguration}
-						setApiConfigurationField={setApiConfigurationField}
-						modelInfo={selectedModelInfo}
-					/>
 				</>
 			)}
 
-			{REASONING_MODELS.has(selectedModelId) && (
-				<ReasoningEffort
-					apiConfiguration={apiConfiguration}
-					setApiConfigurationField={setApiConfigurationField}
-				/>
-			)}
+			<ThinkingBudget
+				key={`${selectedProvider}-${selectedModelId}`}
+				apiConfiguration={apiConfiguration}
+				setApiConfigurationField={setApiConfigurationField}
+				modelInfo={selectedModelInfo}
+			/>
 
 			{!fromWelcomeView && (
 				<>
