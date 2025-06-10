@@ -12,7 +12,11 @@ try {
 	console.warn("Failed to load environment variables:", e)
 }
 
+import { CloudService } from "@roo-code/cloud"
+// import { TelemetryService, PostHogTelemetryClient } from "@roo-code/telemetry" kilocode_change
+
 import "./utils/path" // Necessary to have access to String.prototype.toPosix.
+import { createOutputChannelLogger, createDualLogger } from "./utils/outputChannelLogger"
 
 import { Package } from "./shared/package"
 import { formatLanguage } from "./shared/language"
@@ -56,6 +60,24 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	// Migrate old settings to new
 	await migrateSettings(context, outputChannel)
+
+	// Initialize telemetry service.
+	// const telemetryService = TelemetryService.createInstance()
+
+	try {
+		// telemetryService.register(new PostHogTelemetryClient())
+	} catch (error) {
+		console.warn("Failed to register PostHogTelemetryClient:", error)
+	}
+
+	// Create logger for cloud services
+	const cloudLogger = createDualLogger(createOutputChannelLogger(outputChannel))
+
+	// Initialize Roo Code Cloud service.
+	await CloudService.createInstance(context, {
+		stateChanged: () => ClineProvider.getVisibleInstance()?.postStateToWebview(),
+		log: cloudLogger,
+	})
 
 	// Initialize i18n for internationalization support
 	initializeI18n(context.globalState.get("language") ?? "en-US") // kilocode_change
@@ -162,18 +184,29 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	// Watch the core files and automatically reload the extension host.
 	if (process.env.NODE_ENV === "development") {
-		console.log(`♻️♻️♻️ Core auto-reloading is ENABLED! Watching for changes in ${context.extensionPath}/**/*.ts`)
+		const pattern = "**/*.ts"
 
-		const watcher = vscode.workspace.createFileSystemWatcher(
-			new vscode.RelativePattern(context.extensionPath, "**/*.ts"),
+		const watchPaths = [
+			{ path: context.extensionPath, name: "extension" },
+			{ path: path.join(context.extensionPath, "../packages/types"), name: "types" },
+			{ path: path.join(context.extensionPath, "../packages/telemetry"), name: "telemetry" },
+			{ path: path.join(context.extensionPath, "../packages/cloud"), name: "cloud" },
+		]
+
+		console.log(
+			`♻️♻️♻️ Core auto-reloading is ENABLED. Watching for changes in: ${watchPaths.map(({ name }) => name).join(", ")}`,
 		)
 
-		watcher.onDidChange((uri) => {
-			console.log(`♻️ File changed: ${uri.fsPath}. Reloading host…`)
-			vscode.commands.executeCommand("workbench.action.reloadWindow")
-		})
+		watchPaths.forEach(({ path: watchPath, name }) => {
+			const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(watchPath, pattern))
 
-		context.subscriptions.push(watcher)
+			watcher.onDidChange((uri) => {
+				console.log(`♻️ ${name} file changed: ${uri.fsPath}. Reloading host…`)
+				vscode.commands.executeCommand("workbench.action.reloadWindow")
+			})
+
+			context.subscriptions.push(watcher)
+		})
 	}
 
 	return new API(outputChannel, provider, socketPath, enableLogging)

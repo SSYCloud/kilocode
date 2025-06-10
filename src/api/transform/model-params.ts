@@ -1,18 +1,21 @@
-import type { ModelInfo, ProviderSettings } from "@roo-code/types"
+import { type ModelInfo, type ProviderSettings, ANTHROPIC_DEFAULT_MAX_TOKENS } from "@roo-code/types"
 
-import { ANTHROPIC_DEFAULT_MAX_TOKENS } from "../providers/constants"
 import { shouldUseReasoningBudget, shouldUseReasoningEffort } from "../../shared/api"
 
 import {
 	type AnthropicReasoningParams,
 	type OpenAiReasoningParams,
+	type GeminiReasoningParams,
 	type OpenRouterReasoningParams,
 	getAnthropicReasoning,
 	getOpenAiReasoning,
+	getGeminiReasoning,
 	getOpenRouterReasoning,
 } from "./reasoning"
 
-type GetModelParamsOptions<T extends "openai" | "anthropic" | "openrouter"> = {
+type Format = "anthropic" | "openai" | "gemini" | "openrouter"
+
+type GetModelParamsOptions<T extends Format> = {
 	format: T
 	modelId: string
 	model: ModelInfo
@@ -27,14 +30,19 @@ type BaseModelParams = {
 	reasoningBudget: number | undefined
 }
 
+type AnthropicModelParams = {
+	format: "anthropic"
+	reasoning: AnthropicReasoningParams | undefined
+} & BaseModelParams
+
 type OpenAiModelParams = {
 	format: "openai"
 	reasoning: OpenAiReasoningParams | undefined
 } & BaseModelParams
 
-type AnthropicModelParams = {
-	format: "anthropic"
-	reasoning: AnthropicReasoningParams | undefined
+type GeminiModelParams = {
+	format: "gemini"
+	reasoning: GeminiReasoningParams | undefined
 } & BaseModelParams
 
 type OpenRouterModelParams = {
@@ -42,11 +50,12 @@ type OpenRouterModelParams = {
 	reasoning: OpenRouterReasoningParams | undefined
 } & BaseModelParams
 
-export type ModelParams = OpenAiModelParams | AnthropicModelParams | OpenRouterModelParams
+export type ModelParams = AnthropicModelParams | OpenAiModelParams | GeminiModelParams | OpenRouterModelParams
 
 // Function overloads for specific return types
-export function getModelParams(options: GetModelParamsOptions<"openai">): OpenAiModelParams
 export function getModelParams(options: GetModelParamsOptions<"anthropic">): AnthropicModelParams
+export function getModelParams(options: GetModelParamsOptions<"openai">): OpenAiModelParams
+export function getModelParams(options: GetModelParamsOptions<"gemini">): GeminiModelParams
 export function getModelParams(options: GetModelParamsOptions<"openrouter">): OpenRouterModelParams
 export function getModelParams({
 	format,
@@ -54,7 +63,7 @@ export function getModelParams({
 	model,
 	settings,
 	defaultTemperature = 0,
-}: GetModelParamsOptions<"openai" | "anthropic" | "openrouter">): ModelParams {
+}: GetModelParamsOptions<Format>): ModelParams {
 	const {
 		modelMaxTokens: customMaxTokens,
 		modelMaxThinkingTokens: customMaxThinkingTokens,
@@ -121,6 +130,12 @@ export function getModelParams({
 			format,
 			...params,
 			reasoning: getOpenAiReasoning({ model, reasoningBudget, reasoningEffort, settings }),
+		}
+	} else if (format === "gemini") {
+		return {
+			format,
+			...params,
+			reasoning: getGeminiReasoning({ model, reasoningBudget, reasoningEffort, settings }),
 		}
 	} else {
 		// Special case for o1-pro, which doesn't support temperature.

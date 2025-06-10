@@ -5,7 +5,6 @@ import OpenAI from "openai"
 import {
 	ApiHandlerOptions,
 	ModelRecord,
-	OPEN_ROUTER_PROMPT_CACHING_MODELS,
 	shengSuanYunDefaultModelId,
 	shengSuanYunDefaultModelInfo,
 } from "../../shared/api"
@@ -17,7 +16,7 @@ import { addCacheBreakpoints as addAnthropicCacheBreakpoints } from "../transfor
 import { addCacheBreakpoints as addGeminiCacheBreakpoints } from "../transform/caching/gemini"
 
 import { SingleCompletionHandler } from "../index"
-import { DEFAULT_HEADERS, DEEP_SEEK_DEFAULT_TEMPERATURE } from "./constants"
+import { DEFAULT_HEADERS } from "./constants"
 import { getModelParams } from "../transform/model-params"
 
 import { BaseProvider } from "./base-provider"
@@ -83,16 +82,6 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 		// DeepSeek highly recommends using user instead of system role.
 		if (modelId.startsWith("deepseek/deepseek-r1") || modelId === "perplexity/sonar-reasoning") {
 			openAiMessages = convertToR1Format([{ role: "user", content: systemPrompt }, ...messages])
-		}
-
-		// https://openrouter.ai/docs/features/prompt-caching
-		// TODO: Add a `promptCacheStratey` field to `ModelInfo`.
-		if (OPEN_ROUTER_PROMPT_CACHING_MODELS.has(modelId)) {
-			if (modelId.startsWith("google")) {
-				addGeminiCacheBreakpoints(systemPrompt, openAiMessages)
-			} else {
-				addAnthropicCacheBreakpoints(systemPrompt, openAiMessages)
-			}
 		}
 
 		// https://shengSuanYun.ai/docs/transforms
@@ -165,7 +154,6 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 			modelId: id,
 			model: info,
 			settings: this.options,
-			defaultTemperature: isDeepSeekR1 ? DEEP_SEEK_DEFAULT_TEMPERATURE : 0,
 		})
 		return {
 			id,

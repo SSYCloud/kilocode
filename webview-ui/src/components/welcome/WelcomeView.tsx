@@ -28,7 +28,7 @@ const WelcomeView = () => {
 		[setApiConfiguration], // setApiConfiguration from context is stable
 	)
 
-	const handleSubmit = useCallback(() => {
+	const handleSubmit = () => {
 		const error = apiConfiguration ? validateApiConfiguration(apiConfiguration) : undefined
 
 		if (error) {
@@ -37,7 +37,7 @@ const WelcomeView = () => {
 		}
 		setErrorMessage(undefined)
 		vscode.postMessage({ type: "upsertApiConfiguration", text: currentApiConfigName, apiConfiguration })
-	}, [apiConfiguration, currentApiConfigName])
+	}
 
 	// Using a lazy initializer so it reads once at mount
 	const [imagesBaseUri] = useState(() => {

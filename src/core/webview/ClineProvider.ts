@@ -9,35 +9,38 @@ import axios from "axios"
 import pWaitFor from "p-wait-for"
 import * as vscode from "vscode"
 
-import type {
-	GlobalState,
-	ProviderName,
-	ProviderSettings,
-	RooCodeSettings,
-	ProviderSettingsEntry,
-	TelemetryProperties,
-	CodeActionId,
-	CodeActionName,
-	TerminalActionId,
-	TerminalActionPromptType,
-	HistoryItem,
-} from "@roo-code/types"
-
-import { t } from "../../i18n"
-import { setPanel } from "../../activate/registerCommands"
-import { Package } from "../../shared/package"
 import {
+	type GlobalState,
+	type ProviderName,
+	type ProviderSettings,
+	type RooCodeSettings,
+	type ProviderSettingsEntry,
+	type TelemetryProperties,
+	type TelemetryPropertiesProvider,
+	type CodeActionId,
+	type CodeActionName,
+	type TerminalActionId,
+	type TerminalActionPromptType,
+	type HistoryItem,
+	type CloudUserInfo,
 	requestyDefaultModelId,
 	openRouterDefaultModelId,
 	glamaDefaultModelId,
 	shengSuanYunDefaultModelId,
-} from "../../shared/api"
+	ORGANIZATION_ALLOW_ALL,
+} from "@roo-code/types"
+import { TelemetryService } from "@roo-code/telemetry"
+import { CloudService } from "@roo-code/cloud"
+
+import { t } from "../../i18n"
+import { setPanel } from "../../activate/registerCommands"
+import { Package } from "../../shared/package"
 import { findLast } from "../../shared/array"
 import { supportPrompt } from "../../shared/support-prompt"
 import { GlobalFileNames } from "../../shared/globalFileNames"
 import { ExtensionMessage } from "../../shared/ExtensionMessage"
 import { Mode, defaultModeSlug } from "../../shared/modes"
-import { experimentDefault } from "../../shared/experiments"
+import { experimentDefault, experiments, EXPERIMENT_IDS } from "../../shared/experiments"
 import { formatLanguage } from "../../shared/language"
 import { Terminal } from "../../integrations/terminal/Terminal"
 import { downloadTask } from "../../integrations/misc/export-markdown"
@@ -62,6 +65,7 @@ import { getWorkspacePath } from "../../utils/path"
 import { webviewMessageHandler } from "./webviewMessageHandler"
 import { WebviewMessage } from "../../shared/WebviewMessage"
 import { EMBEDDING_MODEL_PROFILES } from "../../shared/embeddingModels"
+import { ProfileValidator } from "../../shared/ProfileValidator"
 
 import { McpDownloadResponse, McpMarketplaceCatalog } from "../../shared/kilocode/mcp" //kilocode_change
 import { McpServer } from "../../shared/mcp" // kilocode_change
@@ -75,6 +79,12 @@ export type ClineProviderEvents = {
 	clineCreated: [cline: Task]
 }
 
+class OrganizationAllowListViolationError extends Error {
+	constructor(message: string) {
+		super(message)
+	}
+}
+
 export class ClineProvider extends EventEmitter<ClineProviderEvents> implements vscode.WebviewViewProvider {
 	// Used in package.json as the view's id. This value cannot be changed due
 	// to how VSCode caches views based on their id, and updating the id would
@@ -83,6 +93,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 	public static readonly tabPanelId = `${Package.name}.TabPanelProvider`
 	private static activeInstances: Set<ClineProvider> = new Set()
 	private disposables: vscode.Disposable[] = []
+	private webviewDisposables: vscode.Disposable[] = []
 	private view?: vscode.WebviewView | vscode.WebviewPanel
 	private clineStack: Task[] = []
 	private codeIndexStatusSubscription?: vscode.Disposable
@@ -94,7 +105,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 
 	public isViewLaunched = false
 	public settingsImportedAt?: number
-	public readonly latestAnnouncementId = "may-21-2025-3-18" // Update for v3.18.0 announcement
+	public readonly latestAnnouncementId = "may-29-2025-3-19" // Update for v3.19.0 announcement
 	public readonly providerSettingsManager: ProviderSettingsManager
 	public readonly customModesManager: CustomModesManager
 
@@ -215,6 +226,15 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 	- https://vscode-docs.readthedocs.io/en/stable/extensions/patterns-and-principles/
 	- https://github.com/microsoft/vscode-extension-samples/blob/main/webview-sample/src/extension.ts
 	*/
+	private clearWebviewResources() {
+		while (this.webviewDisposables.length) {
+			const x = this.webviewDisposables.pop()
+			if (x) {
+				x.dispose()
+			}
+		}
+	}
+
 	async dispose() {
 		this.log("Disposing ClineProvider...")
 		await this.removeClineFromStack()
@@ -224,6 +244,8 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			this.view.dispose()
 			this.log("Disposed webview")
 		}
+
+		this.clearWebviewResources()
 
 		while (this.disposables.length) {
 			const x = this.disposables.pop()
@@ -241,7 +263,6 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		this.log("Disposed all disposables")
 		ClineProvider.activeInstances.delete(this)
 
-		// Unregister from McpServerManager
 		McpServerManager.unregisterProvider(this)
 	}
 
@@ -325,7 +346,15 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			return
 		}
 
-		await visibleProvider.initClineWithTask(prompt)
+		try {
+			await visibleProvider.initClineWithTask(prompt)
+		} catch (error) {
+			if (error instanceof OrganizationAllowListViolationError) {
+				// Errors from terminal commands seem to get swallowed / ignored.
+				vscode.window.showErrorMessage(error.message)
+			}
+			throw error
+		}
 	}
 
 	async resolveWebviewView(webviewView: vscode.WebviewView | vscode.WebviewPanel) {
@@ -345,7 +374,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		}
 		// kilocode_change end
 
-		// Initialize out-of-scope variables that need to recieve persistent global state values
+		// Initialize out-of-scope variables that need to receive persistent global state values
 		this.getState().then(
 			({
 				terminalShellIntegrationTimeout = Terminal.defaultShellIntegrationTimeout,
@@ -390,7 +419,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 				: this.getHtmlContent(webviewView.webview)
 
 		// Sets up an event listener to listen for messages passed from the webview view context
-		// and executes code based on the message that is recieved
+		// and executes code based on the message that is received
 		this.setWebviewMessageListener(webviewView.webview)
 
 		// Subscribe to code index status updates if the manager exists
@@ -401,8 +430,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 					values: update,
 				})
 			})
-			// Add the subscription to the main disposables array
-			this.disposables.push(this.codeIndexStatusSubscription)
+			this.webviewDisposables.push(this.codeIndexStatusSubscription)
 		}
 
 		// Logs show up in bottom panel > Debug Console
@@ -413,56 +441,48 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		if ("onDidChangeViewState" in webviewView) {
 			// WebviewView and WebviewPanel have all the same properties except for this visibility listener
 			// panel
-			webviewView.onDidChangeViewState(
-				() => {
-					if (this.view?.visible) {
-						this.postMessageToWebview({ type: "action", action: "didBecomeVisible" })
-					}
-				},
-				null,
-				this.disposables,
-			)
+			const viewStateDisposable = webviewView.onDidChangeViewState(() => {
+				if (this.view?.visible) {
+					this.postMessageToWebview({ type: "action", action: "didBecomeVisible" })
+				}
+			})
+			this.webviewDisposables.push(viewStateDisposable)
 		} else if ("onDidChangeVisibility" in webviewView) {
 			// sidebar
-			webviewView.onDidChangeVisibility(
-				() => {
-					if (this.view?.visible) {
-						this.postMessageToWebview({ type: "action", action: "didBecomeVisible" })
-					}
-				},
-				null,
-				this.disposables,
-			)
+			const visibilityDisposable = webviewView.onDidChangeVisibility(() => {
+				if (this.view?.visible) {
+					this.postMessageToWebview({ type: "action", action: "didBecomeVisible" })
+				}
+			})
+			this.webviewDisposables.push(visibilityDisposable)
 		}
 
 		// Listen for when the view is disposed
 		// This happens when the user closes the view or when the view is closed programmatically
 		webviewView.onDidDispose(
 			async () => {
-				// kilocode_change start: only dispose in tab mode
 				if (inTabMode) {
-					this.log("Disposing ClineProvider because it was in tab mode.")
+					this.log("Disposing ClineProvider instance for tab view")
 					await this.dispose()
 				} else {
-					this.log("NOT disposing ClineProvider because it is in sidebar mode and can be reused.")
+					this.log("Clearing webview resources for sidebar view")
+					this.clearWebviewResources()
+					this.codeIndexStatusSubscription?.dispose()
+					this.codeIndexStatusSubscription = undefined
 				}
-				// kilocode_change end
 			},
 			null,
 			this.disposables,
 		)
 
 		// Listen for when color changes
-		vscode.workspace.onDidChangeConfiguration(
-			async (e) => {
-				if (e && e.affectsConfiguration("workbench.colorTheme")) {
-					// Sends latest theme name to webview
-					await this.postMessageToWebview({ type: "theme", text: JSON.stringify(await getTheme()) })
-				}
-			},
-			null,
-			this.disposables,
-		)
+		const configDisposable = vscode.workspace.onDidChangeConfiguration(async (e) => {
+			if (e && e.affectsConfiguration("workbench.colorTheme")) {
+				// Sends latest theme name to webview
+				await this.postMessageToWebview({ type: "theme", text: JSON.stringify(await getTheme()) })
+			}
+		})
+		this.webviewDisposables.push(configDisposable)
 
 		// If the extension is starting a new session, clear previous task state.
 		await this.removeClineFromStack()
@@ -475,7 +495,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 	}
 
 	// When initializing a new task, (not from history but from a tool command
-	// new_task) there is no need to remove the previouse task since the new
+	// new_task) there is no need to remove the previous task since the new
 	// task is a subtask of the previous one, and when it finishes it is removed
 	// from the stack and the caller is resumed in this way we can have a chain
 	// of tasks, each one being a sub task of the previous one until the main
@@ -493,11 +513,16 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 	) {
 		const {
 			apiConfiguration,
+			organizationAllowList,
 			diffEnabled: enableDiff,
 			enableCheckpoints,
 			fuzzyMatchThreshold,
 			experiments,
 		} = await this.getState()
+
+		if (!ProfileValidator.isProfileAllowed(apiConfiguration, organizationAllowList)) {
+			throw new OrganizationAllowListViolationError(t("common:errors.violated_organization_allowlist"))
+		}
 
 		const cline = new Task({
 			context: this.context, // kilocode_change
@@ -629,7 +654,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			"default-src 'none'",
 			`font-src ${webview.cspSource}`,
 			`style-src ${webview.cspSource} 'unsafe-inline' https://* http://${localServerUrl} http://0.0.0.0:${localPort}`,
-			`img-src ${webview.cspSource} data: https://*.googleusercontent.com https://*.googleapis.com`, // kilocode_change: add https://*.googleusercontent.com and https://*.googleapis.com
+			`img-src ${webview.cspSource} https://storage.googleapis.com https://img.clerk.com data: https://*.googleusercontent.com https://*.googleapis.com`, // kilocode_change: add https://*.googleusercontent.com and https://*.googleapis.com
 			`media-src ${webview.cspSource}`,
 			`script-src 'unsafe-eval' ${webview.cspSource} https://* https://*.posthog.com http://${localServerUrl} http://0.0.0.0:${localPort} 'nonce-${nonce}'`,
 			`connect-src ${webview.cspSource} https://* https://*.posthog.com ws://${localServerUrl} ws://0.0.0.0:${localPort} http://${localServerUrl} http://0.0.0.0:${localPort}`,
@@ -697,7 +722,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		/*
 		content security policy of your webview to only allow scripts that have a specific nonce
 		create a content security policy meta tag so that only loading scripts with a nonce is allowed
-		As your extension grows you will likely want to add custom styles, fonts, and/or images to your webview. If you do, you will need to update the content security policy meta tag to explicity allow for these resources. E.g.
+		As your extension grows you will likely want to add custom styles, fonts, and/or images to your webview. If you do, you will need to update the content security policy meta tag to explicitly allow for these resources. E.g.
 				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; font-src ${webview.cspSource}; img-src ${webview.cspSource} https:; script-src 'nonce-${nonce}';">
 		- 'unsafe-inline' is required for styles due to vscode-webview-toolkit's dynamic style injection
 		- since we pass base64 images to the webview, we need to specify img-src ${webview.cspSource} data:;
@@ -715,7 +740,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
             <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
             <meta name="theme-color" content="#000000">
 			<!-- kilocode_change: add https://*.googleusercontent.com https://*.googleapis.com to img-src -->
-            <meta http-equiv="Content-Security-Policy" content="default-src 'none'; font-src ${webview.cspSource}; style-src ${webview.cspSource} 'unsafe-inline'; img-src ${webview.cspSource} https://*.googleusercontent.com data: https://*.googleapis.com; media-src ${webview.cspSource}; script-src ${webview.cspSource} 'wasm-unsafe-eval' 'nonce-${nonce}' https://us-assets.i.posthog.com 'strict-dynamic'; connect-src ${webview.cspSource} https://*.shengsuanyun.com https://openrouter.ai https://api.requesty.ai https://us.i.posthog.com https://us-assets.i.posthog.com;">
+            <meta http-equiv="Content-Security-Policy" content="default-src 'none'; font-src ${webview.cspSource}; style-src ${webview.cspSource} 'unsafe-inline'; img-src ${webview.cspSource} https://*.googleusercontent.com https://storage.googleapis.com https://img.clerk.com data: https://*.googleapis.com; media-src ${webview.cspSource}; script-src ${webview.cspSource} 'wasm-unsafe-eval' 'nonce-${nonce}' https://us-assets.i.posthog.com 'strict-dynamic'; connect-src ${webview.cspSource} https://*.shengsuanyun.com https://openrouter.ai https://api.requesty.ai https://us.i.posthog.com https://us-assets.i.posthog.com;">
             <link rel="stylesheet" type="text/css" href="${stylesUri}">
 			<link href="${codiconsUri}" rel="stylesheet" />
 			<script nonce="${nonce}">
@@ -736,14 +761,15 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 
 	/**
 	 * Sets up an event listener to listen for messages passed from the webview context and
-	 * executes code based on the message that is recieved.
+	 * executes code based on the message that is received.
 	 *
 	 * @param webview A reference to the extension webview
 	 */
 	private setWebviewMessageListener(webview: vscode.Webview) {
 		const onReceiveMessage = async (message: WebviewMessage) => webviewMessageHandler(this, message)
 
-		webview.onDidReceiveMessage(onReceiveMessage, null, this.disposables)
+		const messageDisposable = webview.onDidReceiveMessage(onReceiveMessage)
+		this.webviewDisposables.push(messageDisposable)
 	}
 
 	/**
@@ -1273,6 +1299,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			alwaysAllowModeSwitch,
 			alwaysAllowSubtasks,
 			allowedMaxRequests,
+			autoCondenseContext,
 			autoCondenseContextPercent,
 			soundEnabled,
 			ttsEnabled,
@@ -1320,6 +1347,10 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			maxReadFileLine,
 			terminalCompressProgressBar,
 			historyPreviewCollapsed,
+			cloudUserInfo,
+			cloudIsAuthenticated,
+			organizationAllowList,
+			maxConcurrentFileReads,
 			condensingApiConfigId,
 			customCondensingPrompt,
 			codebaseIndexConfig,
@@ -1356,6 +1387,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			alwaysAllowModeSwitch: alwaysAllowModeSwitch ?? true,
 			alwaysAllowSubtasks: alwaysAllowSubtasks ?? true,
 			allowedMaxRequests,
+			autoCondenseContext: autoCondenseContext ?? true,
 			autoCondenseContextPercent: autoCondenseContextPercent ?? 100,
 			uriScheme: vscode.env.uriScheme,
 			uiKind: vscode.UIKind[vscode.env.uiKind], // kilocode_change
@@ -1415,11 +1447,15 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			language, // kilocode_change
 			renderContext: this.renderContext,
 			maxReadFileLine: maxReadFileLine ?? -1,
+			maxConcurrentFileReads: maxConcurrentFileReads ?? 15,
 			settingsImportedAt: this.settingsImportedAt,
 			terminalCompressProgressBar: terminalCompressProgressBar ?? true,
 			hasSystemPromptOverride,
 			historyPreviewCollapsed: historyPreviewCollapsed ?? false,
 			workflowToggles, // kilocode_change
+			cloudUserInfo,
+			cloudIsAuthenticated: cloudIsAuthenticated ?? false,
+			organizationAllowList,
 			condensingApiConfigId,
 			customCondensingPrompt,
 			codebaseIndexModels: codebaseIndexModels ?? EMBEDDING_MODEL_PROFILES,
@@ -1454,6 +1490,36 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			providerSettings.apiProvider = apiProvider
 		}
 
+		let organizationAllowList = ORGANIZATION_ALLOW_ALL
+
+		try {
+			organizationAllowList = await CloudService.instance.getAllowList()
+		} catch (error) {
+			console.error(
+				`[getState] failed to get organization allow list: ${error instanceof Error ? error.message : String(error)}`,
+			)
+		}
+
+		let cloudUserInfo: CloudUserInfo | null = null
+
+		try {
+			cloudUserInfo = CloudService.instance.getUserInfo()
+		} catch (error) {
+			console.error(
+				`[getState] failed to get cloud user info: ${error instanceof Error ? error.message : String(error)}`,
+			)
+		}
+
+		let cloudIsAuthenticated: boolean = false
+
+		try {
+			cloudIsAuthenticated = CloudService.instance.isAuthenticated()
+		} catch (error) {
+			console.error(
+				`[getState] failed to get cloud authentication state: ${error instanceof Error ? error.message : String(error)}`,
+			)
+		}
+
 		// Return the same structure as before
 		return {
 			apiConfiguration: providerSettings,
@@ -1470,6 +1536,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			alwaysAllowModeSwitch: stateValues.alwaysAllowModeSwitch ?? true,
 			alwaysAllowSubtasks: stateValues.alwaysAllowSubtasks ?? true,
 			allowedMaxRequests: stateValues.allowedMaxRequests,
+			autoCondenseContext: stateValues.autoCondenseContext ?? true,
 			autoCondenseContextPercent: stateValues.autoCondenseContextPercent ?? 100,
 			taskHistory: stateValues.taskHistory,
 			allowedCommands: stateValues.allowedCommands,
@@ -1520,7 +1587,16 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			showRooIgnoredFiles: stateValues.showRooIgnoredFiles ?? true,
 			showAutoApproveMenu: stateValues.showAutoApproveMenu ?? false, // kilocode_change
 			maxReadFileLine: stateValues.maxReadFileLine ?? -1,
+			maxConcurrentFileReads: experiments.isEnabled(
+				stateValues.experiments ?? experimentDefault,
+				EXPERIMENT_IDS.CONCURRENT_FILE_READS,
+			)
+				? (stateValues.maxConcurrentFileReads ?? 15)
+				: 1,
 			historyPreviewCollapsed: stateValues.historyPreviewCollapsed ?? false,
+			cloudUserInfo,
+			cloudIsAuthenticated,
+			organizationAllowList,
 			// Explicitly add condensing settings
 			condensingApiConfigId: stateValues.condensingApiConfigId,
 			customCondensingPrompt: stateValues.customCondensingPrompt,

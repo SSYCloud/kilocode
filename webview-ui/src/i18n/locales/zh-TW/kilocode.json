@@ -1,13 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Kilo Code 中文版可以為你做什麼？",
+		"greeting": "Kilo Code AI Agent-中文版可以為你做什麼？",
 		"introText": "我已經在最快的 AI 模型上受過訓練，準備以極快的速度為你產生程式碼！",
 		"ctaButton": "註冊勝算雲API KEY",
 		"manualModeButton": "使用你自己的 API 金鑰"
 	},
 	"lowCreditWarning": {
 		"addCredit": "添加額度",
-		"lowBalance": "你的 Kilo Code 中文版餘額不足"
+		"lowBalance": "你的Kilo Code AI Agent-中文版餘額不足"
 	},
 	"notifications": {
 		"toolRequest": "工具請求等待核准",
@@ -19,9 +19,9 @@
 			"mcp": "MCP 伺服器"
 		},
 		"provider": {
-			"apiKey": "Kilo Code API 金鑰",
-			"login": "登入 Kilo Code",
-			"logout": "登出 Kilo Code"
+			"apiKey": "勝算雲金鑰",
+			"login": "登入勝算雲",
+			"logout": "登出勝算雲"
 		}
 	},
 	"chat": {
@@ -34,13 +34,14 @@
 		"task": "任務"
 	},
 	"profile": {
+		"title": "個人檔案",
 		"dashboard": "儀表板",
 		"logOut": "登出",
 		"currentBalance": "目前餘額",
 		"loading": "載入中...",
 		"signUp": {
-			"title": "註冊 Kilo Code",
-			"description": "註冊 Kilo Code 可獲得免費積分開始使用。使用你的積分探索我們的功能，試用最新最好的模型，無需承諾即可體驗 Kilo Code 的優勢。",
+			"title": "註冊勝算雲",
+			"description": "註冊勝算雲可獲得免費積分開始使用。使用你的積分探索我們的功能，試用最新最好的模型，無需承諾即可體驗 Kilo Code 的優勢。",
 			"termsAndPrivacy": "繼續即表示你同意<termsLink>服務條款</termsLink>和<privacyLink>隱私政策</privacyLink>。"
 		}
 	}

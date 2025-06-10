@@ -6,6 +6,8 @@ import type {
 	ModeConfig,
 	ExperimentId,
 	ClineMessage,
+	OrganizationAllowList,
+	CloudUserInfo,
 } from "@roo-code/types"
 
 import { GitCommit } from "../utils/git"
@@ -34,7 +36,7 @@ export interface ExtensionMessage {
 		| "theme"
 		| "workspaceUpdated"
 		| "invoke"
-		| "partialMessage"
+		| "messageUpdated"
 		| "mcpServers"
 		| "enhancedPrompt"
 		| "commitSearchResults"
@@ -73,6 +75,7 @@ export interface ExtensionMessage {
 		| "vsCodeSetting"
 		| "profileDataResponse" // kilocode_change
 		| "balanceDataResponse" // kilocode_change
+		| "authenticatedUser"
 		| "condenseTaskContextResponse"
 		| "singleRouterModelFetchResponse"
 		| "indexingStatusUpdate"
@@ -84,7 +87,8 @@ export interface ExtensionMessage {
 		| "settingsButtonClicked"
 		| "historyButtonClicked"
 		| "promptsButtonClicked"
-		| "profileButtonClicked"
+		| "profileButtonClicked" // kilocode_change
+		| "accountButtonClicked"
 		| "didBecomeVisible"
 		| "focusChatInput" // kilocode_change
 	invoke?: "newChat" | "sendMessage" | "primaryButtonClick" | "secondaryButtonClick" | "setChatBoxMessage"
@@ -96,7 +100,7 @@ export interface ExtensionMessage {
 		isActive: boolean
 		path?: string
 	}>
-	partialMessage?: ClineMessage
+	clineMessage?: ClineMessage
 	routerModels?: RouterModels
 	openAiModels?: string[]
 	ollamaModels?: string[]
@@ -124,7 +128,9 @@ export interface ExtensionMessage {
 	url?: string // kilocode_change
 	setting?: string
 	value?: any
-	payload?: ProfileDataResponsePayload | BalanceDataResponsePayload // New: Add payload for profile and balance data
+	payload?: ProfileDataResponsePayload | BalanceDataResponsePayload // kilocode_change: Add payload for profile and balance data
+	userInfo?: CloudUserInfo
+	organizationAllowList?: OrganizationAllowList
 }
 
 export type ExtensionState = Pick<
@@ -165,6 +171,7 @@ export type ExtensionState = Pick<
 	// | "maxWorkspaceFiles" // Optional in GlobalSettings, required here.
 	// | "showRooIgnoredFiles" // Optional in GlobalSettings, required here.
 	// | "maxReadFileLine" // Optional in GlobalSettings, required here.
+	| "maxConcurrentFileReads" // Optional in GlobalSettings, required here.
 	| "terminalOutputLineLimit"
 	| "terminalShellIntegrationTimeout"
 	| "terminalShellIntegrationDisabled"
@@ -228,6 +235,12 @@ export type ExtensionState = Pick<
 	renderContext: "sidebar" | "editor"
 	settingsImportedAt?: number
 	historyPreviewCollapsed?: boolean
+
+	cloudUserInfo: CloudUserInfo | null
+	cloudIsAuthenticated: boolean
+	organizationAllowList: OrganizationAllowList
+
+	autoCondenseContext: boolean
 	autoCondenseContextPercent: number
 }
 
@@ -256,6 +269,7 @@ export interface ClineSayTool {
 	mode?: string
 	reason?: string
 	isOutsideWorkspace?: boolean
+	additionalFileCount?: number // Number of additional files in the same read_file request
 	search?: string
 	replace?: string
 	useRegex?: boolean
@@ -264,6 +278,13 @@ export interface ClineSayTool {
 	endLine?: number
 	lineNumber?: number
 	query?: string
+	batchFiles?: Array<{
+		path: string
+		lineSnippet: string
+		isOutsideWorkspace?: boolean
+		key: string
+	}>
+	question?: string
 }
 
 // Must keep in sync with system prompt.

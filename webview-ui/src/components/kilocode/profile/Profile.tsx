@@ -8,6 +8,7 @@ import { VSCodeButtonLink } from "@/components/common/VSCodeButtonLink"
 import { VSCodeButton, VSCodeDivider, VSCodeLink } from "@vscode/webview-ui-toolkit/react"
 import { useExtensionState } from "@/context/ExtensionStateContext"
 import { useAppTranslation } from "@/i18n/TranslationContext"
+import Logo from "../common/Logo"
 
 interface ProfileProps {
 	onDone: () => void
@@ -64,18 +65,13 @@ const Profile: React.FC<ProfileProps> = ({ onDone: _onDone }) => {
 	const userName = profileData?.Username || profileData?.Nickname || null
 	return (
 		<div className="h-full flex flex-col">
+			<div className="w-full flex justify-center">
+				<Logo />
+			</div>
 			{profileData ? (
 				<div className="flex flex-col pr-3 h-full">
 					<div className="flex flex-col w-full">
 						<div className="flex items-center mb-6 flex-wrap gap-y-4">
-							{profileData.HeadImg ? (
-								<img src={profileData.HeadImg} alt="Profile" className="size-16 rounded-full mr-4" />
-							) : (
-								<div className="size-16 rounded-full bg-[var(--vscode-button-background)] flex items-center justify-center text-3xl text-[var(--vscode-button-foreground)] mr-4">
-									{userName?.[0] || "?"}
-								</div>
-							)}
-
 							<div className="flex flex-col">
 								{userName && (
 									<h2 className="text-[var(--vscode-foreground)] m-0 mb-1 text-lg font-medium">

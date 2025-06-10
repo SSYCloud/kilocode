@@ -12,7 +12,7 @@
   <a href="https://www.reddit.com/r/kilocode/"><img src="https://img.shields.io/reddit/subreddit-subscribers/kilocode?style=flat&logo=reddit&logoColor=white" alt="Reddit"></a>
 </p>
 
-# 🚀 Kilo-中文版
+# 🚀 Kilo Code AI Agent-中文版 (Cline / Roo features combined)
 
 ## 🔥独家专属折扣模型价格【2折】⬇️ 活动限时【6.1-6.15】开发者日活动来了<br>
 
@@ -40,7 +40,7 @@
 以上模型需要手动修改模型值，对您造成的麻烦请多见谅。 <br>
 
 
-##  Kilo-中文版核心优势
+##  Kilo Code AI Agent-中文版核心优势
 ✅ **中文代码生成精准度提升200%**
 
 ✅ **零门槛接入，国内直连无需魔法**
@@ -86,11 +86,11 @@ APIRouter进群交流<br>（如果无法加群，请加企业微信客服）<br>
 
 - [VS Code 应用商店](https://marketplace.visualstudio.com/items?itemName=shengsuan-cloud.cline-shengsuan) (下载)
 - [胜算云Router 官方主页](https://router.shengsuanyun.com/) (了解更多)
-- 
+
 
 ## 背景
 
-Cline 中文版 开发初衷<br>
+Kilo Code AI Agent-中文版 开发初衷<br>
 我们推出 Cline 中文版，旨在为国内开发者提供更便捷、高效的 AI 接入体验。在并行 Cline 主线功能开发的同时，「胜算云 Router」特别开放独家专属模型折扣，全面支持国内用户免魔法接入，实现真正的即用即连。<br>
 
 「胜算云 Router」致力于成为国内 AI 开发者首选工具，让每一个创意都能高效落地，真正实现 开发有胜算，落地有保障。<br>
@@ -127,9 +127,9 @@ APIRouter进群交流<br>（如果无法加群，请加企业微信客服）<br>
 企业客服咨询<br>
   <img src="https://github.com/user-attachments/assets/c180b033-d62c-4dc0-9c2a-a3ad8c70e5a4" alt="企业微信客服" width="250" />
 </div>
-## 如何开始使用 Kilo SSY
+## 如何开始使用Kilo Code AI Agent-中文版
 
-1.  从 [VS Code 应用商店](https://marketplace.visualstudio.com/items?itemName=shengsuan-cloud.kilo-ssy) 安装 Kilo SSY 扩展。
+1.  从 [VS Code 应用商店](https://marketplace.visualstudio.com/items?itemName=shengsuan-cloud.kilo-ssy) 安装Kilo Code AI Agent-中文版扩展。
 2.  使用您的 微信 或 移动手机账号登录，即可享受Gemini 2.5 Pro、Gemini 2.5 Flash Preview 05-20 半价！！以及分享反馈可赢取更多额度！
 3.  开始使用扩展。这里有一个入门视频（点击下方图片即可跳转到 BiliBili）：
 
@@ -137,11 +137,11 @@ APIRouter进群交流<br>（如果无法加群，请加企业微信客服）<br>
 
 ## Roo Code 和 Cline 的区别
 
-我们正在尽最大努力结合两者的优点。Kilo SSY 结合了 Cline 和 Roo 的所有功能，并添加了一些我们自己的功能。它拥有两者的最佳特性，并且我们正在努力使其变得更好！
+我们正在尽最大努力结合两者的优点。Kilo Code AI Agent-中文版结合了 Cline 和 Roo 的所有功能，并添加了一些我们自己的功能。它拥有两者的最佳特性，并且我们正在努力使其变得更好！
 
-无需费心处理 API 密钥，Kilo SSY 内置了最新的 AI 模型，包括 Claude 3.7 Sonnet 和 Gemini 2.5 Pro。
+无需费心处理 API 密钥，Kilo Code AI Agent-中文版内置了最新的 AI 模型，包括 Claude 3.7 Sonnet 和 Gemini 2.5 Pro。
 
-Kilo SSY 是 Roo Code 的直接分支，但也包含了 Cline 的以下功能（以及更多）：
+Kilo Code AI Agent-中文版是 Roo Code 的直接分支，但也包含了 Cline 的以下功能（以及更多）：
 
 - MCP 服务器市场：轻松查找和使用 MCP 服务器以扩展代理功能。
 - 系统通知：当代理完成任务时收到通知。

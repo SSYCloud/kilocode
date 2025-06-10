@@ -2,7 +2,7 @@ import { useCallback, useState } from "react"
 import { VSCodeTextField } from "@vscode/webview-ui-toolkit/react"
 
 import { RouterModels, shengSuanYunDefaultModelId } from "@roo/api"
-import type { ProviderSettings } from "@roo-code/types"
+import type { ProviderSettings, OrganizationAllowList } from "@roo-code/types"
 
 import { vscode } from "@src/utils/vscode"
 import { useAppTranslation } from "@src/i18n/TranslationContext"
@@ -18,6 +18,7 @@ type ShengSuanYunProps = {
 	setApiConfigurationField: (field: keyof ProviderSettings, value: ProviderSettings[keyof ProviderSettings]) => void
 	routerModels?: RouterModels
 	refetchRouterModels: () => void
+	organizationAllowList: OrganizationAllowList
 }
 
 export const ShengSuanYun = ({
@@ -25,6 +26,7 @@ export const ShengSuanYun = ({
 	setApiConfigurationField,
 	routerModels,
 	refetchRouterModels,
+	organizationAllowList,
 }: ShengSuanYunProps) => {
 	const { t } = useAppTranslation()
 
@@ -92,6 +94,7 @@ export const ShengSuanYun = ({
 				modelIdKey="shengSuanYunModelId"
 				serviceName="ShengSuanYun"
 				serviceUrl="https://router.shengsuanyun.com/"
+				organizationAllowList={organizationAllowList}
 			/>
 		</>
 	)

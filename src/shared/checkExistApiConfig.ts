@@ -2,11 +2,13 @@ import { SECRET_STATE_KEYS, ProviderSettings } from "@roo-code/types"
 
 export function checkExistKey(config: ProviderSettings | undefined) {
 	if (!config) {
+		console.log("checkExistKey isExist ProviderSettings", config)
 		return false
 	}
 
 	// Special case for human-relay and fake-ai providers which don't need any configuration.
 	if (config.apiProvider === "human-relay" || config.apiProvider === "fake-ai") {
+		console.log("checkExistKey isExist apiProvider", true)
 		return true
 	}
 
@@ -22,6 +24,6 @@ export function checkExistKey(config: ProviderSettings | undefined) {
 		config.vsCodeLmModelSelector,
 		config.kilocodeModel, // kilocode_change
 	].some((value) => value !== undefined)
-
+	console.log("checkExistKey isExist hasSecretKey||hasOtherConfig", hasSecretKey || hasOtherConfig)
 	return hasSecretKey || hasOtherConfig
 }

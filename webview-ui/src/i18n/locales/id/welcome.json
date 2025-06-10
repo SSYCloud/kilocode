@@ -1,6 +1,6 @@
 {
-	"greeting": "Hai, saya Kilo Code!",
-	"introduction": "<strong>Kilo Code adalah agen coding otonom terdepan.</strong> Bersiaplah untuk merancang, coding, debug, dan meningkatkan produktivitas seperti yang belum pernah kamu lihat sebelumnya. Untuk melanjutkan, Kilo Code memerlukan API key.",
+	"greeting": "Hai, saya Code AI Agent-Chinese (Cline / Roo features combined)!",
+	"introduction": "<strong>Code AI Agent-Chinese  adalah agen coding otonom terdepan.</strong> Bersiaplah untuk merancang, coding, debug, dan meningkatkan produktivitas seperti yang belum pernah kamu lihat sebelumnya. Untuk melanjutkan, Code AI Agent-Chinese memerlukan API key.",
 	"notice": "Untuk memulai, ekstensi ini memerlukan provider API.",
 	"start": "Ayo mulai!",
 	"chooseProvider": "Pilih provider API untuk memulai:",
@@ -16,7 +16,7 @@
 	"startRouter": "Setup Ekspres Melalui Router",
 	"startCustom": "Bawa API Key Sendiri",
 	"telemetry": {
-		"title": "Bantu Tingkatkan Kilo Code",
+		"title": "Bantu Tingkatkan Code AI Agent-Chinese",
 		"anonymousTelemetry": "Kirim data error dan penggunaan anonim untuk membantu kami memperbaiki bug dan meningkatkan ekstensi. Tidak ada kode, prompt, atau informasi pribadi yang pernah dikirim.",
 		"changeSettings": "Kamu selalu bisa mengubah ini di bagian bawah <settingsLink>pengaturan</settingsLink>",
 		"settings": "pengaturan",
