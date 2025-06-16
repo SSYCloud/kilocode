@@ -84,7 +84,6 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 			openAiMessages = convertToR1Format([{ role: "user", content: systemPrompt }, ...messages])
 		}
 
-		// https://shengSuanYun.ai/docs/transforms
 		const completionParams: ShengSuanYunChatCompletionParams = {
 			model: modelId,
 			...(maxTokens && maxTokens > 0 && { max_tokens: maxTokens }),
@@ -99,7 +98,6 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 		}
 		let stream
 		stream = await this.client.chat.completions.create(completionParams)
-
 		let lastUsage: CompletionUsage | undefined = undefined
 
 		try {

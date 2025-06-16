@@ -5,7 +5,6 @@
 	"type": "module",
 	"exports": "./src/index.ts",
 	"scripts": {
-		"lint": "eslint \"src/**/*.{ts,tsx}\" --max-warnings=0",
 		"check-types": "tsc --noEmit",
 		"_test": "dotenvx run -f .env.test -- vitest run",
 		"clean": "rimraf dist .turbo",
