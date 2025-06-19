@@ -44,5 +44,36 @@
 			"description": "Aanmelden bij Kilo Code geeft u gratis credits om te beginnen. Gebruik uw credits om onze functies te verkennen, de nieuwste en beste modellen uit te proberen, en de voordelen van Kilo Code te ervaren zonder verplichtingen.",
 			"termsAndPrivacy": "Door verder te gaan, gaat u akkoord met de <termsLink>Servicevoorwaarden</termsLink> en het <privacyLink>Privacybeleid.</privacyLink>"
 		}
+	},
+	"docs": "Documentatie",
+	"rules": {
+		"tooltip": "Beheer Kilo Code Regels & Workflows",
+		"ariaLabel": "Kilo Code Regels",
+		"tabs": {
+			"rules": "Regels",
+			"workflows": "Workflows"
+		},
+		"description": {
+			"rules": "Regels stellen je in staat om Kilo Code instructies te geven die het moet volgen in alle modi en voor alle prompts. Ze zijn een persistente manier om context en voorkeuren op te nemen voor alle gesprekken in je workspace of globaal.",
+			"workflows": "Workflows zijn een voorbereid sjabloon voor een gesprek. Workflows stellen je in staat om prompts te definiëren die je vaak gebruikt, en kunnen een reeks stappen bevatten om Kilo Code te begeleiden door repetitieve taken, zoals het implementeren van een service of het indienen van een PR. Om een workflow aan te roepen, typ",
+			"workflowsInChat": "in de chat."
+		},
+		"sections": {
+			"globalRules": "Globale Regels",
+			"workspaceRules": "Werkruimte Regels",
+			"globalWorkflows": "Globale Workflows",
+			"workspaceWorkflows": "Werkruimte Workflows"
+		},
+		"validation": {
+			"invalidFileExtension": "Alleen .md, .txt of geen bestandsextensie toegestaan"
+		},
+		"placeholders": {
+			"workflowName": "workflow-naam (.md, .txt of geen extensie)",
+			"ruleName": "regel-naam (.md, .txt of geen extensie)"
+		},
+		"newFile": {
+			"newWorkflowFile": "Nieuw workflow bestand...",
+			"newRuleFile": "Nieuw regel bestand..."
+		}
 	}
 }

@@ -97,9 +97,14 @@ ${getRulesSection(cwd, supportsComputerUse, effectiveDiffStrategy, codeIndexMana
 
 ${getSystemInfoSection(cwd)}
 
-${getObjectiveSection(codeIndexManager)}
+${getObjectiveSection(codeIndexManager, experiments)}
 
-${await addCustomInstructions(baseInstructions, globalCustomInstructions || "", cwd, mode, { language: language ?? formatLanguage(vscode.env.language), rooIgnoreInstructions })}`
+${await addCustomInstructions(baseInstructions, globalCustomInstructions || "", cwd, mode, {
+	language: language ?? formatLanguage(vscode.env.language),
+	rooIgnoreInstructions,
+	localRulesToggleState: context.workspaceState.get("localRulesToggles"), // kilocode_change
+	globalRulesToggleState: context.globalState.get("globalRulesToggles"), // kilocode_change
+})}`
 
 	return basePrompt
 }

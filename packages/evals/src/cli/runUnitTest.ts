@@ -3,12 +3,14 @@ import * as path from "path"
 import { execa, parseCommandString } from "execa"
 import psTree from "ps-tree"
 
-import { type Task } from "../db/index.js"
-import { type ExerciseLanguage, exercisesPath } from "../exercises/index.js"
+import type { Task } from "../db/index.js"
+import { type ExerciseLanguage, EVALS_REPO_PATH } from "../exercises/index.js"
+
+import { Logger } from "./utils.js"
 
 const UNIT_TEST_TIMEOUT = 2 * 60 * 1_000
 
-const testCommands: Record<ExerciseLanguage, { commands: string[]; timeout?: number; cwd?: string }> = {
+const testCommands: Record<ExerciseLanguage, { commands: string[]; timeout?: number }> = {
 	go: { commands: ["go test"] },
 	java: { commands: ["./gradlew test"] },
 	javascript: { commands: ["pnpm install", "pnpm test"] },
@@ -16,18 +18,24 @@ const testCommands: Record<ExerciseLanguage, { commands: string[]; timeout?: num
 	rust: { commands: ["cargo test"] },
 }
 
-export const runUnitTest = async ({ task }: { task: Task }) => {
+type RunUnitTestOptions = {
+	task: Task
+	logger: Logger
+}
+
+export const runUnitTest = async ({ task, logger }: RunUnitTestOptions) => {
 	const cmd = testCommands[task.language]
-	const exercisePath = path.resolve(exercisesPath, task.language, task.exercise)
-	const cwd = cmd.cwd ? path.resolve(exercisePath, cmd.cwd) : exercisePath
+	const cwd = path.resolve(EVALS_REPO_PATH, task.language, task.exercise)
 	const commands = cmd.commands.map((cs) => parseCommandString(cs))
-	const tag = `cli#runUnitTest | ${task.language} / ${task.exercise}`
 
 	let passed = true
 
 	for (const command of commands) {
 		try {
-			const subprocess = execa({ cwd, shell: true, reject: false })`${command}`
+			logger.info(`running "${command.join(" ")}"`)
+			const subprocess = execa({ cwd, shell: "/bin/bash", reject: false })`${command}`
+			subprocess.stdout.pipe(process.stdout)
+			subprocess.stderr.pipe(process.stderr)
 
 			const timeout = setTimeout(async () => {
 				const descendants = await new Promise<number[]>((resolve, reject) => {
@@ -40,28 +48,27 @@ export const runUnitTest = async ({ task }: { task: Task }) => {
 					})
 				})
 
-				console.log(
-					`${Date.now()} [${tag}] "${command.join(" ")}": unit tests timed out, killing ${subprocess.pid} + ${JSON.stringify(descendants)}`,
+				logger.info(
+					`"${command.join(" ")}" timed out, killing ${subprocess.pid} + ${JSON.stringify(descendants)}`,
 				)
 
 				if (descendants.length > 0) {
 					for (const descendant of descendants) {
 						try {
-							console.log(`${Date.now()} [${tag}] killing ${descendant}`)
-
+							logger.info(`killing descendant process ${descendant}`)
 							await execa`kill -9 ${descendant}`
 						} catch (error) {
-							console.error(`${Date.now()} [${tag}] Error killing descendant processes:`, error)
+							logger.error(`failed to kill descendant process ${descendant}:`, error)
 						}
 					}
 				}
 
-				console.log(`${Date.now()} [${tag}] killing ${subprocess.pid}`)
+				logger.info(`killing main process ${subprocess.pid}`)
 
 				try {
 					await execa`kill -9 ${subprocess.pid!}`
 				} catch (error) {
-					console.error(`${Date.now()} [${tag}] Error killing process:`, error)
+					logger.error(`failed to kill main process ${subprocess.pid}:`, error)
 				}
 			}, UNIT_TEST_TIMEOUT)
 
@@ -74,7 +81,7 @@ export const runUnitTest = async ({ task }: { task: Task }) => {
 				break
 			}
 		} catch (error) {
-			console.error(`${Date.now()} [${tag}]`, error)
+			logger.error(`unexpected error:`, error)
 			passed = false
 			break
 		}

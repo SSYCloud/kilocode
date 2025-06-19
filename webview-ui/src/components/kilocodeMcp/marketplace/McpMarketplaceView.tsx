@@ -184,7 +184,7 @@ const McpMarketplaceView = () => {
 							fontWeight: 500,
 							flexShrink: 0,
 						}}>
-						Filter:
+						过滤:
 					</span>
 					<div
 						style={{
@@ -193,12 +193,10 @@ const McpMarketplaceView = () => {
 							flex: 1,
 						}}>
 						<VSCodeDropdown
-							style={{
-								width: "100%",
-							}}
+							style={{ width: "100%" }}
 							value={selectedCategory || ""}
 							onChange={(e) => setSelectedCategory((e.target as HTMLSelectElement).value || null)}>
-							<VSCodeOption value="">All Categories</VSCodeOption>
+							<VSCodeOption value="">所有</VSCodeOption>
 							{categories.map((category) => (
 								<VSCodeOption key={category} value={category}>
 									{category}
@@ -233,9 +231,9 @@ const McpMarketplaceView = () => {
 						value={sortBy}
 						onChange={(e) => setSortBy((e.target as HTMLInputElement).value as typeof sortBy)}>
 						{/* <VSCodeRadio value="downloadCount">Most Installs</VSCodeRadio> */}
-						<VSCodeRadio value="newest">Newest</VSCodeRadio>
+						<VSCodeRadio value="newest">最新</VSCodeRadio>
 						<VSCodeRadio value="stars">GitHub Stars</VSCodeRadio>
-						<VSCodeRadio value="name">Name</VSCodeRadio>
+						<VSCodeRadio value="name">名称</VSCodeRadio>
 					</VSCodeRadioGroup>
 				</div>
 			</div>

@@ -59,6 +59,9 @@ async function main() {
 						srcDir,
 						buildDir,
 					)
+
+					// Copy walkthrough files to dist directory
+					copyPaths([["walkthrough", "walkthrough"]], srcDir, distDir)
 				})
 			},
 		},
@@ -81,7 +84,9 @@ async function main() {
 				build.onEnd((result) => {
 					result.errors.forEach(({ text, location }) => {
 						console.error(`✘ [ERROR] ${text}`)
-						console.error(`    ${location.file}:${location.line}:${location.column}:`)
+						if (location && location.file) {
+							console.error(`    ${location.file}:${location.line}:${location.column}:`)
+						}
 					})
 
 					console.log("[esbuild-problem-matcher#onEnd]")

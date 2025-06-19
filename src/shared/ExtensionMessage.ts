@@ -17,6 +17,7 @@ import { McpMarketplaceCatalog, McpDownloadResponse } from "./kilocode/mcp"
 import { Mode } from "./modes"
 import { RouterModels } from "./api"
 import { ProfileDataResponsePayload, BalanceDataResponsePayload } from "./WebviewMessage"
+import { ClineRulesToggles } from "./cline-rules" // kilocode_change
 
 export interface LanguageModelChatSelector {
 	vendor?: string
@@ -81,6 +82,7 @@ export interface ExtensionMessage {
 		| "indexingStatusUpdate"
 		| "indexCleared"
 		| "codebaseIndexConfig"
+		| "rulesData" // kilocode_change
 	text?: string
 	action?:
 		| "chatButtonClicked"
@@ -131,6 +133,11 @@ export interface ExtensionMessage {
 	payload?: ProfileDataResponsePayload | BalanceDataResponsePayload // kilocode_change: Add payload for profile and balance data
 	userInfo?: CloudUserInfo
 	organizationAllowList?: OrganizationAllowList
+	// kilocode_change: Rules data
+	globalRules?: ClineRulesToggles
+	localRules?: ClineRulesToggles
+	globalWorkflows?: ClineRulesToggles
+	localWorkflows?: ClineRulesToggles
 }
 
 export type ExtensionState = Pick<
@@ -195,7 +202,10 @@ export type ExtensionState = Pick<
 	| "customModePrompts"
 	| "customSupportPrompts"
 	| "enhancementApiConfigId"
-	| "workflowToggles" // kilocode_change
+	| "localWorkflowToggles" // kilocode_change
+	| "globalRulesToggles" // kilocode_change
+	| "localRulesToggles" // kilocode_change
+	| "globalWorkflowToggles" // kilocode_change
 	| "condensingApiConfigId"
 	| "customCondensingPrompt"
 	| "codebaseIndexConfig"
@@ -238,6 +248,7 @@ export type ExtensionState = Pick<
 
 	cloudUserInfo: CloudUserInfo | null
 	cloudIsAuthenticated: boolean
+	sharingEnabled: boolean
 	organizationAllowList: OrganizationAllowList
 
 	autoCondenseContext: boolean

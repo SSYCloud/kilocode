@@ -373,7 +373,7 @@ describe("importExport", () => {
 			expect(fs.mkdir).toHaveBeenCalledWith("/mock/path", { recursive: true })
 
 			expect(fs.writeFile).toHaveBeenCalledWith(
-				"/mock/path/kilo-code-settings.json",
+				"/mock/path/kilo-ssy-settings.json",
 				JSON.stringify({ providerProfiles: mockProviderProfiles, globalSettings: mockGlobalSettings }, null, 2),
 				"utf-8",
 			)

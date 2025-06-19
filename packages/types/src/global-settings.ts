@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { type Keys, keysOf } from "./type-fu.js"
+import { type Keys } from "./type-fu.js"
 import {
 	type ProviderSettings,
 	PROVIDER_SETTINGS_KEYS,
@@ -53,7 +53,10 @@ export const globalSettingsSchema = z.object({
 	browserToolEnabled: z.boolean().optional(),
 	browserViewportSize: z.string().optional(),
 	showAutoApproveMenu: z.boolean().optional(), // kilocode_change
-	workflowToggles: z.record(z.string(), z.boolean()).optional(), // kilocode_change
+	localWorkflowToggles: z.record(z.string(), z.boolean()).optional(), // kilocode_change
+	globalWorkflowToggles: z.record(z.string(), z.boolean()).optional(), // kilocode_change
+	localRulesToggles: z.record(z.string(), z.boolean()).optional(), // kilocode_change
+	globalRulesToggles: z.record(z.string(), z.boolean()).optional(), // kilocode_change
 	screenshotQuality: z.number().optional(),
 	remoteBrowserEnabled: z.boolean().optional(),
 	remoteBrowserHost: z.string().optional(),
@@ -109,93 +112,7 @@ export const globalSettingsSchema = z.object({
 
 export type GlobalSettings = z.infer<typeof globalSettingsSchema>
 
-export const GLOBAL_SETTINGS_KEYS = keysOf<GlobalSettings>()([
-	"currentApiConfigName",
-	"listApiConfigMeta",
-	"pinnedApiConfigs",
-
-	"lastShownAnnouncementId",
-	"customInstructions",
-	"taskHistory",
-
-	"condensingApiConfigId",
-	"customCondensingPrompt",
-
-	"autoApprovalEnabled",
-	"alwaysAllowReadOnly",
-	"alwaysAllowReadOnlyOutsideWorkspace",
-	"alwaysAllowWrite",
-	"alwaysAllowWriteOutsideWorkspace",
-	"writeDelayMs",
-	"alwaysAllowBrowser",
-	"alwaysApproveResubmit",
-	"requestDelaySeconds",
-	"alwaysAllowMcp",
-	"alwaysAllowModeSwitch",
-	"alwaysAllowSubtasks",
-	"alwaysAllowExecute",
-	"allowedCommands",
-	"allowedMaxRequests",
-	"autoCondenseContext",
-	"autoCondenseContextPercent",
-	"maxConcurrentFileReads",
-
-	"browserToolEnabled",
-	"browserViewportSize",
-	"screenshotQuality",
-	"remoteBrowserEnabled",
-	"remoteBrowserHost",
-
-	"enableCheckpoints",
-
-	"ttsEnabled",
-	"ttsSpeed",
-	"soundEnabled",
-	"soundVolume",
-
-	"maxOpenTabsContext",
-	"maxWorkspaceFiles",
-	"showRooIgnoredFiles",
-	"maxReadFileLine",
-
-	"terminalOutputLineLimit",
-	"terminalShellIntegrationTimeout",
-	"terminalShellIntegrationDisabled",
-	"terminalCommandDelay",
-	"terminalPowershellCounter",
-	"terminalZshClearEolMark",
-	"terminalZshOhMy",
-	"terminalZshP10k",
-	"terminalZdotdir",
-	"terminalCompressProgressBar",
-
-	"rateLimitSeconds",
-	"diffEnabled",
-	"fuzzyMatchThreshold",
-	"experiments",
-
-	"codebaseIndexModels",
-	"codebaseIndexConfig",
-
-	"language",
-
-	"telemetrySetting",
-	"mcpEnabled",
-	"enableMcpServerCreation",
-	"mcpMarketplaceCatalog", // kilocode_change
-
-	"mode",
-	"modeApiConfigs",
-	"customModes",
-	"customModePrompts",
-	"customSupportPrompts",
-	"enhancementApiConfigId",
-	"cachedChromeHostUrl",
-	"historyPreviewCollapsed",
-
-	"showAutoApproveMenu", // kilocode_change
-	"workflowToggles", // kilocode_change
-])
+export const GLOBAL_SETTINGS_KEYS = globalSettingsSchema.keyof().options
 
 /**
  * RooCodeSettings
@@ -208,34 +125,7 @@ export type RooCodeSettings = GlobalSettings & ProviderSettings
 /**
  * SecretState
  */
-
-export type SecretState = Pick<
-	ProviderSettings,
-	| "apiKey"
-	| "glamaApiKey"
-	| "openRouterApiKey"
-	| "awsAccessKey"
-	| "awsSecretKey"
-	| "awsSessionToken"
-	| "openAiApiKey"
-	| "geminiApiKey"
-	| "openAiNativeApiKey"
-	| "deepSeekApiKey"
-	| "mistralApiKey"
-	| "unboundApiKey"
-	| "requestyApiKey"
-	| "xaiApiKey"
-	| "groqApiKey"
-	| "chutesApiKey"
-	| "litellmApiKey"
-	| "codeIndexOpenAiKey"
-	| "codeIndexQdrantApiKey"
-	| "kilocodeToken" // kilocode_change
-	| "codebaseIndexOpenAiCompatibleApiKey"
-	| "shengSuanYunApiKey"
->
-
-export const SECRET_STATE_KEYS = keysOf<SecretState>()([
+export const SECRET_STATE_KEYS = [
 	"apiKey",
 	"glamaApiKey",
 	"openRouterApiKey",
@@ -258,7 +148,8 @@ export const SECRET_STATE_KEYS = keysOf<SecretState>()([
 	"kilocodeToken", // kilocode_change
 	"codebaseIndexOpenAiCompatibleApiKey",
 	"shengSuanYunApiKey",
-])
+] as const satisfies readonly (keyof ProviderSettings)[]
+export type SecretState = Pick<ProviderSettings, (typeof SECRET_STATE_KEYS)[number]>
 
 export const isSecretStateKey = (key: string): key is Keys<SecretState> =>
 	SECRET_STATE_KEYS.includes(key as Keys<SecretState>)
@@ -282,7 +173,7 @@ export const isGlobalStateKey = (key: string): key is Keys<GlobalState> =>
 
 // Default settings when running evals (unless overridden).
 export const EVALS_SETTINGS: RooCodeSettings = {
-	apiProvider: "openrouter",
+	apiProvider: "shengsuanyun",
 	openRouterUseMiddleOutTransform: false,
 
 	lastShownAnnouncementId: "may-29-2025-3-19",
@@ -336,7 +227,7 @@ export const EVALS_SETTINGS: RooCodeSettings = {
 	showRooIgnoredFiles: true,
 	maxReadFileLine: -1, // -1 to enable full file reading.
 
-	language: "en",
+	language: "zh-CN",
 	telemetrySetting: "enabled",
 
 	mcpEnabled: false,

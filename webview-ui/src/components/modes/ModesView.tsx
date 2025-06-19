@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from "react"
-import BottomControls from "../chat/BottomControls" // kilocode_change
+import BottomControls from "../kilocode/BottomControls" // kilocode_change
 import {
 	VSCodeCheckbox,
 	VSCodeRadioGroup,

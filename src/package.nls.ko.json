@@ -17,6 +17,7 @@
 	"views.contextMenu.label": "Kilo Code AI Agent-Chinese",
 	"views.terminalMenu.label": "Kilo Code AI Agent-Chinese",
 	"views.sidebar.name": "Kilo Code AI Agent-Chinese",
+	"command.generateCommitMessage.title": "Kilo로 커밋 메시지 생성",
 	"command.mcpServers.title": "MCP 서버",
 	"command.prompts.title": "모드",
 	"command.history.title": "기록",

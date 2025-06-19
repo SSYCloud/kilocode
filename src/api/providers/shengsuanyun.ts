@@ -12,8 +12,6 @@ import {
 import { convertToOpenAiMessages } from "../transform/openai-format"
 import { ApiStreamChunk } from "../transform/stream"
 import { convertToR1Format } from "../transform/r1-format"
-import { addCacheBreakpoints as addAnthropicCacheBreakpoints } from "../transform/caching/anthropic"
-import { addCacheBreakpoints as addGeminiCacheBreakpoints } from "../transform/caching/gemini"
 
 import { SingleCompletionHandler } from "../index"
 import { DEFAULT_HEADERS } from "./constants"
@@ -22,7 +20,6 @@ import { getModelParams } from "../transform/model-params"
 import { BaseProvider } from "./base-provider"
 import { getModels } from "./fetchers/modelCache"
 
-// Add custom interface for shengSuanYun params.
 type ShengSuanYunChatCompletionParams = OpenAI.Chat.ChatCompletionCreateParams & {
 	transforms?: string[]
 	include_reasoning?: boolean
@@ -35,9 +32,6 @@ type ShengSuanYunChatCompletionParams = OpenAI.Chat.ChatCompletionCreateParams &
 	}
 }
 
-// See `OpenAI.Chat.Completions.ChatCompletionChunk["usage"]`
-// `CompletionsAPI.CompletionUsage`
-// See also: https://shengSuanYun.ai/docs/use-cases/usage-accounting
 interface CompletionUsage {
 	completion_tokens?: number
 	completion_tokens_details?: {
@@ -59,10 +53,8 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 	constructor(options: ApiHandlerOptions) {
 		super()
 		this.options = options
-
 		const baseURL = "https://router.shengsuanyun.com/api/v1"
 		const apiKey = this.options.shengSuanYunApiKey ?? "not-provided"
-
 		this.client = new OpenAI({ baseURL, apiKey, defaultHeaders: DEFAULT_HEADERS })
 	}
 
@@ -71,7 +63,7 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 		messages: Anthropic.Messages.MessageParam[],
 	): AsyncGenerator<ApiStreamChunk> {
 		this.models = await getModels({ provider: "shengsuanyun" })
-		let { id: modelId, maxTokens, temperature, topP } = this.getModel()
+		let { id: modelId, info } = this.getModel()
 
 		// Convert Anthropic messages to OpenAI format.
 		let openAiMessages: OpenAI.Chat.ChatCompletionMessageParam[] = [
@@ -79,11 +71,100 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 			...convertToOpenAiMessages(messages),
 		]
 
+		if (info.supportsPromptCache) {
+			openAiMessages[0] = {
+				role: "system",
+				content: [
+					{
+						type: "text",
+						text: systemPrompt,
+						// @ts-ignore-next-line
+						cache_control: { type: "ephemeral" },
+					},
+				],
+			}
+			// Add cache_control to the last two user messages
+			// (note: this works because we only ever add one user message at a time, but if we added multiple we'd need to mark the user message before the last assistant message)
+			const lastTwoUserMessages = openAiMessages.filter((msg) => msg.role === "user").slice(-2)
+			lastTwoUserMessages.forEach((msg) => {
+				if (typeof msg.content === "string") {
+					msg.content = [{ type: "text", text: msg.content }]
+				}
+				if (Array.isArray(msg.content)) {
+					// NOTE: this is fine since env details will always be added at the end. but if it weren't there, and the user added a image_url type message, it would pop a text part before it and then move it after to the end.
+					let lastTextPart = msg.content.filter((part) => part.type === "text").pop()
+
+					if (!lastTextPart) {
+						lastTextPart = { type: "text", text: "..." }
+						msg.content.push(lastTextPart)
+					}
+					// @ts-ignore-next-line
+					lastTextPart["cache_control"] = { type: "ephemeral" }
+				}
+			})
+		}
+
+		let maxTokens: number | undefined
+		switch (modelId) {
+			case "anthropic/claude-3.7-sonnet":
+			case "anthropic/claude-3.7-sonnet:beta":
+			case "anthropic/claude-3.7-sonnet:thinking":
+			case "anthropic/claude-3-7-sonnet":
+			case "anthropic/claude-3-7-sonnet:beta":
+			case "anthropic/claude-3.5-sonnet":
+			case "anthropic/claude-3.5-sonnet:beta":
+			case "anthropic/claude-3.5-sonnet-20240620":
+			case "anthropic/claude-3.5-sonnet-20240620:beta":
+			case "anthropic/claude-3-5-haiku":
+			case "anthropic/claude-3-5-haiku:beta":
+			case "anthropic/claude-3-5-haiku-20241022":
+			case "anthropic/claude-3-5-haiku-20241022:beta":
+				maxTokens = 8_192
+				break
+		}
+
+		let temperature: number | undefined = 0
+		let topP: number | undefined = undefined
+		if (
+			modelId.startsWith("deepseek/deepseek-r1") ||
+			modelId.startsWith("deepseek/deepseek-v3") ||
+			modelId.startsWith("deepseek/deepseek-chat") ||
+			modelId.startsWith("deepseek/deepseek-reason") ||
+			modelId === "perplexity/sonar-reasoning" ||
+			modelId === "qwen/qwq-32b:free" ||
+			modelId === "qwen/qwq-32b"
+		) {
+			// Recommended values from DeepSeek
+			temperature = 0.7
+			topP = 0.95
+			openAiMessages = convertToR1Format([{ role: "user", content: systemPrompt }, ...messages])
+		}
+
+		let reasoning: { max_tokens: number } | undefined = undefined
+		switch (modelId) {
+			case "anthropic/claude-3.7-sonnet":
+			case "anthropic/claude-3.7-sonnet:beta":
+			case "anthropic/claude-3.7-sonnet:thinking":
+			case "anthropic/claude-3-7-sonnet":
+			case "anthropic/claude-3-7-sonnet:beta": {
+				let budget_tokens = this.options.modelMaxThinkingTokens || 0
+				const reasoningOn = budget_tokens !== 0 ? true : false
+				if (reasoningOn) {
+					temperature = undefined // extended thinking does not support non-1 temperature
+					reasoning = { max_tokens: budget_tokens }
+				}
+				break
+			}
+		}
 		// DeepSeek highly recommends using user instead of system role.
 		if (modelId.startsWith("deepseek/deepseek-r1") || modelId === "perplexity/sonar-reasoning") {
 			openAiMessages = convertToR1Format([{ role: "user", content: systemPrompt }, ...messages])
 		}
 
+		let shouldApplyMiddleOutTransform = this.options.openRouterUseMiddleOutTransform
+		if (modelId === "deepseek/deepseek-chat") {
+			shouldApplyMiddleOutTransform = true
+		}
 		const completionParams: ShengSuanYunChatCompletionParams = {
 			model: modelId,
 			...(maxTokens && maxTokens > 0 && { max_tokens: maxTokens }),
@@ -94,10 +175,9 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 			stream_options: { include_usage: true },
 
 			// This way, the transforms field will only be included in the parameters when shengSuanYunUseMiddleOutTransform is true.
-			...((this.options.openRouterUseMiddleOutTransform ?? true) && { transforms: ["middle-out"] }),
+			...((shouldApplyMiddleOutTransform ?? true) && { transforms: ["middle-out"] }),
 		}
-		let stream
-		stream = await this.client.chat.completions.create(completionParams)
+		let stream = await this.client.chat.completions.create(completionParams)
 		let lastUsage: CompletionUsage | undefined = undefined
 
 		try {
@@ -174,12 +254,10 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 		}
 
 		const response = await this.client.chat.completions.create(completionParams)
-
 		if ("error" in response) {
 			const error = response.error as { message?: string; code?: number }
 			throw new Error(`shengSuanYun API Error ${error?.code}: ${error?.message}`)
 		}
-
 		const completion = response as OpenAI.Chat.ChatCompletion
 		return completion.choices[0]?.message?.content || ""
 	}

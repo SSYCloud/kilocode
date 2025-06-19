@@ -1,6 +1,8 @@
 import fs from "fs/promises"
 import path from "path"
 
+import { hasAnyToggles, loadEnabledRules } from "./kilo"
+
 // kilocode_change start
 let vscodeAPI: typeof import("vscode") | undefined
 try {
@@ -19,6 +21,7 @@ import { Dirent } from "fs"
 import { isLanguage } from "@roo-code/types"
 
 import { LANGUAGES } from "../../../shared/language"
+import { ClineRulesToggles } from "../../../shared/cline-rules" // kilocode_change
 
 /**
  * Safely read a file and return its trimmed content
@@ -170,6 +173,7 @@ function formatDirectoryContent(dirPath: string, files: Array<{ filename: string
 
 /**
  * Load rule files from the specified directory
+ * kilocode_change: this function is only called when the user doesn't have any rules toggles stored yet
  */
 export async function loadRuleFiles(cwd: string): Promise<string> {
 	// kilocode_change start: add kilocode directory, leave fallback to roo directory
@@ -224,7 +228,14 @@ export async function addCustomInstructions(
 	globalCustomInstructions: string,
 	cwd: string,
 	mode: string,
-	options: { language?: string; rooIgnoreInstructions?: string } = {},
+	// kilocode_change begin: rule toggles
+	options: {
+		language?: string
+		rooIgnoreInstructions?: string
+		localRulesToggleState?: ClineRulesToggles
+		globalRulesToggleState?: ClineRulesToggles
+	} = {},
+	// kilocode_change end
 ): Promise<string> {
 	const sections = []
 
@@ -301,11 +312,29 @@ export async function addCustomInstructions(
 		rules.push(options.rooIgnoreInstructions)
 	}
 
-	// Add generic rules
-	const genericRuleContent = await loadRuleFiles(cwd)
-	if (genericRuleContent && genericRuleContent.trim()) {
-		rules.push(genericRuleContent.trim())
+	// kilocode_change start: rule toggles
+	if (hasAnyToggles(options.localRulesToggleState) || hasAnyToggles(options.globalRulesToggleState)) {
+		const genericRuleContent =
+			(
+				await loadEnabledRules(
+					cwd,
+					options.localRulesToggleState || {},
+					options.globalRulesToggleState || {},
+					directoryExists,
+					readTextFilesFromDirectory,
+				)
+			)?.trim() ?? ""
+		if (genericRuleContent) {
+			rules.push(genericRuleContent)
+		}
+	} else {
+		// Fallback to legacy function if no toggle states provided
+		const genericRuleContent = (await loadRuleFiles(cwd))?.trim() ?? ""
+		if (genericRuleContent) {
+			rules.push(genericRuleContent)
+		}
 	}
+	// kilocode_change end
 
 	if (rules.length > 0) {
 		sections.push(`Rules:\n\n${rules.join("\n\n")}`)

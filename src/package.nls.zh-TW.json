@@ -17,6 +17,7 @@
 	"views.contextMenu.label": "Kilo Code AI Agent-中文版",
 	"views.terminalMenu.label": "Kilo Code AI Agent-中文版",
 	"views.sidebar.name": "Kilo Code AI Agent-中文版",
+	"command.generateCommitMessage.title": "使用 Kilo 生成提交訊息",
 	"command.mcpServers.title": "MCP 伺服器",
 	"command.prompts.title": "模式",
 	"command.history.title": "歷史記錄",

@@ -1,15 +1,15 @@
-# Code mode
+# 编码模式
 
-Describe what you want to build in the text area and press ⮐ Enter.
+在文本区域描述您想构建的内容，然后按 ⮐ Enter。
 
-<img src="images/hn-nextjs.png" width='200' alt="Prompting Kilo Code to Build a Hacker News clone in Next.js" />
+<img src="images/hn-nextjs.png" width='200' alt="提示 Kilo Code 使用 Next.js 构建一个 Hacker News 克隆" />
 
-The more context you give, the better the result. Include things like your tech stack, key features, or file names.
+您提供的上下文越多，结果就越好。包括您的技术栈、关键功能或文件名等信息。
 
-_Example: Create a Hacker News clone in Next.js_
+_示例：使用 Next.js 创建一个 Hacker News 克隆_
 
-Kilo Code will write the code, generate the files, and run the project for you.
+Kilo Code 将为您编写代码、生成文件并运行项目。
 
-## Kilo Code has many Modes ...
+## Kilo Code 有多种模式 ...
 
-<img src="images/modes.gif" width='200' alt="Kilo Code modes" />
+<img src="images/modes.gif" width='200' alt="Kilo Code 模式" />

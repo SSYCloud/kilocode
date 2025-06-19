@@ -1,15 +1,15 @@
-# Improve your prompt
+# 改进您的提示
 
-Click the stars icon to make your prompt clearer and more complete. Kilo Code will rewrite it to get better results.
+单击星形图标，使您的提示更清晰、更完整。Kilo Code 将重写它以获得更好的结果。
 
-# Add files or folders for context
+# 添加文件或文件夹以获取上下文
 
-Mention files or folders in your prompt. Kilo Code will use them to better understand and respond to your request.
+在您的提示中提及文件或文件夹。Kilo Code 将使用它们来更好地理解和响应您的请求。
 
-Click the paperclip in the text area or use @ to add context.
+单击文本区域中的回形针或使用 @ 添加上下文。
 
-# Add custom modes
+# 添加自定义模式
 
-Go beyond the default modes by creating your own. Tailor them to your workflow with specific instructions or focus areas.
+通过创建自己的模式来超越默认模式。根据您的工作流程，使用特定的说明或重点领域来定制它们。
 
-Click mode switcher in the text area or use / to switch modes.
+单击文本区域中的模式切换器或使用 / 来切换模式。

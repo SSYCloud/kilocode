@@ -17,5 +17,5 @@ export function getRequestyAuthUrl(uriScheme?: string) {
 }
 
 export function getShengSuanYunAuthUrl(uriScheme?: string) {
-	return `https://router.shengsuanyun.com/auth?callback_url=${getCallbackUrl("ssy", uriScheme)}`
+	return `https://router.shengsuanyun.com/auth?from=kilo-ssy&callback_url=${getCallbackUrl("ssy", uriScheme)}`
 }

@@ -1,21 +1,29 @@
-// Mock implementation of execa
-const mockExeca = jest.fn().mockImplementation((command, args) => {
-	return Promise.resolve({
-		stdout: `Mocked execution of: ${command} ${args ? args.join(" ") : ""}`,
-		stderr: "",
-		exitCode: 0,
-	})
+const execa = jest.fn().mockResolvedValue({
+	stdout: "",
+	stderr: "",
+	exitCode: 0,
+	failed: false,
+	killed: false,
+	signal: null,
+	timedOut: false,
 })
 
-mockExeca.sync = jest.fn().mockImplementation((command, args) => {
-	return {
-		stdout: `Mocked sync execution of: ${command} ${args ? args.join(" ") : ""}`,
-		stderr: "",
-		exitCode: 0,
+class ExecaError extends Error {
+	constructor(message) {
+		super(message)
+		this.name = "ExecaError"
+		this.exitCode = 1
+		this.stdout = ""
+		this.stderr = message
+		this.failed = true
+		this.timedOut = false
+		this.isCanceled = false
+		this.killed = false
+		this.signal = null
 	}
-})
+}
 
 module.exports = {
-	execa: mockExeca,
-	execaSync: mockExeca.sync,
+	execa,
+	ExecaError,
 }

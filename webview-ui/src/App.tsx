@@ -14,7 +14,7 @@ import WelcomeView from "./components/welcome/WelcomeView" // kilocode_change
 
 import ModesView from "./components/modes/ModesView"
 import { HumanRelayDialog } from "./components/human-relay/HumanRelayDialog"
-import BottomControls from "./components/chat/BottomControls" // kilocode_change
+import BottomControls from "./components/kilocode/BottomControls" // kilocode_change
 import { AccountView } from "./components/account/AccountView"
 import Profile from "./components/kilocode/profile/Profile"
 
@@ -144,8 +144,8 @@ const App = () => {
 				onCancel={(requestId) => vscode.postMessage({ type: "humanRelayCancel", requestId })}
 			/>
 			{/* kilocode_change */}
-			{/* Chat, prompts and history view contain their own bottom controls */}
-			{!["chat", "prompts", "history"].includes(tab) && (
+			{/* Chat, modes and history view contain their own bottom controls */}
+			{!["chat", "modes", "history"].includes(tab) && (
 				<div className="fixed inset-0 top-auto">
 					<BottomControls />
 				</div>

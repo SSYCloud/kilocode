@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from "react"
+import React, { Fragment, memo, useCallback, useEffect, useMemo, useState } from "react" // kilocode_change Fragment
 import { convertHeadersToObject } from "./utils/headers"
 import { useDebounce } from "react-use"
 import { VSCodeButtonLink } from "../common/VSCodeButtonLink"
@@ -286,14 +286,14 @@ const ApiOptions = ({
 						<SelectValue placeholder={t("settings:common.select")} />
 					</SelectTrigger>
 					<SelectContent>
+						{/*  kilocode_change start: separator */}
 						{PROVIDERS.map(({ value, label }, i) => (
-							<>
-								<SelectItem key={value} value={value}>
-									{label}
-								</SelectItem>
+							<Fragment key={value}>
+								<SelectItem value={value}>{label}</SelectItem>
 								{i === 0 ? <SelectSeparator /> : null}
-							</>
+							</Fragment>
 						))}
+						{/*  kilocode_change end */}
 					</SelectContent>
 				</Select>
 			</div>

@@ -35,7 +35,7 @@ import ChatRow from "./ChatRow"
 import ChatTextArea from "./ChatTextArea"
 import TaskHeader from "./TaskHeader"
 import AutoApproveMenu from "./AutoApproveMenu"
-import BottomControls from "./BottomControls" // kilocode_change
+import BottomControls from "../kilocode/BottomControls" // kilocode_change
 import SystemPromptWarning from "./SystemPromptWarning"
 import { showSystemNotification } from "@/kilocode/helpers" // kilocode_change
 // import ProfileViolationWarning from "./ProfileViolationWarning" kilocode_change: unused

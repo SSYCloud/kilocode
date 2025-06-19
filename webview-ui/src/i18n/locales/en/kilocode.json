@@ -44,5 +44,36 @@
 			"description": "Signing up with Kilo Code gives you free credits to get started. Use your credits to explore our features, try out the latest and greatest models, and experience the benefits of Kilo Code without any commitment.",
 			"termsAndPrivacy": "By continuing, you agree to the <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy.</privacyLink>"
 		}
+	},
+	"docs": "Docs",
+	"rules": {
+		"tooltip": "Manage Kilo Code Rules & Workflows",
+		"ariaLabel": "Kilo Code Rules",
+		"tabs": {
+			"rules": "Rules",
+			"workflows": "Workflows"
+		},
+		"description": {
+			"rules": "Rules allow you to provide Kilo Code with instructions it should follow in all modes and for all prompts. They are a persistent way to include context and preferences for all conversations in your workspace or globally.",
+			"workflows": "Workflows are a prepared template for a conversation. Workflows can allow you to define prompts you use frequently, and can include a series of steps to guide Kilo Code through repetitive tasks, such as deploying a service or submitting a PR. To invoke a workflow, type",
+			"workflowsInChat": "in the chat."
+		},
+		"sections": {
+			"globalRules": "Global Rules",
+			"workspaceRules": "Workspace Rules",
+			"globalWorkflows": "Global Workflows",
+			"workspaceWorkflows": "Workspace Workflows"
+		},
+		"validation": {
+			"invalidFileExtension": "Only .md, .txt, or no file extension allowed"
+		},
+		"placeholders": {
+			"workflowName": "workflow-name (.md, .txt, or no extension)",
+			"ruleName": "rule-name (.md, .txt, or no extension)"
+		},
+		"newFile": {
+			"newWorkflowFile": "New workflow file...",
+			"newRuleFile": "New rule file..."
+		}
 	}
 }

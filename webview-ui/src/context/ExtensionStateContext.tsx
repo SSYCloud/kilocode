@@ -1,5 +1,4 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react"
-import { useEvent } from "react-use"
 
 import {
 	type ProviderSettings,
@@ -23,6 +22,7 @@ import { McpMarketplaceCatalog } from "../../../src/shared/kilocode/mcp" // kilo
 
 import { vscode } from "@src/utils/vscode"
 import { convertTextMateToHljs } from "@src/utils/textMateToHljs"
+import { ClineRulesToggles } from "@roo/cline-rules" // kilocode_change
 
 export interface ExtensionStateContextType extends ExtensionState {
 	historyPreviewCollapsed?: boolean // Add the new state property
@@ -35,9 +35,15 @@ export interface ExtensionStateContextType extends ExtensionState {
 	currentCheckpoint?: string
 	filePaths: string[]
 	openedTabs: Array<{ label: string; isActive: boolean; path?: string }>
-	setWorkflowToggles: (toggles: Record<string, boolean>) => void // kilocode_change
+	// kilocode_change start
+	globalRules: ClineRulesToggles
+	localRules: ClineRulesToggles
+	globalWorkflows: ClineRulesToggles
+	localWorkflows: ClineRulesToggles
+	// kilocode_change start
 	organizationAllowList: OrganizationAllowList
 	cloudIsAuthenticated: boolean
+	sharingEnabled: boolean
 	maxConcurrentFileReads?: number
 	condensingApiConfigId?: string
 	setCondensingApiConfigId: (value: string) => void
@@ -203,9 +209,9 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		terminalZdotdir: false, // Default ZDOTDIR handling setting
 		terminalCompressProgressBar: true, // Default to compress progress bar output
 		historyPreviewCollapsed: false, // Initialize the new state (default to expanded)
-		workflowToggles: {}, // Initialize with empty workflow toggles  // kilocode_change
 		cloudUserInfo: null,
 		cloudIsAuthenticated: false,
+		sharingEnabled: false,
 		organizationAllowList: ORGANIZATION_ALLOW_ALL,
 		autoCondenseContext: true,
 		autoCondenseContextPercent: 100,
@@ -228,6 +234,12 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 	const [mcpMarketplaceCatalog, setMcpMarketplaceCatalog] = useState<McpMarketplaceCatalog>({ items: [] }) // kilocode_change
 	const [currentCheckpoint, setCurrentCheckpoint] = useState<string>()
 	const [extensionRouterModels, setExtensionRouterModels] = useState<RouterModels | undefined>(undefined)
+	// kilocode_change start
+	const [globalRules, setGlobalRules] = useState<ClineRulesToggles>({})
+	const [localRules, setLocalRules] = useState<ClineRulesToggles>({})
+	const [globalWorkflows, setGlobalWorkflows] = useState<ClineRulesToggles>({})
+	const [localWorkflows, setLocalWorkflows] = useState<ClineRulesToggles>({})
+	// kilocode_change end
 
 	const setListApiConfigMeta = useCallback(
 		(value: ProviderSettingsEntry[]) => setState((prevState) => ({ ...prevState, listApiConfigMeta: value })),
@@ -294,6 +306,13 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 					}
 					break
 				}
+				case "rulesData": {
+					if (message.globalRules) setGlobalRules(message.globalRules)
+					if (message.localRules) setLocalRules(message.localRules)
+					if (message.globalWorkflows) setGlobalWorkflows(message.globalWorkflows)
+					if (message.localWorkflows) setLocalWorkflows(message.localWorkflows)
+					break
+				}
 				// end kilocode_change
 				case "currentCheckpointUpdated": {
 					setCurrentCheckpoint(message.text)
@@ -312,7 +331,12 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		[setListApiConfigMeta],
 	)
 
-	useEvent("message", handleMessage)
+	useEffect(() => {
+		window.addEventListener("message", handleMessage)
+		return () => {
+			window.removeEventListener("message", handleMessage)
+		}
+	}, [handleMessage])
 
 	useEffect(() => {
 		vscode.postMessage({ type: "webviewDidLaunch" })
@@ -328,6 +352,12 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		currentCheckpoint,
 		filePaths,
 		openedTabs,
+		// kilocode_change start
+		globalRules,
+		localRules,
+		globalWorkflows,
+		localWorkflows,
+		// kilocode_change end
 		soundVolume: state.soundVolume,
 		ttsSpeed: state.ttsSpeed,
 		fuzzyMatchThreshold: state.fuzzyMatchThreshold,
@@ -414,12 +444,6 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		setHistoryPreviewCollapsed: (value) =>
 			setState((prevState) => ({ ...prevState, historyPreviewCollapsed: value })),
 
-		// kilocode_change
-		setWorkflowToggles: (toggles) =>
-			setState((prevState) => ({
-				...prevState,
-				workflowToggles: toggles,
-			})),
 		setAutoCondenseContext: (value) => setState((prevState) => ({ ...prevState, autoCondenseContext: value })),
 		setAutoCondenseContextPercent: (value) =>
 			setState((prevState) => ({ ...prevState, autoCondenseContextPercent: value })),

@@ -272,7 +272,7 @@ function setupAutocomplete(context: vscode.ExtensionContext): vscode.Disposable 
 	const statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100)
 	statusBar.text = "$(sparkle) Kilo Complete"
 	statusBar.tooltip = "Kilo Code Autocomplete"
-	statusBar.command = "kilo-code.toggleAutocomplete"
+	statusBar.command = "kilo-ssy.toggleAutocomplete"
 	statusBar.show()
 
 	// Helper function to format cost with special handling for small amounts
@@ -309,14 +309,14 @@ Model: ${DEFAULT_MODEL}\
 `
 	}
 
-	const toggleCommand = vscode.commands.registerCommand("kilo-code.toggleAutocomplete", () => {
+	const toggleCommand = vscode.commands.registerCommand("kilo-ssy.toggleAutocomplete", () => {
 		enabled = !enabled
 		updateStatusBar()
 		vscode.window.showInformationMessage(`Kilo Complete ${enabled ? "enabled" : "disabled"}`)
 	})
 
 	// Command to track when a suggestion is accepted
-	const trackAcceptedSuggestionCommand = vscode.commands.registerCommand("kilo-code.trackAcceptedSuggestion", () => {
+	const trackAcceptedSuggestionCommand = vscode.commands.registerCommand("kilo-ssy.trackAcceptedSuggestion", () => {
 		justAcceptedSuggestion = true
 	})
 
@@ -387,8 +387,8 @@ function createInlineCompletionItem(completionText: string, position: vscode.Pos
 
 	return Object.assign(new vscode.InlineCompletionItem(completionText, insertRange), {
 		command: {
-			command: "kilo-code.trackAcceptedSuggestion",
-			title: "Track Accepted Suggestion",
+			command: "kilo-ssy.trackAcceptedSuggestion",
+			title: "跟踪已接受的建议",
 			arguments: [completionText, position],
 		},
 	})

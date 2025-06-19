@@ -67,7 +67,9 @@
 		"condense_not_enough_messages": "Tidak cukup pesan untuk mengompres konteks",
 		"condensed_recently": "Konteks baru saja dikompres; melewati percobaan ini",
 		"condense_handler_invalid": "Handler API untuk mengompres konteks tidak valid",
-		"condense_context_grew": "Ukuran konteks bertambah saat mengompres; melewati percobaan ini"
+		"condense_context_grew": "Ukuran konteks bertambah saat mengompres; melewati percobaan ini",
+		"share_task_failed": "Gagal membagikan tugas. Silakan coba lagi.",
+		"share_no_active_task": "Tidak ada tugas aktif untuk dibagikan"
 	},
 	"warnings": {
 		"no_terminal_content": "Tidak ada konten terminal yang dipilih",
@@ -83,7 +85,8 @@
 		"mcp_server_not_found": "Server \"{{serverName}}\" tidak ditemukan dalam konfigurasi",
 		"custom_storage_path_set": "Path penyimpanan kustom diatur: {{path}}",
 		"default_storage_path": "Kembali menggunakan path penyimpanan default",
-		"settings_imported": "Pengaturan berhasil diimpor."
+		"settings_imported": "Pengaturan berhasil diimpor.",
+		"share_link_copied": "Link bagikan disalin ke clipboard"
 	},
 	"answers": {
 		"yes": "Ya",

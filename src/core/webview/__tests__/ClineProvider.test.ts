@@ -442,6 +442,7 @@ describe("ClineProvider", () => {
 			autoCondenseContext: true,
 			autoCondenseContextPercent: 100,
 			cloudIsAuthenticated: false,
+			sharingEnabled: false,
 		}
 
 		const message: ExtensionMessage = {

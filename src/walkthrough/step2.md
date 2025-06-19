@@ -1,7 +1,7 @@
-# Ask mode
+# 问答模式
 
-  <img src="images/askui.png" alt="Ask Mode" />
+<img src="images/askui.png" alt="问答模式" />
 
-Have a question about your code? Switch to Ask mode and type it out. Kilo Code will scan your codebase and give you a clear, accurate explanation.
+对您的代码有疑问吗？切换到问答模式并输入您的问题。Kilo Code 将扫描您的代码库，并为您提供清晰、准确的解释。
 
-Tip: Reference specific files or functions for more precise answers.
+提示：引用特定的文件或函数以获得更精确的答案。

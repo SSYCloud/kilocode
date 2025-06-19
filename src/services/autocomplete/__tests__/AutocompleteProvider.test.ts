@@ -11,7 +11,7 @@ jest.mock("vscode", () => ({
 	commands: {
 		executeCommand: jest.fn(),
 		registerCommand: jest.fn().mockImplementation((_, handler) => {
-			if (_ === "kilo-code.acceptAutocompletePreview") {
+			if (_ === "kilo-ssy.acceptAutocompletePreview") {
 				;(global as any).acceptHandler = handler
 			}
 			return { dispose: jest.fn() }

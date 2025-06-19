@@ -248,6 +248,7 @@ describe("mergeExtensionState", () => {
 			autoCondenseContext: true,
 			autoCondenseContextPercent: 100,
 			cloudIsAuthenticated: false,
+			sharingEnabled: false,
 		}
 
 		const prevState: ExtensionState = {
@@ -264,6 +265,7 @@ describe("mergeExtensionState", () => {
 				autoCondenseContext: true,
 				concurrentFileReads: true,
 				autocomplete: true,
+				disableCompletionCommand: false,
 			} as Record<ExperimentId, boolean>,
 		}
 
@@ -279,6 +281,7 @@ describe("mergeExtensionState", () => {
 			autoCondenseContext: true,
 			concurrentFileReads: true,
 			autocomplete: true,
+			disableCompletionCommand: false,
 		})
 	})
 })

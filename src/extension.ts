@@ -13,7 +13,7 @@ try {
 }
 
 import { CloudService } from "@roo-code/cloud"
-// import { TelemetryService, PostHogTelemetryClient } from "@roo-code/telemetry" kilocode_change
+import { TelemetryService, PostHogTelemetryClient } from "@roo-code/telemetry"
 
 import "./utils/path" // Necessary to have access to String.prototype.toPosix.
 import { createOutputChannelLogger, createDualLogger } from "./utils/outputChannelLogger"
@@ -26,7 +26,10 @@ import { DIFF_VIEW_URI_SCHEME } from "./integrations/editor/DiffViewProvider"
 import { TerminalRegistry } from "./integrations/terminal/TerminalRegistry"
 import { McpServerManager } from "./services/mcp/McpServerManager"
 import { CodeIndexManager } from "./services/code-index/manager"
+import { registerAutocomplete } from "./services/autocomplete/AutocompleteProvider"
+import { registerCommitMessageProvider } from "./services/commit-message"
 import { migrateSettings } from "./utils/migrateSettings"
+import { checkAndRunAutoLaunchingTask as checkAndRunAutoLaunchingTask } from "./utils/autoLaunchingTask"
 import { API } from "./extension/api"
 
 import {
@@ -37,7 +40,6 @@ import {
 	CodeActionProvider,
 } from "./activate"
 import { initializeI18n } from "./i18n"
-import { registerAutocomplete } from "./services/autocomplete/AutocompleteProvider"
 
 /**
  * Built using https://github.com/microsoft/vscode-webview-ui-toolkit
@@ -62,10 +64,9 @@ export async function activate(context: vscode.ExtensionContext) {
 	await migrateSettings(context, outputChannel)
 
 	// Initialize telemetry service.
-	// const telemetryService = TelemetryService.createInstance()
-
+	const telemetryService = TelemetryService.createInstance()
 	try {
-		// telemetryService.register(new PostHogTelemetryClient())
+		telemetryService.register(new PostHogTelemetryClient())
 	} catch (error) {
 		console.warn("Failed to register PostHogTelemetryClient:", error)
 	}
@@ -172,6 +173,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	)
 
 	registerAutocomplete(context) // kilocode_change
+	registerCommitMessageProvider(context, outputChannel) // kilocode_change
 	registerCodeActions(context)
 	registerTerminalActions(context)
 
@@ -208,6 +210,8 @@ export async function activate(context: vscode.ExtensionContext) {
 			context.subscriptions.push(watcher)
 		})
 	}
+
+	await checkAndRunAutoLaunchingTask(context) // kilocode_change
 
 	return new API(outputChannel, provider, socketPath, enableLogging)
 }

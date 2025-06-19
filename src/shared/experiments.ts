@@ -4,6 +4,7 @@ export const EXPERIMENT_IDS = {
 	AUTOCOMPLETE: "autocomplete",
 	POWER_STEERING: "powerSteering",
 	CONCURRENT_FILE_READS: "concurrentFileReads",
+	DISABLE_COMPLETION_COMMAND: "disableCompletionCommand",
 } as const satisfies Record<string, ExperimentId>
 
 type _AssertExperimentIds = AssertEqual<Equals<ExperimentId, Values<typeof EXPERIMENT_IDS>>>
@@ -18,6 +19,7 @@ export const experimentConfigsMap: Record<ExperimentKey, ExperimentConfig> = {
 	AUTOCOMPLETE: { enabled: false }, // kilocode_change
 	POWER_STEERING: { enabled: false },
 	CONCURRENT_FILE_READS: { enabled: false },
+	DISABLE_COMPLETION_COMMAND: { enabled: false },
 }
 
 export const experimentDefault = Object.fromEntries(

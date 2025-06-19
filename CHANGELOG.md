@@ -1,5 +1,84 @@
 # Kilo Code AI Agent-Chinese
 
+## [v4.37.0]
+
+### Minor Changes
+
+- [#724](https://github.com/Kilo-Org/kilocode/pull/724) [`a3d70ac`](https://github.com/Kilo-Org/kilocode/commit/a3d70ac457c41ccb01f892237c948156cea20b86) Thanks [@chrarnoldus](https://github.com/chrarnoldus)! - Added support for Excel (.xlsx) files
+
+## [v4.36.0]
+
+- [#690](https://github.com/Kilo-Org/kilocode/pull/690) [`9b1451a`](https://github.com/Kilo-Org/kilocode/commit/9b1451a47bd2bc567646a4a0c2a12b42826ab9d1) Thanks [@kevinvandijk](https://github.com/kevinvandijk)! - Include changes from Roo Code v3.19.7:
+
+    - Fix McpHub sidebar focus behavior to prevent unwanted focus grabbing
+    - Disable checkpoint functionality when nested git repositories are detected to prevent conflicts
+    - Remove unused Storybook components and dependencies to reduce bundle size
+    - Add data-testid ESLint rule for improved testing standards (thanks @elianiva!)
+    - Update development dependencies including eslint, knip, @types/node, i18next, fast-xml-parser, and @google/genai
+    - Improve CI infrastructure with GitHub Actions and Blacksmith runner migrations
+    - Replace explicit caching with implicit caching to reduce latency for Gemini models
+    - Clarify that the default concurrent file read limit is 15 files (thanks @olearycrew!)
+    - Fix copy button logic (thanks @samhvw8!)
+    - Fade buttons on history preview if no interaction in progress (thanks @sachasayan!)
+    - Allow MCP server refreshing, fix state changes in MCP server management UI view (thanks @taylorwilsdon!)
+    - Remove unnecessary npx usage in some npm scripts (thanks @user202729!)
+    - Bug fix for trailing slash error when using LiteLLM provider (thanks @kcwhite!)
+    - Fix Gemini 2.5 Pro Preview thinking budget bug
+    - Add Gemini Pro 06-05 model support (thanks @daniel-lxs and @shariqriazz!)
+    - Fix reading PDF, DOCX, and IPYNB files in read_file tool (thanks @samhvw8!)
+    - Fix Mermaid CSP errors with enhanced bundling strategy (thanks @KJ7LNW!)
+    - Improve model info detection for custom Bedrock ARNs (thanks @adamhill!)
+    - Add OpenAI Compatible embedder for codebase indexing (thanks @SannidhyaSah!)
+    - Fix multiple memory leaks in ChatView component (thanks @kiwina!)
+    - Fix WorkspaceTracker resource leaks by disposing FileSystemWatcher (thanks @kiwina!)
+    - Fix RooTips setTimeout cleanup to prevent state updates on unmounted components (thanks @kiwina!)
+    - Fix FileSystemWatcher leak in RooIgnoreController (thanks @kiwina!)
+    - Fix clipboard memory leak by clearing setTimeout in useCopyToClipboard (thanks @kiwina!)
+    - Fix ClineProvider instance cleanup (thanks @xyOz-dev!)
+    - Enforce codebase_search as primary tool for code understanding tasks (thanks @hannesrudolph!)
+    - Improve Docker setup for evals
+    - Move evals into pnpm workspace, switch from SQLite to Postgres
+    - Refactor MCP to use getDefaultEnvironment for stdio client transport (thanks @samhvw8!)
+    - Get rid of "partial" component in names referencing not necessarily partial messages (thanks @wkordalski!)
+    - Improve feature request template (thanks @elianiva!)
+
+- [#592](https://github.com/Kilo-Org/kilocode/pull/592) [`68c3d6e`](https://github.com/Kilo-Org/kilocode/commit/68c3d6e7a1250e08e2bd2b9cbbbd6b4312bad045) Thanks [@chrarnoldus](https://github.com/chrarnoldus)! - Workflow and rules configuration screen added
+
+### Patch Changes
+
+- [#697](https://github.com/Kilo-Org/kilocode/pull/697) [`9514f22`](https://github.com/Kilo-Org/kilocode/commit/9514f22a9d77b2d838ddcb97b5f2c5909aaea68a) Thanks [@kevinvandijk](https://github.com/kevinvandijk)! - Add correct path to walkthrough files to show walkthrough on first load (thanks for the report @adamhill!)
+
+## [v4.35.1]
+
+- [#695](https://github.com/Kilo-Org/kilocode/pull/695) [`a7910eb`](https://github.com/Kilo-Org/kilocode/commit/a7910eba54a4ede296bfa82beddae71a1d9f77c5) Thanks [@kevinvandijk](https://github.com/kevinvandijk)! - Fix: Feedback button overlaps new mode creation dialog
+
+- [#693](https://github.com/Kilo-Org/kilocode/pull/693) [`2a9edf8`](https://github.com/Kilo-Org/kilocode/commit/2a9edf85ca2062d0b296430348ebac967f28febb) Thanks [@hassoncs](https://github.com/hassoncs)! - Temporarily remove .kilocode/rule loading for commit message generation until it works better
+
+## [v4.35.0]
+
+- [#633](https://github.com/Kilo-Org/kilocode/pull/633) [`347cf9e`](https://github.com/Kilo-Org/kilocode/commit/347cf9e6dc10d5b8706af5e111ccc854f7742566) Thanks [@hassoncs](https://github.com/hassoncs)! - # AI-Powered Git Commit Message Generation
+
+    Automatically generate meaningful Git commit messages using AI
+
+    ## How It Works
+
+    1. Stage your changes in Git as usual
+    2. Click the [KILO] square icon in the Source Control panel
+    3. The AI analyzes your staged changes and generates an appropriate commit message
+    4. The generated message is automatically populated in the commit input box
+
+- [#638](https://github.com/Kilo-Org/kilocode/pull/638) [`3d2e749`](https://github.com/Kilo-Org/kilocode/commit/3d2e749d51797681c018bc390757fdabefd60620) Thanks [@tru-kilo](https://github.com/tru-kilo)! - Added ability to favorite tasks
+
+## [v4.34.1]
+
+### Patch Changes
+
+- [#612](https://github.com/Kilo-Org/kilocode/pull/612) [`793cfdd`](https://github.com/Kilo-Org/kilocode/commit/793cfdd4fc1411c63c818e14b0b6ca8c5225a859) Thanks [@HadesArchitect](https://github.com/HadesArchitect)! - - #611 Customer Support Visibility (Added links to contact customer support)
+
+- [#672](https://github.com/Kilo-Org/kilocode/pull/672) [`c3d955c`](https://github.com/Kilo-Org/kilocode/commit/c3d955c2280258601d5f4b05101710e34d540075) Thanks [@chrarnoldus](https://github.com/chrarnoldus)! - Fixed response times for gemini-2.5-pro-preview being very slow (minutes instead of seconds)
+
+- [#671](https://github.com/Kilo-Org/kilocode/pull/671) [`e0a3740`](https://github.com/Kilo-Org/kilocode/commit/e0a37406fe8102b1acd4f8e9005652e828a14e36) Thanks [@chrarnoldus](https://github.com/chrarnoldus)! - OpenRouter bring-your-own-key models now have much more accurate cost estimates.
+
 ## [v4.34.0]
 
 ### Minor Changes

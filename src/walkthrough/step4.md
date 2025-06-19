@@ -1,7 +1,7 @@
-# Architect mode
+# 架构师模式
 
-<img src="images/design_patterns.png" alt="design patterns" />
+<img src="images/design_patterns.png" alt="设计模式" />
 
-Need to plan before writing code? Switch to Architect mode and ask high-level questions about structure, patterns, or logic.
+在编写代码之前需要规划吗？切换到架构师模式，并询问有关结构、模式或逻辑的高级问题。
 
-Use it to break down features, map out components, or design how everything should work before diving in.
+用它来分解功能、规划组件，或在深入之前设计一切应该如何工作。

@@ -1,21 +1,20 @@
 // import { useExtensionState } from "@/context/ExtensionStateContext" // No longer needed
-import React, { useEffect } from "react"
+import Logo from "../common/Logo"
 import { Trans } from "react-i18next"
 import { vscode } from "@/utils/vscode"
-
-import { ProfileDataResponsePayload, WebviewMessage } from "@roo/WebviewMessage"
-import { VSCodeButtonLink } from "@/components/common/VSCodeButtonLink"
-import { VSCodeButton, VSCodeDivider, VSCodeLink } from "@vscode/webview-ui-toolkit/react"
-import { useExtensionState } from "@/context/ExtensionStateContext"
+import React, { useEffect } from "react"
+import { getShengSuanYunAuthUrl } from "@/oauth/urls"
 import { useAppTranslation } from "@/i18n/TranslationContext"
-import Logo from "../common/Logo"
+import { useExtensionState } from "@/context/ExtensionStateContext"
+import { VSCodeButtonLink } from "@/components/common/VSCodeButtonLink"
+import { ProfileDataResponsePayload, WebviewMessage } from "@roo/WebviewMessage"
+import { VSCodeButton, VSCodeDivider, VSCodeLink } from "@vscode/webview-ui-toolkit/react"
 
 interface ProfileProps {
 	onDone: () => void
 }
-
 const Profile: React.FC<ProfileProps> = ({ onDone: _onDone }) => {
-	const { apiConfiguration, currentApiConfigName } = useExtensionState()
+	const { apiConfiguration, uriScheme } = useExtensionState()
 	const { t } = useAppTranslation()
 	const [profileData, setProfileData] = React.useState<any>(null)
 	const [isLoadingUser, setIsLoadingUser] = React.useState(true)
@@ -47,17 +46,17 @@ const Profile: React.FC<ProfileProps> = ({ onDone: _onDone }) => {
 		}
 	}, [])
 
-	function handleLogout(): void {
-		console.info("Logging out...", apiConfiguration)
-		vscode.postMessage({
-			type: "upsertApiConfiguration",
-			text: currentApiConfigName,
-			apiConfiguration: {
-				...apiConfiguration,
-				shengSuanYunXToken: "",
-			},
-		})
-	}
+	// function handleLogout(): void {
+	// 	console.info("Logging out...", apiConfiguration)
+	// 	vscode.postMessage({
+	// 		type: "upsertApiConfiguration",
+	// 		text: currentApiConfigName,
+	// 		apiConfiguration: {
+	// 			...apiConfiguration,
+	// 			shengSuanYunXToken: "",
+	// 		},
+	// 	})
+	// }
 
 	if (isLoadingUser) {
 		return <></>
@@ -99,29 +98,41 @@ const Profile: React.FC<ProfileProps> = ({ onDone: _onDone }) => {
 						</div>
 						<VSCodeButton
 							appearance="secondary"
-							onClick={handleLogout}
+							onClick={() => _onDone()}
 							className="w-full min-[225px]:w-1/2">
-							{t("kilocode:profile.logOut")}
+							确 定
 						</VSCodeButton>
 					</div>
 
 					<VSCodeDivider className="w-full my-6" />
 
-					<div className="w-full flex flex-col items-center">
-						<div className="text-sm text-[var(--vscode-descriptionForeground)] mb-3">
-							{t("kilocode:profile.currentBalance")}
+					{profileData.Wallet.Assets < 1 ? (
+						<div className="w-full flex flex-col items-center">
+							<div className="text-sm text-[var(--vscode-descriptionForeground)] mb-3">
+								进群联系客服，领取免费额度
+							</div>
+							<div className="w-[130px] h-[130px]">
+								<img
+									src="https://router.shengsuanyun.com/webp/relation-BDyr0A7L.webp"
+									alt="customer service"
+								/>
+							</div>
 						</div>
-						<div className="text-2xl font-bold text-[var(--vscode-foreground)] mb-6 flex items-center gap-2">
-							<span>￥{(profileData.Wallet.Assets / 10000).toFixed(2)}</span>
+					) : (
+						<div className="w-full flex flex-col items-center">
+							<div className="text-sm text-[var(--vscode-descriptionForeground)] mb-3">
+								{t("kilocode:profile.currentBalance")}
+							</div>
+							<div className="text-2xl font-bold text-[var(--vscode-foreground)] mb-6 flex items-center gap-2">
+								<span>￥{(profileData.Wallet.Assets / 10000).toFixed(2)}</span>
+							</div>
 						</div>
-					</div>
+					)}
 				</div>
 			) : (
 				<div className="flex flex-col items-center pr-3">
 					<p className="text-center">{t("kilocode:profile.signUp.description")}</p>
-					<VSCodeButtonLink
-						href={`https://router.shengsuanyun.com/auth?callback_url=vscode://shengsuan-cloud.kilo-ssy/ssy`}
-						className="w-full mb-4">
+					<VSCodeButtonLink href={getShengSuanYunAuthUrl(uriScheme)} className="w-full mb-4">
 						{t("kilocode:profile.signUp.title")}
 					</VSCodeButtonLink>
 					<p className="text-[var(--vscode-descriptionForeground)] text-xs text-center m-0">

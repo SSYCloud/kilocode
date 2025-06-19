@@ -3,7 +3,7 @@
 	"displayName": "%extension.displayName%",
 	"description": "%extension.description%",
 	"publisher": "shengsuan-cloud",
-	"version": "4.34.0",
+	"version": "4.37.0",
 	"icon": "assets/images/panel_light.png",
 	"galleryBanner": {
 		"color": "#FFFFFF",
@@ -63,7 +63,7 @@
 						"title": "Write code for you",
 						"description": "Describe what you want to build. Kilo Code will write it from scratch, generate the files, and run them for you.",
 						"media": {
-							"markdown": "walkthrough/step1.md"
+							"markdown": "./dist/walkthrough/step1.md"
 						}
 					},
 					{
@@ -71,10 +71,10 @@
 						"title": "Understand your codebase",
 						"description": "Need clarity on how something works? Ask Kilo Code about any part of your files and get a clear explanation.",
 						"media": {
-							"markdown": "walkthrough/step2.md"
+							"markdown": "./dist/walkthrough/step2.md"
 						},
 						"content": {
-							"path": "walkthrough/step2.md"
+							"path": "./dist/walkthrough/step2.md"
 						}
 					},
 					{
@@ -82,7 +82,7 @@
 						"title": "Get things working again",
 						"description": "Stuck on an error? Kilo Code can find the issue, fix it, and get your code running.",
 						"media": {
-							"markdown": "walkthrough/step3.md"
+							"markdown": "./dist/walkthrough/step3.md"
 						}
 					},
 					{
@@ -90,7 +90,7 @@
 						"title": "Plan your logic",
 						"description": "Not sure where to start? Map out your logic and structure before writing a single line of code.",
 						"media": {
-							"markdown": "walkthrough/step4.md"
+							"markdown": "./dist/walkthrough/step4.md"
 						}
 					},
 					{
@@ -98,7 +98,7 @@
 						"title": "And more",
 						"description": "Improve your prompt, add context, or create your own custom modes.",
 						"media": {
-							"markdown": "walkthrough/step5.md"
+							"markdown": "./dist/walkthrough/step5.md"
 						}
 					}
 				]
@@ -229,6 +229,15 @@
 				"title": "%command.profile.title%",
 				"icon": "$(account)",
 				"category": "%configuration.title%"
+			},
+			{
+				"command": "kilo-ssy.generateCommitMessage",
+				"title": "%command.generateCommitMessage.title%",
+				"icon": {
+					"light": "assets/icons/kilo-light.svg",
+					"dark": "assets/icons/kilo-dark.svg"
+				},
+				"category": "%configuration.title%"
 			}
 		],
 		"keybindings": [
@@ -358,6 +367,19 @@
 					"group": "navigation@6",
 					"when": "activeWebviewPanelId == kilo-ssy.TabPanelProvider"
 				}
+			],
+			"scm/input": [
+				{
+					"command": "kilo-ssy.generateCommitMessage",
+					"group": "navigation"
+				}
+			],
+			"scm/title": [
+				{
+					"command": "kilo-ssy.generateCommitMessage",
+					"when": "scmProvider == git",
+					"group": "navigation"
+				}
 			]
 		},
 		"submenus": [
@@ -418,7 +440,7 @@
 		"format": "prettier --write .",
 		"bundle": "node esbuild.mjs",
 		"vscode:prepublish": "pnpm bundle --production",
-		"vsix": "mkdirp ../bin && npx vsce package --no-dependencies --out ../bin",
+		"vsix": "mkdirp ../bin && vsce package --no-dependencies --out ../bin",
 		"publish:marketplace": "vsce publish --no-dependencies && ovsx publish --no-dependencies",
 		"watch:bundle": "pnpm bundle --watch",
 		"watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
@@ -430,7 +452,7 @@
 		"@anthropic-ai/vertex-sdk": "^0.11.3",
 		"@aws-sdk/client-bedrock-runtime": "^3.812.0",
 		"@aws-sdk/credential-providers": "^3.806.0",
-		"@google/genai": "^0.13.0",
+		"@google/genai": "^1.0.0",
 		"@mistralai/mistralai": "^1.6.0",
 		"@modelcontextprotocol/sdk": "^1.9.0",
 		"@roo-code/cloud": "workspace:^",
@@ -449,13 +471,14 @@
 		"delay": "^6.0.0",
 		"diff": "^5.2.0",
 		"diff-match-patch": "^1.0.5",
+		"exceljs": "^4.4.0",
 		"fast-deep-equal": "^3.1.3",
-		"fast-xml-parser": "^4.5.1",
+		"fast-xml-parser": "^5.0.0",
 		"fastest-levenshtein": "^1.0.16",
 		"fzf": "^0.5.2",
 		"get-folder-size": "^5.0.0",
 		"google-auth-library": "^9.15.1",
-		"i18next": "^24.2.2",
+		"i18next": "^25.0.0",
 		"ignore": "^7.0.3",
 		"isbinaryfile": "^5.0.2",
 		"lru-cache": "^11.1.0",

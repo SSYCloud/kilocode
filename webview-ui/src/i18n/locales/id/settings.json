@@ -521,6 +521,10 @@
 		"MULTI_SEARCH_AND_REPLACE": {
 			"name": "Gunakan tool multi block diff eksperimental",
 			"description": "Ketika diaktifkan, Kilo Code akan menggunakan tool multi block diff. Ini akan mencoba memperbarui beberapa blok kode dalam file dalam satu permintaan."
+		},
+		"DISABLE_COMPLETION_COMMAND": {
+			"name": "Nonaktifkan eksekusi perintah di attempt_completion",
+			"description": "Ketika diaktifkan, tool attempt_completion tidak akan mengeksekusi perintah. Ini adalah fitur eksperimental untuk mempersiapkan penghentian eksekusi perintah dalam penyelesaian tugas."
 		}
 	},
 	"promptCaching": {
