@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 import Image from "next/image"
 import { TestimonialsMobile } from "./testimonials-mobile"
 
@@ -48,7 +48,7 @@ export const testimonials: Testimonial[] = [
 export function Testimonials() {
 	const containerRef = useRef<HTMLDivElement>(null)
 
-	const containerVariants = {
+	const containerVariants: Variants = {
 		hidden: { opacity: 0 },
 		visible: {
 			opacity: 1,
@@ -59,7 +59,7 @@ export function Testimonials() {
 		},
 	}
 
-	const itemVariants = {
+	const itemVariants: Variants = {
 		hidden: {
 			opacity: 0,
 			y: 20,
