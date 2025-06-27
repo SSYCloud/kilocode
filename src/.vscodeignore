@@ -1,6 +1,6 @@
 # Exclude everything
 **
-
+src/assets/docs/**
 # Include README.md, CHANGELOG.md and LICENSE
 !README.md
 !CHANGELOG.md
