@@ -74,7 +74,7 @@ export function Testimonials() {
 		},
 	}
 
-	const backgroundVariants = {
+	const backgroundVariants: Variants = {
 		hidden: {
 			opacity: 0,
 		},
