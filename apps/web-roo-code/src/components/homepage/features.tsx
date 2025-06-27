@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 import { FaRobot, FaCode, FaBrain, FaTools, FaTerminal, FaPuzzlePiece, FaGlobe } from "react-icons/fa"
 import { FeaturesMobile } from "./features-mobile"
 
@@ -77,7 +77,7 @@ export function Features() {
 		},
 	}
 
-	const itemVariants = {
+	const itemVariants: Variants = {
 		hidden: {
 			opacity: 0,
 			y: 20,
@@ -92,7 +92,7 @@ export function Features() {
 		},
 	}
 
-	const backgroundVariants = {
+	const backgroundVariants: Variants = {
 		hidden: {
 			opacity: 0,
 		},

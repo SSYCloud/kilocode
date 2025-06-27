@@ -2,14 +2,14 @@
 
 import { VscVscode } from "react-icons/vsc"
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 
 interface InstallSectionProps {
 	downloads: string | null
 }
 
 export function InstallSection({ downloads }: InstallSectionProps) {
-	const backgroundVariants = {
+	const backgroundVariants: Variants = {
 		hidden: {
 			opacity: 0,
 		},

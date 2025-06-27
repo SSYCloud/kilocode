@@ -18,7 +18,6 @@ import WelcomeView from "./components/welcome/WelcomeView" // kilocode_change
 import ModesView from "./components/modes/ModesView"
 import { HumanRelayDialog } from "./components/human-relay/HumanRelayDialog"
 import BottomControls from "./components/kilocode/BottomControls" // kilocode_change
-import { AccountView } from "./components/account/AccountView"
 import Profile from "./components/kilocode/profile/Profile"
 // import { AccountView } from "./components/account/AccountView" // kilocode_change: we have our own profile view
 import { useAddNonInteractiveClickListener } from "./components/ui/hooks/useNonInteractiveClick"
