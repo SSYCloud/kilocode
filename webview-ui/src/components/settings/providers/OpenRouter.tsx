@@ -30,6 +30,7 @@ type OpenRouterProps = {
 	uriScheme: string | undefined
 	fromWelcomeView?: boolean
 	organizationAllowList: OrganizationAllowList
+	modelValidationError?: string
 }
 
 export const OpenRouter = ({
@@ -40,6 +41,7 @@ export const OpenRouter = ({
 	uriScheme,
 	fromWelcomeView,
 	organizationAllowList,
+	modelValidationError,
 }: OpenRouterProps) => {
 	const { t } = useAppTranslation()
 
@@ -56,13 +58,20 @@ export const OpenRouter = ({
 		[setApiConfigurationField],
 	)
 
-	const { data: openRouterModelProviders } = useOpenRouterModelProviders(apiConfiguration?.openRouterModelId, {
-		enabled:
-			!!apiConfiguration?.openRouterModelId &&
-			routerModels?.openrouter &&
-			Object.keys(routerModels.openrouter).length > 1 &&
-			apiConfiguration.openRouterModelId in routerModels.openrouter,
-	})
+	// kilocode_change start: openRouterBaseUrl, apiKey
+	const { data: openRouterModelProviders } = useOpenRouterModelProviders(
+		apiConfiguration?.openRouterModelId,
+		apiConfiguration?.openRouterBaseUrl,
+		apiConfiguration?.apiKey,
+		{
+			enabled:
+				!!apiConfiguration?.openRouterModelId &&
+				routerModels?.openrouter &&
+				Object.keys(routerModels.openrouter).length > 1 &&
+				apiConfiguration.openRouterModelId in routerModels.openrouter,
+		},
+	)
+	// kilocode_change end
 
 	return (
 		<>
@@ -135,6 +144,7 @@ export const OpenRouter = ({
 				serviceName="OpenRouter"
 				serviceUrl="https://openrouter.ai/models"
 				organizationAllowList={organizationAllowList}
+				errorMessage={modelValidationError}
 			/>
 			{openRouterModelProviders && Object.keys(openRouterModelProviders).length > 0 && (
 				<div>

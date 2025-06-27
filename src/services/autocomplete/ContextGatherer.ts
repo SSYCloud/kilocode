@@ -403,18 +403,15 @@ export class ContextGatherer {
 
 	// AIDIFF: Simplified findChildren, predicate based.
 	// PLANREF: continue/extensions/vscode/src/autocomplete/lsp.ts (findChildren)
-	private _findSyntaxNodes(
-		node: Parser.SyntaxNode,
-		predicate: (n: Parser.SyntaxNode) => boolean,
-	): Parser.SyntaxNode[] {
-		const matchingNodes: Parser.SyntaxNode[] = []
-		const queue: Parser.SyntaxNode[] = [node]
+	private _findSyntaxNodes(node: Parser.Node, predicate: (n: Parser.Node) => boolean): Parser.Node[] {
+		const matchingNodes: Parser.Node[] = []
+		const queue: Parser.Node[] = [node]
 		while (queue.length > 0) {
 			const currentNode = queue.shift()!
 			if (predicate(currentNode)) {
 				matchingNodes.push(currentNode)
 			}
-			queue.push(...currentNode.children)
+			queue.push(...currentNode.children.filter((child): child is Parser.Node => child !== null))
 		}
 		return matchingNodes
 	}
@@ -505,7 +502,7 @@ export class ContextGatherer {
 	// PLANREF: continue/extensions/vscode/src/autocomplete/lsp.ts (getDefinitionsForNode)
 	private async _getDefinitionsForNodeLsp(
 		documentUri: vscode.Uri,
-		node: Parser.SyntaxNode,
+		node: Parser.Node,
 		langInfo?: AutocompleteLanguageInfo, // AIDIFF: Make langInfo optional
 	): Promise<CodeContextDefinition[]> {
 		const definitions: CodeContextDefinition[] = []
@@ -537,8 +534,8 @@ export class ContextGatherer {
 									).find((fn) => fn.startPosition.row === 0) // Assuming defAst is for the range
 
 									if (funcNode) {
-										const bodyNode = funcNode.children.find((c) =>
-											FUNCTION_BLOCK_NODE_TYPES.includes(c.type),
+										const bodyNode = funcNode.children.find(
+											(c) => c !== null && FUNCTION_BLOCK_NODE_TYPES.includes(c.type),
 										)
 										if (bodyNode) {
 											content = defAst.rootNode.text.substring(0, bodyNode.startIndex).trim()

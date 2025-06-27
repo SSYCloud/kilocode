@@ -29,6 +29,7 @@ docs/_site/
 
 # Logging
 logs
+*.log
 
 # Vite development
 .vite-port
@@ -44,3 +45,6 @@ logs
 .qodo/
 .vercel
 .roo/mcp.json
+
+# Nix / Direnv
+.direnv

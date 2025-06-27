@@ -1,22 +1,22 @@
 import React from "react"
 import type { HistoryItem } from "@roo-code/types"
-import prettyBytes from "pretty-bytes"
-import { vscode } from "@/utils/vscode"
 import { formatDate } from "@/utils/format"
-import { Button } from "@/components/ui"
-import { CopyButton } from "./CopyButton"
+import { DeleteButton } from "./DeleteButton"
+import { cn } from "@/lib/utils"
+import { Button } from "@src/components/ui"
+import { vscode } from "@/utils/vscode" // kilocode_change: pull slash commands from Cline
+import { useAppTranslation } from "@/i18n/TranslationContext"
 
 export interface TaskItemHeaderProps {
 	item: HistoryItem
-	variant: "compact" | "full"
 	isSelectionMode: boolean
-	t: (key: string, options?: any) => string
 	onDelete?: (taskId: string) => void
 }
 
-const TaskItemHeader: React.FC<TaskItemHeaderProps> = ({ item, variant, isSelectionMode, t, onDelete }) => {
-	const isCompact = variant === "compact"
+const TaskItemHeader: React.FC<TaskItemHeaderProps> = ({ item, isSelectionMode, onDelete }) => {
+	const { t } = useAppTranslation()
 
+	// kilocode_change start
 	// Standardized icon styles
 	const actionIconStyle: React.CSSProperties = {
 		fontSize: "16px",
@@ -24,16 +24,6 @@ const TaskItemHeader: React.FC<TaskItemHeaderProps> = ({ item, variant, isSelect
 		verticalAlign: "middle",
 	}
 
-	const handleDeleteClick = (e: React.MouseEvent) => {
-		e.stopPropagation()
-		if (e.shiftKey) {
-			vscode.postMessage({ type: "deleteTaskWithId", text: item.id })
-		} else if (onDelete) {
-			onDelete(item.id)
-		}
-	}
-
-	// kilocode_change start
 	const handleFavoriteClick = (e: React.MouseEvent) => {
 		e.stopPropagation()
 		vscode.postMessage({ type: "toggleTaskFavorite", text: item.id })
@@ -41,7 +31,12 @@ const TaskItemHeader: React.FC<TaskItemHeaderProps> = ({ item, variant, isSelect
 	// kilocode_change end
 
 	return (
-		<div className="flex justify-between items-center pb-0">
+		<div
+			className={cn("flex justify-between items-center", {
+				// this is to balance out the margin when we don't have a delete button
+				// because the delete button sorta pushes the date up due to its size
+				"mb-1": !onDelete,
+			})}>
 			<div className="flex items-center flex-wrap gap-x-2 text-xs">
 				<span className="text-vscode-descriptionForeground font-medium text-sm uppercase">
 					{formatDate(item.ts)}
@@ -66,28 +61,7 @@ const TaskItemHeader: React.FC<TaskItemHeaderProps> = ({ item, variant, isSelect
 						/>
 					</Button>
 					{/* kilocode_change end */}
-
-					{isCompact ? (
-						<CopyButton itemTask={item.task} />
-					) : (
-						<>
-							{onDelete && (
-								<Button
-									variant="ghost"
-									size="icon"
-									title={t("history:deleteTaskTitle")}
-									data-testid="delete-task-button"
-									onClick={handleDeleteClick}>
-									<span className="codicon codicon-trash" style={actionIconStyle} />
-								</Button>
-							)}
-							{!isCompact && item.size && (
-								<span className="text-vscode-descriptionForeground ml-1 text-sm">
-									{prettyBytes(item.size)}
-								</span>
-							)}
-						</>
-					)}
+					{onDelete && <DeleteButton itemId={item.id} onDelete={onDelete} />}
 				</div>
 			)}
 		</div>

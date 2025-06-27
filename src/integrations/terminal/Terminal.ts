@@ -6,6 +6,7 @@ import { BaseTerminal } from "./BaseTerminal"
 import { TerminalProcess } from "./TerminalProcess"
 import { ShellIntegrationManager } from "./ShellIntegrationManager"
 import { mergePromise } from "./mergePromise"
+import { getWorkspacePath } from "../../utils/path" // kilocode_change
 
 export class Terminal extends BaseTerminal {
 	public terminal: vscode.Terminal
@@ -157,6 +158,8 @@ export class Terminal extends BaseTerminal {
 			// VTE must be disabled because it prevents the prompt command from executing
 			// See https://wiki.gnome.org/Apps/Terminal/VTE
 			VTE_VERSION: "0",
+
+			WORKSPACE_ROOT: getWorkspacePath(), // kilocode_change
 		}
 
 		// Set Oh My Zsh shell integration if enabled

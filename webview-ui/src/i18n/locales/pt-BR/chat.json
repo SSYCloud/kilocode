@@ -12,7 +12,11 @@
 		"export": "Exportar histórico de tarefas",
 		"delete": "Excluir tarefa (Shift + Clique para pular confirmação)",
 		"condenseContext": "Condensar contexto de forma inteligente",
-		"share": "Compartilhar tarefa"
+		"share": "Compartilhar tarefa",
+		"shareWithOrganization": "Compartilhar com organização",
+		"shareWithOrganizationDescription": "Apenas membros da sua organização podem acessar",
+		"sharePublicly": "Compartilhar publicamente",
+		"sharePubliclyDescription": "Qualquer pessoa com o link pode acessar"
 	},
 	"history": {
 		"title": "Histórico"
@@ -81,7 +85,7 @@
 	"onboarding": "<strong>Sua lista de tarefas neste espaço de trabalho está vazia.</strong> Comece digitando uma tarefa abaixo. Não sabe como começar? Leia mais sobre o que o Kilo Code pode fazer por você nos <DocsLink>documentos</DocsLink>.",
 	"rooTips": {
 		"boomerangTasks": {
-			"title": "Tarefas Bumerangue",
+			"title": "Orquestração de Tarefas",
 			"description": "Divida as tarefas em partes menores e gerenciáveis."
 		},
 		"stickyModels": {
@@ -151,6 +155,7 @@
 		"didRead": "Kilo Code leu este arquivo:",
 		"wantsToEdit": "Kilo Code quer editar este arquivo:",
 		"wantsToEditOutsideWorkspace": "Kilo Code quer editar este arquivo fora do espaço de trabalho:",
+		"wantsToEditProtected": "Kilo Code quer editar um arquivo de configuração protegido:",
 		"wantsToCreate": "Kilo Code quer criar um novo arquivo:",
 		"wantsToSearchReplace": "Kilo Code quer realizar busca e substituição neste arquivo:",
 		"didSearchReplace": "Kilo Code realizou busca e substituição neste arquivo:",
@@ -158,7 +163,8 @@
 		"wantsToInsertWithLineNumber": "Kilo Code quer inserir conteúdo neste arquivo na linha {{lineNumber}}:",
 		"wantsToInsertAtEnd": "Kilo Code quer adicionar conteúdo ao final deste arquivo:",
 		"wantsToReadAndXMore": "Kilo Code quer ler este arquivo e mais {{count}}:",
-		"wantsToReadMultiple": "Kilo Code deseja ler múltiplos arquivos:"
+		"wantsToReadMultiple": "Kilo Code deseja ler múltiplos arquivos:",
+		"wantsToApplyBatchChanges": "Kilo Code quer aplicar alterações a múltiplos arquivos:"
 	},
 	"directoryOperations": {
 		"wantsToViewTopLevel": "Kilo Code quer visualizar os arquivos de nível superior neste diretório:",
@@ -168,7 +174,15 @@
 		"wantsToViewDefinitions": "Kilo Code quer visualizar nomes de definição de código-fonte usados neste diretório:",
 		"didViewDefinitions": "Kilo Code visualizou nomes de definição de código-fonte usados neste diretório:",
 		"wantsToSearch": "Kilo Code quer pesquisar neste diretório por <code>{{regex}}</code>:",
-		"didSearch": "Kilo Code pesquisou neste diretório por <code>{{regex}}</code>:"
+		"didSearch": "Kilo Code pesquisou neste diretório por <code>{{regex}}</code>:",
+		"wantsToSearchOutsideWorkspace": "Kilo Code quer pesquisar neste diretório (fora do espaço de trabalho) por <code>{{regex}}</code>:",
+		"didSearchOutsideWorkspace": "Kilo Code pesquisou neste diretório (fora do espaço de trabalho) por <code>{{regex}}</code>:",
+		"wantsToViewTopLevelOutsideWorkspace": "Kilo Code quer visualizar os arquivos de nível superior neste diretório (fora do espaço de trabalho):",
+		"didViewTopLevelOutsideWorkspace": "Kilo Code visualizou os arquivos de nível superior neste diretório (fora do espaço de trabalho):",
+		"wantsToViewRecursiveOutsideWorkspace": "Kilo Code quer visualizar recursivamente todos os arquivos neste diretório (fora do espaço de trabalho):",
+		"didViewRecursiveOutsideWorkspace": "Kilo Code visualizou recursivamente todos os arquivos neste diretório (fora do espaço de trabalho):",
+		"wantsToViewDefinitionsOutsideWorkspace": "Kilo Code quer visualizar nomes de definição de código-fonte usados neste diretório (fora do espaço de trabalho):",
+		"didViewDefinitionsOutsideWorkspace": "Kilo Code visualizou nomes de definição de código-fonte usados neste diretório (fora do espaço de trabalho):"
 	},
 	"commandOutput": "Saída do comando",
 	"response": "Resposta",
@@ -219,11 +233,11 @@
 	},
 	"announcement": {
 		"title": "🎉 Roo Code {{version}} Lançado",
-		"description": "Roo Code {{version}} traz poderosos novos recursos e melhorias baseados no seu feedback.",
+		"description": "Roo Code {{version}} traz importantes novos recursos e melhorias baseados no seu feedback.",
 		"whatsNew": "O que há de novo",
-		"feature1": "<bold>Condensação Inteligente de Contexto Habilitada por Padrão</bold>: A condensação de contexto agora está habilitada por padrão com configurações ajustáveis para quando a condensação automática acontece",
-		"feature2": "<bold>Botão de Condensação Manual</bold>: Novo botão no cabeçalho da tarefa permite acionar manualmente a condensação de contexto a qualquer momento",
-		"feature3": "<bold>Configurações de Condensação Aprimoradas</bold>: Ajuste quando e como a condensação automática ocorre através das <contextSettingsLink>Configurações de Contexto</contextSettingsLink>",
+		"feature1": "<bold>Lançamento do Marketplace Roo</bold>: O marketplace está agora no ar! Descubra e instale modos e MCPs mais facilmente do que nunca.",
+		"feature2": "<bold>Modelos Gemini 2.5</bold>: Adicionado suporte para novos modelos Gemini 2.5 Pro, Flash e Flash Lite.",
+		"feature3": "<bold>Suporte a Arquivos Excel e Mais</bold>: Adicionado suporte a arquivos Excel (.xlsx) e numerosas correções de bugs e melhorias!",
 		"hideButton": "Ocultar anúncio",
 		"detailsDiscussLinks": "Obtenha mais detalhes e participe da discussão no <discordLink>Discord</discordLink> e <redditLink>Reddit</redditLink> 🚀"
 	},
@@ -284,5 +298,12 @@
 		"deny": {
 			"title": "Negar tudo"
 		}
+	},
+	"indexingStatus": {
+		"ready": "Índice pronto",
+		"indexing": "Indexando {{percentage}}%",
+		"indexed": "Indexado",
+		"error": "Erro do índice",
+		"status": "Status do índice"
 	}
 }

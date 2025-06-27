@@ -43,12 +43,12 @@
 		"title": "Moda özgü özel talimatlar (isteğe bağlı)",
 		"resetToDefault": "Varsayılana sıfırla",
 		"description": "{{modeName}} modu için özel davranış yönergeleri ekleyin.",
-		"loadFromFile": "{{mode}} moduna özgü özel talimatlar ayrıca çalışma alanınızdaki <span>.kilocode/rules/</span> klasöründen yüklenebilir (.kilocoderules-{{slug}} kullanımdan kaldırılmıştır ve yakında çalışmayı durduracaktır)."
+		"loadFromFile": "{{mode}} moduna özgü özel talimatlar ayrıca çalışma alanınızdaki <span>.kilocode-chinese/rules/</span> klasöründen yüklenebilir (.kilocoderules-{{slug}} kullanımdan kaldırılmıştır ve yakında çalışmayı durduracaktır)."
 	},
 	"globalCustomInstructions": {
 		"title": "Tüm Modlar için Özel Talimatlar",
 		"description": "Bu talimatlar tüm modlara uygulanır. Aşağıdaki moda özgü talimatlarla geliştirilebilen temel davranış seti sağlarlar. <0>Daha fazla bilgi edinin</0>",
-		"loadFromFile": "Talimatlar ayrıca çalışma alanınızdaki <span>.kilocode/rules/</span> klasöründen de yüklenebilir (.kilocoderules ve .clinerules kullanımdan kaldırılmıştır ve yakında çalışmayı durduracaklardır)."
+		"loadFromFile": "Talimatlar ayrıca çalışma alanınızdaki <span>.kilocode-chinese/rules/</span> klasöründen de yüklenebilir (.kilocoderules ve .clinerules kullanımdan kaldırılmıştır ve yakında çalışmayı durduracaklardır)."
 	},
 	"systemPrompt": {
 		"preview": "Sistem promptunu önizle",
@@ -103,6 +103,10 @@
 			"NEW_TASK": {
 				"label": "Yeni Görev Başlat",
 				"description": "Girdiyle yeni bir görev başlat. Komut paletinde kullanılabilir."
+			},
+			"COMMIT_MESSAGE": {
+				"label": "Commit Mesajı Oluşturma",
+				"description": "Sahnelenmiş git değişikliklerinize göre açıklayıcı commit mesajları oluşturun. Deponuzun en iyi uygulamalarına uygun mesajlar oluşturmak için komut istemini özelleştirin."
 			}
 		}
 	},

@@ -31,7 +31,8 @@
 		"prompts": "Prompt",
 		"experimental": "Eksperimental",
 		"language": "Bahasa",
-		"about": "Tentang Kilo Code"
+		"about": "Tentang Kilo Code",
+		"display": "Tampilkan"
 	},
 	"prompts": {
 		"description": "Konfigurasi support prompt yang digunakan untuk aksi cepat seperti meningkatkan prompt, menjelaskan kode, dan memperbaiki masalah. Prompt ini membantu Kilo Code memberikan bantuan yang lebih baik untuk tugas pengembangan umum."
@@ -83,6 +84,10 @@
 			"outsideWorkspace": {
 				"label": "Sertakan file di luar workspace",
 				"description": "Izinkan Kilo Code membuat dan mengedit file di luar workspace saat ini tanpa memerlukan persetujuan."
+			},
+			"protected": {
+				"label": "Sertakan file yang dilindungi",
+				"description": "Izinkan Kilo Code membuat dan mengedit file yang dilindungi (seperti .kilocodeignore dan file konfigurasi .kilocode/) tanpa memerlukan persetujuan."
 			}
 		},
 		"browser": {
@@ -149,6 +154,10 @@
 		"openRouterApiKey": "OpenRouter API Key",
 		"getOpenRouterApiKey": "Dapatkan OpenRouter API Key",
 		"apiKeyStorageNotice": "API key disimpan dengan aman di Secret Storage VSCode",
+		"cerebras": {
+			"apiKey": "Cerebras API Key",
+			"getApiKey": "Dapatkan Cerebras API Key"
+		},
 		"glamaApiKey": "Glama API Key",
 		"getGlamaApiKey": "Dapatkan Glama API Key",
 		"useCustomBaseUrl": "Gunakan base URL kustom",
@@ -303,7 +312,27 @@
 			"medium": "Sedang",
 			"low": "Rendah"
 		},
-		"setReasoningLevel": "Aktifkan Upaya Reasoning"
+		"setReasoningLevel": "Aktifkan Upaya Reasoning",
+		"claudeCode": {
+			"pathLabel": "Jalur Kode Claude",
+			"description": "Jalur opsional ke Claude Code CLI Anda. Defaultnya adalah 'claude' jika tidak diatur.",
+			"placeholder": "Default: claude"
+		},
+		"geminiCli": {
+			"description": "Provider ini menggunakan autentikasi OAuth dari alat Gemini CLI dan tidak memerlukan kunci API.",
+			"oauthPath": "Jalur Kredensial OAuth (opsional)",
+			"oauthPathDescription": "Jalur ke file kredensial OAuth. Biarkan kosong untuk menggunakan lokasi default (~/.gemini/oauth_creds.json).",
+			"instructions": "Jika kamu belum melakukan autentikasi, silakan jalankan",
+			"instructionsContinued": "di terminal kamu terlebih dahulu.",
+			"setupLink": "Instruksi Pengaturan Gemini CLI",
+			"requirementsTitle": "Persyaratan Penting",
+			"requirement1": "Pertama, kamu perlu menginstal alat Gemini CLI",
+			"requirement2": "Kemudian, jalankan gemini di terminal kamu dan pastikan kamu masuk dengan Google",
+			"requirement3": "Hanya bekerja dengan akun Google pribadi (bukan akun Google Workspace)",
+			"requirement4": "Tidak menggunakan kunci API - autentikasi ditangani melalui OAuth",
+			"requirement5": "Memerlukan alat Gemini CLI diinstal dan diautentikasi terlebih dahulu",
+			"freeAccess": "Akses tingkat gratis melalui autentikasi OAuth"
+		}
 	},
 	"browser": {
 		"enable": {
@@ -370,7 +399,17 @@
 			"hint": "Kosong = gunakan prompt default"
 		},
 		"autoCondenseContext": {
-			"name": "Secara otomatis memicu kondensasi konteks cerdas"
+			"name": "Secara otomatis memicu kondensasi konteks cerdas",
+			"description": "Ketika diaktifkan, Roo akan secara otomatis mengondensasi konteks ketika ambang batas tercapai. Ketika dinonaktifkan, kamu masih dapat memicu kondensasi konteks secara manual."
+		},
+		"condensingThreshold": {
+			"label": "Ambang Batas Pemicu Kondensasi",
+			"selectProfile": "Konfigurasi ambang batas untuk profil",
+			"defaultProfile": "Default Global (semua profil)",
+			"defaultDescription": "Ketika konteks mencapai persentase ini, akan secara otomatis dikondensasi untuk semua profil kecuali mereka memiliki pengaturan kustom",
+			"profileDescription": "Ambang batas kustom untuk profil ini saja (menimpa default global)",
+			"inheritDescription": "Profil ini mewarisi ambang batas default global ({{threshold}}%)",
+			"usesGlobal": "(menggunakan global {{threshold}}%)"
 		},
 		"openTabs": {
 			"label": "Batas konteks tab terbuka",
@@ -516,15 +555,19 @@
 		},
 		"CONCURRENT_FILE_READS": {
 			"name": "Aktifkan pembacaan file bersamaan",
-			"description": "Ketika diaktifkan, Kilo Code dapat membaca beberapa file dalam satu permintaan (hingga 15 file). Ketika dinonaktifkan, Kilo Code harus membaca file satu per satu. Menonaktifkan ini dapat membantu saat bekerja dengan model yang kurang mampu atau ketika kamu ingin kontrol lebih terhadap akses file."
+			"description": "Ketika diaktifkan, Kilo Code dapat membaca beberapa file dalam satu permintaan. Ketika dinonaktifkan, Kilo Code harus membaca file satu per satu. Menonaktifkan ini dapat membantu saat bekerja dengan model yang kurang mampu atau ketika kamu ingin kontrol lebih terhadap akses file."
 		},
 		"MULTI_SEARCH_AND_REPLACE": {
 			"name": "Gunakan tool multi block diff eksperimental",
 			"description": "Ketika diaktifkan, Kilo Code akan menggunakan tool multi block diff. Ini akan mencoba memperbarui beberapa blok kode dalam file dalam satu permintaan."
 		},
-		"DISABLE_COMPLETION_COMMAND": {
-			"name": "Nonaktifkan eksekusi perintah di attempt_completion",
-			"description": "Ketika diaktifkan, tool attempt_completion tidak akan mengeksekusi perintah. Ini adalah fitur eksperimental untuk mempersiapkan penghentian eksekusi perintah dalam penyelesaian tugas."
+		"MARKETPLACE": {
+			"name": "Aktifkan Marketplace",
+			"description": "Ketika diaktifkan, kamu dapat menginstal MCP dan mode kustom dari Marketplace."
+		},
+		"MULTI_FILE_APPLY_DIFF": {
+			"name": "Aktifkan edit file bersamaan",
+			"description": "Ketika diaktifkan, Kilo Code dapat mengedit beberapa file dalam satu permintaan. Ketika dinonaktifkan, Kilo Code harus mengedit file satu per satu. Menonaktifkan ini dapat membantu saat bekerja dengan model yang kurang mampu atau ketika kamu ingin kontrol lebih terhadap modifikasi file."
 		}
 	},
 	"promptCaching": {
@@ -567,8 +610,8 @@
 		"useCustomModel": "Gunakan kustom: {{modelId}}"
 	},
 	"footer": {
-		"feedback": "Jika kamu punya pertanyaan atau feedback, jangan ragu untuk membuka issue di <githubLink>https://github.com/SSYCloud/kilocode/tree/ssy</githubLink> atau bergabung <redditLink>reddit.com/r/kilocode</redditLink> atau <discordLink>kilocode.ai/discord</discordLink>",
-		"support": "Untuk pertanyaan keuangan, silakan hubungi Dukungan Pelanggan di <supportLink>hi@kilocode.ai</supportLink>",
+		"feedback": "Jika kamu punya pertanyaan atau feedback, jangan ragu untuk membuka issue di <githubLink>github.com/Kilo-Org/kilocode</githubLink> atau bergabung <redditLink>reddit.com/r/kilocode</redditLink> atau <discordLink>kilocode.ai/discord</discordLink>",
+		"support": "Untuk pertanyaan keuangan, silakan hubungi Customer Support di <supportLink>hi@kilocode.ai</supportLink>",
 		"telemetry": {
 			"label": "Izinkan pelaporan error dan penggunaan anonim",
 			"description": "Bantu tingkatkan Kilo Code dengan mengirim data penggunaan anonim dan laporan error. Tidak ada kode, prompt, atau informasi pribadi yang pernah dikirim. Lihat kebijakan privasi kami untuk detail lebih lanjut."
@@ -631,5 +674,13 @@
 	"labels": {
 		"customArn": "ARN Kustom",
 		"useCustomArn": "Gunakan ARN kustom..."
-	}
+	},
+	"display": {
+		"taskTimeline": {
+			"label": "Tampilkan linimasa tugas",
+			"description": "Tampilkan timeline visual dari pesan-pesan tugas, diwarnai berdasarkan jenisnya, memungkinkan Anda untuk melihat kemajuan tugas dengan cepat dan menggulir kembali ke titik-titik tertentu dalam riwayat tugas."
+		}
+	},
+	"includeMaxOutputTokens": "Sertakan token output maksimum",
+	"includeMaxOutputTokensDescription": "Kirim parameter token output maksimum dalam permintaan API. Beberapa provider mungkin tidak mendukung ini."
 }

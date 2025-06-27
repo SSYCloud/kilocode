@@ -6,9 +6,8 @@ export function checkExistKey(config: ProviderSettings | undefined) {
 		return false
 	}
 
-	// Special case for human-relay and fake-ai providers which don't need any configuration.
-	if (config.apiProvider === "human-relay" || config.apiProvider === "fake-ai") {
-		// console.log("checkExistKey isExist apiProvider", true)
+	// Special case for human-relay, fake-ai, and claude-code providers which don't need any configuration.
+	if (config.apiProvider && ["human-relay", "fake-ai", "claude-code"].includes(config.apiProvider)) {
 		return true
 	}
 

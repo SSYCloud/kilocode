@@ -1,9 +1,8 @@
 {
-	"greeting": "Salut, je suis Code AI Agent-Chinese (Cline / Roo features combined) !",
+	"greeting": "Salut, je suis Code AI Agent-Chinese ",
 	"introduction": "<strong>Code AI Agent-Chinese  est l'agent de codage autonome de premier plan.</strong> Prépare-toi à architecturer, coder, déboguer et à augmenter ta productivité comme jamais auparavant. Pour continuer, Code AI Agent-Chinese nécessite une clé API.",
 	"notice": "Pour commencer, cette extension a besoin d'un fournisseur d'API.",
 	"start": "C'est parti !",
-	"chooseProvider": "Choisis un fournisseur d'API pour commencer :",
 	"routers": {
 		"kilo": {
 			"description": "Une interface unifiée pour les LLMs"
@@ -12,8 +11,9 @@
 			"description": "Une interface unifiée pour les LLMs"
 		}
 	},
-	"startRouter": "Configuration rapide via un routeur",
-	"startCustom": "Utiliser ta propre clé API",
+	"chooseProvider": "Pour faire sa magie, Kilo Code a besoin d'une clé API.",
+	"startRouter": "Nous recommandons d'utiliser un routeur LLM :",
+	"startCustom": "Ou tu peux apporter ta propre clé API :",
 	"telemetry": {
 		"title": "Aide à améliorer Code AI Agent-Chinese",
 		"anonymousTelemetry": "Envoie des données d'utilisation et d'erreurs anonymes pour nous aider à corriger les bugs et améliorer l'extension. Aucun code, texte ou information personnelle n'est jamais envoyé.",
@@ -22,6 +22,5 @@
 		"allow": "Autoriser",
 		"deny": "Refuser"
 	},
-	"or": "ou",
 	"importSettings": "Importer les paramètres"
 }

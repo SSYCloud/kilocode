@@ -12,7 +12,11 @@
 		"export": "कार्य इतिहास निर्यात करें",
 		"delete": "कार्य हटाएं (पुष्टि को छोड़ने के लिए Shift + क्लिक)",
 		"condenseContext": "संदर्भ को बुद्धिमानी से संघनित करें",
-		"share": "कार्य साझा करें"
+		"share": "कार्य साझा करें",
+		"shareWithOrganization": "संगठन के साथ साझा करें",
+		"shareWithOrganizationDescription": "केवल आपके संगठन के सदस्य पहुंच सकते हैं",
+		"sharePublicly": "सार्वजनिक रूप से साझा करें",
+		"sharePubliclyDescription": "लिंक वाला कोई भी व्यक्ति पहुंच सकता है"
 	},
 	"history": {
 		"title": "इतिहास"
@@ -81,7 +85,7 @@
 	"onboarding": "एजेंटिक कोडिंग क्षमताओं में नवीनतम प्रगति के कारण, मैं जटिल सॉफ्टवेयर विकास कार्यों को चरण-दर-चरण संभाल सकता हूं। ऐसे उपकरणों के साथ जो मुझे फ़ाइलें बनाने और संपादित करने, जटिल प्रोजेक्ट का अन्वेषण करने, ब्राउज़र का उपयोग करने और टर्मिनल कमांड (आपकी अनुमति के बाद) निष्पादित करने की अनुमति देते हैं, मैं आपकी मदद कोड पूर्णता या तकनीकी समर्थन से परे तरीकों से कर सकता हूं। मैं अपनी क्षमताओं का विस्तार करने और नए उपकरण बनाने के लिए MCP का भी उपयोग कर सकता हूं।",
 	"rooTips": {
 		"boomerangTasks": {
-			"title": "बूमरैंग कार्य",
+			"title": "कार्य संयोजन",
 			"description": "कार्यों को छोटे, प्रबंधनीय भागों में विभाजित करें।"
 		},
 		"stickyModels": {
@@ -151,6 +155,7 @@
 		"didRead": "Kilo Code ने इस फ़ाइल को पढ़ा:",
 		"wantsToEdit": "Kilo Code इस फ़ाइल को संपादित करना चाहता है:",
 		"wantsToEditOutsideWorkspace": "Kilo Code कार्यक्षेत्र के बाहर इस फ़ाइल को संपादित करना चाहता है:",
+		"wantsToEditProtected": "Kilo Code एक सुरक्षित कॉन्फ़िगरेशन फ़ाइल को संपादित करना चाहता है:",
 		"wantsToCreate": "Kilo Code एक नई फ़ाइल बनाना चाहता है:",
 		"wantsToSearchReplace": "Kilo Code इस फ़ाइल में खोज और प्रतिस्थापन करना चाहता है:",
 		"didSearchReplace": "Kilo Code ने इस फ़ाइल में खोज और प्रतिस्थापन किया:",
@@ -158,7 +163,8 @@
 		"wantsToInsertWithLineNumber": "Kilo Code इस फ़ाइल की {{lineNumber}} लाइन पर सामग्री डालना चाहता है:",
 		"wantsToInsertAtEnd": "Kilo Code इस फ़ाइल के अंत में सामग्री जोड़ना चाहता है:",
 		"wantsToReadAndXMore": "रू इस फ़ाइल को और {{count}} अन्य को पढ़ना चाहता है:",
-		"wantsToReadMultiple": "Kilo Code कई फ़ाइलें पढ़ना चाहता है:"
+		"wantsToReadMultiple": "Kilo Code कई फ़ाइलें पढ़ना चाहता है:",
+		"wantsToApplyBatchChanges": "Kilo Code कई फ़ाइलों में परिवर्तन लागू करना चाहता है:"
 	},
 	"directoryOperations": {
 		"wantsToViewTopLevel": "Kilo Code इस निर्देशिका में शीर्ष स्तर की फ़ाइलें देखना चाहता है:",
@@ -168,7 +174,15 @@
 		"wantsToViewDefinitions": "Kilo Code इस निर्देशिका में उपयोग किए गए सोर्स कोड परिभाषा नामों को देखना चाहता है:",
 		"didViewDefinitions": "Kilo Code ने इस निर्देशिका में उपयोग किए गए सोर्स कोड परिभाषा नामों को देखा:",
 		"wantsToSearch": "Kilo Code इस निर्देशिका में <code>{{regex}}</code> के लिए खोज करना चाहता है:",
-		"didSearch": "Kilo Code ने इस निर्देशिका में <code>{{regex}}</code> के लिए खोज की:"
+		"didSearch": "Kilo Code ने इस निर्देशिका में <code>{{regex}}</code> के लिए खोज की:",
+		"wantsToSearchOutsideWorkspace": "Kilo Code इस निर्देशिका (कार्यक्षेत्र के बाहर) में <code>{{regex}}</code> के लिए खोज करना चाहता है:",
+		"didSearchOutsideWorkspace": "Kilo Code ने इस निर्देशिका (कार्यक्षेत्र के बाहर) में <code>{{regex}}</code> के लिए खोज की:",
+		"wantsToViewTopLevelOutsideWorkspace": "Kilo Code इस निर्देशिका (कार्यक्षेत्र के बाहर) में शीर्ष स्तर की फ़ाइलें देखना चाहता है:",
+		"didViewTopLevelOutsideWorkspace": "Kilo Code ने इस निर्देशिका (कार्यक्षेत्र के बाहर) में शीर्ष स्तर की फ़ाइलें देखीं:",
+		"wantsToViewRecursiveOutsideWorkspace": "Kilo Code इस निर्देशिका (कार्यक्षेत्र के बाहर) में सभी फ़ाइलों को पुनरावर्ती रूप से देखना चाहता है:",
+		"didViewRecursiveOutsideWorkspace": "Kilo Code ने इस निर्देशिका (कार्यक्षेत्र के बाहर) में सभी फ़ाइलों को पुनरावर्ती रूप से देखा:",
+		"wantsToViewDefinitionsOutsideWorkspace": "Kilo Code इस निर्देशिका (कार्यक्षेत्र के बाहर) में उपयोग किए गए सोर्स कोड परिभाषा नामों को देखना चाहता है:",
+		"didViewDefinitionsOutsideWorkspace": "Kilo Code ने इस निर्देशिका (कार्यक्षेत्र के बाहर) में उपयोग किए गए सोर्स कोड परिभाषा नामों को देखा:"
 	},
 	"commandOutput": "कमांड आउटपुट",
 	"response": "प्रतिक्रिया",
@@ -221,9 +235,9 @@
 		"title": "🎉 Roo Code {{version}} रिलीज़ हुआ",
 		"description": "Roo Code {{version}} आपके फीडबैक के आधार पर शक्तिशाली नई सुविधाएँ और सुधार लाता है।",
 		"whatsNew": "नई सुविधाएँ",
-		"feature1": "<bold>बुद्धिमान संदर्भ संघनन डिफ़ॉल्ट रूप से सक्षम</bold>: संदर्भ संघनन अब डिफ़ॉल्ट रूप से सक्षम है और स्वचालित संघनन कब होगा इसके लिए कॉन्फ़िगरेबल सेटिंग्स हैं",
-		"feature2": "<bold>मैन्युअल संघनन बटन</bold>: कार्य हेडर में नया बटन आपको किसी भी समय मैन्युअल रूप से संदर्भ संघनन ट्रिगर करने की अनुमति देता है",
-		"feature3": "<bold>उन्नत संघनन सेटिंग्स</bold>: <contextSettingsLink>संदर्भ सेटिंग्स</contextSettingsLink> के माध्यम से स्वचालित संघनन कब और कैसे होता है इसे फाइन-ट्यून करें",
+		"feature1": "<bold>Roo Marketplace लॉन्च</bold> - Marketplace अब लाइव है! पहले से कहीं आसान तरीके से modes और MCP खोजें और इंस्टॉल करें।",
+		"feature2": "<bold>Gemini 2.5 Models</bold> - नए Gemini 2.5 Pro, Flash, और Flash Lite models के लिए समर्थन जोड़ा गया।",
+		"feature3": "<bold>Excel File समर्थन और अधिक</bold> - Excel (.xlsx) file समर्थन जोड़ा गया और कई bug fixes और सुधार!",
 		"hideButton": "घोषणा छिपाएँ",
 		"detailsDiscussLinks": "<discordLink>Discord</discordLink> और <redditLink>Reddit</redditLink> पर अधिक जानकारी प्राप्त करें और चर्चा में भाग लें 🚀"
 	},
@@ -284,5 +298,12 @@
 		"deny": {
 			"title": "सभी अस्वीकार करें"
 		}
+	},
+	"indexingStatus": {
+		"ready": "इंडेक्स तैयार",
+		"indexing": "इंडेक्सिंग {{percentage}}%",
+		"indexed": "इंडेक्स किया गया",
+		"error": "इंडेक्स त्रुटि",
+		"status": "इंडेक्स स्थिति"
 	}
 }

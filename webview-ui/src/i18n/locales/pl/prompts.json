@@ -48,7 +48,7 @@
 	"globalCustomInstructions": {
 		"title": "Niestandardowe instrukcje dla wszystkich trybów",
 		"description": "Te instrukcje dotyczą wszystkich trybów. Zapewniają podstawowy zestaw zachowań, które mogą być rozszerzone przez instrukcje specyficzne dla trybów poniżej. <0>Dowiedz się więcej</0>",
-		"loadFromFile": "Instrukcje mogą być również ładowane z folderu <span>.kilocode/rules/</span> w Twoim obszarze roboczym (.kilocoderules i .clinerules są przestarzałe i wkrótce przestaną działać)."
+		"loadFromFile": "Instrukcje mogą być również ładowane z folderu <span>.kilocode-chinese/rules/</span> w Twoim obszarze roboczym (.kilocoderules i .clinerules są przestarzałe i wkrótce przestaną działać)."
 	},
 	"systemPrompt": {
 		"preview": "Podgląd podpowiedzi systemowej",
@@ -103,6 +103,10 @@
 			"NEW_TASK": {
 				"label": "Rozpocznij nowe zadanie",
 				"description": "Rozpocznij nowe zadanie z wprowadzonymi danymi. Dostępne w palecie poleceń."
+			},
+			"COMMIT_MESSAGE": {
+				"label": "Generowanie Komunikatów Zatwierdzania",
+				"description": "Generuj opisowe komunikaty commita na podstawie zaplanowanych zmian w git. Dostosuj zapytanie, aby generować komunikaty zgodne z najlepszymi praktykami Twojego repozytorium."
 			}
 		}
 	},

@@ -3,7 +3,7 @@ import Parser from "web-tree-sitter"
 import { RangeInFileWithContents } from "../ide-types"
 import { getParserForFile } from "./treeSitter"
 
-export type AstPath = Parser.SyntaxNode[]
+export type AstPath = Parser.Node[]
 
 export async function getAst(filepath: string, fileContents: string): Promise<Parser.Tree | undefined> {
 	const parser = await getParserForFile(filepath)
@@ -14,7 +14,7 @@ export async function getAst(filepath: string, fileContents: string): Promise<Pa
 
 	try {
 		const ast = parser.parse(fileContents)
-		return ast
+		return ast || undefined
 	} catch (e) {
 		return undefined
 	}
@@ -25,7 +25,7 @@ export async function getTreePathAtCursor(ast: Parser.Tree, cursorIndex: number)
 	while (path[path.length - 1].childCount > 0) {
 		let foundChild = false
 		for (const child of path[path.length - 1].children) {
-			if (child.startIndex <= cursorIndex && child.endIndex >= cursorIndex) {
+			if (child && child.startIndex <= cursorIndex && child.endIndex >= cursorIndex) {
 				path.push(child)
 				foundChild = true
 				break
@@ -57,7 +57,7 @@ export async function getScopeAroundRange(
 	while (node.childCount > 0) {
 		let foundChild = false
 		for (const child of node.children) {
-			if (child.startIndex < startIndex && child.endIndex > endIndex) {
+			if (child && child.startIndex < startIndex && child.endIndex > endIndex) {
 				node = child
 				foundChild = true
 				break

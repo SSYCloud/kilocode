@@ -25,6 +25,7 @@
 		"autoApprove": "Auto-Approve",
 		"browser": "Browser",
 		"checkpoints": "Checkpoints",
+		"display": "Display",
 		"notifications": "Notifications",
 		"contextManagement": "Context",
 		"terminal": "Terminal",
@@ -83,6 +84,10 @@
 			"outsideWorkspace": {
 				"label": "Include files outside workspace",
 				"description": "Allow Kilo Code to create and edit files outside the current workspace without requiring approval."
+			},
+			"protected": {
+				"label": "Include protected files",
+				"description": "Allow Kilo Code to create and edit protected files (like .kilocodeignore and .kilocode/ configuration files) without requiring approval."
 			}
 		},
 		"browser": {
@@ -253,6 +258,10 @@
 				"learnMore": "Learn more about provider routing"
 			}
 		},
+		"cerebras": {
+			"apiKey": "Cerebras API Key",
+			"getApiKey": "Get Cerebras API Key"
+		},
 		"customModel": {
 			"capabilities": "Configure the capabilities and pricing for your custom OpenAI-compatible model. Be careful when specifying the model capabilities, as they can affect how Kilo Code performs.",
 			"maxTokens": {
@@ -305,7 +314,27 @@
 			"medium": "Medium",
 			"low": "Low"
 		},
-		"setReasoningLevel": "Enable Reasoning Effort"
+		"setReasoningLevel": "Enable Reasoning Effort",
+		"claudeCode": {
+			"pathLabel": "Claude Code Path",
+			"description": "Optional path to your Claude Code CLI. Defaults to 'claude' if not set.",
+			"placeholder": "Default: claude"
+		},
+		"geminiCli": {
+			"description": "This provider uses OAuth authentication from the Gemini CLI tool and does not require API keys.",
+			"oauthPath": "OAuth Credentials Path (optional)",
+			"oauthPathDescription": "Path to the OAuth credentials file. Leave empty to use the default location (~/.gemini/oauth_creds.json).",
+			"instructions": "If you haven't authenticated yet, please run",
+			"instructionsContinued": "in your terminal first.",
+			"setupLink": "Gemini CLI Setup Instructions",
+			"requirementsTitle": "Important Requirements",
+			"requirement1": "First, you need to install the Gemini CLI tool",
+			"requirement2": "Then, run gemini in your terminal and make sure you Log in with Google",
+			"requirement3": "Only works with personal Google accounts (not Google Workspace accounts)",
+			"requirement4": "Does not use API keys - authentication is handled via OAuth",
+			"requirement5": "Requires the Gemini CLI tool to be installed and authenticated first",
+			"freeAccess": "Free tier access via OAuth authentication"
+		}
 	},
 	"browser": {
 		"enable": {
@@ -341,6 +370,12 @@
 			"description": "When enabled, Kilo Code will automatically create checkpoints during task execution, making it easy to review changes or revert to earlier states. <0>Learn more</0>"
 		}
 	},
+	"display": {
+		"taskTimeline": {
+			"label": "Show task timeline",
+			"description": "Display a visual timeline of task messages, colorized by type, allowing you to quickly view task progress and scroll back to specific points in the task's history."
+		}
+	},
 	"notifications": {
 		"sound": {
 			"label": "Enable sound effects",
@@ -372,7 +407,8 @@
 			"hint": "Empty = use default prompt"
 		},
 		"autoCondenseContext": {
-			"name": "Automatically trigger intelligent context condensing"
+			"name": "Automatically trigger intelligent context condensing",
+			"description": "When enabled, Roo will automatically condense the context when the threshold is reached. When disabled, you can still manually trigger context condensing."
 		},
 		"openTabs": {
 			"label": "Open tabs context limit",
@@ -395,6 +431,15 @@
 			"description": "Kilo Code reads this number of lines when the model omits start/end values. If this number is less than the file's total, Kilo Code generates a line number index of code definitions. Special cases: -1 instructs Kilo Code to read the entire file (without indexing), and 0 instructs it to read no lines and provides line indexes only for minimal context. Lower values minimize initial context usage, enabling precise subsequent line-range reads. Explicit start/end requests are not limited by this setting.",
 			"lines": "lines",
 			"always_full_read": "Always read entire file"
+		},
+		"condensingThreshold": {
+			"label": "Condensing Trigger Threshold",
+			"selectProfile": "Configure threshold for profile",
+			"defaultProfile": "Global Default (all profiles)",
+			"defaultDescription": "When context reaches this percentage, it will be automatically condensed for all profiles unless they have custom settings",
+			"profileDescription": "Custom threshold for this profile only (overrides global default)",
+			"inheritDescription": "This profile inherits the global default threshold ({{threshold}}%)",
+			"usesGlobal": "(uses global {{threshold}}%)"
 		}
 	},
 	"terminal": {
@@ -503,9 +548,13 @@
 			"name": "Use experimental multi block diff tool",
 			"description": "When enabled, Kilo Code will use multi block diff tool. This will try to update multiple code blocks in the file in one request."
 		},
-		"DISABLE_COMPLETION_COMMAND": {
-			"name": "Disable command execution in attempt_completion",
-			"description": "When enabled, the attempt_completion tool will not execute commands. This is an experimental feature to prepare for deprecating command execution in task completion."
+		"MARKETPLACE": {
+			"name": "Enable Marketplace",
+			"description": "When enabled, you can install MCPs and custom modes from the Marketplace."
+		},
+		"MULTI_FILE_APPLY_DIFF": {
+			"name": "Enable concurrent file edits",
+			"description": "When enabled, Kilo Code can edit multiple files in a single request. When disabled, Kilo Code must edit files one at a time. Disabling this can help when working with less capable models or when you want more control over file modifications."
 		}
 	},
 	"promptCaching": {
@@ -612,5 +661,7 @@
 	"labels": {
 		"customArn": "Custom ARN",
 		"useCustomArn": "Use custom ARN..."
-	}
+	},
+	"includeMaxOutputTokens": "Include max output tokens",
+	"includeMaxOutputTokensDescription": "Send max output tokens parameter in API requests. Some providers may not support this."
 }

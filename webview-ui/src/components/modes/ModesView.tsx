@@ -1078,7 +1078,7 @@ const ModesView = ({ onDone }: ModesViewProps) => {
 										onClick={() =>
 											vscode.postMessage({
 												type: "openFile",
-												text: "./.kilocode/rules/rules.md",
+												text: "./.kilocode-chinese/rules/rules.md",
 												values: {
 													create: true,
 													content: "",

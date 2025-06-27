@@ -1,9 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Kilo Code AI Agent-中文版可以為你做什麼？",
-		"introText": "我已經在最快的 AI 模型上受過訓練，準備以極快的速度為你產生程式碼！",
-		"ctaButton": "註冊勝算雲API KEY",
-		"manualModeButton": "使用你自己的 API 金鑰"
+		"greeting": "歡迎使用 Kilo Code！",
+		"introText1": "Kilo Code 是一個免費的開源 AI 程式設計代理。",
+		"introText2": "它適用於最新的 AI 模型，如 Claude 4 Sonnet、Gemini 2.5 Pro、GPT-4.1 以及 450 多個其他模型。",
+		"introText3": "建立免費帳戶，獲得價值 20 美元的 token，可用於任何 AI 模型。",
+		"ctaButton": "建立免費帳戶",
+		"manualModeButton": "使用你自己的 API 金鑰",
+		"alreadySignedUp": "已經註冊了？",
+		"loginText": "在此登入"
 	},
 	"lowCreditWarning": {
 		"addCredit": "添加額度",
@@ -74,6 +78,30 @@
 		"newFile": {
 			"newWorkflowFile": "新建工作流程檔案...",
 			"newRuleFile": "新建規則檔案..."
+		}
+	},
+	"taskTimeline": {
+		"tooltip": {
+			"clickToScroll": "查看 {{messageType}} (#{{messageNumber}})",
+			"messageTypes": {
+				"browser_action_result": "浏览器操作结果",
+				"browser_action": "浏览器操作",
+				"browser_action_launch": "浏览器启动",
+				"checkpoint_saved": "检查点已保存",
+				"command": "命令执行",
+				"completion_result": "完成结果",
+				"command_output": "命令输出",
+				"condense_context": "压缩上下文",
+				"error": "错误信息",
+				"followup": "后续问题",
+				"mcp_server_response": "MCP服务器响应",
+				"reasoning": "AI推理",
+				"text": "AI回复",
+				"tool": "工具使用",
+				"use_mcp_server": "MCP 服务器使用情况",
+				"unknown": "未知消息类型",
+				"user": "用户反馈"
+			}
 		}
 	}
 }

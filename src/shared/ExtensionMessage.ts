@@ -4,7 +4,7 @@ import type {
 	ProviderSettings,
 	HistoryItem,
 	ModeConfig,
-	ExperimentId,
+	Experiments,
 	ClineMessage,
 	OrganizationAllowList,
 	CloudUserInfo,
@@ -16,8 +16,29 @@ import { McpServer } from "./mcp"
 import { McpMarketplaceCatalog, McpDownloadResponse } from "./kilocode/mcp"
 import { Mode } from "./modes"
 import { RouterModels } from "./api"
-import { ProfileDataResponsePayload, BalanceDataResponsePayload } from "./WebviewMessage"
+import { ProfileDataResponsePayload, BalanceDataResponsePayload } from "./WebviewMessage" // kilocode_change
 import { ClineRulesToggles } from "./cline-rules" // kilocode_change
+import type { MarketplaceItem } from "@roo-code/types"
+
+// Type for marketplace installed metadata
+export interface MarketplaceInstalledMetadata {
+	project: Record<string, { type: string }>
+	global: Record<string, { type: string }>
+}
+
+// Indexing status types
+export interface IndexingStatus {
+	systemStatus: string
+	message?: string
+	processedItems: number
+	totalItems: number
+	currentItemUnit?: string
+}
+
+export interface IndexingStatusUpdateMessage {
+	type: "indexingStatusUpdate"
+	values: IndexingStatus
+}
 
 export interface LanguageModelChatSelector {
 	vendor?: string
@@ -73,6 +94,7 @@ export interface ExtensionMessage {
 		| "focusChatInput" // kilocode_change
 		| "setHistoryPreviewCollapsed"
 		| "commandExecutionStatus"
+		| "mcpExecutionStatus"
 		| "vsCodeSetting"
 		| "profileDataResponse" // kilocode_change
 		| "balanceDataResponse" // kilocode_change
@@ -83,15 +105,22 @@ export interface ExtensionMessage {
 		| "indexCleared"
 		| "codebaseIndexConfig"
 		| "rulesData" // kilocode_change
+		| "marketplaceInstallResult"
+		| "marketplaceData"
+		| "mermaidFixResponse" // kilocode_change
 	text?: string
+	payload?: ProfileDataResponsePayload | BalanceDataResponsePayload // kilocode_change: Add payload for profile and balance data
 	action?:
 		| "chatButtonClicked"
 		| "settingsButtonClicked"
 		| "historyButtonClicked"
 		| "promptsButtonClicked"
 		| "profileButtonClicked" // kilocode_change
+		| "marketplaceButtonClicked"
 		| "accountButtonClicked"
 		| "didBecomeVisible"
+		| "focusInput"
+		| "switchTab"
 		| "focusChatInput" // kilocode_change
 	invoke?: "newChat" | "sendMessage" | "primaryButtonClick" | "secondaryButtonClick" | "setChatBoxMessage"
 	state?: ExtensionState
@@ -130,14 +159,18 @@ export interface ExtensionMessage {
 	url?: string // kilocode_change
 	setting?: string
 	value?: any
-	payload?: ProfileDataResponsePayload | BalanceDataResponsePayload // kilocode_change: Add payload for profile and balance data
+	items?: MarketplaceItem[]
 	userInfo?: CloudUserInfo
 	organizationAllowList?: OrganizationAllowList
+	tab?: string
 	// kilocode_change: Rules data
 	globalRules?: ClineRulesToggles
 	localRules?: ClineRulesToggles
 	globalWorkflows?: ClineRulesToggles
 	localWorkflows?: ClineRulesToggles
+	marketplaceItems?: MarketplaceItem[]
+	marketplaceInstalledMetadata?: MarketplaceInstalledMetadata
+	fixedCode?: string | null // For mermaidFixResponse // kilocode_change
 }
 
 export type ExtensionState = Pick<
@@ -153,6 +186,7 @@ export type ExtensionState = Pick<
 	| "alwaysAllowReadOnlyOutsideWorkspace"
 	| "alwaysAllowWrite"
 	| "alwaysAllowWriteOutsideWorkspace"
+	| "alwaysAllowWriteProtected"
 	// | "writeDelayMs" // Optional in GlobalSettings, required here.
 	| "alwaysAllowBrowser"
 	| "alwaysApproveResubmit"
@@ -206,10 +240,12 @@ export type ExtensionState = Pick<
 	| "globalRulesToggles" // kilocode_change
 	| "localRulesToggles" // kilocode_change
 	| "globalWorkflowToggles" // kilocode_change
+	| "commitMessageApiConfigId" // kilocode_change
 	| "condensingApiConfigId"
 	| "customCondensingPrompt"
 	| "codebaseIndexConfig"
 	| "codebaseIndexModels"
+	| "profileThresholds"
 > & {
 	version: string
 	clineMessages: ClineMessage[]
@@ -231,7 +267,7 @@ export type ExtensionState = Pick<
 	maxReadFileLine: number // Maximum number of lines to read from a file before truncating
 	showAutoApproveMenu: boolean // kilocode_change: Whether to show the auto-approve menu in the chat view
 
-	experiments: Record<ExperimentId, boolean> // Map of experiment IDs to their enabled state
+	experiments: Experiments // Map of experiment IDs to their enabled state
 
 	mcpEnabled: boolean
 	enableMcpServerCreation: boolean
@@ -245,6 +281,7 @@ export type ExtensionState = Pick<
 	renderContext: "sidebar" | "editor"
 	settingsImportedAt?: number
 	historyPreviewCollapsed?: boolean
+	showTaskTimeline?: boolean // kilocode_change
 
 	cloudUserInfo: CloudUserInfo | null
 	cloudIsAuthenticated: boolean
@@ -253,6 +290,9 @@ export type ExtensionState = Pick<
 
 	autoCondenseContext: boolean
 	autoCondenseContextPercent: number
+	marketplaceItems?: MarketplaceItem[]
+	marketplaceInstalledMetadata?: { project: Record<string, any>; global: Record<string, any> }
+	profileThresholds: Record<string, number>
 }
 
 export interface ClineSayTool {
@@ -280,6 +320,7 @@ export interface ClineSayTool {
 	mode?: string
 	reason?: string
 	isOutsideWorkspace?: boolean
+	isProtected?: boolean
 	additionalFileCount?: number // Number of additional files in the same read_file request
 	search?: string
 	replace?: string
@@ -294,6 +335,17 @@ export interface ClineSayTool {
 		lineSnippet: string
 		isOutsideWorkspace?: boolean
 		key: string
+		content?: string
+	}>
+	batchDiffs?: Array<{
+		path: string
+		changeCount: number
+		key: string
+		content: string
+		diffs?: Array<{
+			content: string
+			startLine?: number
+		}>
 	}>
 	question?: string
 }
@@ -332,6 +384,7 @@ export interface ClineAskUseMcpServer {
 	toolName?: string
 	arguments?: string
 	uri?: string
+	response?: string
 }
 
 export interface ClineApiReqInfo {

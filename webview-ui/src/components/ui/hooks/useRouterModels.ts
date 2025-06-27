@@ -35,4 +35,15 @@ const getRouterModels = async () =>
 		vscode.postMessage({ type: "requestRouterModels" })
 	})
 
-export const useRouterModels = () => useQuery({ queryKey: ["routerModels"], queryFn: getRouterModels })
+// kilocode_change start
+type RouterModelsQueryKey = {
+	openRouterBaseUrl?: string
+	openRouterApiKey?: string
+	lmStudioBaseUrl?: string
+	ollamaBaseUrl?: string
+	// Requesty, Unbound, etc should perhaps also be here, but they already have their own hacks for reloading
+}
+
+export const useRouterModels = (queryKey: RouterModelsQueryKey) =>
+	useQuery({ queryKey: ["routerModels", queryKey], queryFn: getRouterModels })
+// kilocode_change end

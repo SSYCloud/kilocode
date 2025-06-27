@@ -12,7 +12,11 @@
 		"export": "Esporta cronologia attività",
 		"delete": "Elimina attività (Shift + Clic per saltare la conferma)",
 		"condenseContext": "Condensa contesto in modo intelligente",
-		"share": "Condividi attività"
+		"share": "Condividi attività",
+		"shareWithOrganization": "Condividi con l'organizzazione",
+		"shareWithOrganizationDescription": "Solo i membri della tua organizzazione possono accedere",
+		"sharePublicly": "Condividi pubblicamente",
+		"sharePubliclyDescription": "Chiunque con il link può accedere"
 	},
 	"history": {
 		"title": "Cronologia"
@@ -81,7 +85,7 @@
 	"onboarding": "Grazie alle più recenti innovazioni nelle capacità di codifica agentica, posso gestire complesse attività di sviluppo software passo dopo passo. Con strumenti che mi permettono di creare e modificare file, esplorare progetti complessi, utilizzare il browser ed eseguire comandi da terminale (dopo la tua autorizzazione), posso aiutarti in modi che vanno oltre il completamento del codice o il supporto tecnico. Posso persino usare MCP per creare nuovi strumenti ed estendere le mie capacità.",
 	"rooTips": {
 		"boomerangTasks": {
-			"title": "Attività Boomerang",
+			"title": "Orchestrazione di Attività",
 			"description": "Dividi le attività in parti più piccole e gestibili."
 		},
 		"stickyModels": {
@@ -151,6 +155,7 @@
 		"didRead": "Kilo Code ha letto questo file:",
 		"wantsToEdit": "Kilo Code vuole modificare questo file:",
 		"wantsToEditOutsideWorkspace": "Kilo Code vuole modificare questo file al di fuori dell'area di lavoro:",
+		"wantsToEditProtected": "Kilo Code vuole modificare un file di configurazione protetto:",
 		"wantsToCreate": "Kilo Code vuole creare un nuovo file:",
 		"wantsToSearchReplace": "Kilo Code vuole eseguire ricerca e sostituzione in questo file:",
 		"didSearchReplace": "Kilo Code ha eseguito ricerca e sostituzione in questo file:",
@@ -158,7 +163,8 @@
 		"wantsToInsertWithLineNumber": "Kilo Code vuole inserire contenuto in questo file alla riga {{lineNumber}}:",
 		"wantsToInsertAtEnd": "Kilo Code vuole aggiungere contenuto alla fine di questo file:",
 		"wantsToReadAndXMore": "Kilo Code vuole leggere questo file e altri {{count}}:",
-		"wantsToReadMultiple": "Kilo Code vuole leggere più file:"
+		"wantsToReadMultiple": "Kilo Code vuole leggere più file:",
+		"wantsToApplyBatchChanges": "Kilo Code vuole applicare modifiche a più file:"
 	},
 	"directoryOperations": {
 		"wantsToViewTopLevel": "Kilo Code vuole visualizzare i file di primo livello in questa directory:",
@@ -168,7 +174,15 @@
 		"wantsToViewDefinitions": "Kilo Code vuole visualizzare i nomi delle definizioni di codice sorgente utilizzate in questa directory:",
 		"didViewDefinitions": "Kilo Code ha visualizzato i nomi delle definizioni di codice sorgente utilizzate in questa directory:",
 		"wantsToSearch": "Kilo Code vuole cercare in questa directory <code>{{regex}}</code>:",
-		"didSearch": "Kilo Code ha cercato in questa directory <code>{{regex}}</code>:"
+		"didSearch": "Kilo Code ha cercato in questa directory <code>{{regex}}</code>:",
+		"wantsToSearchOutsideWorkspace": "Kilo Code vuole cercare in questa directory (fuori dall'area di lavoro) <code>{{regex}}</code>:",
+		"didSearchOutsideWorkspace": "Kilo Code ha cercato in questa directory (fuori dall'area di lavoro) <code>{{regex}}</code>:",
+		"wantsToViewTopLevelOutsideWorkspace": "Kilo Code vuole visualizzare i file di primo livello in questa directory (fuori dall'area di lavoro):",
+		"didViewTopLevelOutsideWorkspace": "Kilo Code ha visualizzato i file di primo livello in questa directory (fuori dall'area di lavoro):",
+		"wantsToViewRecursiveOutsideWorkspace": "Kilo Code vuole visualizzare ricorsivamente tutti i file in questa directory (fuori dall'area di lavoro):",
+		"didViewRecursiveOutsideWorkspace": "Kilo Code ha visualizzato ricorsivamente tutti i file in questa directory (fuori dall'area di lavoro):",
+		"wantsToViewDefinitionsOutsideWorkspace": "Kilo Code vuole visualizzare i nomi delle definizioni di codice sorgente utilizzate in questa directory (fuori dall'area di lavoro):",
+		"didViewDefinitionsOutsideWorkspace": "Kilo Code ha visualizzato i nomi delle definizioni di codice sorgente utilizzate in questa directory (fuori dall'area di lavoro):"
 	},
 	"commandOutput": "Output del comando",
 	"response": "Risposta",
@@ -219,11 +233,11 @@
 	},
 	"announcement": {
 		"title": "🎉 Rilasciato Roo Code {{version}}",
-		"description": "Roo Code {{version}} introduce potenti nuove funzionalità e miglioramenti basati sui tuoi feedback.",
+		"description": "Roo Code {{version}} introduce importanti nuove funzionalità e miglioramenti basati sui tuoi feedback.",
 		"whatsNew": "Novità",
-		"feature1": "<bold>Condensazione Intelligente del Contesto Abilitata di Default</bold>: La condensazione del contesto è ora abilitata di default con impostazioni configurabili per quando avviene la condensazione automatica",
-		"feature2": "<bold>Pulsante di Condensazione Manuale</bold>: Nuovo pulsante nell'intestazione delle attività che ti permette di attivare manualmente la condensazione del contesto in qualsiasi momento",
-		"feature3": "<bold>Impostazioni di Condensazione Migliorate</bold>: Regola quando e come avviene la condensazione automatica tramite le <contextSettingsLink>Impostazioni di Contesto</contextSettingsLink>",
+		"feature1": "<bold>Lancio del Marketplace Roo</bold>: Il marketplace è ora attivo! Scopri e installa modalità e MCP più facilmente che mai.",
+		"feature2": "<bold>Modelli Gemini 2.5</bold>: Aggiunto supporto per i nuovi modelli Gemini 2.5 Pro, Flash e Flash Lite.",
+		"feature3": "<bold>Supporto File Excel e altro</bold>: Aggiunto supporto per file Excel (.xlsx) e numerose correzioni di bug e miglioramenti!",
 		"hideButton": "Nascondi annuncio",
 		"detailsDiscussLinks": "Ottieni maggiori dettagli e partecipa alle discussioni su <discordLink>Discord</discordLink> e <redditLink>Reddit</redditLink> 🚀"
 	},
@@ -284,5 +298,12 @@
 		"deny": {
 			"title": "Nega tutto"
 		}
+	},
+	"indexingStatus": {
+		"ready": "Indice pronto",
+		"indexing": "Indicizzazione {{percentage}}%",
+		"indexed": "Indicizzato",
+		"error": "Errore indice",
+		"status": "Stato indice"
 	}
 }

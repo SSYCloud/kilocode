@@ -1,9 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Cosa può fare Kilo Code per te?",
-		"introText": "Sono stato addestrato sui modelli di intelligenza artificiale più veloci disponibili e sono pronto a generare codice per te alla massima velocità!",
-		"ctaButton": "Registra la chiave API ShengSuanYun",
-		"manualModeButton": "Usa la tua chiave API"
+		"greeting": "Benvenuto in Kilo Code!",
+		"introText1": "Kilo Code è un agente di coding AI gratuito e open source.",
+		"introText2": "Funziona con i più recenti modelli AI come Claude 4 Sonnet, Gemini 2.5 Pro, GPT-4.1, e oltre 450 altri.",
+		"introText3": "Crea un account gratuito e ottieni $20 di token da utilizzare con qualsiasi modello AI.",
+		"ctaButton": "Crea account gratuito",
+		"manualModeButton": "Usa la tua chiave API",
+		"alreadySignedUp": "Già registrato?",
+		"loginText": "Accedi qui"
 	},
 	"lowCreditWarning": {
 		"addCredit": "Aggiungi credito",
@@ -74,6 +78,30 @@
 		"newFile": {
 			"newWorkflowFile": "Nuovo file flusso di lavoro...",
 			"newRuleFile": "Nuovo file regola..."
+		}
+	},
+	"taskTimeline": {
+		"tooltip": {
+			"messageTypes": {
+				"browser_action_launch": "avvio del browser",
+				"browser_action": "azione del browser",
+				"browser_action_result": "risultato dell'azione del browser",
+				"checkpoint_saved": "checkpoint salvato",
+				"command_output": "output del comando",
+				"condense_context": "contesto condensato",
+				"error": "messaggio di errore",
+				"command": "esecuzione di comandi",
+				"completion_result": "risultato di completamento",
+				"followup": "domanda di approfondimento",
+				"reasoning": "Ragionamento dell'IA",
+				"mcp_server_response": "Risposta del server MCP",
+				"text": "Risposta dell'IA",
+				"unknown": "tipo di messaggio sconosciuto",
+				"use_mcp_server": "Utilizzo del server MCP",
+				"tool": "utilizzo strumenti",
+				"user": "feedback dell'utente"
+			},
+			"clickToScroll": "Visualizza {{messageType}} (#{{messageNumber}})"
 		}
 	}
 }

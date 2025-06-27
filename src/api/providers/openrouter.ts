@@ -48,10 +48,12 @@ interface CompletionUsage {
 	}
 	total_tokens?: number
 	cost?: number
-	is_byok?: boolean // kilocode_change
+	// kilocode_change start
+	cost_details?: {
+		upstream_inference_cost?: number
+	}
+	// kilocode_change end
 }
-
-const BYOK_COST_MULTIPLIER = 20 // kilocode_change
 
 export class OpenRouterHandler extends BaseProvider implements SingleCompletionHandler {
 	protected options: ApiHandlerOptions
@@ -82,7 +84,10 @@ export class OpenRouterHandler extends BaseProvider implements SingleCompletionH
 		// other providers (including Gemini), so we need to explicitly disable
 		// i We should generalize this using the logic in `getModelParams`, but
 		// this is easier for now.
-		if (modelId === "google/gemini-2.5-pro-preview" && typeof reasoning === "undefined") {
+		if (
+			(modelId === "google/gemini-2.5-pro-preview" || modelId === "google/gemini-2.5-pro") &&
+			typeof reasoning === "undefined"
+		) {
 			reasoning = { exclude: true }
 		}
 
@@ -170,9 +175,9 @@ export class OpenRouterHandler extends BaseProvider implements SingleCompletionH
 				outputTokens: lastUsage.completion_tokens || 0,
 				// Waiting on OpenRouter to figure out what this represents in the Gemini case
 				// and how to best support it.
-				// cacheReadTokens: lastUsage.prompt_tokens_details?.cached_tokens,
+				cacheReadTokens: lastUsage.prompt_tokens_details?.cached_tokens, // kilocode_change: uncomment
 				reasoningTokens: lastUsage.completion_tokens_details?.reasoning_tokens,
-				totalCost: (lastUsage.is_byok ? BYOK_COST_MULTIPLIER : 1) * (lastUsage.cost || 0), // kilocode_change byok
+				totalCost: (lastUsage.cost_details?.upstream_inference_cost || 0) + (lastUsage.cost || 0), // kilocode_change +upstream_inference_cost
 			}
 		}
 	}

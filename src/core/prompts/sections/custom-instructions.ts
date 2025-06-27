@@ -177,7 +177,7 @@ function formatDirectoryContent(dirPath: string, files: Array<{ filename: string
  */
 export async function loadRuleFiles(cwd: string): Promise<string> {
 	// kilocode_change start: add kilocode directory, leave fallback to roo directory
-	// Check for .kilocode/rules/ directory
+	// Check for .kilocode-chinese/rules/ directory
 	const kilocodeRulesDir = path.join(cwd, ".kilocode", "rules")
 	if (await directoryExists(kilocodeRulesDir)) {
 		const files = await readTextFilesFromDirectory(kilocodeRulesDir)
@@ -193,9 +193,9 @@ export async function loadRuleFiles(cwd: string): Promise<string> {
 		const files = await readTextFilesFromDirectory(rooRulesDir)
 		if (files.length > 0) {
 			if (vscodeAPI && !hasShownNonKilocodeRulesMessage) {
-				// kilocode_change: show message to move to .kilocode/rules/
+				// kilocode_change: show message to move to .kilocode-chinese/rules/
 				vscodeAPI.window.showWarningMessage(
-					`Loading non-Kilocode rules from ${rooRulesDir}, consider moving to .kilocode/rules/`,
+					`Loading non-Kilocode rules from ${rooRulesDir}, consider moving to .kilocode-chinese/rules/`,
 				)
 				hasShownNonKilocodeRulesMessage = true
 			} // kilocode_change end
@@ -210,9 +210,9 @@ export async function loadRuleFiles(cwd: string): Promise<string> {
 		const content = await safeReadFile(path.join(cwd, file))
 		if (content) {
 			if (file !== ".kilocoderules" && vscodeAPI && !hasShownNonKilocodeRulesMessage) {
-				// kilocode_change: show message to move to .kilocode/rules/
+				// kilocode_change: show message to move to .kilocode-chinese/rules/
 				vscodeAPI.window.showWarningMessage(
-					`Loading non-Kilocode rules from ${file}, consider moving to .kilocode/rules/`,
+					`Loading non-Kilocode rules from ${file}, consider moving to .kilocode-chinese/rules/`,
 				)
 				hasShownNonKilocodeRulesMessage = true
 			} // kilocode_change end

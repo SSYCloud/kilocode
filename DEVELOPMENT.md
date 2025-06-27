@@ -7,7 +7,7 @@ Welcome to the Kilo Code development guide! This document will help you set up y
 Before you begin, make sure you have the following installed:
 
 1. **Git** - For version control
-2. **Node.js** (version [v20.18.1](https://github.com/Kilo-Org/kilocode/blob/main/.nvmrc) recommended)
+2. **Node.js** (version [v20.19.2](https://github.com/Kilo-Org/kilocode/blob/main/.nvmrc) recommended)
 3. **pnpm** - Package manager (https://pnpm.io/)
 4. **Visual Studio Code** - Our recommended IDE for development
 

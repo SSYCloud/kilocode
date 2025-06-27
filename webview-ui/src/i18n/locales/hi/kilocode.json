@@ -1,9 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Kilo Code आपके लिए क्या कर सकता है?",
-		"introText": "मुझे उपलब्ध सबसे तेज़ AI मॉडल्स पर प्रशिक्षित किया गया है और मैं आपके लिए अत्यंत तेज़ी से कोड जनरेट करने के लिए तैयार हूँ!",
-		"ctaButton": "ShengSuanYun API KEY पंजीकृत करें",
-		"manualModeButton": "अपनी स्वयं की API कुंजी का उपयोग करें"
+		"greeting": "Kilo Code में आपका स्वागत है!",
+		"introText1": "Kilo Code एक मुफ्त, ओपन सोर्स AI कोडिंग एजेंट है।",
+		"introText2": "यह Claude 4 Sonnet, Gemini 2.5 Pro, GPT-4.1, और 450+ अन्य नवीनतम AI मॉडल्स के साथ काम करता है।",
+		"introText3": "एक मुफ्त खाता बनाएं और किसी भी AI मॉडल के साथ उपयोग के लिए $20 के tokens प्राप्त करें।",
+		"ctaButton": "मुफ्त खाता बनाएं",
+		"manualModeButton": "अपनी स्वयं की API कुंजी का उपयोग करें",
+		"alreadySignedUp": "पहले से साइन अप हैं?",
+		"loginText": "यहाँ लॉग इन करें"
 	},
 	"lowCreditWarning": {
 		"addCredit": "क्रेडिट जोड़ें",
@@ -74,6 +78,30 @@
 		"newFile": {
 			"newWorkflowFile": "नई वर्कफ़्लो फ़ाइल...",
 			"newRuleFile": "नई नियम फ़ाइल..."
+		}
+	},
+	"taskTimeline": {
+		"tooltip": {
+			"clickToScroll": "{{messageType}} (#{{messageNumber}}) देखें",
+			"messageTypes": {
+				"browser_action_launch": "ब्राउज़र लॉन्च",
+				"browser_action": "ब्राउज़र क्रिया",
+				"checkpoint_saved": "चेकपॉइंट सहेजा गया",
+				"browser_action_result": "ब्राउज़र क्रिया परिणाम",
+				"command": "कमांड एक्जीक्यूशन",
+				"command_output": "कमांड आउटपुट",
+				"completion_result": "पूर्णता परिणाम",
+				"error": "त्रुटि संदेश",
+				"mcp_server_response": "MCP सर्वर प्रतिक्रिया",
+				"condense_context": "संदर्भ संक्षिप्त करें",
+				"followup": "अनुवर्ती प्रश्न",
+				"reasoning": "AI तर्क",
+				"text": "AI प्रतिक्रिया",
+				"unknown": "अज्ञात संदेश प्रकार",
+				"tool": "उपकरण उपयोग",
+				"use_mcp_server": "MCP सर्वर उपयोग",
+				"user": "उपयोगकर्ता प्रतिक्रिया"
+			}
 		}
 	}
 }

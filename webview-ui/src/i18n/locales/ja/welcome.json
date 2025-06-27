@@ -1,9 +1,8 @@
 {
-	"greeting": "こんにちは、Code AI Agent-Chinese (Cline / Roo features combined)です！",
+	"greeting": "こんにちは、Code AI Agent-Chinese です！",
 	"introduction": "<strong>Code AI Agent-Chinese は最高の自律型コーディングエージェントです。</strong>アーキテクチャの設計、コーディング、デバッグ、そして今までにない生産性向上を体験する準備をしてください。続行するには、Code AI Agent-Chinese にはAPIキーが必要です。",
 	"notice": "開始するには、この拡張機能にはAPIプロバイダーが必要です。",
 	"start": "さあ、始めましょう！",
-	"chooseProvider": "開始するにはAPIプロバイダーを選択してください：",
 	"routers": {
 		"kilo": {
 			"description": "LLMsのための統一インターフェース"
@@ -12,8 +11,9 @@
 			"description": "LLMsのための統一インターフェース"
 		}
 	},
-	"startRouter": "ルーター経由の簡単セットアップ",
-	"startCustom": "自分のAPIキーを使用",
+	"chooseProvider": "Kilo Codeが機能するには、APIキーが必要です。",
+	"startRouter": "LLMルーターの使用をお勧めします：",
+	"startCustom": "または、あなた自身のAPIキーを使用できます：",
 	"telemetry": {
 		"title": "Code AI Agent-Chineseの改善にご協力ください",
 		"anonymousTelemetry": "バグの修正と拡張機能の改善のため、匿名のエラーと使用データを送信してください。コード、プロンプト、個人情報は一切送信されません。",
@@ -22,6 +22,5 @@
 		"allow": "許可",
 		"deny": "拒否"
 	},
-	"or": "または",
 	"importSettings": "設定をインポート"
 }

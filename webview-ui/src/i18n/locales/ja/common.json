@@ -1,4 +1,11 @@
 {
+	"answers": {
+		"yes": "はい",
+		"no": "いいえ",
+		"cancel": "キャンセル",
+		"remove": "削除",
+		"keep": "保持"
+	},
 	"number_format": {
 		"thousand_suffix": "k",
 		"million_suffix": "m",
@@ -17,6 +24,51 @@
 	},
 	"mermaid": {
 		"loading": "Mermaidダイアグラムを生成中...",
-		"render_error": "ダイアグラムをレンダリングできません"
+		"render_error": "ダイアグラムをレンダリングできません",
+		"fixing_syntax": "Mermaid構文を修正中...",
+		"fix_syntax_button": "AIで構文を修正",
+		"original_code": "元のコード：",
+		"errors": {
+			"unknown_syntax": "不明な構文エラー",
+			"fix_timeout": "AI修正リクエストがタイムアウトしました",
+			"fix_failed": "AI修正に失敗しました",
+			"fix_attempts": "{{attempts}}回の試行後に構文の修正に失敗しました。最後のエラー：{{error}}",
+			"no_fix_provided": "AIが修正を提供できませんでした",
+			"fix_request_failed": "修正リクエストに失敗しました"
+		},
+		"buttons": {
+			"zoom": "ズーム",
+			"zoomIn": "拡大",
+			"zoomOut": "縮小",
+			"copy": "コピー",
+			"save": "画像を保存",
+			"viewCode": "コードを表示",
+			"viewDiagram": "ダイアグラムを表示",
+			"close": "閉じる"
+		},
+		"modal": {
+			"codeTitle": "Mermaidコード"
+		},
+		"tabs": {
+			"diagram": "ダイアグラム",
+			"code": "コード"
+		},
+		"feedback": {
+			"imageCopied": "画像をクリップボードにコピーしました",
+			"copyError": "画像のコピーエラー"
+		}
+	},
+	"file": {
+		"errors": {
+			"invalidDataUri": "無効なデータURI形式",
+			"copyingImage": "画像のコピーエラー: {{error}}",
+			"openingImage": "画像を開く際のエラー: {{error}}",
+			"pathNotExists": "パスが存在しません: {{path}}",
+			"couldNotOpen": "ファイルを開けませんでした: {{error}}",
+			"couldNotOpenGeneric": "ファイルを開けませんでした！"
+		},
+		"success": {
+			"imageDataUriCopied": "画像データURIをクリップボードにコピーしました"
+		}
 	}
 }

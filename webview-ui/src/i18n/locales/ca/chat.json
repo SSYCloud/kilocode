@@ -12,7 +12,11 @@
 		"export": "Exportar historial de tasques",
 		"delete": "Eliminar tasca (Shift + Clic per ometre confirmació)",
 		"condenseContext": "Condensar context de forma intel·ligent",
-		"share": "Compartir tasca"
+		"share": "Compartir tasca",
+		"shareWithOrganization": "Compartir amb l'organització",
+		"shareWithOrganizationDescription": "Només els membres de la teva organització poden accedir",
+		"sharePublicly": "Compartir públicament",
+		"sharePubliclyDescription": "Qualsevol amb l'enllaç pot accedir"
 	},
 	"history": {
 		"title": "Historial"
@@ -81,7 +85,7 @@
 	"onboarding": "<strong> La vostra llista de tasques en aquest espai de treball està buida. </strong> Comença escrivint una tasca a continuació. \nNo esteu segur per on començar? \nMés informació sobre què pot fer Kilo Code als documents.",
 	"rooTips": {
 		"boomerangTasks": {
-			"title": "Tasques Boomerang",
+			"title": "Orquestració de Tasques",
 			"description": "Divideix les tasques en parts més petites i manejables."
 		},
 		"stickyModels": {
@@ -151,6 +155,7 @@
 		"didRead": "Kilo Code ha llegit aquest fitxer:",
 		"wantsToEdit": "Kilo Code vol editar aquest fitxer:",
 		"wantsToEditOutsideWorkspace": "Kilo Code vol editar aquest fitxer fora de l'espai de treball:",
+		"wantsToEditProtected": "Kilo Code vol editar un fitxer de configuració protegit:",
 		"wantsToCreate": "Kilo Code vol crear un nou fitxer:",
 		"wantsToSearchReplace": "Kilo Code vol realitzar cerca i substitució en aquest fitxer:",
 		"didSearchReplace": "Kilo Code ha realitzat cerca i substitució en aquest fitxer:",
@@ -158,7 +163,8 @@
 		"wantsToInsertWithLineNumber": "Kilo Code vol inserir contingut a la línia {{lineNumber}} d'aquest fitxer:",
 		"wantsToInsertAtEnd": "Kilo Code vol afegir contingut al final d'aquest fitxer:",
 		"wantsToReadAndXMore": "En Kilo Code vol llegir aquest fitxer i {{count}} més:",
-		"wantsToReadMultiple": "Kilo Code vol llegir diversos fitxers:"
+		"wantsToReadMultiple": "Kilo Code vol llegir diversos fitxers:",
+		"wantsToApplyBatchChanges": "Kilo Code vol aplicar canvis a múltiples fitxers:"
 	},
 	"directoryOperations": {
 		"wantsToViewTopLevel": "Kilo Code vol veure els fitxers de nivell superior en aquest directori:",
@@ -168,7 +174,15 @@
 		"wantsToViewDefinitions": "Kilo Code vol veure noms de definicions de codi font utilitzats en aquest directori:",
 		"didViewDefinitions": "Kilo Code ha vist noms de definicions de codi font utilitzats en aquest directori:",
 		"wantsToSearch": "Kilo Code vol cercar en aquest directori <code>{{regex}}</code>:",
-		"didSearch": "Kilo Code ha cercat en aquest directori <code>{{regex}}</code>:"
+		"didSearch": "Kilo Code ha cercat en aquest directori <code>{{regex}}</code>:",
+		"wantsToSearchOutsideWorkspace": "Kilo Code vol cercar en aquest directori (fora de l'espai de treball) <code>{{regex}}</code>:",
+		"didSearchOutsideWorkspace": "Kilo Code ha cercat en aquest directori (fora de l'espai de treball) <code>{{regex}}</code>:",
+		"wantsToViewTopLevelOutsideWorkspace": "Kilo Code vol veure els fitxers de nivell superior en aquest directori (fora de l'espai de treball):",
+		"didViewTopLevelOutsideWorkspace": "Kilo Code ha vist els fitxers de nivell superior en aquest directori (fora de l'espai de treball):",
+		"wantsToViewRecursiveOutsideWorkspace": "Kilo Code vol veure recursivament tots els fitxers en aquest directori (fora de l'espai de treball):",
+		"didViewRecursiveOutsideWorkspace": "Kilo Code ha vist recursivament tots els fitxers en aquest directori (fora de l'espai de treball):",
+		"wantsToViewDefinitionsOutsideWorkspace": "Kilo Code vol veure noms de definicions de codi font utilitzats en aquest directori (fora de l'espai de treball):",
+		"didViewDefinitionsOutsideWorkspace": "Kilo Code ha vist noms de definicions de codi font utilitzats en aquest directori (fora de l'espai de treball):"
 	},
 	"commandOutput": "Sortida de l'ordre",
 	"response": "Resposta",
@@ -221,9 +235,9 @@
 		"title": "🎉 Roo Code {{version}} publicat",
 		"description": "Roo Code {{version}} porta noves funcionalitats potents i millores basades en els teus comentaris.",
 		"whatsNew": "Novetats",
-		"feature1": "<bold>Condensació intel·ligent de context activada per defecte</bold>: La condensació de context ara està activada per defecte amb configuracions configurables per quan es produeix la condensació automàtica",
-		"feature2": "<bold>Botó de condensació manual</bold>: Nou botó a la capçalera de tasques que et permet activar manualment la condensació de context en qualsevol moment",
-		"feature3": "<bold>Configuració avançada de condensació</bold>: Ajusta quan i com es produeix la condensació automàtica a través de <contextSettingsLink>Configuració de context</contextSettingsLink>",
+		"feature1": "<bold>Llançament del Marketplace Roo</bold> - El marketplace ja està en funcionament! Descobreix i instal·la modes i MCP més fàcilment que mai.",
+		"feature2": "<bold>Models Gemini 2.5</bold> - S'ha afegit suport per als nous models Gemini 2.5 Pro, Flash i Flash Lite.",
+		"feature3": "<bold>Suport per a fitxers Excel i més</bold> - S'ha afegit suport per a fitxers Excel (.xlsx) i nombroses correccions d'errors i millores!",
 		"hideButton": "Amagar anunci",
 		"detailsDiscussLinks": "Obtingues més detalls i participa a <discordLink>Discord</discordLink> i <redditLink>Reddit</redditLink> 🚀"
 	},
@@ -284,5 +298,12 @@
 		"deny": {
 			"title": "Denegar tot"
 		}
+	},
+	"indexingStatus": {
+		"ready": "Índex preparat",
+		"indexing": "Indexant {{percentage}}%",
+		"indexed": "Indexat",
+		"error": "Error d'índex",
+		"status": "Estat de l'índex"
 	}
 }

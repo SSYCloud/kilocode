@@ -46,7 +46,7 @@ export interface RangeInFileWithContents {
 }
 export interface SymbolWithRange extends RangeInFile {
 	name: string
-	type: Parser.SyntaxNode["type"]
+	type: Parser.Node["type"]
 	content: string
 }
 

@@ -1,9 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Was kann Kilo Code für Sie tun?",
-		"introText": "Ich wurde mit den schnellsten verfügbaren KI-Modellen trainiert und bin bereit, für Sie blitzschnell Code zu generieren!",
-		"ctaButton": "ShengSuanYun API-Schlüssel registrieren",
-		"manualModeButton": "Eigener API-Schlüssel verwenden"
+		"greeting": "Willkommen bei Kilo Code!",
+		"introText1": "Kilo Code ist ein kostenloser Open-Source-KI-Coding-Agent.",
+		"introText2": "Er funktioniert mit den neuesten KI-Modellen wie Claude 4 Sonnet, Gemini 2.5 Pro, GPT-4.1 und über 450 weiteren.",
+		"introText3": "Erstelle ein kostenloses Konto und erhalte $20 an Tokens zur Nutzung mit jedem KI-Modell.",
+		"ctaButton": "Kostenloses Konto erstellen",
+		"manualModeButton": "Eigenen API-Schlüssel verwenden",
+		"alreadySignedUp": "Bereits registriert?",
+		"loginText": "Hier anmelden"
 	},
 	"lowCreditWarning": {
 		"addCredit": "Guthaben hinzufügen",
@@ -74,6 +78,30 @@
 		"newFile": {
 			"newWorkflowFile": "Neue Workflow-Datei...",
 			"newRuleFile": "Neue Regel-Datei..."
+		}
+	},
+	"taskTimeline": {
+		"tooltip": {
+			"messageTypes": {
+				"browser_action_launch": "Browser-Start",
+				"browser_action_result": "Browser-Aktionsergebnis",
+				"browser_action": "Browser-Aktion",
+				"command": "Befehlsausführung",
+				"completion_result": "Fertigstellungsergebnis",
+				"condense_context": "Kontext verdichten",
+				"command_output": "Befehlsausgabe",
+				"error": "Fehlermeldung",
+				"reasoning": "KI-Denken",
+				"mcp_server_response": "MCP-Server-Antwort",
+				"checkpoint_saved": "Kontrollpunkt gespeichert",
+				"text": "KI-Antwort",
+				"unknown": "unbekannter Nachrichtentyp",
+				"tool": "Werkzeugnutzung",
+				"use_mcp_server": "MCP-Server-Nutzung",
+				"followup": "Nachfrage",
+				"user": "Nutzerfeedback"
+			},
+			"clickToScroll": "{{messageType}} (#{{messageNumber}}) ansehen"
 		}
 	}
 }

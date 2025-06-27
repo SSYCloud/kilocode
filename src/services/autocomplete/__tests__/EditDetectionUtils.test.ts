@@ -2,7 +2,7 @@ import * as vscode from "vscode"
 import { isHumanEdit } from "../utils/EditDetectionUtils"
 
 // Mock the vscode namespace
-jest.mock("vscode", () => ({
+vi.mock("vscode", () => ({
 	TextDocumentChangeReason: {
 		Undo: 1,
 		Redo: 2,

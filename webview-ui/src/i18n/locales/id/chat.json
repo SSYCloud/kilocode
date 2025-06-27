@@ -1,5 +1,5 @@
 {
-	"greeting": "Apa yang bisa Kilo Code lakukan untuk Anda?",
+	"greeting": "Selamat datang di Kilo Code",
 	"task": {
 		"title": "Tugas",
 		"seeMore": "Lihat lebih banyak",
@@ -12,7 +12,11 @@
 		"closeAndStart": "Tutup tugas dan mulai yang baru",
 		"export": "Ekspor riwayat tugas",
 		"share": "Bagikan tugas",
-		"delete": "Hapus Tugas (Shift + Klik untuk lewati konfirmasi)"
+		"delete": "Hapus Tugas (Shift + Klik untuk lewati konfirmasi)",
+		"shareWithOrganization": "Bagikan dengan organisasi",
+		"shareWithOrganizationDescription": "Hanya anggota organisasi Anda yang dapat mengakses",
+		"sharePublicly": "Bagikan secara publik",
+		"sharePubliclyDescription": "Siapa pun dengan tautan dapat mengakses"
 	},
 	"history": {
 		"title": "Riwayat"
@@ -89,7 +93,7 @@
 	"onboarding": "Daftar tugas di workspace ini kosong.",
 	"rooTips": {
 		"boomerangTasks": {
-			"title": "Tugas Boomerang",
+			"title": "Orkestrasi Tugas",
 			"description": "Bagi tugas menjadi bagian-bagian kecil yang dapat dikelola"
 		},
 		"stickyModels": {
@@ -162,6 +166,8 @@
 		"didRead": "Kilo Code membaca file ini:",
 		"wantsToEdit": "Kilo Code ingin mengedit file ini:",
 		"wantsToEditOutsideWorkspace": "Kilo Code ingin mengedit file ini di luar workspace:",
+		"wantsToEditProtected": "Kilo Code ingin mengedit file konfigurasi yang dilindungi:",
+		"wantsToApplyBatchChanges": "Kilo Code ingin menerapkan perubahan ke beberapa file:",
 		"wantsToCreate": "Kilo Code ingin membuat file baru:",
 		"wantsToSearchReplace": "Kilo Code ingin mencari dan mengganti di file ini:",
 		"didSearchReplace": "Kilo Code melakukan pencarian dan penggantian pada file ini:",
@@ -177,7 +183,15 @@
 		"wantsToViewDefinitions": "Kilo Code ingin melihat nama definisi source code yang digunakan di direktori ini:",
 		"didViewDefinitions": "Kilo Code melihat nama definisi source code yang digunakan di direktori ini:",
 		"wantsToSearch": "Kilo Code ingin mencari direktori ini untuk <code>{{regex}}</code>:",
-		"didSearch": "Kilo Code mencari direktori ini untuk <code>{{regex}}</code>:"
+		"didSearch": "Kilo Code mencari direktori ini untuk <code>{{regex}}</code>:",
+		"wantsToSearchOutsideWorkspace": "Kilo Code ingin mencari direktori ini (di luar workspace) untuk <code>{{regex}}</code>:",
+		"didSearchOutsideWorkspace": "Kilo Code mencari direktori ini (di luar workspace) untuk <code>{{regex}}</code>:",
+		"wantsToViewTopLevelOutsideWorkspace": "Kilo Code ingin melihat file tingkat atas di direktori ini (di luar workspace):",
+		"didViewTopLevelOutsideWorkspace": "Kilo Code melihat file tingkat atas di direktori ini (di luar workspace):",
+		"wantsToViewRecursiveOutsideWorkspace": "Kilo Code ingin melihat semua file secara rekursif di direktori ini (di luar workspace):",
+		"didViewRecursiveOutsideWorkspace": "Kilo Code melihat semua file secara rekursif di direktori ini (di luar workspace):",
+		"wantsToViewDefinitionsOutsideWorkspace": "Kilo Code ingin melihat nama definisi source code yang digunakan di direktori ini (di luar workspace):",
+		"didViewDefinitionsOutsideWorkspace": "Kilo Code melihat nama definisi source code yang digunakan di direktori ini (di luar workspace):"
 	},
 	"codebaseSearch": {
 		"wantsToSearch": "Kilo Code ingin mencari codebase untuk <code>{{query}}</code>:",
@@ -227,9 +241,9 @@
 		"title": "🎉 Roo Code {{version}} Dirilis",
 		"description": "Roo Code {{version}} menghadirkan fitur baru yang powerful dan perbaikan berdasarkan feedback kamu.",
 		"whatsNew": "Apa yang Baru",
-		"feature1": "<bold>Model Pratinjau Gemini 2.5 Flash</bold>: Akses model Gemini Flash terbaru untuk respons yang lebih cepat dan efisien",
-		"feature2": "<bold>Kondensasi Konteks Cerdas</bold>: Tombol baru di header tugas memungkinkan kamu mengondensasi konten secara cerdas dengan umpan balik visual",
-		"feature3": "<bold>Dukungan YAML untuk Definisi Mode</bold>: Buat dan sesuaikan mode lebih mudah dengan dukungan YAML",
+		"feature1": "<bold>Peluncuran Roo Marketplace</bold> - Marketplace sekarang sudah live! Temukan dan install mode serta MCP lebih mudah dari sebelumnya.",
+		"feature2": "<bold>Model Gemini 2.5</bold> - Menambahkan dukungan untuk model Gemini 2.5 Pro, Flash, dan Flash Lite yang baru.",
+		"feature3": "<bold>Dukungan File Excel & Lainnya</bold> - Menambahkan dukungan file Excel (.xlsx) dan banyak perbaikan bug serta peningkatan!",
 		"hideButton": "Sembunyikan pengumuman",
 		"detailsDiscussLinks": "Dapatkan detail lebih lanjut dan diskusi di <discordLink>Discord</discordLink> dan <redditLink>Reddit</redditLink> 🚀"
 	},
@@ -281,8 +295,15 @@
 	"ask": {
 		"autoApprovedRequestLimitReached": {
 			"title": "Batas Permintaan yang Disetujui Otomatis Tercapai",
-			"description": "Kilo Code telah mencapai batas {{count}} permintaan API yang disetujui otomatis. Apakah Anda ingin mengatur ulang hitungan dan melanjutkan tugas?",
+			"description": "Kilo Code telah mencapai batas {{count}} permintaan API yang disetujui otomatis. Apakah kamu ingin mengatur ulang hitungan dan melanjutkan tugas?",
 			"button": "Atur Ulang dan Lanjutkan"
 		}
+	},
+	"indexingStatus": {
+		"ready": "Indeks siap",
+		"indexing": "Mengindeks {{percentage}}%",
+		"indexed": "Terindeks",
+		"error": "Error indeks",
+		"status": "Status indeks"
 	}
 }

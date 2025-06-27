@@ -1,9 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Что может сделать для вас Kilo Code?",
-		"introText": "Я обучен на самых быстрых доступных моделях ИИ и готов генерировать код для вас на сверхскоростях!",
-		"ctaButton": "Зарегистрировать API ключ ShengSuanYun",
-		"manualModeButton": "Использовать свой API-ключ"
+		"greeting": "Добро пожаловать в Kilo Code!",
+		"introText1": "Kilo Code — это бесплатный агент кодирования ИИ с открытым исходным кодом.",
+		"introText2": "Работает с новейшими моделями ИИ, такими как Claude 4 Sonnet, Gemini 2.5 Pro, GPT-4.1 и более чем 450 другими.",
+		"introText3": "Создайте бесплатную учетную запись и получите токены на $20 для использования с любой моделью ИИ.",
+		"ctaButton": "Создать бесплатную учетную запись",
+		"manualModeButton": "Использовать свой API-ключ",
+		"alreadySignedUp": "Уже зарегистрированы?",
+		"loginText": "Войти здесь"
 	},
 	"lowCreditWarning": {
 		"addCredit": "Добавить кредит",
@@ -74,6 +78,30 @@
 		"newFile": {
 			"newWorkflowFile": "Новый файл рабочего процесса...",
 			"newRuleFile": "Новый файл правила..."
+		}
+	},
+	"taskTimeline": {
+		"tooltip": {
+			"messageTypes": {
+				"browser_action_launch": "запуск браузера",
+				"browser_action_result": "результат действия в браузере",
+				"browser_action": "действие в браузере",
+				"command": "выполнение команды",
+				"command_output": "вывод команды",
+				"checkpoint_saved": "контрольная точка сохранена",
+				"error": "сообщение об ошибке",
+				"completion_result": "результат завершения",
+				"condense_context": "сжать контекст",
+				"followup": "дополнительный вопрос",
+				"mcp_server_response": "Ответ сервера MCP",
+				"tool": "использование инструмента",
+				"reasoning": "ИИ рассуждение",
+				"text": "Ответ ИИ",
+				"use_mcp_server": "Использование сервера MCP",
+				"unknown": "неизвестный тип сообщения",
+				"user": "отзыв пользователя"
+			},
+			"clickToScroll": "Посмотреть {{messageType}} (#{{messageNumber}})"
 		}
 	}
 }

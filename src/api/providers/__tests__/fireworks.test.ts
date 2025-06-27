@@ -5,11 +5,11 @@ import { ApiHandlerOptions, fireworksDefaultModelId } from "../../../shared/api"
 import { Anthropic } from "@anthropic-ai/sdk"
 import { BaseProvider } from "../base-provider"
 
-const mockCreate = jest.fn()
-jest.mock("openai", () => {
+const mockCreate = vi.fn()
+vi.mock("openai", () => {
 	return {
 		__esModule: true,
-		default: jest.fn().mockImplementation(() => ({
+		default: vi.fn().mockImplementation(() => ({
 			chat: {
 				completions: {
 					create: mockCreate.mockImplementation(async (options) => {
@@ -165,7 +165,7 @@ describe("FireworksHandler", () => {
 		})
 
 		it("should handle DeepSeek models differently", async () => {
-			jest.spyOn(handler, "getModel").mockReturnValueOnce({
+			vi.spyOn(handler, "getModel").mockReturnValueOnce({
 				id: "accounts/fireworks/models/deepseek-test" as any,
 				info: {
 					maxTokens: 4096,
@@ -236,9 +236,9 @@ describe("FireworksHandler", () => {
 		})
 
 		it("should correctly calculate max output tokens when prompt is near context window limit", async () => {
-			jest.spyOn(handler, "countTokens").mockResolvedValueOnce(8000)
+			vi.spyOn(handler, "countTokens").mockResolvedValueOnce(8000)
 
-			jest.spyOn(handler, "getModel").mockReturnValueOnce({
+			vi.spyOn(handler, "getModel").mockReturnValueOnce({
 				id: "accounts/fireworks/models/deepseek-v3" as any,
 				info: {
 					maxTokens: 16000,
@@ -310,7 +310,7 @@ describe("FireworksHandler", () => {
 		})
 
 		it("should handle and cap extremely large max_tokens values", async () => {
-			jest.spyOn(handler, "getModel").mockReturnValueOnce({
+			vi.spyOn(handler, "getModel").mockReturnValueOnce({
 				id: "accounts/fireworks/models/deepseek-v3" as any,
 				info: {
 					maxTokens: 200000,
@@ -353,7 +353,7 @@ describe("FireworksHandler", () => {
 		})
 
 		it("should handle excessively large prompts", async () => {
-			jest.spyOn(handler, "countTokens").mockResolvedValueOnce(100000)
+			vi.spyOn(handler, "countTokens").mockResolvedValueOnce(100000)
 
 			const stream = handler.createMessage(systemPrompt, messages)
 			for await (const chunk of stream) {
@@ -688,7 +688,7 @@ describe("FireworksHandler", () => {
 
 	describe("countTokens", () => {
 		it("should use base provider's token counting", async () => {
-			const baseSpy = jest.spyOn(BaseProvider.prototype, "countTokens").mockResolvedValue(100)
+			const baseSpy = vi.spyOn(BaseProvider.prototype, "countTokens").mockResolvedValue(100)
 
 			const content = [{ type: "text" as const, text: "Hello world" }]
 			const result = await handler.countTokens(content)
@@ -707,16 +707,14 @@ describe("FireworksHandler", () => {
 		})
 
 		it("should handle image content blocks in token counting", async () => {
-			const baseCountSpy = jest
-				.spyOn(BaseProvider.prototype, "countTokens")
-				.mockImplementation(async (content) => {
-					for (const block of content as Anthropic.Messages.ContentBlockParam[]) {
-						if (block.type === "image") {
-							return 500
-						}
+			const baseCountSpy = vi.spyOn(BaseProvider.prototype, "countTokens").mockImplementation(async (content) => {
+				for (const block of content as Anthropic.Messages.ContentBlockParam[]) {
+					if (block.type === "image") {
+						return 500
 					}
-					return 10
-				})
+				}
+				return 10
+			})
 
 			const content = [
 				{
@@ -737,19 +735,17 @@ describe("FireworksHandler", () => {
 		})
 
 		it("should count tokens for mixed text and image content", async () => {
-			const baseCountSpy = jest
-				.spyOn(BaseProvider.prototype, "countTokens")
-				.mockImplementation(async (content) => {
-					let totalTokens = 0
-					for (const block of content as Anthropic.Messages.ContentBlockParam[]) {
-						if (block.type === "image") {
-							totalTokens += 500
-						} else if (block.type === "text") {
-							totalTokens += 10
-						}
+			const baseCountSpy = vi.spyOn(BaseProvider.prototype, "countTokens").mockImplementation(async (content) => {
+				let totalTokens = 0
+				for (const block of content as Anthropic.Messages.ContentBlockParam[]) {
+					if (block.type === "image") {
+						totalTokens += 500
+					} else if (block.type === "text") {
+						totalTokens += 10
 					}
-					return totalTokens
-				})
+				}
+				return totalTokens
+			})
 
 			const content = [
 				{ type: "text" as const, text: "Hello world" },
@@ -772,7 +768,7 @@ describe("FireworksHandler", () => {
 
 		it("should handle large text inputs", async () => {
 			const veryLongText = "A".repeat(10000)
-			const baseCountSpy = jest.spyOn(BaseProvider.prototype, "countTokens").mockResolvedValue(2500)
+			const baseCountSpy = vi.spyOn(BaseProvider.prototype, "countTokens").mockResolvedValue(2500)
 
 			const content = [{ type: "text" as const, text: veryLongText }]
 			const result = await handler.countTokens(content)

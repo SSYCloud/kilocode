@@ -1,9 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Kilo Code có thể làm gì cho bạn?",
-		"introText": "Tôi đã được đào tạo trên các mô hình AI nhanh nhất hiện có và sẵn sàng tạo mã cho bạn với tốc độ cực nhanh!",
-		"ctaButton": "Đăng ký khóa API ShengSuanYun",
-		"manualModeButton": "Sử dụng khóa API của riêng bạn"
+		"greeting": "Chào mừng bạn đến với Kilo Code!",
+		"introText1": "Kilo Code là một agent lập trình AI miễn phí và mã nguồn mở.",
+		"introText2": "Hoạt động với các mô hình AI mới nhất như Claude 4 Sonnet, Gemini 2.5 Pro, GPT-4.1, và hơn 450 mô hình khác.",
+		"introText3": "Tạo tài khoản miễn phí và nhận token trị giá $20 để sử dụng với bất kỳ mô hình AI nào.",
+		"ctaButton": "Tạo tài khoản miễn phí",
+		"manualModeButton": "Sử dụng khóa API của riêng bạn",
+		"alreadySignedUp": "Đã đăng ký?",
+		"loginText": "Đăng nhập tại đây"
 	},
 	"lowCreditWarning": {
 		"addCredit": "Thêm tín dụng",
@@ -74,6 +78,30 @@
 		"newFile": {
 			"newWorkflowFile": "Tệp quy trình làm việc mới...",
 			"newRuleFile": "Tệp quy tắc mới..."
+		}
+	},
+	"taskTimeline": {
+		"tooltip": {
+			"messageTypes": {
+				"browser_action_launch": "khởi chạy trình duyệt",
+				"browser_action": "hành động trình duyệt",
+				"browser_action_result": "kết quả hành động trình duyệt",
+				"checkpoint_saved": "đã lưu điểm kiểm tra",
+				"command_output": "kết quả lệnh",
+				"command": "thực thi lệnh",
+				"completion_result": "kết quả hoàn thành",
+				"error": "thông báo lỗi",
+				"followup": "câu hỏi tiếp theo",
+				"condense_context": "thu gọn ngữ cảnh",
+				"mcp_server_response": "Phản hồi từ máy chủ MCP",
+				"reasoning": "Suy luận AI",
+				"unknown": "loại tin nhắn không xác định",
+				"tool": "sử dụng công cụ",
+				"text": "Phản hồi của AI",
+				"use_mcp_server": "Sử dụng máy chủ MCP",
+				"user": "phản hồi của người dùng"
+			},
+			"clickToScroll": "Xem {{messageType}} (#{{messageNumber}})"
 		}
 	}
 }

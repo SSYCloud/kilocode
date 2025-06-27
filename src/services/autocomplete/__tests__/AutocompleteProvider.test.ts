@@ -1,20 +1,20 @@
 // Mock the vscode module
-jest.mock("vscode", () => ({
+vi.mock("vscode", () => ({
 	window: {
-		createTextEditorDecorationType: jest.fn().mockReturnValue({ dispose: jest.fn() }),
+		createTextEditorDecorationType: vi.fn().mockReturnValue({ dispose: vi.fn() }),
 		activeTextEditor: {
 			selection: { active: {} },
-			edit: jest.fn().mockImplementation(() => Promise.resolve(true)),
-			setDecorations: jest.fn(),
+			edit: vi.fn().mockImplementation(() => Promise.resolve(true)),
+			setDecorations: vi.fn(),
 		},
 	},
 	commands: {
-		executeCommand: jest.fn(),
-		registerCommand: jest.fn().mockImplementation((_, handler) => {
-			if (_ === "kilo-ssy.acceptAutocompletePreview") {
+		executeCommand: vi.fn(),
+		registerCommand: vi.fn().mockImplementation((_, handler) => {
+			if (_ === "kilo-code.acceptAutocompletePreview") {
 				;(global as any).acceptHandler = handler
 			}
-			return { dispose: jest.fn() }
+			return { dispose: vi.fn() }
 		}),
 	},
 	Range: class {
@@ -29,9 +29,9 @@ jest.mock("vscode", () => ({
 	DecorationRangeBehavior: { ClosedOpen: 1 },
 	StatusBarAlignment: { Right: 1 },
 	workspace: {
-		getConfiguration: jest.fn().mockReturnValue({ get: jest.fn() }),
-		onDidChangeConfiguration: jest.fn().mockReturnValue({ dispose: jest.fn() }),
-		onDidChangeTextDocument: jest.fn().mockReturnValue({ dispose: jest.fn() }),
+		getConfiguration: vi.fn().mockReturnValue({ get: vi.fn() }),
+		onDidChangeConfiguration: vi.fn().mockReturnValue({ dispose: vi.fn() }),
+		onDidChangeTextDocument: vi.fn().mockReturnValue({ dispose: vi.fn() }),
 	},
 }))
 
@@ -47,13 +47,13 @@ class MockAutocompleteProvider {
 	// Mock editor
 	editor = {
 		selection: { active: {} },
-		edit: jest.fn().mockImplementation((callback) => {
-			const editBuilder = { insert: jest.fn() }
+		edit: vi.fn().mockImplementation((callback) => {
+			const editBuilder = { insert: vi.fn() }
 			callback(editBuilder)
 
 			// Create a mock Promise with a then method that can be called in tests
 			const mockPromise = {
-				then: jest.fn().mockImplementation((thenCallback) => {
+				then: vi.fn().mockImplementation((thenCallback) => {
 					// Store the callback for later execution in tests
 					mockPromise._thenCallback = thenCallback
 					return mockPromise
@@ -63,7 +63,7 @@ class MockAutocompleteProvider {
 
 			return mockPromise
 		}),
-		setDecorations: jest.fn(),
+		setDecorations: vi.fn(),
 	}
 
 	// Clear preview method
@@ -124,7 +124,7 @@ describe("Two-stage completion acceptance", () => {
 	let provider: MockAutocompleteProvider
 
 	beforeEach(() => {
-		jest.clearAllMocks()
+		vi.clearAllMocks()
 		provider = new MockAutocompleteProvider()
 	})
 
@@ -144,7 +144,7 @@ describe("Two-stage completion acceptance", () => {
 
 		// Get the edit callback that was passed to edit()
 		const editCallback = provider.editor.edit.mock.calls[0][0]
-		const mockEditBuilder = { insert: jest.fn() }
+		const mockEditBuilder = { insert: vi.fn() }
 
 		// Execute the edit callback
 		editCallback(mockEditBuilder)
@@ -177,7 +177,7 @@ describe("Two-stage completion acceptance", () => {
 
 		// Get the edit callback that was passed to edit()
 		const editCallback = provider.editor.edit.mock.calls[0][0]
-		const mockEditBuilder = { insert: jest.fn() }
+		const mockEditBuilder = { insert: vi.fn() }
 
 		// Execute the edit callback
 		editCallback(mockEditBuilder)

@@ -4,28 +4,29 @@ import * as fs from "fs"
 import { ContextGatherer, type CodeContextDefinition as _CodeContextDefinition } from "../ContextGatherer"
 import { type AutocompleteLanguageInfo as _AutocompleteLanguageInfo } from "../AutocompleteLanguageInfo"
 import type Parser from "web-tree-sitter"
+import { Mock } from "vitest"
 
 // Define mocks first
 const mockVscode = {
 	commands: {
-		executeCommand: jest.fn(),
+		executeCommand: vi.fn(),
 	},
 	workspace: {
 		fs: {
-			readFile: jest.fn(),
+			readFile: vi.fn(),
 		},
-		getConfiguration: jest.fn(() => ({
-			get: jest.fn(),
+		getConfiguration: vi.fn(() => ({
+			get: vi.fn(),
 		})),
-		onDidChangeTextDocument: jest.fn(() => ({ dispose: jest.fn() })),
+		onDidChangeTextDocument: vi.fn(() => ({ dispose: vi.fn() })),
 		// Add other necessary workspace mocks if needed by ContextGatherer constructor or methods
 	},
 	window: {
-		onDidChangeTextEditorSelection: jest.fn(() => ({ dispose: jest.fn() })),
+		onDidChangeTextEditorSelection: vi.fn(() => ({ dispose: vi.fn() })),
 		// Add other necessary window mocks
 	},
 	Uri: {
-		file: jest.fn((filePath: string) => {
+		file: vi.fn((filePath: string) => {
 			const _path = filePath // to avoid confusion with path module
 			return {
 				scheme: "file",
@@ -34,12 +35,12 @@ const mockVscode = {
 				query: "",
 				fragment: "",
 				fsPath: _path,
-				with: jest.fn().mockReturnThis(), // basic mock for 'with'
-				toJSON: jest.fn(() => ({ scheme: "file", fsPath: _path, path: _path })),
-				toString: jest.fn(() => `file://${_path}`),
+				with: vi.fn().mockReturnThis(), // basic mock for 'with'
+				toJSON: vi.fn(() => ({ scheme: "file", fsPath: _path, path: _path })),
+				toString: vi.fn(() => `file://${_path}`),
 			}
 		}),
-		parse: jest.fn((uriString: string) => {
+		parse: vi.fn((uriString: string) => {
 			const parts = uriString.replace("file://", "").split("#")
 			const _path = parts[0]
 			return {
@@ -49,15 +50,15 @@ const mockVscode = {
 				query: "",
 				fragment: parts[1] || "",
 				fsPath: _path,
-				with: jest.fn().mockReturnThis(),
-				toJSON: jest.fn(() => ({ scheme: "file", fsPath: _path, path: _path })),
-				toString: jest.fn(() => uriString),
+				with: vi.fn().mockReturnThis(),
+				toJSON: vi.fn(() => ({ scheme: "file", fsPath: _path, path: _path })),
+				toString: vi.fn(() => uriString),
 			}
 		}),
 	},
-	Position: jest.fn((line: number, character: number) => ({ line, character })),
-	Range: jest.fn((start, end) => ({ start, end })),
-	Location: jest.fn((uri, rangeOrPosition) => ({
+	Position: vi.fn((line: number, character: number) => ({ line, character })),
+	Range: vi.fn((start, end) => ({ start, end })),
+	Location: vi.fn((uri, rangeOrPosition) => ({
 		uri,
 		range: rangeOrPosition,
 	})),
@@ -65,14 +66,14 @@ const mockVscode = {
 }
 
 // Mock VS Code APIs
-jest.doMock("vscode", () => mockVscode)
+vi.doMock("vscode", () => mockVscode)
 
 // Mock tree-sitter utilities
 const mockTreeSitterUtils = {
-	getAst: jest.fn(),
-	getTreePathAtCursor: jest.fn(),
+	getAst: vi.fn(),
+	getTreePathAtCursor: vi.fn(),
 }
-jest.doMock("../utils/treeSitter", () => mockTreeSitterUtils)
+vi.doMock("../utils/treeSitter", () => mockTreeSitterUtils)
 
 const FIXTURES_PATH = path.join(__dirname, "fixtures", "contextGatherer")
 
@@ -250,7 +251,7 @@ async function testGatherContextForLspDefinitions(contextGatherer: ContextGather
 	const sourceFileUri = mockVscode.Uri.file(path.join(FIXTURES_PATH, testCase.fileName))
 
 	// --- Mock vscode.workspace.fs.readFile ---
-	;(mockVscode.workspace.fs.readFile as jest.Mock).mockImplementation(async (uri: vscode.Uri) => {
+	;(mockVscode.workspace.fs.readFile as Mock).mockImplementation(async (uri: vscode.Uri) => {
 		if (uri.fsPath === sourceFileUri.fsPath) {
 			return Buffer.from(sourceFileContent)
 		}
@@ -267,7 +268,7 @@ async function testGatherContextForLspDefinitions(contextGatherer: ContextGather
 	})
 
 	// --- Mock vscode.commands.executeCommand (LSP Definition Provider) ---
-	;(mockVscode.commands.executeCommand as jest.Mock).mockImplementation(
+	;(mockVscode.commands.executeCommand as Mock).mockImplementation(
 		async (command: string, uri: vscode.Uri, position: vscode.Position) => {
 			if (command === "vscode.executeDefinitionProvider") {
 				const matchingInteraction = testCase.expectedLspInteractions.find(
@@ -285,7 +286,7 @@ async function testGatherContextForLspDefinitions(contextGatherer: ContextGather
 	)
 
 	// --- Mock treeSitterUtils.getAst ---
-	;(mockTreeSitterUtils.getAst as jest.Mock).mockImplementation(async (filePath: string, content: string) => {
+	;(mockTreeSitterUtils.getAst as Mock).mockImplementation(async (filePath: string, content: string) => {
 		// Return a mock AST. For simplicity, the root node is the first node in treeSitterCursorPathNodes.
 		// A more robust mock would parse `content` or use pre-defined ASTs for each fixture.
 		const rootNodeFromCase = testCase.treeSitterCursorPathNodes[0]
@@ -324,11 +325,11 @@ async function testGatherContextForLspDefinitions(contextGatherer: ContextGather
 	})
 
 	// --- Mock treeSitterUtils.getTreePathAtCursor ---
-	;(mockTreeSitterUtils.getTreePathAtCursor as jest.Mock).mockImplementation(
+	;(mockTreeSitterUtils.getTreePathAtCursor as Mock).mockImplementation(
 		async (ast: Parser.Tree, _cursorIndex: number) => {
 			// Check if the provided AST matches the one we'd expect for the source file
 			if (ast.rootNode === testCase.treeSitterCursorPathNodes[0]) {
-				return testCase.treeSitterCursorPathNodes as unknown as Parser.SyntaxNode[]
+				return testCase.treeSitterCursorPathNodes as unknown as Parser.Node[]
 			}
 			console.warn(`[Test Mock getTreePathAtCursor] AST mismatch or unhandled case.`)
 			return []
@@ -411,12 +412,12 @@ describe.skip("ContextGatherer - LSP Definition Crawling", () => {
 	beforeEach(() => {
 		contextGatherer = new ContextGatherer(20, 10, 10, 5) // Use some default values
 		// Reset mocks before each test
-		;(mockVscode.commands.executeCommand as jest.Mock).mockClear()
-		;(mockVscode.workspace.fs.readFile as jest.Mock).mockClear()
-		;(mockTreeSitterUtils.getAst as jest.Mock).mockClear()
-		;(mockTreeSitterUtils.getTreePathAtCursor as jest.Mock).mockClear()
+		;(mockVscode.commands.executeCommand as Mock).mockClear()
+		;(mockVscode.workspace.fs.readFile as Mock).mockClear()
+		;(mockTreeSitterUtils.getAst as Mock).mockClear()
+		;(mockTreeSitterUtils.getTreePathAtCursor as Mock).mockClear()
 		// Ensure Uri.file mock is reset
-		mockVscode.Uri.file = jest.fn((filePath: string) => {
+		mockVscode.Uri.file = vi.fn((filePath: string) => {
 			const _path = filePath
 			return {
 				scheme: "file",
@@ -425,9 +426,9 @@ describe.skip("ContextGatherer - LSP Definition Crawling", () => {
 				query: "",
 				fragment: "",
 				fsPath: _path,
-				with: jest.fn().mockReturnThis(),
-				toJSON: jest.fn(() => ({ scheme: "file", fsPath: _path, path: _path })),
-				toString: jest.fn(() => `file://${_path}`),
+				with: vi.fn().mockReturnThis(),
+				toJSON: vi.fn(() => ({ scheme: "file", fsPath: _path, path: _path })),
+				toString: vi.fn(() => `file://${_path}`),
 			}
 		})
 	})

@@ -33,6 +33,7 @@ export const commandIds = [
 	"promptsButtonClicked",
 
 	"historyButtonClicked",
+	"marketplaceButtonClicked",
 	"popoutButtonClicked",
 	"accountButtonClicked",
 	"settingsButtonClicked",
@@ -55,6 +56,7 @@ export const commandIds = [
 	"focusChatInput", // kilocode_change
 	"importSettings", // kilocode_change
 	"exportSettings", // kilocode_change
+	"focusPanel",
 ] as const
 
 export type CommandId = (typeof commandIds)[number]
@@ -64,13 +66,16 @@ export type CommandId = (typeof commandIds)[number]
  */
 
 export const languages = [
-	"ca",
+	"ca", // kilocode_change
+	"cs", // kilocode_change
 	"de",
+	"el", // kilocode_change
 	"en",
 	"es",
+	"fil", // kilocode_change
 	"fr",
 	"hi",
-	"id", // kilocode_change
+	"id",
 	"it",
 	"ja",
 	"ko",
@@ -78,7 +83,10 @@ export const languages = [
 	"pl",
 	"pt-BR",
 	"ru",
+	"sv", // kilocode_change
+	"th", // kilocode_change
 	"tr",
+	"uk", // kilocode_change
 	"vi",
 	"zh-CN",
 	"zh-TW",

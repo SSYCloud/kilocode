@@ -1,9 +1,13 @@
 {
 	"welcome": {
-		"greeting": "¿Qué puede hacer Kilo Code por ti?",
-		"introText": "¡He sido entrenado con los modelos de IA más rápidos disponibles y estoy listo para generar código para ti a la velocidad de la luz!",
-		"ctaButton": "Registrar API KEY de ShengSuanYun",
-		"manualModeButton": "Usa tu propia clave API"
+		"greeting": "¡Bienvenido a Kilo Code!",
+		"introText1": "Kilo Code es un agente de codificación de IA gratuito y de código abierto.",
+		"introText2": "Funciona con los modelos de IA más recientes como Claude 4 Sonnet, Gemini 2.5 Pro, GPT-4.1, y más de 450 modelos adicionales.",
+		"introText3": "Crea una cuenta gratuita y obtén $20 en tokens para usar con cualquier modelo de IA.",
+		"ctaButton": "Crear cuenta gratuita",
+		"manualModeButton": "Usa tu propia clave API",
+		"alreadySignedUp": "¿Ya te registraste?",
+		"loginText": "Inicia sesión aquí"
 	},
 	"lowCreditWarning": {
 		"addCredit": "Añadir Crédito",
@@ -74,6 +78,30 @@
 		"newFile": {
 			"newWorkflowFile": "Nuevo archivo de flujo de trabajo...",
 			"newRuleFile": "Nuevo archivo de regla..."
+		}
+	},
+	"taskTimeline": {
+		"tooltip": {
+			"clickToScroll": "Ver {{messageType}} (#{{messageNumber}})",
+			"messageTypes": {
+				"browser_action_launch": "lanzamiento del navegador",
+				"browser_action": "acción del navegador",
+				"checkpoint_saved": "punto de control guardado",
+				"command_output": "salida del comando",
+				"browser_action_result": "resultado de la acción del navegador",
+				"command": "ejecución de comandos",
+				"condense_context": "condensar contexto",
+				"mcp_server_response": "Respuesta del servidor MCP",
+				"completion_result": "resultado de completado",
+				"followup": "pregunta de seguimiento",
+				"reasoning": "Razonamiento de IA",
+				"tool": "uso de herramientas",
+				"text": "Respuesta de IA",
+				"error": "mensaje de error",
+				"unknown": "tipo de mensaje desconocido",
+				"use_mcp_server": "Uso del servidor MCP",
+				"user": "opinión del usuario"
+			}
 		}
 	}
 }

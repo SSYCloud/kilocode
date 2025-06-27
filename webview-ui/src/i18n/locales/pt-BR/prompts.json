@@ -48,7 +48,7 @@
 	"globalCustomInstructions": {
 		"title": "Instruções personalizadas para todos os modos",
 		"description": "Estas instruções se aplicam a todos os modos. Elas fornecem um conjunto base de comportamentos que podem ser aprimorados por instruções específicas do modo abaixo. <0>Saiba mais</0>",
-		"loadFromFile": "As instruções também podem ser carregadas da pasta <span>.kilocode/rules/</span> no seu espaço de trabalho (.kilocoderules estão obsoletos e deixarão de funcionar em breve)."
+		"loadFromFile": "As instruções também podem ser carregadas da pasta <span>.kilocode-chinese/rules/</span> no seu espaço de trabalho (.kilocoderules estão obsoletos e deixarão de funcionar em breve)."
 	},
 	"systemPrompt": {
 		"preview": "Visualizar prompt do sistema",
@@ -103,6 +103,10 @@
 			"NEW_TASK": {
 				"label": "Iniciar Nova Tarefa",
 				"description": "Inicie uma nova tarefa com a entrada fornecida. Disponível na paleta de comandos."
+			},
+			"COMMIT_MESSAGE": {
+				"label": "Geração de Mensagem de Commit",
+				"description": "Gere mensagens de commit descritivas baseadas em suas alterações git preparadas. Personalize o prompt para gerar mensagens que sigam as melhores práticas do seu repositório."
 			}
 		}
 	},

@@ -3,7 +3,7 @@
 import fs from "node:fs"
 import path from "path"
 
-import Parser, { Language } from "web-tree-sitter"
+import { Parser, Language, Query, Tree, Node } from "web-tree-sitter"
 import { getUriFileExtension } from "../templating/uri"
 import { FileSymbolMap, SymbolWithRange } from "../ide-types"
 import { readFile } from "node:fs/promises"
@@ -123,6 +123,7 @@ export const IGNORE_PATH_PATTERNS: Partial<Record<LanguageName, RegExp[]>> = {
 
 export async function getParserForFile(filepath: string) {
 	try {
+		const { Parser } = require("web-tree-sitter")
 		await Parser.init()
 		const parser = new Parser()
 
@@ -147,6 +148,7 @@ const nameToLanguage = new Map<string, Language>()
 
 export async function getLanguageForFile(filepath: string): Promise<Language | undefined> {
 	try {
+		const { Parser } = require("web-tree-sitter")
 		await Parser.init()
 		const extension = getUriFileExtension(filepath)
 
@@ -172,7 +174,7 @@ export const getFullLanguageName = (filepath: string) => {
 	return supportedLanguages[extension]
 }
 
-export async function getQueryForFile(filepath: string, queryPath: string): Promise<Parser.Query | undefined> {
+export async function getQueryForFile(filepath: string, queryPath: string): Promise<any | undefined> {
 	const language = await getLanguageForFile(filepath)
 	if (!language) {
 		return undefined
@@ -189,7 +191,8 @@ export async function getQueryForFile(filepath: string, queryPath: string): Prom
 	}
 	const querySource = fs.readFileSync(sourcePath).toString()
 
-	const query = language.query(querySource)
+	const { Query } = require("web-tree-sitter")
+	const query = new Query(language, querySource)
 	return query
 }
 
@@ -200,11 +203,12 @@ async function loadLanguageForFileExt(fileExtension: string): Promise<Language> 
 		...(process.env.NODE_ENV !== "production" ? ["..", "node_modules", "tree-sitter-wasms", "out"] : [""]),
 		`tree-sitter-${supportedLanguages[fileExtension]}.wasm`,
 	)
-	return await Parser.Language.load(wasmPath)
+	const { Language } = require("web-tree-sitter")
+	return await Language.load(wasmPath)
 }
 
 // See https://tree-sitter.github.io/tree-sitter/using-parsers
-const GET_SYMBOLS_FOR_NODE_TYPES: Parser.SyntaxNode["type"][] = [
+const GET_SYMBOLS_FOR_NODE_TYPES: Node["type"][] = [
 	"class_declaration",
 	"class_definition",
 	"function_item", // function name = first "identifier" child
@@ -223,9 +227,13 @@ export async function getSymbolsForFile(filepath: string, contents: string): Pro
 		return
 	}
 
-	let tree: Parser.Tree
+	let tree: Tree | null
 	try {
 		tree = parser.parse(contents)
+		if (!tree) {
+			console.log(`Error parsing file: ${filepath} - parse returned null`)
+			return
+		}
 	} catch (e) {
 		console.log(`Error parsing file: ${filepath}`)
 		return
@@ -234,7 +242,7 @@ export async function getSymbolsForFile(filepath: string, contents: string): Pro
 
 	// Function to recursively find all named nodes (classes and functions)
 	const symbols: SymbolWithRange[] = []
-	function findNamedNodesRecursive(node: Parser.SyntaxNode) {
+	function findNamedNodesRecursive(node: Node) {
 		// console.log(`node: ${node.type}, ${node.text}`);
 		if (GET_SYMBOLS_FOR_NODE_TYPES.includes(node.type)) {
 			// console.log(`parent: ${node.type}, ${node.text.substring(0, 200)}`);
@@ -245,10 +253,11 @@ export async function getSymbolsForFile(filepath: string, contents: string): Pro
 			// Empirically, the actual name is the last identifier in the node
 			// Especially with languages where return type is declared before the name
 			// TODO use findLast in newer version of node target
-			let identifier: Parser.SyntaxNode | undefined = undefined
+			let identifier: Node | undefined = undefined
 			for (let i = node.children.length - 1; i >= 0; i--) {
-				if (node.children[i].type === "identifier" || node.children[i].type === "property_identifier") {
-					identifier = node.children[i]
+				const child = node.children[i]
+				if (child && (child.type === "identifier" || child.type === "property_identifier")) {
+					identifier = child
 					break
 				}
 			}
@@ -272,7 +281,11 @@ export async function getSymbolsForFile(filepath: string, contents: string): Pro
 				})
 			}
 		}
-		node.children.forEach(findNamedNodesRecursive)
+		node.children.forEach((child) => {
+			if (child) {
+				findNamedNodesRecursive(child)
+			}
+		})
 	}
 	findNamedNodesRecursive(tree.rootNode)
 	return symbols
@@ -297,7 +310,7 @@ export async function getSymbolsForManyFiles(uris: string[]): Promise<FileSymbol
 // AIDIFF: Added getAst and getTreePathAtCursor from continue/core/autocomplete/util/ast.ts
 // PLANREF: continue/core/autocomplete/util/ast.ts
 
-export async function getAst(filepath: string, fileContents: string): Promise<Parser.Tree | undefined> {
+export async function getAst(filepath: string, fileContents: string): Promise<Tree | undefined> {
 	const parser = await getParserForFile(filepath)
 
 	if (!parser) {
@@ -306,19 +319,19 @@ export async function getAst(filepath: string, fileContents: string): Promise<Pa
 
 	try {
 		const ast = parser.parse(fileContents)
-		return ast
+		return ast || undefined
 	} catch (e) {
 		// console.warn(`[treeSitter] Error parsing AST for ${filepath}:`, e);
 		return undefined
 	}
 }
 
-export async function getTreePathAtCursor(ast: Parser.Tree, cursorIndex: number): Promise<Parser.SyntaxNode[]> {
+export async function getTreePathAtCursor(ast: Tree, cursorIndex: number): Promise<Node[]> {
 	const path = [ast.rootNode]
 	while (path[path.length - 1].childCount > 0) {
 		let foundChild = false
 		for (const child of path[path.length - 1].children) {
-			if (child.startIndex <= cursorIndex && child.endIndex >= cursorIndex) {
+			if (child && child.startIndex <= cursorIndex && child.endIndex >= cursorIndex) {
 				path.push(child)
 				foundChild = true
 				break

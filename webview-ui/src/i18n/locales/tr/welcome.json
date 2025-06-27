@@ -1,9 +1,8 @@
 {
-	"greeting": "Merhaba, ben Code AI Agent-Chinese (Cline / Roo features combined)!",
+	"greeting": "Merhaba, ben Code AI Agent-Chinese",
 	"introduction": "<strong>Code AI Agent-Chinese , önde gelen otonom kodlama aracıdır.</strong> Daha önce hiç görmediğin şekilde mimari tasarım yapmaya, kod yazmaya, hata ayıklamaya ve üretkenliğini artırmaya hazırlan. Devam etmek için Code AI Agent-Chinese 'un bir API anahtarına ihtiyacı var.",
 	"notice": "Başlamak için bu eklentinin bir API sağlayıcısına ihtiyacı var.",
 	"start": "Hadi başlayalım!",
-	"chooseProvider": "Başlamak için bir API sağlayıcısı seç:",
 	"routers": {
 		"kilo": {
 			"description": "Optimize edilmiş LLM yönlendiricin"
@@ -12,8 +11,9 @@
 			"description": "LLM'ler için birleşik bir arayüz"
 		}
 	},
-	"startRouter": "Yönlendirici Üzerinden Hızlı Kurulum",
-	"startCustom": "Kendi API Anahtarını Kullan",
+	"chooseProvider": "Sihirini yapabilmesi için Kilo Code'nun bir API anahtarına ihtiyacı var.",
+	"startRouter": "Bir LLM yönlendiricisi kullanmanı öneririz:",
+	"startCustom": "Veya kendi API anahtarını kullanabilirsin:",
 	"telemetry": {
 		"title": "Code AI Agent-Chinese'u Geliştirmeye Yardım Et",
 		"anonymousTelemetry": "Hataları düzeltmemize ve eklentiyi geliştirmemize yardımcı olmak için anonim hata ve kullanım verileri gönder. Hiçbir zaman kod, metin veya kişisel bilgi gönderilmez.",
@@ -22,6 +22,5 @@
 		"allow": "İzin Ver",
 		"deny": "Reddet"
 	},
-	"or": "veya",
 	"importSettings": "Ayarları İçe Aktar"
 }

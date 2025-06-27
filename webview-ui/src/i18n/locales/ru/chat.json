@@ -12,7 +12,11 @@
 		"export": "Экспортировать историю задач",
 		"delete": "Удалить задачу (Shift + клик для пропуска подтверждения)",
 		"condenseContext": "Интеллектуально сжать контекст",
-		"share": "Поделиться задачей"
+		"share": "Поделиться задачей",
+		"shareWithOrganization": "Поделиться с организацией",
+		"shareWithOrganizationDescription": "Только члены вашей организации могут получить доступ",
+		"sharePublicly": "Поделиться публично",
+		"sharePubliclyDescription": "Любой, у кого есть ссылка, может получить доступ"
 	},
 	"history": {
 		"title": "История"
@@ -80,7 +84,7 @@
 	"about": "Создавайте, рефакторите и отлаживайте код с помощью ИИ. Подробнее см. в нашей <DocsLink>документации</DocsLink>.",
 	"rooTips": {
 		"boomerangTasks": {
-			"title": "Задачи-бумеранги",
+			"title": "Оркестрация задач",
 			"description": "Разделяйте задачи на более мелкие, управляемые части"
 		},
 		"stickyModels": {
@@ -146,6 +150,7 @@
 		"didRead": "Kilo Code прочитал этот файл:",
 		"wantsToEdit": "Kilo Code хочет отредактировать этот файл:",
 		"wantsToEditOutsideWorkspace": "Kilo Code хочет отредактировать этот файл вне рабочей области:",
+		"wantsToEditProtected": "Kilo Code хочет отредактировать защищённый файл конфигурации:",
 		"wantsToCreate": "Kilo Code хочет создать новый файл:",
 		"wantsToSearchReplace": "Kilo Code хочет выполнить поиск и замену в этом файле:",
 		"didSearchReplace": "Kilo Code выполнил поиск и замену в этом файле:",
@@ -153,7 +158,8 @@
 		"wantsToInsertWithLineNumber": "Kilo Code хочет вставить содержимое в этот файл на строку {{lineNumber}}:",
 		"wantsToInsertAtEnd": "Kilo Code хочет добавить содержимое в конец этого файла:",
 		"wantsToReadAndXMore": "Kilo Code хочет прочитать этот файл и еще {{count}}:",
-		"wantsToReadMultiple": "Kilo Code хочет прочитать несколько файлов:"
+		"wantsToReadMultiple": "Kilo Code хочет прочитать несколько файлов:",
+		"wantsToApplyBatchChanges": "Kilo Code хочет применить изменения к нескольким файлам:"
 	},
 	"directoryOperations": {
 		"wantsToViewTopLevel": "Kilo Code хочет просмотреть файлы верхнего уровня в этой директории:",
@@ -163,7 +169,15 @@
 		"wantsToViewDefinitions": "Kilo Code хочет просмотреть имена определений исходного кода в этой директории:",
 		"didViewDefinitions": "Kilo Code просмотрел имена определений исходного кода в этой директории:",
 		"wantsToSearch": "Kilo Code хочет выполнить поиск в этой директории по <code>{{regex}}</code>:",
-		"didSearch": "Kilo Code выполнил поиск в этой директории по <code>{{regex}}</code>:"
+		"didSearch": "Kilo Code выполнил поиск в этой директории по <code>{{regex}}</code>:",
+		"wantsToSearchOutsideWorkspace": "Kilo Code хочет выполнить поиск в этой директории (вне рабочего пространства) по <code>{{regex}}</code>:",
+		"didSearchOutsideWorkspace": "Kilo Code выполнил поиск в этой директории (вне рабочего пространства) по <code>{{regex}}</code>:",
+		"wantsToViewTopLevelOutsideWorkspace": "Kilo Code хочет просмотреть файлы верхнего уровня в этой директории (вне рабочего пространства):",
+		"didViewTopLevelOutsideWorkspace": "Kilo Code просмотрел файлы верхнего уровня в этой директории (вне рабочего пространства):",
+		"wantsToViewRecursiveOutsideWorkspace": "Kilo Code хочет рекурсивно просмотреть все файлы в этой директории (вне рабочего пространства):",
+		"didViewRecursiveOutsideWorkspace": "Kilo Code рекурсивно просмотрел все файлы в этой директории (вне рабочего пространства):",
+		"wantsToViewDefinitionsOutsideWorkspace": "Kilo Code хочет просмотреть имена определений исходного кода в этой директории (вне рабочего пространства):",
+		"didViewDefinitionsOutsideWorkspace": "Kilo Code просмотрел имена определений исходного кода в этой директории (вне рабочего пространства):"
 	},
 	"commandOutput": "Вывод команды",
 	"response": "Ответ",
@@ -206,11 +220,11 @@
 	},
 	"announcement": {
 		"title": "🎉 Выпущен Roo Code {{version}}",
-		"description": "Roo Code {{version}} приносит мощные новые функции и улучшения на основе ваших отзывов.",
+		"description": "Roo Code {{version}} приносит важные новые функции и улучшения на основе ваших отзывов.",
 		"whatsNew": "Что нового",
-		"feature1": "<bold>Интеллектуальное Сжатие Контекста Включено по Умолчанию</bold>: Сжатие контекста теперь включено по умолчанию с настраиваемыми параметрами для автоматического сжатия",
-		"feature2": "<bold>Кнопка Ручного Сжатия</bold>: Новая кнопка в заголовке задачи позволяет вручную запускать сжатие контекста в любое время",
-		"feature3": "<bold>Улучшенные Настройки Сжатия</bold>: Настройте когда и как происходит автоматическое сжатие через <contextSettingsLink>Настройки Контекста</contextSettingsLink>",
+		"feature1": "<bold>Запуск Roo Marketplace</bold>: Маркетплейс теперь в сети! Открывайте и устанавливайте режимы и MCP проще, чем когда-либо.",
+		"feature2": "<bold>Модели Gemini 2.5</bold>: Добавлена поддержка новых моделей Gemini 2.5 Pro, Flash и Flash Lite.",
+		"feature3": "<bold>Поддержка файлов Excel и многое другое</bold>: Добавлена поддержка файлов Excel (.xlsx) и множество исправлений ошибок и улучшений!",
 		"hideButton": "Скрыть объявление",
 		"detailsDiscussLinks": "Подробнее и обсуждение в <discordLink>Discord</discordLink> и <redditLink>Reddit</redditLink> 🚀"
 	},
@@ -284,5 +298,12 @@
 		"deny": {
 			"title": "Отклонить все"
 		}
+	},
+	"indexingStatus": {
+		"ready": "Индекс готов",
+		"indexing": "Индексация {{percentage}}%",
+		"indexed": "Проиндексировано",
+		"error": "Ошибка индекса",
+		"status": "Статус индекса"
 	}
 }

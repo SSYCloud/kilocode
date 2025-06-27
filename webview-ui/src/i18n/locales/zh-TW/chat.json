@@ -12,7 +12,11 @@
 		"export": "匯出工作紀錄",
 		"delete": "刪除工作（按住 Shift 並點選可跳過確認）",
 		"condenseContext": "智慧壓縮上下文",
-		"share": "分享工作"
+		"share": "分享工作",
+		"shareWithOrganization": "與組織分享",
+		"shareWithOrganizationDescription": "僅組織成員可存取",
+		"sharePublicly": "公開分享",
+		"sharePubliclyDescription": "任何擁有連結的人都可存取"
 	},
 	"history": {
 		"title": "歷史"
@@ -81,7 +85,7 @@
 	"onboarding": "<strong>您在此工作區中的工作清單是空的。</strong> 請在下方輸入工作以開始。 不確定如何開始？ 在 <DocsLink>說明文件</DocsLink> 中閱讀更多關於 Kilo Code 能為您做什麼的資訊。",
 	"rooTips": {
 		"boomerangTasks": {
-			"title": "任務拆分",
+			"title": "任務編排",
 			"description": "將任務拆分為更小、更易於管理的部分。"
 		},
 		"stickyModels": {
@@ -151,6 +155,7 @@
 		"didRead": "Kilo Code 已讀取此檔案：",
 		"wantsToEdit": "Kilo Code 想要編輯此檔案：",
 		"wantsToEditOutsideWorkspace": "Kilo Code 想要編輯此工作區外的檔案：",
+		"wantsToEditProtected": "Kilo Code 想要編輯受保護的設定檔案：",
 		"wantsToCreate": "Kilo Code 想要建立新檔案：",
 		"wantsToSearchReplace": "Kilo Code 想要在此檔案中搜尋和取代：",
 		"didSearchReplace": "Kilo Code 已在此檔案執行搜尋和取代：",
@@ -158,7 +163,8 @@
 		"wantsToInsertWithLineNumber": "Kilo Code 想要在此檔案第 {{lineNumber}} 行插入內容：",
 		"wantsToInsertAtEnd": "Kilo Code 想要在此檔案末尾新增內容：",
 		"wantsToReadAndXMore": "Kilo Code 想要讀取此檔案以及另外 {{count}} 個檔案：",
-		"wantsToReadMultiple": "Kilo Code 想要讀取多個檔案："
+		"wantsToReadMultiple": "Kilo Code 想要讀取多個檔案：",
+		"wantsToApplyBatchChanges": "Kilo Code 想要對多個檔案套用變更："
 	},
 	"directoryOperations": {
 		"wantsToViewTopLevel": "Kilo Code 想要檢視此目錄中最上層的檔案：",
@@ -168,7 +174,15 @@
 		"wantsToViewDefinitions": "Kilo Code 想要檢視此目錄中使用的原始碼定義名稱：",
 		"didViewDefinitions": "Kilo Code 已檢視此目錄中使用的原始碼定義名稱：",
 		"wantsToSearch": "Kilo Code 想要在此目錄中搜尋 <code>{{regex}}</code>：",
-		"didSearch": "Kilo Code 已在此目錄中搜尋 <code>{{regex}}</code>："
+		"didSearch": "Kilo Code 已在此目錄中搜尋 <code>{{regex}}</code>：",
+		"wantsToSearchOutsideWorkspace": "Kilo Code 想要在此目錄（工作區外）中搜尋 <code>{{regex}}</code>：",
+		"didSearchOutsideWorkspace": "Kilo Code 已在此目錄（工作區外）中搜尋 <code>{{regex}}</code>：",
+		"wantsToViewTopLevelOutsideWorkspace": "Kilo Code 想要檢視此目錄（工作區外）中最上層的檔案：",
+		"didViewTopLevelOutsideWorkspace": "Kilo Code 已檢視此目錄（工作區外）中最上層的檔案：",
+		"wantsToViewRecursiveOutsideWorkspace": "Kilo Code 想要遞迴檢視此目錄（工作區外）中的所有檔案：",
+		"didViewRecursiveOutsideWorkspace": "Kilo Code 已遞迴檢視此目錄（工作區外）中的所有檔案：",
+		"wantsToViewDefinitionsOutsideWorkspace": "Kilo Code 想要檢視此目錄（工作區外）中使用的原始碼定義名稱：",
+		"didViewDefinitionsOutsideWorkspace": "Kilo Code 已檢視此目錄（工作區外）中使用的原始碼定義名稱："
 	},
 	"commandOutput": "命令輸出",
 	"response": "回應",
@@ -219,11 +233,11 @@
 	},
 	"announcement": {
 		"title": "🎉 Roo Code {{version}} 已發布",
-		"description": "Roo Code {{version}} 帶來基於您意見回饋的強大新功能與改進。",
+		"description": "Roo Code {{version}} 帶來基於您意見回饋的重要新功能與改進。",
 		"whatsNew": "新功能",
-		"feature1": "<bold>智慧上下文壓縮預設啟用</bold>: 上下文壓縮現已預設啟用，並提供可設定的自動壓縮觸發設定",
-		"feature2": "<bold>手動壓縮按鈕</bold>: 工作標題中的新按鈕讓您隨時手動觸發上下文壓縮",
-		"feature3": "<bold>進階壓縮設定</bold>: 透過<contextSettingsLink>上下文設定</contextSettingsLink>精確控制自動壓縮的時機和方式",
+		"feature1": "<bold>Roo 市場正式上線</bold>: 市場現已上線！比以往更輕鬆地探索並安裝模式和 MCP。",
+		"feature2": "<bold>Gemini 2.5 模型</bold>: 新增對新版 Gemini 2.5 Pro、Flash 和 Flash Lite 模型的支援。",
+		"feature3": "<bold>Excel 檔案支援及更多</bold>: 新增 Excel (.xlsx) 檔案支援以及大量錯誤修復和改進！",
 		"hideButton": "隱藏公告",
 		"detailsDiscussLinks": "在 <discordLink>Discord</discordLink> 和 <redditLink>Reddit</redditLink> 取得更多詳細資訊並參與討論 🚀"
 	},
@@ -284,5 +298,12 @@
 		"deny": {
 			"title": "全部拒絕"
 		}
+	},
+	"indexingStatus": {
+		"ready": "索引就緒",
+		"indexing": "索引中 {{percentage}}%",
+		"indexed": "已索引",
+		"error": "索引錯誤",
+		"status": "索引狀態"
 	}
 }

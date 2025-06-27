@@ -67,12 +67,12 @@ Parameters:
   4. Your guidelines should NOT be a recollection of the conversation up to this point in time, meaning you should NOT be including arbitrary details of the conversation.
 Usage:
 <new_rule>
-<path>.kilocode/rules/{file name}.md</path>
+<path>.kilocode-chinese/rules/{file name}.md</path>
 <content>Kilo rule file content here</content>
 </new_rule>
 Example:
 <new_rule>
-<path>.kilocode/rules/project-preferences.md</path>
+<path>.kilocode-chinese/rules/project-preferences.md</path>
 <content>
 ## Brief overview
   [Brief description of the rules, including if this set of guidelines is project-specific or global]

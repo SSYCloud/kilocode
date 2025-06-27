@@ -1,9 +1,13 @@
 {
 	"welcome": {
-		"greeting": "Kilo Code sizin için ne yapabilir?",
-		"introText": "En hızlı mevcut yapay zeka modelleriyle eğitildim ve sizin için ışık hızında kod üretmeye hazırım!",
-		"ctaButton": "ShengSuanYun API Anahtarını Kaydet",
-		"manualModeButton": "Kendi API anahtarınızı kullanın"
+		"greeting": "Kilo Code'a hoş geldiniz!",
+		"introText1": "Kilo Code ücretsiz, açık kaynaklı bir AI kodlama ajanıdır.",
+		"introText2": "Claude 4 Sonnet, Gemini 2.5 Pro, GPT-4.1 ve 450+ diğer en yeni AI modelleri ile çalışır.",
+		"introText3": "Ücretsiz hesap oluşturun ve herhangi bir AI modeli ile kullanabilceğiniz $20 değerinde token alın.",
+		"ctaButton": "Ücretsiz hesap oluştur",
+		"manualModeButton": "Kendi API anahtarınızı kullanın",
+		"alreadySignedUp": "Zaten kaydoldunuz mu?",
+		"loginText": "Buradan giriş yapın"
 	},
 	"lowCreditWarning": {
 		"addCredit": "Kredi Ekle",
@@ -74,6 +78,30 @@
 		"newFile": {
 			"newWorkflowFile": "Yeni iş akışı dosyası...",
 			"newRuleFile": "Yeni kural dosyası..."
+		}
+	},
+	"taskTimeline": {
+		"tooltip": {
+			"clickToScroll": "{{messageType}} (#{{messageNumber}}) Görüntüle",
+			"messageTypes": {
+				"browser_action_launch": "tarayıcı başlatma",
+				"browser_action_result": "tarayıcı işlemi sonucu",
+				"browser_action": "tarayıcı eylemi",
+				"command_output": "komut çıktısı",
+				"completion_result": "tamamlama sonucu",
+				"checkpoint_saved": "kontrol noktası kaydedildi\n(sometimes can be \"ilerleme kaydedildi\" depending on context)",
+				"condense_context": "bağlamı özetle",
+				"error": "hata mesajı",
+				"command": "komut yürütme",
+				"followup": "devam sorusu",
+				"mcp_server_response": "MCP sunucu yanıtı",
+				"text": "YZ yanıtı",
+				"reasoning": "Yapay zeka muhakemesi",
+				"tool": "araç kullanımı",
+				"unknown": "bilinmeyen mesaj türü",
+				"use_mcp_server": "MCP sunucu kullanımı",
+				"user": "kullanıcı geri bildirimi"
+			}
 		}
 	}
 }

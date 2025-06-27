@@ -12,7 +12,11 @@
 		"export": "Görev geçmişini dışa aktar",
 		"delete": "Görevi sil (Onayı atlamak için Shift + Tıkla)",
 		"condenseContext": "Bağlamı akıllıca yoğunlaştır",
-		"share": "Görevi paylaş"
+		"share": "Görevi paylaş",
+		"shareWithOrganization": "Kuruluşla paylaş",
+		"shareWithOrganizationDescription": "Sadece kuruluşunuzun üyeleri erişebilir",
+		"sharePublicly": "Herkese açık paylaş",
+		"sharePubliclyDescription": "Bağlantıya sahip herkes erişebilir"
 	},
 	"history": {
 		"title": "Geçmiş"
@@ -81,7 +85,7 @@
 	"onboarding": "<strong>Bu çalışma alanındaki görev listeniz boş.</strong> Aşağıya bir görev yazarak başlayın. Nasıl başlayacağınızdan emin değil misiniz? Kilo Code'nun sizin için neler yapabileceği hakkında daha fazla bilgiyi <DocsLink>belgelerde</DocsLink> okuyun.",
 	"rooTips": {
 		"boomerangTasks": {
-			"title": "Bumerang Görevleri",
+			"title": "Görev Orkestrasyonu",
 			"description": "Görevleri daha küçük, yönetilebilir parçalara ayırın."
 		},
 		"stickyModels": {
@@ -151,6 +155,7 @@
 		"didRead": "Kilo Code bu dosyayı okudu:",
 		"wantsToEdit": "Kilo Code bu dosyayı düzenlemek istiyor:",
 		"wantsToEditOutsideWorkspace": "Kilo Code çalışma alanı dışındaki bu dosyayı düzenlemek istiyor:",
+		"wantsToEditProtected": "Kilo Code korumalı bir yapılandırma dosyasını düzenlemek istiyor:",
 		"wantsToCreate": "Kilo Code yeni bir dosya oluşturmak istiyor:",
 		"wantsToSearchReplace": "Kilo Code bu dosyada arama ve değiştirme yapmak istiyor:",
 		"didSearchReplace": "Kilo Code bu dosyada arama ve değiştirme yaptı:",
@@ -158,7 +163,8 @@
 		"wantsToInsertWithLineNumber": "Kilo Code bu dosyanın {{lineNumber}}. satırına içerik eklemek istiyor:",
 		"wantsToInsertAtEnd": "Kilo Code bu dosyanın sonuna içerik eklemek istiyor:",
 		"wantsToReadAndXMore": "Kilo Code bu dosyayı ve {{count}} tane daha okumak istiyor:",
-		"wantsToReadMultiple": "Kilo Code birden fazla dosya okumak istiyor:"
+		"wantsToReadMultiple": "Kilo Code birden fazla dosya okumak istiyor:",
+		"wantsToApplyBatchChanges": "Kilo Code birden fazla dosyaya değişiklik uygulamak istiyor:"
 	},
 	"directoryOperations": {
 		"wantsToViewTopLevel": "Kilo Code bu dizindeki üst düzey dosyaları görüntülemek istiyor:",
@@ -168,7 +174,15 @@
 		"wantsToViewDefinitions": "Kilo Code bu dizinde kullanılan kaynak kod tanımlama isimlerini görüntülemek istiyor:",
 		"didViewDefinitions": "Kilo Code bu dizinde kullanılan kaynak kod tanımlama isimlerini görüntüledi:",
 		"wantsToSearch": "Kilo Code bu dizinde <code>{{regex}}</code> için arama yapmak istiyor:",
-		"didSearch": "Kilo Code bu dizinde <code>{{regex}}</code> için arama yaptı:"
+		"didSearch": "Kilo Code bu dizinde <code>{{regex}}</code> için arama yaptı:",
+		"wantsToSearchOutsideWorkspace": "Kilo Code bu dizinde (çalışma alanı dışında) <code>{{regex}}</code> için arama yapmak istiyor:",
+		"didSearchOutsideWorkspace": "Kilo Code bu dizinde (çalışma alanı dışında) <code>{{regex}}</code> için arama yaptı:",
+		"wantsToViewTopLevelOutsideWorkspace": "Kilo Code bu dizindeki (çalışma alanı dışında) üst düzey dosyaları görüntülemek istiyor:",
+		"didViewTopLevelOutsideWorkspace": "Kilo Code bu dizindeki (çalışma alanı dışında) üst düzey dosyaları görüntüledi:",
+		"wantsToViewRecursiveOutsideWorkspace": "Kilo Code bu dizindeki (çalışma alanı dışında) tüm dosyaları özyinelemeli olarak görüntülemek istiyor:",
+		"didViewRecursiveOutsideWorkspace": "Kilo Code bu dizindeki (çalışma alanı dışında) tüm dosyaları özyinelemeli olarak görüntüledi:",
+		"wantsToViewDefinitionsOutsideWorkspace": "Kilo Code bu dizinde (çalışma alanı dışında) kullanılan kaynak kod tanımlama isimlerini görüntülemek istiyor:",
+		"didViewDefinitionsOutsideWorkspace": "Kilo Code bu dizinde (çalışma alanı dışında) kullanılan kaynak kod tanımlama isimlerini görüntüledi:"
 	},
 	"commandOutput": "Komut Çıktısı",
 	"response": "Yanıt",
@@ -221,9 +235,9 @@
 		"title": "🎉 Roo Code {{version}} Yayınlandı",
 		"description": "Roo Code {{version}} geri bildirimlerinize dayalı güçlü yeni özellikler ve iyileştirmeler getiriyor.",
 		"whatsNew": "Yenilikler",
-		"feature1": "<bold>Akıllı Bağlam Sıkıştırma Varsayılan Olarak Etkin</bold>: Bağlam sıkıştırma artık varsayılan olarak etkin ve otomatik sıkıştırmanın ne zaman gerçekleşeceği için yapılandırılabilir ayarlar mevcut",
-		"feature2": "<bold>Manuel Sıkıştırma Butonu</bold>: Görev başlığındaki yeni buton, istediğiniz zaman manuel olarak bağlam sıkıştırmayı tetiklemenize olanak tanır",
-		"feature3": "<bold>Gelişmiş Sıkıştırma Ayarları</bold>: <contextSettingsLink>Bağlam Ayarları</contextSettingsLink> üzerinden otomatik sıkıştırmanın ne zaman ve nasıl gerçekleşeceğini ince ayarlayın",
+		"feature1": "<bold>Roo Marketplace Lansmanı</bold> - Marketplace artık canlı! Modları ve MCP'leri her zamankinden daha kolay keşfedin ve kurun.",
+		"feature2": "<bold>Gemini 2.5 Modelleri</bold> - Yeni Gemini 2.5 Pro, Flash ve Flash Lite modelleri için destek eklendi.",
+		"feature3": "<bold>Excel Dosya Desteği ve Daha Fazlası</bold> - Excel (.xlsx) dosya desteği eklendi ve sayısız hata düzeltmesi ve iyileştirme!",
 		"hideButton": "Duyuruyu gizle",
 		"detailsDiscussLinks": "<discordLink>Discord</discordLink> ve <redditLink>Reddit</redditLink> üzerinde daha fazla ayrıntı edinin ve tartışmalara katılın 🚀"
 	},
@@ -284,5 +298,12 @@
 		"deny": {
 			"title": "Tümünü Reddet"
 		}
+	},
+	"indexingStatus": {
+		"ready": "İndeks hazır",
+		"indexing": "İndeksleniyor {{percentage}}%",
+		"indexed": "İndekslendi",
+		"error": "İndeks hatası",
+		"status": "İndeks durumu"
 	}
 }

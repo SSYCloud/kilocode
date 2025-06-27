@@ -12,7 +12,11 @@
 		"export": "导出任务历史",
 		"delete": "删除任务（Shift + 点击跳过确认）",
 		"share": "分享任务",
-		"condenseContext": "智能压缩上下文"
+		"condenseContext": "智能压缩上下文",
+		"shareWithOrganization": "与组织分享",
+		"shareWithOrganizationDescription": "仅组织成员可访问",
+		"sharePublicly": "公开分享",
+		"sharePubliclyDescription": "任何拥有链接的人都可访问"
 	},
 	"history": {
 		"title": "历史"
@@ -81,7 +85,7 @@
 	"onboarding": "<strong>此工作区中的任务列表为空。</strong> 请在下方输入任务开始。 不确定如何开始？ 在 <DocsLink>文档</DocsLink> 中阅读更多关于 Kilo Code  可以为您做什么的信息。",
 	"rooTips": {
 		"boomerangTasks": {
-			"title": "任务拆分",
+			"title": "任务编排",
 			"description": "将任务拆分为更小、更易于管理的部分。"
 		},
 		"stickyModels": {
@@ -151,6 +155,7 @@
 		"didRead": "已读取文件:",
 		"wantsToEdit": "需要编辑文件:",
 		"wantsToEditOutsideWorkspace": "需要编辑外部文件:",
+		"wantsToEditProtected": "需要编辑受保护的配置文件:",
 		"wantsToCreate": "需要新建文件:",
 		"wantsToSearchReplace": "需要在此文件中搜索和替换:",
 		"didSearchReplace": "已完成搜索和替换:",
@@ -158,7 +163,8 @@
 		"wantsToInsertWithLineNumber": "需要在第 {{lineNumber}} 行插入内容:",
 		"wantsToInsertAtEnd": "需要在文件末尾添加内容:",
 		"wantsToReadAndXMore": "Kilo Code 想读取此文件以及另外 {{count}} 个文件：",
-		"wantsToReadMultiple": "Kilo Code 想要读取多个文件："
+		"wantsToReadMultiple": "Kilo Code 想要读取多个文件：",
+		"wantsToApplyBatchChanges": "Kilo Code 想要对多个文件应用更改："
 	},
 	"directoryOperations": {
 		"wantsToViewTopLevel": "需要查看目录文件列表:",
@@ -168,7 +174,15 @@
 		"wantsToViewDefinitions": "Kilo Code 想查看此目录中使用的源代码定义名称:",
 		"didViewDefinitions": "Kilo Code 已查看此目录中使用的源代码定义名称:",
 		"wantsToSearch": "需要搜索内容: {{regex}}",
-		"didSearch": "已完成内容搜索: {{regex}}"
+		"didSearch": "已完成内容搜索: {{regex}}",
+		"wantsToSearchOutsideWorkspace": "需要搜索内容（工作区外）: {{regex}}",
+		"didSearchOutsideWorkspace": "已完成内容搜索（工作区外）: {{regex}}",
+		"wantsToViewTopLevelOutsideWorkspace": "需要查看目录文件列表（工作区外）:",
+		"didViewTopLevelOutsideWorkspace": "已查看目录文件列表（工作区外）:",
+		"wantsToViewRecursiveOutsideWorkspace": "需要查看目录所有文件（工作区外）:",
+		"didViewRecursiveOutsideWorkspace": "已查看目录所有文件（工作区外）:",
+		"wantsToViewDefinitionsOutsideWorkspace": "Kilo Code想查看此目录中使用的源代码定义名称（工作区外）:",
+		"didViewDefinitionsOutsideWorkspace": "Kilo Code已查看此目录中使用的源代码定义名称（工作区外）:"
 	},
 	"commandOutput": "命令输出",
 	"response": "响应",
@@ -219,11 +233,11 @@
 	},
 	"announcement": {
 		"title": "🎉 Roo Code {{version}} 已发布",
-		"description": "Roo Code {{version}} 带来基于您反馈的强大新功能和改进。",
+		"description": "Roo Code {{version}} 带来基于您反馈的重要新功能和改进。",
 		"whatsNew": "新特性",
-		"feature1": "<bold>智能上下文压缩默认启用</bold>: 上下文压缩现已默认启用，并提供可配置的自动压缩触发设置",
-		"feature2": "<bold>手动压缩按钮</bold>: 任务标题中的新按钮让您随时手动触发上下文压缩",
-		"feature3": "<bold>高级压缩设置</bold>: 通过<contextSettingsLink>上下文设置</contextSettingsLink>精确控制自动压缩的时机和方式",
+		"feature1": "<bold>Roo 市场正式上线</bold>: 市场现已上线！比以往更轻松地发现和安装模式及 MCP。",
+		"feature2": "<bold>Gemini 2.5 模型</bold>: 新增对新版 Gemini 2.5 Pro、Flash 和 Flash Lite 模型的支持。",
+		"feature3": "<bold>Excel 文件支持及更多</bold>: 新增 Excel (.xlsx) 文件支持以及大量错误修复和改进！",
 		"hideButton": "隐藏公告",
 		"detailsDiscussLinks": "在 <discordLink>Discord</discordLink> 和 <redditLink>Reddit</redditLink> 获取更多详情并参与讨论 🚀"
 	},
@@ -284,5 +298,12 @@
 		"deny": {
 			"title": "全部拒绝"
 		}
+	},
+	"indexingStatus": {
+		"ready": "索引就绪",
+		"indexing": "索引中 {{percentage}}%",
+		"indexed": "已索引",
+		"error": "索引错误",
+		"status": "索引状态"
 	}
 }
