@@ -57,6 +57,10 @@
 		"ollamaUrlLabel": "URL Ollama:",
 		"qdrantUrlLabel": "URL Qdrant",
 		"qdrantKeyLabel": "Klucz Qdrant:",
+		"advancedConfigLabel": "Konfiguracja zaawansowana",
+		"searchMinScoreLabel": "Próg wyniku wyszukiwania",
+		"searchMinScoreDescription": "Minimalny wynik podobieństwa (0.0-1.0) wymagany dla wyników wyszukiwania. Niższe wartości zwracają więcej wyników, ale mogą być mniej trafne. Wyższe wartości zwracają mniej wyników, ale bardziej trafnych.",
+		"searchMinScoreResetTooltip": "Zresetuj do wartości domyślnej (0.4)",
 		"startIndexingButton": "Rozpocznij indeksowanie",
 		"clearIndexDataButton": "Wyczyść dane indeksu",
 		"unsavedSettingsMessage": "Zapisz swoje ustawienia przed rozpoczęciem procesu indeksowania.",
@@ -110,6 +114,11 @@
 		"subtasks": {
 			"label": "Podzadania",
 			"description": "Zezwalaj na tworzenie i ukończenie podzadań bez konieczności zatwierdzania"
+		},
+		"followupQuestions": {
+			"label": "Pytanie",
+			"description": "Automatycznie wybierz pierwszą sugerowaną odpowiedź na pytania uzupełniające po skonfigurowanym limicie czasu",
+			"timeoutLabel": "Czas oczekiwania przed automatycznym wybraniem pierwszej odpowiedzi"
 		},
 		"execute": {
 			"label": "Wykonaj",
@@ -322,18 +331,18 @@
 		},
 		"geminiCli": {
 			"description": "Ten dostawca używa uwierzytelniania OAuth z narzędzia Gemini CLI i nie wymaga kluczy API.",
-			"oauthPath": "Ścieżka danych uwierzytelniających OAuth (opcjonalna)",
+			"oauthPath": "Ścieżka danych uwierzytelniających OAuth (opcjonalne)",
 			"oauthPathDescription": "Ścieżka do pliku danych uwierzytelniających OAuth. Pozostaw puste, aby użyć domyślnej lokalizacji (~/.gemini/oauth_creds.json).",
-			"instructions": "Jeśli jeszcze się nie uwierzytelniłeś, uruchom",
-			"instructionsContinued": "w swoim terminalu najpierw.",
+			"instructions": "Jeśli jeszcze się nie uwierzytelniłeś, uruchom najpierw",
+			"instructionsContinued": "w swoim terminalu.",
 			"setupLink": "Instrukcje konfiguracji Gemini CLI",
 			"requirementsTitle": "Ważne wymagania",
 			"requirement1": "Najpierw musisz zainstalować narzędzie Gemini CLI",
 			"requirement2": "Następnie uruchom gemini w swoim terminalu i upewnij się, że logujesz się przez Google",
-			"requirement3": "Działa tylko z osobistymi kontami Google (nie kontami Google Workspace)",
+			"requirement3": "Działa tylko z osobistymi kontami Google (nie z kontami Google Workspace)",
 			"requirement4": "Nie używa kluczy API - uwierzytelnianie jest obsługiwane przez OAuth",
 			"requirement5": "Wymaga, aby narzędzie Gemini CLI było najpierw zainstalowane i uwierzytelnione",
-			"freeAccess": "Dostęp do warstwy bezpłatnej przez uwierzytelnianie OAuth"
+			"freeAccess": "Darmowy dostęp przez uwierzytelnianie OAuth"
 		}
 	},
 	"browser": {
@@ -402,7 +411,7 @@
 		},
 		"autoCondenseContext": {
 			"name": "Automatycznie wyzwalaj inteligentną kondensację kontekstu",
-			"description": "Gdy włączone, Roo automatycznie skondensuje kontekst po osiągnięciu progu. Gdy wyłączone, nadal możesz ręcznie wyzwolić kondensację kontekstu."
+			"description": "Gdy włączone, Kilo Code automatycznie skondensuje kontekst po osiągnięciu progu. Gdy wyłączone, nadal możesz ręcznie wyzwolić kondensację kontekstu."
 		},
 		"openTabs": {
 			"label": "Limit kontekstu otwartych kart",
@@ -592,7 +601,7 @@
 	},
 	"footer": {
 		"feedback": "Jeśli masz jakiekolwiek pytania lub opinie, śmiało otwórz zgłoszenie na <githubLink>https://github.com/SSYCloud/kilocode/tree/ssy</githubLink> lub dołącz do <redditLink>reddit.com/r/kilocode</redditLink> lub <discordLink>kilocode.ai/discord</discordLink>",
-		"support": "W sprawach finansowych skontaktuj się z Obsługą Klienta pod adresem <supportLink>hi@kilocode.ai</supportLink>",
+		"support": "W sprawach finansowych skontaktuj się z Obsługą Klienta pod adresem ",
 		"telemetry": {
 			"label": "Zezwól na anonimowe raportowanie błędów i użycia",
 			"description": "Pomóż ulepszyć Kilo Code, wysyłając anonimowe dane o użytkowaniu i raporty o błędach. Nigdy nie są wysyłane kod, podpowiedzi ani informacje osobiste. Zobacz naszą politykę prywatności, aby uzyskać więcej szczegółów."

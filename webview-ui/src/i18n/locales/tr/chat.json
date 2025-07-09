@@ -16,7 +16,12 @@
 		"shareWithOrganization": "Kuruluşla paylaş",
 		"shareWithOrganizationDescription": "Sadece kuruluşunuzun üyeleri erişebilir",
 		"sharePublicly": "Herkese açık paylaş",
-		"sharePubliclyDescription": "Bağlantıya sahip herkes erişebilir"
+		"sharePubliclyDescription": "Bağlantıya sahip herkes erişebilir",
+		"connectToCloud": "Buluta bağlan",
+		"connectToCloudDescription": "Görevleri paylaşmak için Roo Code Cloud'a giriş yap",
+		"sharingDisabledByOrganization": "Paylaşım kuruluş tarafından devre dışı bırakıldı",
+		"shareSuccessOrganization": "Organizasyon bağlantısı panoya kopyalandı",
+		"shareSuccessPublic": "Genel bağlantı panoya kopyalandı"
 	},
 	"history": {
 		"title": "Geçmiş"
@@ -103,6 +108,7 @@
 	},
 	"selectMode": "Etkileşim modunu seçin",
 	"selectApiConfig": "API yapılandırmasını seçin",
+	"selectModelConfig": "Model seçin",
 	"enhancePrompt": "Ek bağlamla istemi geliştir",
 	"addImages": "Mesaja resim ekle",
 	"sendMessage": "Mesaj gönder",
@@ -112,6 +118,12 @@
 	"dragFiles": "dosyaları sürüklemek için shift tuşuna basılı tutun",
 	"dragFilesImages": "dosyaları/resimleri sürüklemek için shift tuşuna basılı tutun",
 	"enhancePromptDescription": "'İstemi geliştir' düğmesi, ek bağlam, açıklama veya yeniden ifade sağlayarak isteğinizi iyileştirmeye yardımcı olur. Buraya bir istek yazıp düğmeye tekrar tıklayarak nasıl çalıştığını görebilirsiniz.",
+	"modeSelector": {
+		"title": "Modlar",
+		"marketplace": "Mod Pazaryeri",
+		"settings": "Mod Ayarları",
+		"description": "Roo'nun davranışını özelleştiren uzmanlaşmış kişilikler."
+	},
 	"errorReadingFile": "Dosya okuma hatası:",
 	"noValidImages": "Hiçbir geçerli resim işlenmedi",
 	"separator": "Ayırıcı",
@@ -229,17 +241,19 @@
 		"tokens": "token"
 	},
 	"followUpSuggest": {
-		"copyToInput": "Giriş alanına kopyala (veya Shift + tıklama)"
+		"copyToInput": "Giriş alanına kopyala (veya Shift + tıklama)",
+		"autoSelectCountdown": "{{count}}s içinde otomatik seçilecek",
+		"countdownDisplay": "{{count}}sn"
 	},
 	"announcement": {
 		"title": "🎉 Roo Code {{version}} Yayınlandı",
-		"description": "Roo Code {{version}} geri bildirimlerinize dayalı güçlü yeni özellikler ve iyileştirmeler getiriyor.",
+		"description": "Roo Code {{version}}, geliştirme iş akışınızı geliştirmek için güçlü yeni özellikler ve önemli iyileştirmeler getiriyor.",
 		"whatsNew": "Yenilikler",
-		"feature1": "<bold>Roo Marketplace Lansmanı</bold> - Marketplace artık canlı! Modları ve MCP'leri her zamankinden daha kolay keşfedin ve kurun.",
-		"feature2": "<bold>Gemini 2.5 Modelleri</bold> - Yeni Gemini 2.5 Pro, Flash ve Flash Lite modelleri için destek eklendi.",
-		"feature3": "<bold>Excel Dosya Desteği ve Daha Fazlası</bold> - Excel (.xlsx) dosya desteği eklendi ve sayısız hata düzeltmesi ve iyileştirme!",
+		"feature1": "<bold>Tek Tıkla Görev Paylaşımı</bold>: Görevlerinizi meslektaşlarınız ve toplulukla tek tıkla anında paylaşın.",
+		"feature2": "<bold>Global .roo Dizin Desteği</bold>: Projeler arası tutarlı ayarlar için global .roo dizininden kurallar ve yapılandırmalar yükleyin.",
+		"feature3": "<bold>Geliştirilmiş Mimar'dan Kod'a Geçişler</bold>: Mimar modunda planlamadan Kod modunda uygulamaya sorunsuz aktarımlar.",
 		"hideButton": "Duyuruyu gizle",
-		"detailsDiscussLinks": "<discordLink>Discord</discordLink> ve <redditLink>Reddit</redditLink> üzerinde daha fazla ayrıntı edinin ve tartışmalara katılın 🚀"
+		"detailsDiscussLinks": "<discordLink>Discord</discordLink> ve <redditLink>Reddit</redditLink>'te daha fazla ayrıntı alın ve tartışmalara katılın 🚀"
 	},
 	"browser": {
 		"rooWantsToUse": "Kilo Code tarayıcıyı kullanmak istiyor:",
@@ -289,7 +303,8 @@
 	"codebaseSearch": {
 		"wantsToSearch": "Kilo Code kod tabanında <code>{{query}}</code> aramak istiyor:",
 		"wantsToSearchWithPath": "Kilo Code <code>{{path}}</code> içinde kod tabanında <code>{{query}}</code> aramak istiyor:",
-		"didSearch": "<code>{{query}}</code> için {{count}} sonuç bulundu:"
+		"didSearch": "<code>{{query}}</code> için {{count}} sonuç bulundu:",
+		"resultTooltip": "Benzerlik puanı: {{score}} (dosyayı açmak için tıklayın)"
 	},
 	"read-batch": {
 		"approve": {
@@ -305,5 +320,8 @@
 		"indexed": "İndekslendi",
 		"error": "İndeks hatası",
 		"status": "İndeks durumu"
+	},
+	"versionIndicator": {
+		"ariaLabel": "Sürüm {{version}} - Sürüm notlarını görüntülemek için tıklayın"
 	}
 }

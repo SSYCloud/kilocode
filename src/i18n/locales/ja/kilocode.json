@@ -2,10 +2,16 @@
 	"info": {
 		"settings_imported": "設定のインポートに成功しました。"
 	},
+	"userFeedback": {
+		"message_update_failed": "メッセージの更新に失敗しました",
+		"no_checkpoint_found": "このメッセージの前にチェックポイントが見つかりませんでした",
+		"message_updated": "メッセージが正常に更新されました"
+	},
 	"lowCreditWarning": {
 		"title": "クレジット残高警告！",
 		"message": "無料クレジットでチャージするか、追加購入できるか確認してください！"
 	},
+	"notLoggedInError": "リクエストを完了できません。選択したプロバイダーに接続してログインしていることを確認してください。",
 	"rules": {
 		"actions": {
 			"delete": "削除",
@@ -34,17 +40,13 @@
 		}
 	},
 	"commitMessage": {
-		"activated": "Kiloコードコミットメッセージジェネレーターが起動しました",
+		"activated": "Kilo Codeコミットメッセージ生成器が起動しました",
 		"gitNotFound": "⚠️ Gitリポジトリが見つからないか、gitが利用できません",
-		"gitInitError": "⚠️ Git 初期化エラー: {{error}}",
-		"generating": "Kilo: コミットメッセージを生成中...",
-		"analyzingChanges": "Kilo: 段階的な変更を分析中...",
-		"noStagedChangesRepo": "キロ: gitリポジトリにステージングされた変更は見つかりませんでした",
-		"noStagedChanges": "Kilo: 分析する対象のステージングされた変更は見つかりませんでした",
-		"generated": "キロ: コミットメッセージが生成されました！",
+		"gitInitError": "⚠️ Gitの初期化エラー: {{error}}",
+		"generating": "Kilo: コミットメッセージを生成しています...",
+		"noChanges": "キロ: 分析すべき変更は見つかりませんでした",
+		"generated": "Kilo: コミットメッセージが生成されました！",
 		"generationFailed": "Kilo: コミットメッセージの生成に失敗しました: {{errorMessage}}",
-		"tokenRequired": "コミットメッセージの生成にはKilo Codeトークンが必要です",
-		"activationFailed": "Kilo: コミットメッセージプロバイダーのアクティベーションに失敗しました: {{error}}",
-		"providerRegistered": "Kilo: コミットメッセージプロバイダーが登録されました"
+		"generatingFromUnstaged": "Kilo: ステージングされていない変更を使用してメッセージを生成中"
 	}
 }

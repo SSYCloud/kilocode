@@ -57,6 +57,10 @@
 		"ollamaUrlLabel": "Ollama URL:",
 		"qdrantUrlLabel": "Qdrant URL",
 		"qdrantKeyLabel": "Qdrant 키:",
+		"advancedConfigLabel": "고급 구성",
+		"searchMinScoreLabel": "검색 점수 임계값",
+		"searchMinScoreDescription": "검색 결과에 필요한 최소 유사도 점수(0.0-1.0). 값이 낮을수록 더 많은 결과가 반환되지만 관련성이 떨어질 수 있습니다. 값이 높을수록 결과는 적지만 관련성이 높은 결과가 반환됩니다.",
+		"searchMinScoreResetTooltip": "기본값(0.4)으로 재설정",
 		"startIndexingButton": "인덱싱 시작",
 		"clearIndexDataButton": "인덱스 데이터 지우기",
 		"unsavedSettingsMessage": "인덱싱 프로세스를 시작하기 전에 설정을 저장해 주세요.",
@@ -110,6 +114,11 @@
 		"subtasks": {
 			"label": "하위 작업",
 			"description": "승인 없이 하위 작업 생성 및 완료 허용"
+		},
+		"followupQuestions": {
+			"label": "질문",
+			"description": "설정된 시간이 지나면 후속 질문에 대한 첫 번째 제안 답변을 자동으로 선택합니다",
+			"timeoutLabel": "첫 번째 답변을 자동 선택하기 전 대기 시간"
 		},
 		"execute": {
 			"label": "실행",
@@ -323,17 +332,17 @@
 		"geminiCli": {
 			"description": "이 공급자는 Gemini CLI 도구의 OAuth 인증을 사용하며 API 키가 필요하지 않습니다.",
 			"oauthPath": "OAuth 자격 증명 경로 (선택사항)",
-			"oauthPathDescription": "OAuth 자격 증명 파일 경로입니다. 기본 위치(~/.gemini/oauth_creds.json)를 사용하려면 비워두세요.",
+			"oauthPathDescription": "OAuth 자격 증명 파일의 경로입니다. 기본 위치(~/.gemini/oauth_creds.json)를 사용하려면 비워두세요.",
 			"instructions": "아직 인증하지 않았다면",
-			"instructionsContinued": "을 터미널에서 먼저 실행해주세요.",
+			"instructionsContinued": "를 터미널에서 먼저 실행하세요.",
 			"setupLink": "Gemini CLI 설정 지침",
 			"requirementsTitle": "중요한 요구사항",
 			"requirement1": "먼저 Gemini CLI 도구를 설치해야 합니다",
-			"requirement2": "그다음 터미널에서 gemini를 실행하고 Google로 로그인하세요",
+			"requirement2": "그 다음 터미널에서 gemini를 실행하고 Google로 로그인했는지 확인하세요",
 			"requirement3": "개인 Google 계정에서만 작동합니다 (Google Workspace 계정 불가)",
 			"requirement4": "API 키를 사용하지 않습니다 - 인증은 OAuth를 통해 처리됩니다",
 			"requirement5": "Gemini CLI 도구가 먼저 설치되고 인증되어야 합니다",
-			"freeAccess": "OAuth 인증을 통한 무료 등급 액세스"
+			"freeAccess": "OAuth 인증을 통한 무료 액세스"
 		}
 	},
 	"browser": {
@@ -402,7 +411,7 @@
 		},
 		"autoCondenseContext": {
 			"name": "지능적 컨텍스트 압축 자동 트리거",
-			"description": "활성화되면 Roo는 임계값에 도달했을 때 자동으로 컨텍스트를 압축합니다. 비활성화되면 여전히 수동으로 컨텍스트 압축을 트리거할 수 있습니다."
+			"description": "활성화되면 Kilo Code는 임계값에 도달했을 때 자동으로 컨텍스트를 압축합니다. 비활성화되면 여전히 수동으로 컨텍스트 압축을 트리거할 수 있습니다."
 		},
 		"openTabs": {
 			"label": "열린 탭 컨텍스트 제한",
@@ -592,7 +601,7 @@
 	},
 	"footer": {
 		"feedback": "질문이나 피드백이 있으시면 <githubLink>https://github.com/SSYCloud/kilocode/tree/ssy</githubLink>에서 이슈를 열거나 <redditLink>reddit.com/r/kilocode</redditLink> 또는 <discordLink>kilocode.ai/discord</discordLink>에 가입하세요",
-		"support": "재무 관련 문의는 <supportLink>hi@kilocode.ai</supportLink>로 고객 지원팀에 문의하세요",
+		"support": "재무 관련 문의는 로 고객 지원팀에 문의하세요",
 		"telemetry": {
 			"label": "익명 오류 및 사용 보고 허용",
 			"description": "익명 사용 데이터 및 오류 보고서를 보내 Kilo Code 개선에 도움을 주세요. 코드, 프롬프트 또는 개인 정보는 절대 전송되지 않습니다. 자세한 내용은 개인정보 보호정책을 참조하세요."

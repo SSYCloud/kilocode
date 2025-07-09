@@ -2,10 +2,16 @@
 	"info": {
 		"settings_imported": "Paramètres importés avec succès."
 	},
+	"userFeedback": {
+		"message_update_failed": "Échec de la mise à jour du message",
+		"no_checkpoint_found": "Aucun point de contrôle trouvé avant ce message",
+		"message_updated": "Message mis à jour avec succès"
+	},
 	"lowCreditWarning": {
 		"title": "Avertissement de Crédit Faible !",
 		"message": "Vérifiez si vous pouvez recharger avec des crédits gratuits ou en acheter davantage !"
 	},
+	"notLoggedInError": "Impossible de traiter la demande, assure-toi que tu es connecté et identifié auprès du fournisseur sélectionné.",
 	"rules": {
 		"actions": {
 			"delete": "Supprimer",
@@ -38,13 +44,9 @@
 		"gitNotFound": "⚠️ Dépôt Git introuvable ou git non disponible",
 		"gitInitError": "⚠️ Erreur d'initialisation Git : {{error}}",
 		"generating": "Kilo : Génération du message de commit...",
-		"analyzingChanges": "Kilo : Analyse des modifications en cours...",
-		"noStagedChangesRepo": "Kilo : Aucun changement en attente trouvé dans le dépôt git",
-		"noStagedChanges": "Kilo : Aucune modification en attente trouvée à analyser",
+		"noChanges": "Kilo : Aucune modification trouvée à analyser",
 		"generated": "Kilo : Message de commit généré !",
-		"generationFailed": "Kilo : Échec de génération du message de commit : {{errorMessage}}",
-		"tokenRequired": "Le jeton Kilo Code est requis pour la génération de messages de commit",
-		"activationFailed": "Kilo : Échec de l'activation du fournisseur de messages de commit : {{error}}",
-		"providerRegistered": "Kilo : Fournisseur de messages de commit enregistré"
+		"generationFailed": "Kilo: Échec de génération du message de commit : {{errorMessage}}",
+		"generatingFromUnstaged": "Kilo : Génération du message à partir des modifications non indexées"
 	}
 }

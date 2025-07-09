@@ -211,7 +211,7 @@ export function NewRun() {
 														className="h-9"
 													/>
 													<CommandList>
-														<CommandEmpty>No model found.</CommandEmpty>
+														<CommandEmpty>未发现模型.</CommandEmpty>
 														<CommandGroup>
 															{models.data?.map(({ id, name }) => (
 																<CommandItem
@@ -244,7 +244,7 @@ export function NewRun() {
 								variant="secondary"
 								onClick={() => document.getElementById("json-upload")?.click()}>
 								<SlidersHorizontal />
-								Import Settings
+								导入设置
 							</Button>
 							<input
 								id="json-upload"
@@ -258,10 +258,7 @@ export function NewRun() {
 									<>
 										<div className="flex items-center gap-1 p-2 border-b">
 											<CircleCheck className="size-4 text-ring" />
-											<div className="text-sm">
-												Imported valid Kilo Code settings. Showing differences from default
-												settings.
-											</div>
+											<div className="text-sm">导入自定义 Kilo SSY 设置.</div>
 										</div>
 										<SettingsDiff defaultSettings={EVALS_SETTINGS} customSettings={settings} />
 									</>
@@ -272,19 +269,19 @@ export function NewRun() {
 
 						<Button type="button" variant="secondary" onClick={() => setSystemPromptDialogOpen(true)}>
 							<Book />
-							Override System Prompt
+							替代系统提示
 						</Button>
 
 						<Dialog open={systemPromptDialogOpen} onOpenChange={setSystemPromptDialogOpen}>
 							<DialogContent>
-								<DialogTitle>Override System Prompt</DialogTitle>
+								<DialogTitle>替代系统提示</DialogTitle>
 								<Textarea
 									ref={systemPromptRef}
 									value={systemPrompt}
 									onChange={(e) => setSystemPrompt(e.target.value)}
 								/>
 								<DialogFooter>
-									<Button onClick={() => setSystemPromptDialogOpen(false)}>Done</Button>
+									<Button onClick={() => setSystemPromptDialogOpen(false)}>确定</Button>
 								</DialogFooter>
 							</DialogContent>
 						</Dialog>
@@ -300,8 +297,8 @@ export function NewRun() {
 									defaultValue="full"
 									onValueChange={(value) => setValue("suite", value as "full" | "partial")}>
 									<TabsList>
-										<TabsTrigger value="full">All</TabsTrigger>
-										<TabsTrigger value="partial">Some</TabsTrigger>
+										<TabsTrigger value="full">所有</TabsTrigger>
+										<TabsTrigger value="partial">部分</TabsTrigger>
 									</TabsList>
 								</Tabs>
 								{suite === "partial" && (
@@ -323,7 +320,7 @@ export function NewRun() {
 						name="concurrency"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Concurrency</FormLabel>
+								<FormLabel>金额</FormLabel>
 								<FormControl>
 									<div className="flex flex-row items-center gap-2">
 										<Slider
@@ -346,7 +343,7 @@ export function NewRun() {
 						name="description"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Description / Notes</FormLabel>
+								<FormLabel>描述 / 提示</FormLabel>
 								<FormControl>
 									<Textarea placeholder="Optional" {...field} />
 								</FormControl>
@@ -358,7 +355,7 @@ export function NewRun() {
 					<div className="flex justify-end">
 						<Button size="lg" type="submit" disabled={isSubmitting}>
 							<Rocket className="size-4" />
-							Launch
+							启动
 						</Button>
 					</div>
 				</form>

@@ -16,7 +16,12 @@
 		"shareWithOrganization": "Compartir amb l'organització",
 		"shareWithOrganizationDescription": "Només els membres de la teva organització poden accedir",
 		"sharePublicly": "Compartir públicament",
-		"sharePubliclyDescription": "Qualsevol amb l'enllaç pot accedir"
+		"sharePubliclyDescription": "Qualsevol amb l'enllaç pot accedir",
+		"connectToCloud": "Connecta al núvol",
+		"connectToCloudDescription": "Inicia sessió a Kilo Code Cloud per compartir tasques",
+		"sharingDisabledByOrganization": "Compartició deshabilitada per l'organització",
+		"shareSuccessOrganization": "Enllaç d'organització copiat al porta-retalls",
+		"shareSuccessPublic": "Enllaç públic copiat al porta-retalls"
 	},
 	"history": {
 		"title": "Historial"
@@ -103,6 +108,7 @@
 	},
 	"selectMode": "Selecciona el mode d'interacció",
 	"selectApiConfig": "Seleccioneu la configuració de l'API",
+	"selectModelConfig": "Seleccioneu el model",
 	"enhancePrompt": "Millora la sol·licitud amb context addicional",
 	"addImages": "Afegeix imatges al missatge",
 	"sendMessage": "Envia el missatge",
@@ -112,6 +118,12 @@
 	"dragFiles": "manté premut shift per arrossegar fitxers",
 	"dragFilesImages": "manté premut shift per arrossegar fitxers/imatges",
 	"enhancePromptDescription": "El botó 'Millora la sol·licitud' ajuda a millorar la teva sol·licitud proporcionant context addicional, aclariments o reformulacions. Prova d'escriure una sol·licitud aquí i fes clic al botó de nou per veure com funciona.",
+	"modeSelector": {
+		"title": "Modes",
+		"marketplace": "Marketplace de Modes",
+		"settings": "Configuració de Modes",
+		"description": "Personalitats especialitzades que adapten el comportament de Kilo Code."
+	},
 	"errorReadingFile": "Error en llegir el fitxer:",
 	"noValidImages": "No s'ha processat cap imatge vàlida",
 	"separator": "Separador",
@@ -229,17 +241,19 @@
 		"tokens": "tokens"
 	},
 	"followUpSuggest": {
-		"copyToInput": "Copiar a l'entrada (o Shift + clic)"
+		"copyToInput": "Copiar a l'entrada (o Shift + clic)",
+		"autoSelectCountdown": "Selecció automàtica en {{count}}s",
+		"countdownDisplay": "{{count}}s"
 	},
 	"announcement": {
-		"title": "🎉 Roo Code {{version}} publicat",
-		"description": "Roo Code {{version}} porta noves funcionalitats potents i millores basades en els teus comentaris.",
+		"title": "🎉 Roo Code {{version}} Llançat",
+		"description": "Roo Code {{version}} porta noves funcions potents i millores significatives per millorar el vostre flux de treball de desenvolupament.",
 		"whatsNew": "Novetats",
-		"feature1": "<bold>Llançament del Marketplace Roo</bold> - El marketplace ja està en funcionament! Descobreix i instal·la modes i MCP més fàcilment que mai.",
-		"feature2": "<bold>Models Gemini 2.5</bold> - S'ha afegit suport per als nous models Gemini 2.5 Pro, Flash i Flash Lite.",
-		"feature3": "<bold>Suport per a fitxers Excel i més</bold> - S'ha afegit suport per a fitxers Excel (.xlsx) i nombroses correccions d'errors i millores!",
-		"hideButton": "Amagar anunci",
-		"detailsDiscussLinks": "Obtingues més detalls i participa a <discordLink>Discord</discordLink> i <redditLink>Reddit</redditLink> 🚀"
+		"feature1": "<bold>Compartició de Tasques amb 1 Clic</bold>: Comparteix instantàniament les vostres tasques amb companys i la comunitat amb un sol clic.",
+		"feature2": "<bold>Suport per a Directori Global .roo</bold>: Carrega regles i configuracions des d'un directori global .roo per a configuracions consistents entre projectes.",
+		"feature3": "<bold>Transicions Millorades d'Arquitecte a Codi</bold>: Transferències fluides de la planificació en mode Arquitecte a la implementació en mode Codi.",
+		"hideButton": "Amaga l'anunci",
+		"detailsDiscussLinks": "Obtén més detalls i uneix-te a les discussions a <discordLink>Discord</discordLink> i <redditLink>Reddit</redditLink> 🚀"
 	},
 	"browser": {
 		"rooWantsToUse": "Kilo Code vol utilitzar el navegador:",
@@ -289,7 +303,8 @@
 	"codebaseSearch": {
 		"wantsToSearch": "Kilo Code vol cercar a la base de codi <code>{{query}}</code>:",
 		"wantsToSearchWithPath": "Kilo Code vol cercar a la base de codi <code>{{query}}</code> a <code>{{path}}</code>:",
-		"didSearch": "S'han trobat {{count}} resultat(s) per a <code>{{query}}</code>:"
+		"didSearch": "S'han trobat {{count}} resultat(s) per a <code>{{query}}</code>:",
+		"resultTooltip": "Puntuació de similitud: {{score}} (fes clic per obrir el fitxer)"
 	},
 	"read-batch": {
 		"approve": {
@@ -305,5 +320,8 @@
 		"indexed": "Indexat",
 		"error": "Error d'índex",
 		"status": "Estat de l'índex"
+	},
+	"versionIndicator": {
+		"ariaLabel": "Versió {{version}} - Feu clic per veure les notes de llançament"
 	}
 }

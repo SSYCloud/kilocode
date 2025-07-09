@@ -1,7 +1,7 @@
 {
-	"extension.displayName": "Kilo Code Nightly",
-	"views.contextMenu.label": "Kilo Code Nightly",
-	"views.terminalMenu.label": "Kilo Code Nightly",
-	"views.activitybar.title": "Kilo Code Nightly",
-	"configuration.title": "Kilo Code Nightly"
+	"extension.displayName": "Kilo SSY Nightly",
+	"views.contextMenu.label": "Kilo SSY Nightly",
+	"views.terminalMenu.label": "Kilo SSY Nightly",
+	"views.activitybar.title": "Kilo SSY Nightly",
+	"configuration.title": "Kilo SSY Nightly"
 }

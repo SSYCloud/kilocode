@@ -16,7 +16,12 @@
 		"shareWithOrganization": "संगठन के साथ साझा करें",
 		"shareWithOrganizationDescription": "केवल आपके संगठन के सदस्य पहुंच सकते हैं",
 		"sharePublicly": "सार्वजनिक रूप से साझा करें",
-		"sharePubliclyDescription": "लिंक वाला कोई भी व्यक्ति पहुंच सकता है"
+		"sharePubliclyDescription": "लिंक वाला कोई भी व्यक्ति पहुंच सकता है",
+		"connectToCloud": "Cloud से कनेक्ट करें",
+		"connectToCloudDescription": "कार्य साझा करने के लिए Kilo Code Cloud में साइन इन करें",
+		"sharingDisabledByOrganization": "संगठन द्वारा साझाकरण अक्षम किया गया",
+		"shareSuccessOrganization": "संगठन लिंक क्लिपबोर्ड में कॉपी किया गया",
+		"shareSuccessPublic": "सार्वजनिक लिंक क्लिपबोर्ड में कॉपी किया गया"
 	},
 	"history": {
 		"title": "इतिहास"
@@ -103,6 +108,7 @@
 	},
 	"selectMode": "इंटरैक्शन मोड चुनें",
 	"selectApiConfig": "एपीआई कॉन्फ़िगरेशन का चयन करें",
+	"selectModelConfig": "मॉडल चुनें",
 	"enhancePrompt": "अतिरिक्त संदर्भ के साथ प्रॉम्प्ट बढ़ाएँ",
 	"addImages": "संदेश में चित्र जोड़ें",
 	"sendMessage": "संदेश भेजें",
@@ -112,6 +118,12 @@
 	"dragFiles": "फ़ाइलें खींचने के लिए shift दबाकर रखें",
 	"dragFilesImages": "फ़ाइलें/चित्र खींचने के लिए shift दबाकर रखें",
 	"enhancePromptDescription": "'प्रॉम्प्ट बढ़ाएँ' बटन अतिरिक्त संदर्भ, स्पष्टीकरण या पुनर्विचार प्रदान करके आपके अनुरोध को बेहतर बनाने में मदद करता है। यहां अनुरोध लिखकर देखें और यह कैसे काम करता है यह देखने के लिए बटन पर फिर से क्लिक करें।",
+	"modeSelector": {
+		"title": "मोड्स",
+		"marketplace": "मोड मार्केटप्लेस",
+		"settings": "मोड सेटिंग्स",
+		"description": "विशेष व्यक्तित्व जो Kilo Code के व्यवहार को अनुकूलित करते हैं।"
+	},
 	"errorReadingFile": "फ़ाइल पढ़ने में त्रुटि:",
 	"noValidImages": "कोई मान्य चित्र प्रोसेस नहीं किया गया",
 	"separator": "विभाजक",
@@ -229,17 +241,19 @@
 		"tokens": "टोकन"
 	},
 	"followUpSuggest": {
-		"copyToInput": "इनपुट में कॉपी करें (या Shift + क्लिक)"
+		"copyToInput": "इनपुट में कॉपी करें (या Shift + क्लिक)",
+		"autoSelectCountdown": "{{count}}s में स्वचालित रूप से चयन हो रहा है",
+		"countdownDisplay": "{{count}}सेकंड"
 	},
 	"announcement": {
 		"title": "🎉 Roo Code {{version}} रिलीज़ हुआ",
-		"description": "Roo Code {{version}} आपके फीडबैक के आधार पर शक्तिशाली नई सुविधाएँ और सुधार लाता है।",
-		"whatsNew": "नई सुविधाएँ",
-		"feature1": "<bold>Roo Marketplace लॉन्च</bold> - Marketplace अब लाइव है! पहले से कहीं आसान तरीके से modes और MCP खोजें और इंस्टॉल करें।",
-		"feature2": "<bold>Gemini 2.5 Models</bold> - नए Gemini 2.5 Pro, Flash, और Flash Lite models के लिए समर्थन जोड़ा गया।",
-		"feature3": "<bold>Excel File समर्थन और अधिक</bold> - Excel (.xlsx) file समर्थन जोड़ा गया और कई bug fixes और सुधार!",
-		"hideButton": "घोषणा छिपाएँ",
-		"detailsDiscussLinks": "<discordLink>Discord</discordLink> और <redditLink>Reddit</redditLink> पर अधिक जानकारी प्राप्त करें और चर्चा में भाग लें 🚀"
+		"description": "Roo Code {{version}} आपके विकास वर्कफ़्लो को बेहतर बनाने के लिए शक्तिशाली नई सुविधाएं और महत्वपूर्ण सुधार लेकर आया है।",
+		"whatsNew": "नया क्या है",
+		"feature1": "<bold>1-क्लिक टास्क शेयरिंग</bold>: अपने टास्क को सहकर्मियों और समुदाय के साथ एक क्लिक में तुरंत साझा करें।",
+		"feature2": "<bold>ग्लोबल .roo डायरेक्टरी समर्थन</bold>: प्रोजेक्ट्स में निरंतर सेटिंग्स के लिए ग्लोबल .roo डायरेक्टरी से नियम और कॉन्फ़िगरेशन लोड करें।",
+		"feature3": "<bold>बेहतर आर्किटेक्ट से कोड ट्रांज़िशन</bold>: आर्किटेक्ट मोड में प्लानिंग से कोड मोड में इम्प्लीमेंटेशन तक सहज स्थानांतरण।",
+		"hideButton": "घोषणा छुपाएं",
+		"detailsDiscussLinks": "<discordLink>Discord</discordLink> और <redditLink>Reddit</redditLink> पर अधिक विवरण प्राप्त करें और चर्चाओं में शामिल हों 🚀"
 	},
 	"browser": {
 		"rooWantsToUse": "Kilo Code ब्राउज़र का उपयोग करना चाहता है:",
@@ -289,7 +303,8 @@
 	"codebaseSearch": {
 		"wantsToSearch": "Kilo Code कोडबेस में <code>{{query}}</code> खोजना चाहता है:",
 		"wantsToSearchWithPath": "Kilo Code <code>{{path}}</code> में कोडबेस में <code>{{query}}</code> खोजना चाहता है:",
-		"didSearch": "<code>{{query}}</code> के लिए {{count}} परिणाम मिले:"
+		"didSearch": "<code>{{query}}</code> के लिए {{count}} परिणाम मिले:",
+		"resultTooltip": "समानता स्कोर: {{score}} (फ़ाइल खोलने के लिए क्लिक करें)"
 	},
 	"read-batch": {
 		"approve": {
@@ -305,5 +320,8 @@
 		"indexed": "इंडेक्स किया गया",
 		"error": "इंडेक्स त्रुटि",
 		"status": "इंडेक्स स्थिति"
+	},
+	"versionIndicator": {
+		"ariaLabel": "संस्करण {{version}} - रिलीज़ नोट्स देखने के लिए क्लिक करें"
 	}
 }

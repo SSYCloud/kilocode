@@ -22,7 +22,7 @@ import Profile from "./components/kilocode/profile/Profile"
 // import { AccountView } from "./components/account/AccountView" // kilocode_change: we have our own profile view
 import { useAddNonInteractiveClickListener } from "./components/ui/hooks/useNonInteractiveClick"
 import { KiloCodeErrorBoundary } from "./kilocode/KiloCodeErrorBoundary"
-
+import McpView from "./components/mcp/McpView"
 type Tab = "settings" | "history" | "mcp" | "modes" | "chat" | "marketplace" | "account" | "profile" // kilocode_change: add "profile"
 
 const tabsByMessageAction: Partial<Record<NonNullable<ExtensionMessage["action"]>, Tab>> = {
@@ -33,6 +33,7 @@ const tabsByMessageAction: Partial<Record<NonNullable<ExtensionMessage["action"]
 	profileButtonClicked: "profile",
 	marketplaceButtonClicked: "marketplace",
 	accountButtonClicked: "account",
+	mcpButtonClicked: "mcp",
 }
 
 const App = () => {
@@ -91,7 +92,6 @@ const App = () => {
 	const onMessage = useCallback(
 		(e: MessageEvent) => {
 			const message: ExtensionMessage = e.data
-
 			if (message.type === "action" && message.action) {
 				// kilocode_change begin
 				if (message.action === "focusChatInput") {
@@ -172,6 +172,7 @@ const App = () => {
 	) : (
 		<>
 			{tab === "modes" && <ModesView onDone={() => switchTab("chat")} />}
+			{tab === "mcp" && <McpView onDone={() => switchTab("chat")} />}
 			{tab === "history" && <HistoryView onDone={() => switchTab("chat")} />}
 			{tab === "settings" && (
 				<SettingsView ref={settingsRef} onDone={() => switchTab("chat")} targetSection={currentSection} /> // kilocode_change

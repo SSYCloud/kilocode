@@ -57,6 +57,10 @@
 		"ollamaUrlLabel": "Ollama URL:",
 		"qdrantUrlLabel": "Qdrant URL",
 		"qdrantKeyLabel": "Qdrant Key:",
+		"advancedConfigLabel": "Konfigurasi Lanjutan",
+		"searchMinScoreLabel": "Ambang Batas Skor Pencarian",
+		"searchMinScoreDescription": "Skor kesamaan minimum (0.0-1.0) yang diperlukan untuk hasil pencarian. Nilai yang lebih rendah mengembalikan lebih banyak hasil tetapi mungkin kurang relevan. Nilai yang lebih tinggi mengembalikan lebih sedikit hasil tetapi lebih relevan.",
+		"searchMinScoreResetTooltip": "Reset ke nilai default (0.4)",
 		"startIndexingButton": "Mulai Pengindeksan",
 		"clearIndexDataButton": "Hapus Data Indeks",
 		"unsavedSettingsMessage": "Silakan simpan pengaturan kamu sebelum memulai proses pengindeksan.",
@@ -110,6 +114,11 @@
 		"subtasks": {
 			"label": "Subtugas",
 			"description": "Izinkan pembuatan dan penyelesaian subtugas tanpa memerlukan persetujuan"
+		},
+		"followupQuestions": {
+			"label": "Pertanyaan",
+			"description": "Secara otomatis memilih jawaban pertama yang disarankan untuk pertanyaan lanjutan setelah batas waktu yang dikonfigurasi",
+			"timeoutLabel": "Waktu tunggu sebelum otomatis memilih jawaban pertama"
 		},
 		"execute": {
 			"label": "Eksekusi",
@@ -319,19 +328,19 @@
 			"placeholder": "Default: claude"
 		},
 		"geminiCli": {
-			"description": "Provider ini menggunakan autentikasi OAuth dari alat Gemini CLI dan tidak memerlukan kunci API.",
+			"description": "Penyedia ini menggunakan autentikasi OAuth dari alat Gemini CLI dan tidak memerlukan kunci API.",
 			"oauthPath": "Jalur Kredensial OAuth (opsional)",
 			"oauthPathDescription": "Jalur ke file kredensial OAuth. Biarkan kosong untuk menggunakan lokasi default (~/.gemini/oauth_creds.json).",
-			"instructions": "Jika kamu belum melakukan autentikasi, silakan jalankan",
-			"instructionsContinued": "di terminal kamu terlebih dahulu.",
-			"setupLink": "Instruksi Pengaturan Gemini CLI",
+			"instructions": "Jika Anda belum melakukan autentikasi, jalankan",
+			"instructionsContinued": "di terminal Anda terlebih dahulu.",
+			"setupLink": "Petunjuk Pengaturan Gemini CLI",
 			"requirementsTitle": "Persyaratan Penting",
-			"requirement1": "Pertama, kamu perlu menginstal alat Gemini CLI",
-			"requirement2": "Kemudian, jalankan gemini di terminal kamu dan pastikan kamu masuk dengan Google",
-			"requirement3": "Hanya bekerja dengan akun Google pribadi (bukan akun Google Workspace)",
+			"requirement1": "Pertama, Anda perlu menginstal alat Gemini CLI",
+			"requirement2": "Kemudian, jalankan gemini di terminal Anda dan pastikan Anda masuk dengan Google",
+			"requirement3": "Hanya berfungsi dengan akun Google pribadi (bukan akun Google Workspace)",
 			"requirement4": "Tidak menggunakan kunci API - autentikasi ditangani melalui OAuth",
 			"requirement5": "Memerlukan alat Gemini CLI diinstal dan diautentikasi terlebih dahulu",
-			"freeAccess": "Akses tingkat gratis melalui autentikasi OAuth"
+			"freeAccess": "Akses gratis melalui autentikasi OAuth"
 		}
 	},
 	"browser": {
@@ -400,7 +409,7 @@
 		},
 		"autoCondenseContext": {
 			"name": "Secara otomatis memicu kondensasi konteks cerdas",
-			"description": "Ketika diaktifkan, Roo akan secara otomatis mengondensasi konteks ketika ambang batas tercapai. Ketika dinonaktifkan, kamu masih dapat memicu kondensasi konteks secara manual."
+			"description": "Ketika diaktifkan, Kilo Code akan secara otomatis mengondensasi konteks ketika ambang batas tercapai. Ketika dinonaktifkan, kamu masih dapat memicu kondensasi konteks secara manual."
 		},
 		"condensingThreshold": {
 			"label": "Ambang Batas Pemicu Kondensasi",
@@ -611,7 +620,7 @@
 	},
 	"footer": {
 		"feedback": "Jika kamu punya pertanyaan atau feedback, jangan ragu untuk membuka issue di <githubLink>github.com/Kilo-Org/kilocode</githubLink> atau bergabung <redditLink>reddit.com/r/kilocode</redditLink> atau <discordLink>kilocode.ai/discord</discordLink>",
-		"support": "Untuk pertanyaan keuangan, silakan hubungi Customer Support di <supportLink>hi@kilocode.ai</supportLink>",
+		"support": "Untuk pertanyaan keuangan, silakan hubungi Customer Support di <supportLink>https://kilocode.ai/support</supportLink>",
 		"telemetry": {
 			"label": "Izinkan pelaporan error dan penggunaan anonim",
 			"description": "Bantu tingkatkan Kilo Code dengan mengirim data penggunaan anonim dan laporan error. Tidak ada kode, prompt, atau informasi pribadi yang pernah dikirim. Lihat kebijakan privasi kami untuk detail lebih lanjut."

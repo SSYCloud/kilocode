@@ -4,6 +4,8 @@
 	"modes": {
 		"title": "Chế độ",
 		"createNewMode": "Tạo chế độ mới",
+		"importMode": "Nhập chế độ",
+		"noMatchFound": "Không tìm thấy chế độ nào",
 		"editModesConfig": "Chỉnh sửa cấu hình chế độ",
 		"editGlobalModes": "Chỉnh sửa chế độ toàn cục",
 		"editProjectModes": "Chỉnh sửa chế độ dự án (.kilossymodes)",
@@ -34,6 +36,11 @@
 		"resetToDefault": "Đặt lại về mặc định",
 		"description": "Xác định chuyên môn và tính cách của Kilo Code cho chế độ này. Mô tả này định hình cách Kilo Code giới thiệu bản thân và tiếp cận nhiệm vụ."
 	},
+	"description": {
+		"title": "Mô tả ngắn (cho con người)",
+		"resetToDefault": "Đặt lại về mô tả mặc định",
+		"description": "Mô tả ngắn gọn hiển thị trong menu thả xuống bộ chọn chế độ."
+	},
 	"whenToUse": {
 		"title": "Khi nào nên sử dụng (tùy chọn)",
 		"description": "Mô tả khi nào nên sử dụng chế độ này. Điều này giúp Orchestrator chọn chế độ phù hợp cho một nhiệm vụ.",
@@ -45,10 +52,28 @@
 		"description": "Thêm hướng dẫn hành vi dành riêng cho chế độ {{modeName}}.",
 		"loadFromFile": "Hướng dẫn tùy chỉnh dành riêng cho chế độ {{mode}} cũng có thể được tải từ thư mục <span>.kilocode/rules-{{slug}}/</span> trong không gian làm việc của bạn (.kilocoderules-{{slug}} và .clinerules-{{slug}} đã lỗi thời và sẽ sớm ngừng hoạt động)."
 	},
+	"exportMode": {
+		"title": "Xuất chế độ",
+		"description": "Xuất chế độ này với các quy tắc từ thư mục .kilocode/rules-{{slug}}/ được kết hợp thành tệp YAML có thể chia sẻ. Các tệp gốc vẫn không thay đổi.",
+		"exporting": "Đang xuất..."
+	},
 	"globalCustomInstructions": {
 		"title": "Hướng dẫn tùy chỉnh cho tất cả các chế độ",
 		"description": "Những hướng dẫn này áp dụng cho tất cả các chế độ. Chúng cung cấp một bộ hành vi cơ bản có thể được nâng cao bởi hướng dẫn dành riêng cho chế độ bên dưới. <0>Tìm hiểu thêm</0>",
 		"loadFromFile": "Hướng dẫn cũng có thể được tải từ thư mục <span>.kilocode-chinese/rules/</span> trong không gian làm việc của bạn (.kilocoderules và .clinerules đã lỗi thời và sẽ sớm ngừng hoạt động)."
+	},
+	"importMode": {
+		"selectLevel": "Chọn nơi để nhập chế độ này:",
+		"import": "Nhập",
+		"importing": "Đang nhập...",
+		"global": {
+			"label": "Cấp độ toàn cục",
+			"description": "Có sẵn trong tất cả các dự án. Nếu chế độ đã xuất có chứa tệp quy tắc, chúng sẽ được tạo lại trong thư mục toàn cục .kilocode/rules-{slug}/."
+		},
+		"project": {
+			"label": "Cấp độ dự án",
+			"description": "Chỉ có sẵn trong không gian làm việc này. Nếu chế độ đã xuất có chứa tệp quy tắc, chúng sẽ được tạo lại trong thư mục .kilocode/rules-{slug}/."
+		}
 	},
 	"systemPrompt": {
 		"preview": "Xem trước lời nhắc hệ thống",
@@ -149,6 +174,10 @@
 			"label": "Công cụ có sẵn",
 			"description": "Chọn công cụ nào chế độ này có thể sử dụng."
 		},
+		"description": {
+			"label": "Mô tả ngắn (cho con người)",
+			"description": "Mô tả ngắn gọn hiển thị trong menu thả xuống bộ chọn chế độ."
+		},
 		"customInstructions": {
 			"label": "Hướng dẫn tùy chỉnh (tùy chọn)",
 			"description": "Thêm hướng dẫn hành vi dành riêng cho chế độ này."
@@ -159,5 +188,8 @@
 		},
 		"deleteMode": "Xóa chế độ"
 	},
-	"allFiles": "tất cả các tệp"
+	"allFiles": "tất cả các tệp",
+	"advanced": {
+		"title": "Nâng cao"
+	}
 }

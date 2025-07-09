@@ -45,6 +45,7 @@ export const handleUri = async (uri: vscode.Uri) => {
 		case "/shengsuanyun":
 		case "/ssy": {
 			const code = query.get("code")
+			console.log("hit /ssy code :", code)
 			if (code) {
 				await visibleProvider.handleShengSuanYunCallback(code)
 			}

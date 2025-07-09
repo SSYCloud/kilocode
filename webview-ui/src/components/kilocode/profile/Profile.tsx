@@ -90,7 +90,7 @@ const Profile: React.FC<ProfileProps> = ({ onDone: _onDone }) => {
 					<div className="w-full flex gap-2 flex-col min-[225px]:flex-row">
 						<div className="w-full min-[225px]:w-1/2">
 							<VSCodeButtonLink
-								href="https://router.shengsuanyun.com/user/recharge"
+								href="https://console.shengsuanyun.com/user/recharge"
 								appearance="primary"
 								className="w-full">
 								{t("kilocode:profile.dashboard")}
@@ -109,11 +109,11 @@ const Profile: React.FC<ProfileProps> = ({ onDone: _onDone }) => {
 					{profileData.Wallet.Assets < 1 ? (
 						<div className="w-full flex flex-col items-center">
 							<div className="text-sm text-[var(--vscode-descriptionForeground)] mb-3">
-								进群联系客服，领取免费额度
+								进群联系客服，领取100万token免费试用额度
 							</div>
 							<div className="w-[130px] h-[130px]">
 								<img
-									src="https://router.shengsuanyun.com/webp/relation-BDyr0A7L.webp"
+									src="https://www.shengsuanyun.com/webp/relation-BMfLRnIZ.webp"
 									alt="customer service"
 								/>
 							</div>

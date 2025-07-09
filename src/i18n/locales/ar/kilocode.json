@@ -1,0 +1,58 @@
+{
+	"info": {
+		"settings_imported": "تم استيراد الإعدادات بنجاح."
+	},
+	"userFeedback": {
+		"message_update_failed": "فشل تحديث الرسالة",
+		"no_checkpoint_found": "ما فيه نقطة حفظ قبل هذي الرسالة",
+		"message_updated": "تم تحديث الرسالة بنجاح"
+	},
+	"lowCreditWarning": {
+		"title": "تنبيه: الرصيد منخفض!",
+		"message": "تحقق إذا تقدر تشحن برصيد مجاني أو تشتري رصيد إضافي!"
+	},
+	"notLoggedInError": "لا يمكن إكمال الطلب، تأكد من أنك متصل ومسجل الدخول باستخدام المزود المحدد.",
+	"rules": {
+		"actions": {
+			"delete": "احذف",
+			"confirmDelete": "متأكد إنك تبي تحذف {{filename}}؟",
+			"deleted": "تم حذف {{filename}}"
+		},
+		"errors": {
+			"noWorkspaceFound": "ما تم العثور على مجلد مشروع",
+			"fileAlreadyExists": "الملف {{filename}} موجود مسبقًا",
+			"failedToCreateRuleFile": "فشل إنشاء ملف القاعدة.",
+			"failedToDeleteRuleFile": "فشل حذف ملف القاعدة."
+		},
+		"templates": {
+			"workflow": {
+				"description": "وصف سير العمل هنا...",
+				"stepsHeader": "## الخطوات",
+				"step1": "الخطوة 1",
+				"step2": "الخطوة 2"
+			},
+			"rule": {
+				"description": "وصف القاعدة هنا...",
+				"guidelinesHeader": "## الإرشادات",
+				"guideline1": "إرشاد 1",
+				"guideline2": "إرشاد 2"
+			}
+		}
+	},
+	"commitMessage": {
+		"activated": "تم تفعيل منشئ رسائل التزام كود كيلو",
+		"gitNotFound": "⚠️ مستودع Git غير موجود أو Git غير متاح",
+		"gitInitError": "⚠️ خطأ في تهيئة Git: {{error}}",
+		"generating": "كيلو: جارٍ إنشاء رسالة الالتزام...",
+		"noChanges": "كيلو: لم يتم العثور على تغييرات للتحليل",
+		"generated": "كيلو: تم إنشاء رسالة الالتزام!",
+		"generationFailed": "Kilo: فشل في إنشاء رسالة الالتزام: {{errorMessage}}",
+		"generatingFromUnstaged": "كيلو: إنشاء رسالة باستخدام التغييرات غير المرحلة",
+		"analyzingChanges": "Kilo: جاري تحليل التعديلات الجاهزة...",
+		"noStagedChangesRepo": "Kilo: ما فيه تعديلات مضافة في مستودع git",
+		"noStagedChanges": "Kilo: ما فيه تعديلات مضافة لتحليلها",
+		"tokenRequired": "يتطلب توليد الرسالة رمز Kilo Code",
+		"activationFailed": "Kilo: فشل تفعيل مولّد الرسائل: {{error}}",
+		"providerRegistered": "Kilo: تم تسجيل موفر رسائل الاعتماد"
+	}
+}

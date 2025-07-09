@@ -3,7 +3,7 @@
 	"displayName": "%extension.displayName%",
 	"description": "%extension.description%",
 	"publisher": "shengsuan-cloud",
-	"version": "4.44.1",
+	"version": "4.51.2",
 	"icon": "assets/images/panel_light.png",
 	"galleryBanner": {
 		"color": "#FFFFFF",
@@ -14,13 +14,13 @@
 		"node": "20.19.2"
 	},
 	"author": {
-		"name": "Kilo Code"
+		"name": "Kilo SSY"
 	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/SSYCloud/kilocode/tree/ssy"
 	},
-	"homepage": "https://router.shengsuanyun.com",
+	"homepage": "https://www.shengsuanyun.com/",
 	"categories": [
 		"AI",
 		"Chat",
@@ -42,9 +42,10 @@
 		"sonnet",
 		"ai",
 		"llama",
-		"Kilo Code",
+		"Kilo SSY",
 		"kilocode",
-		"roocode"
+		"roocode",
+		"Kilo SSY"
 	],
 	"activationEvents": [
 		"onLanguage",
@@ -55,21 +56,21 @@
 		"walkthroughs": [
 			{
 				"id": "kiloCodeWalkthrough",
-				"title": "5 ways Kilo Code helps you code",
-				"description": "You now have a personal AI coding assistant.",
+				"title": "Kilo SSY 帮助您编码的 5 种方式",
+				"description": "您现在拥有一位个人 AI 编码助手。",
 				"steps": [
 					{
 						"id": "welcome",
-						"title": "Write code for you",
-						"description": "Describe what you want to build. Kilo Code will write it from scratch, generate the files, and run them for you.",
+						"title": "为你写代码",
+						"description": "描述您想要构建的内容。Kilo SSY 将从头开始编写，生成文件并为您运行。",
 						"media": {
 							"markdown": "./dist/walkthrough/step1.md"
 						}
 					},
 					{
 						"id": "getting-started",
-						"title": "Understand your codebase",
-						"description": "Need clarity on how something works? Ask Kilo Code about any part of your files and get a clear explanation.",
+						"title": "了解您的代码库",
+						"description": "需要弄清楚某些东西的工作原理吗？向 Kilo SSY 咨询文件的任何部分，即可获得清晰的解释。",
 						"media": {
 							"markdown": "./dist/walkthrough/step2.md"
 						},
@@ -79,24 +80,24 @@
 					},
 					{
 						"id": "modes",
-						"title": "Get things working again",
-						"description": "Stuck on an error? Kilo Code can find the issue, fix it, and get your code running.",
+						"title": "保持你的工作顺利完成",
+						"description": "遇到错误了吗？Kilo SSY 可以找到问题，修复它，并让您的代码正常运行。",
 						"media": {
 							"markdown": "./dist/walkthrough/step3.md"
 						}
 					},
 					{
 						"id": "code-actions",
-						"title": "Plan your logic",
-						"description": "Not sure where to start? Map out your logic and structure before writing a single line of code.",
+						"title": "规划你的业务逻辑",
+						"description": "不知道从哪里开始？在编写任何代码之前，先规划好逻辑和结构。",
 						"media": {
 							"markdown": "./dist/walkthrough/step4.md"
 						}
 					},
 					{
 						"id": "advanced-features",
-						"title": "And more",
-						"description": "Improve your prompt, add context, or create your own custom modes.",
+						"title": "更多",
+						"description": "改进您的提示，添加上下文，或创建您自己的自定义模式。",
 						"media": {
 							"markdown": "./dist/walkthrough/step5.md"
 						}
@@ -130,8 +131,13 @@
 				"icon": "$(add)"
 			},
 			{
+				"command": "kilo-ssy.mcpButtonClicked",
+				"title": "%command.mcpServers.title%",
+				"icon": "$(server)"
+			},
+			{
 				"command": "kilo-ssy.importSettings",
-				"title": "Import Settings",
+				"title": "%command.importSettings.title%",
 				"category": "%configuration.title%"
 			},
 			{
@@ -148,6 +154,11 @@
 				"command": "kilo-ssy.historyButtonClicked",
 				"title": "%command.history.title%",
 				"icon": "$(history)"
+			},
+			{
+				"command": "kilo-ssy.marketplaceButtonClicked",
+				"title": "%command.marketplace.title%",
+				"icon": "$(extensions)"
 			},
 			{
 				"command": "kilo-ssy.popoutButtonClicked",
@@ -252,6 +263,11 @@
 				"key": "ctrl+shift+k",
 				"mac": "cmd+shift+k",
 				"when": "true"
+			},
+			{
+				"command": "editor.action.inlineSuggest.commit",
+				"key": "tab",
+				"when": "inlineSuggestionVisible && editorTextFocus && !editorTabMovesFocus && !inSnippetMode && !suggestWidgetVisible && editorLangId != 'markdown'"
 			}
 		],
 		"menus": {
@@ -306,7 +322,7 @@
 					"when": "view == kilo-ssy.SidebarProvider"
 				},
 				{
-					"command": "kilo-ssy.promptsButtonClicked",
+					"command": "kilo-ssy.mcpButtonClicked",
 					"group": "navigation@2",
 					"when": "view == kilo-ssy.SidebarProvider"
 				},
@@ -332,7 +348,7 @@
 				},
 				{
 					"command": "kilo-ssy.helpButtonClicked",
-					"group": "navigation@7",
+					"group": "navigation@8",
 					"when": "false && view == kilo-ssy.SidebarProvider"
 				}
 			],
@@ -343,7 +359,7 @@
 					"when": "activeWebviewPanelId == kilo-ssy.TabPanelProvider"
 				},
 				{
-					"command": "kilo-ssy.promptsButtonClicked",
+					"command": "kilo-ssy.mcpButtonClicked",
 					"group": "navigation@2",
 					"when": "activeWebviewPanelId == kilo-ssy.TabPanelProvider"
 				},
@@ -428,6 +444,16 @@
 					"type": "string",
 					"default": "",
 					"description": "%settings.customStoragePath.description%"
+				},
+				"kilo-ssy.enableCodeActions": {
+					"type": "boolean",
+					"default": true,
+					"description": "%settings.enableCodeActions.description%"
+				},
+				"kilo-ssy.autoImportSettingsPath": {
+					"type": "string",
+					"default": "",
+					"description": "%settings.autoImportSettingsPath.description%"
 				}
 			}
 		}
@@ -496,6 +522,7 @@
 		"pdf-parse": "^1.1.1",
 		"pkce-challenge": "^5.0.0",
 		"pretty-bytes": "^7.0.0",
+		"proper-lockfile": "^4.1.2",
 		"ps-tree": "^1.2.0",
 		"puppeteer-chromium-resolver": "^24.0.0",
 		"puppeteer-core": "^23.4.0",
@@ -505,6 +532,7 @@
 		"serialize-error": "^12.0.0",
 		"simple-git": "^3.27.0",
 		"sound-play": "^1.1.0",
+		"stream-json": "^1.8.0",
 		"string-similarity": "^4.0.4",
 		"strip-ansi": "^7.1.0",
 		"strip-bom": "^5.0.0",
@@ -533,7 +561,9 @@
 		"@types/node": "20.x",
 		"@types/node-cache": "^4.1.3",
 		"@types/node-ipc": "^9.2.3",
+		"@types/proper-lockfile": "^4.1.4",
 		"@types/ps-tree": "^1.1.6",
+		"@types/stream-json": "^1.7.8",
 		"@types/string-similarity": "^4.0.2",
 		"@types/tmp": "^0.2.6",
 		"@types/turndown": "^5.0.5",

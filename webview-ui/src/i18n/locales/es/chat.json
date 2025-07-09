@@ -16,7 +16,12 @@
 		"shareWithOrganization": "Compartir con organización",
 		"shareWithOrganizationDescription": "Solo los miembros de tu organización pueden acceder",
 		"sharePublicly": "Compartir públicamente",
-		"sharePubliclyDescription": "Cualquiera con el enlace puede acceder"
+		"sharePubliclyDescription": "Cualquiera con el enlace puede acceder",
+		"connectToCloud": "Conectar al Cloud",
+		"connectToCloudDescription": "Inicia sesión en Kilo Code Cloud para compartir tareas",
+		"sharingDisabledByOrganization": "Compartir deshabilitado por la organización",
+		"shareSuccessOrganization": "Enlace de organización copiado al portapapeles",
+		"shareSuccessPublic": "Enlace público copiado al portapapeles"
 	},
 	"history": {
 		"title": "Historial"
@@ -103,6 +108,7 @@
 	},
 	"selectMode": "Seleccionar modo de interacción",
 	"selectApiConfig": "Seleccionar configuración de API",
+	"selectModelConfig": "Seleccionar modelo",
 	"enhancePrompt": "Mejorar el mensaje con contexto adicional",
 	"addImages": "Agregar imágenes al mensaje",
 	"sendMessage": "Enviar mensaje",
@@ -112,6 +118,12 @@
 	"dragFiles": "mantén shift para arrastrar archivos",
 	"dragFilesImages": "mantén shift para arrastrar archivos/imágenes",
 	"enhancePromptDescription": "El botón 'Mejorar el mensaje' ayuda a mejorar tu petición proporcionando contexto adicional, aclaraciones o reformulaciones. Intenta escribir una petición aquí y haz clic en el botón nuevamente para ver cómo funciona.",
+	"modeSelector": {
+		"title": "Modos",
+		"marketplace": "Marketplace de Modos",
+		"settings": "Configuración de Modos",
+		"description": "Personalidades especializadas que adaptan el comportamiento de Kilo Code."
+	},
 	"errorReadingFile": "Error al leer el archivo:",
 	"noValidImages": "No se procesaron imágenes válidas",
 	"separator": "Separador",
@@ -229,15 +241,17 @@
 		"tokens": "tokens"
 	},
 	"followUpSuggest": {
-		"copyToInput": "Copiar a la entrada (o Shift + clic)"
+		"copyToInput": "Copiar a la entrada (o Shift + clic)",
+		"autoSelectCountdown": "Selección automática en {{count}}s",
+		"countdownDisplay": "{{count}}s"
 	},
 	"announcement": {
 		"title": "🎉 Roo Code {{version}} publicado",
-		"description": "Roo Code {{version}} trae importantes nuevas funcionalidades y mejoras basadas en tus comentarios.",
+		"description": "Roo Code {{version}} trae poderosas nuevas funcionalidades y mejoras significativas para mejorar tu flujo de trabajo de desarrollo.",
 		"whatsNew": "Novedades",
-		"feature1": "<bold>Lanzamiento del Marketplace de Roo</bold>: ¡El marketplace ya está disponible! Descubre e instala modos y MCPs más fácil que nunca.",
-		"feature2": "<bold>Modelos Gemini 2.5</bold>: Se agregó soporte para los nuevos modelos Gemini 2.5 Pro, Flash y Flash Lite.",
-		"feature3": "<bold>Soporte de archivos Excel y más</bold>: ¡Se agregó soporte para archivos Excel (.xlsx) y numerosas correcciones de errores y mejoras!",
+		"feature1": "<bold>Compartir tareas con 1 clic</bold>: Comparte tus tareas instantáneamente con colegas y la comunidad con un solo clic.",
+		"feature2": "<bold>Soporte de directorio .roo global</bold>: Carga reglas y configuraciones desde un directorio .roo global para configuraciones consistentes entre proyectos.",
+		"feature3": "<bold>Transiciones mejoradas de Arquitecto a Código</bold>: Transferencias fluidas desde la planificación en modo Arquitecto hasta la implementación en modo Código.",
 		"hideButton": "Ocultar anuncio",
 		"detailsDiscussLinks": "Obtén más detalles y participa en <discordLink>Discord</discordLink> y <redditLink>Reddit</redditLink> 🚀"
 	},
@@ -289,7 +303,8 @@
 	"codebaseSearch": {
 		"wantsToSearch": "Kilo Code quiere buscar en la base de código <code>{{query}}</code>:",
 		"wantsToSearchWithPath": "Kilo Code quiere buscar en la base de código <code>{{query}}</code> en <code>{{path}}</code>:",
-		"didSearch": "Se encontraron {{count}} resultado(s) para <code>{{query}}</code>:"
+		"didSearch": "Se encontraron {{count}} resultado(s) para <code>{{query}}</code>:",
+		"resultTooltip": "Puntuación de similitud: {{score}} (haz clic para abrir el archivo)"
 	},
 	"read-batch": {
 		"approve": {
@@ -305,5 +320,8 @@
 		"indexed": "Indexado",
 		"error": "Error de índice",
 		"status": "Estado del índice"
+	},
+	"versionIndicator": {
+		"ariaLabel": "Versión {{version}} - Haz clic para ver las notas de la versión"
 	}
 }

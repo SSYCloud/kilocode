@@ -62,7 +62,9 @@ export const ShengSuanYunBalanceDisplay = ({ apiKey }: { apiKey: string | undefi
 	}
 	const formattedBalance = keyInfo.Assets.toFixed(2)
 	return (
-		<VSCodeLink href="https://router.shengsuanyun.com/user/bill" className="text-vscode-foreground hover:underline">
+		<VSCodeLink
+			href="https://console.shengsuanyun.com/user/recharge"
+			className="text-vscode-foreground hover:underline">
 			￥{formattedBalance}
 		</VSCodeLink>
 	)

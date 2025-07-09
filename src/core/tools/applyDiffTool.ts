@@ -1,6 +1,8 @@
 import path from "path"
 import fs from "fs/promises"
 
+import { TelemetryService } from "@roo-code/telemetry"
+
 import { ClineSayTool } from "../../shared/ExtensionMessage"
 import { getReadablePath } from "../../utils/path"
 import { Task } from "../task/Task"
@@ -104,6 +106,7 @@ export async function applyDiffToolLegacy(
 				const currentCount = (cline.consecutiveMistakeCountForApplyDiff.get(relPath) || 0) + 1
 				cline.consecutiveMistakeCountForApplyDiff.set(relPath, currentCount)
 				let formattedError = ""
+				TelemetryService.instance.captureDiffApplicationError(cline.taskId, currentCount)
 
 				if (diffResult.failParts && diffResult.failParts.length > 0) {
 					for (const failPart of diffResult.failParts) {
@@ -144,9 +147,13 @@ export async function applyDiffToolLegacy(
 			await cline.diffViewProvider.update(diffResult.content, true)
 			await cline.diffViewProvider.scrollToFirstDiff()
 
+			// Check if file is write-protected
+			const isWriteProtected = cline.rooProtectedController?.isWriteProtected(relPath) || false
+
 			const completeMessage = JSON.stringify({
 				...sharedMessageProps,
 				diff: diffContent,
+				isProtected: isWriteProtected,
 			} satisfies ClineSayTool)
 
 			let toolProgressStatus
@@ -155,7 +162,7 @@ export async function applyDiffToolLegacy(
 				toolProgressStatus = cline.diffStrategy.getProgressStatus(block, diffResult)
 			}
 
-			const didApprove = await askApproval("tool", completeMessage, toolProgressStatus)
+			const didApprove = await askApproval("tool", completeMessage, toolProgressStatus, isWriteProtected)
 
 			if (!didApprove) {
 				await cline.diffViewProvider.revertChanges() // Cline likely handles closing the diff view

@@ -16,7 +16,12 @@
 		"shareWithOrganization": "Поділитися з організацією",
 		"shareWithOrganizationDescription": "Лише члени твоєї організації мають доступ",
 		"sharePublicly": "Поділитися публічно",
-		"sharePubliclyDescription": "Будь-хто з посиланням має доступ"
+		"sharePubliclyDescription": "Будь-хто з посиланням має доступ",
+		"connectToCloud": "Підключитися до Cloud",
+		"connectToCloudDescription": "Увійдіть до Kilo Code Cloud для обміну завданнями",
+		"sharingDisabledByOrganization": "Обмін вимкнено організацією",
+		"shareSuccessOrganization": "Посилання організації скопійовано до буфера обміну",
+		"shareSuccessPublic": "Публічне посилання скопійовано до буфера обміну"
 	},
 	"history": {
 		"title": "Історія"
@@ -111,8 +116,15 @@
 	},
 	"selectMode": "Вибери режим для взаємодії",
 	"selectApiConfig": "Вибери конфігурацію API",
+	"selectModelConfig": "Вибрати модель",
 	"enhancePrompt": "Покращити запит додатковим контекстом",
 	"enhancePromptDescription": "Кнопка 'Покращити запит' допомагає покращити твій запит, надаючи додатковий контекст, роз'яснення або переформулювання. Спробуй ввести запит тут і натиснути кнопку знову, щоб побачити, як це працює.",
+	"modeSelector": {
+		"title": "Режими",
+		"marketplace": "Ринок режимів",
+		"settings": "Налаштування режимів",
+		"description": "Спеціалізовані персони, які налаштовують поведінку Kilo Code."
+	},
 	"addImages": "Додати зображення до повідомлення",
 	"sendMessage": "Надіслати повідомлення",
 	"typeMessage": "Введи повідомлення...",
@@ -196,7 +208,8 @@
 	"codebaseSearch": {
 		"wantsToSearch": "Kilo Code хоче шукати в кодовій базі <code>{{query}}</code>:",
 		"wantsToSearchWithPath": "Kilo Code хоче шукати в кодовій базі <code>{{query}}</code> в <code>{{path}}</code>:",
-		"didSearch": "Знайдено {{count}} результат(ів) для <code>{{query}}</code>:"
+		"didSearch": "Знайдено {{count}} результат(ів) для <code>{{query}}</code>:",
+		"resultTooltip": "Оцінка схожості: {{score}} (клікни для відкриття файлу)"
 	},
 	"commandOutput": "Вивід команди",
 	"response": "Відповідь",
@@ -252,7 +265,9 @@
 		"seconds": "{{count}}с"
 	},
 	"followUpSuggest": {
-		"copyToInput": "Копіювати до вводу (так само як shift + клік)"
+		"copyToInput": "Копіювати до вводу (так само як shift + клік)",
+		"autoSelectCountdown": "Автовибір через {{count}}с",
+		"countdownDisplay": "{{count}}с"
 	},
 	"browser": {
 		"rooWantsToUse": "Kilo Code хоче використати браузер:",
@@ -305,5 +320,8 @@
 		"indexed": "Проіндексовано",
 		"error": "Помилка індексу",
 		"status": "Статус індексу"
+	},
+	"versionIndicator": {
+		"ariaLabel": "Версія {{version}} - Клікни для перегляду приміток до випуску"
 	}
 }

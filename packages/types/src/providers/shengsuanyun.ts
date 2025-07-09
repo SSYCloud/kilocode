@@ -1,7 +1,7 @@
 import type { ModelInfo } from "../model.js"
 
 // shengSuanYun
-// https://router.shengsuanyun.com
+// https://www.shengsuanyun.com/
 export const shengSuanYunDefaultModelId = "anthropic/claude-sonnet-4"
 
 export const shengSuanYunDefaultModelInfo: ModelInfo = {

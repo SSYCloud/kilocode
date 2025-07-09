@@ -1,20 +1,31 @@
+// kilocode_change - new file
 import * as vscode from "vscode"
 import * as path from "path"
-import { execSync } from "child_process"
+import { spawnSync } from "child_process"
+import { shouldExcludeLockFile } from "./exclusionUtils"
+import { RooIgnoreController } from "../../core/ignore/RooIgnoreController"
 
 export interface GitChange {
 	filePath: string
 	status: string
 }
 
+export interface GitOptions {
+	staged: boolean
+}
+
 /**
  * Utility class for Git operations using direct shell commands
  */
 export class GitExtensionService {
-	private workspaceRoot: string | undefined
+	private workspaceRoot: string
+	private ignoreController: RooIgnoreController
 
 	constructor() {
-		this.workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath
+		this.workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath ?? process.cwd()
+
+		this.ignoreController = new RooIgnoreController(this.workspaceRoot)
+		this.ignoreController.initialize()
 	}
 
 	/**
@@ -22,12 +33,8 @@ export class GitExtensionService {
 	 */
 	public async initialize(): Promise<boolean> {
 		try {
-			if (!this.workspaceRoot) {
-				return false
-			}
-
 			// Check if git is available and we're in a git repository
-			this.executeGitCommand("git rev-parse --is-inside-work-tree")
+			this.spawnGitWithArgs(["rev-parse", "--is-inside-work-tree"])
 			return true
 		} catch (error) {
 			console.error("Git initialization failed:", error)
@@ -36,13 +43,13 @@ export class GitExtensionService {
 	}
 
 	/**
-	 * Gathers information about staged changes using git diff --cached
+	 * Gathers information about changes (staged or unstaged)
 	 */
-	public async gatherStagedChanges(): Promise<GitChange[] | null> {
+	public async gatherChanges(options: GitOptions): Promise<GitChange[]> {
 		try {
-			const statusOutput = await this.getStagedStatus()
+			const statusOutput = this.getStatus(options)
 			if (!statusOutput.trim()) {
-				return null
+				return []
 			}
 
 			const changes: GitChange[] = []
@@ -55,15 +62,16 @@ export class GitExtensionService {
 				const filePath = line.substring(1).trim()
 
 				changes.push({
-					filePath: path.join(this.workspaceRoot || "", filePath),
+					filePath: path.join(this.workspaceRoot, filePath),
 					status: this.getChangeStatusFromCode(statusCode),
 				})
 			}
 
-			return changes.length > 0 ? changes : null
+			return changes
 		} catch (error) {
-			console.error("Error gathering staged changes:", error)
-			return null
+			const changeType = options.staged ? "staged" : "unstaged"
+			console.error(`Error gathering ${changeType} changes:`, error)
+			return []
 		}
 	}
 
@@ -92,90 +100,107 @@ export class GitExtensionService {
 	}
 
 	/**
-	 * Executes a git command and returns the output
-	 * @param command The git command to execute
+	 * Runs a git command with arguments and returns the output
+	 * @param args The git command arguments as an array
 	 * @returns The command output as a string
 	 */
-	public executeGitCommand(command: string): string {
+	public spawnGitWithArgs(args: string[]): string {
 		try {
-			if (!this.workspaceRoot) {
-				throw new Error("No workspace folder found")
+			const result = spawnSync("git", args, {
+				cwd: this.workspaceRoot,
+				encoding: "utf8",
+				stdio: ["ignore", "pipe", "pipe"],
+			})
+
+			if (result.error) {
+				throw result.error
 			}
-			return execSync(command, { cwd: this.workspaceRoot, encoding: "utf8" })
+
+			if (result.status !== 0) {
+				throw new Error(`Git command failed with status ${result.status}: ${result.stderr}`)
+			}
+
+			return result.stdout
 		} catch (error) {
-			console.error(`Error executing git command: ${command}`, error)
+			console.error(`Error executing git command: git ${args.join(" ")}`, error)
 			throw error
 		}
 	}
 
-	/**
-	 * Gets the diff of staged changes
-	 * @private Internal helper method
-	 */
-	private getStagedDiff(): string {
-		return this.executeGitCommand("git diff --cached")
+	private getDiffForChanges(options: GitOptions): string {
+		const { staged } = options
+		try {
+			const diffs: string[] = []
+			const args = staged ? ["diff", "--name-only", "--cached"] : ["diff", "--name-only"]
+			const files = this.spawnGitWithArgs(args)
+				.split("\n")
+				.map((line) => line.trim())
+				.filter((line) => line.length > 0)
+
+			for (const filePath of files) {
+				if (this.ignoreController.validateAccess(filePath) && !shouldExcludeLockFile(filePath)) {
+					const diff = this.getGitDiff(filePath, { staged }).trim()
+					diffs.push(diff)
+				}
+			}
+
+			return diffs.join("\n")
+		} catch (error) {
+			const changeType = staged ? "staged" : "unstaged"
+			console.error(`Error generating ${changeType} diff:`, error)
+			return ""
+		}
 	}
 
-	/**
-	 * Gets only the staged files using git diff --cached
-	 * @private Internal helper method
-	 */
-	private getStagedStatus(): string {
-		return this.executeGitCommand("git diff --name-status --cached")
+	private getStatus(options: GitOptions): string {
+		const { staged } = options
+		const args = staged ? ["diff", "--name-status", "--cached"] : ["diff", "--name-status"]
+		return this.spawnGitWithArgs(args)
 	}
 
-	/**
-	 * Gets a summary of staged changes
-	 * @private Internal helper method
-	 */
-	private getStagedSummary(): string {
-		return this.executeGitCommand("git diff --cached --stat")
+	private getSummary(options: GitOptions): string {
+		const { staged } = options
+		const args = staged ? ["diff", "--cached", "--stat"] : ["diff", "--stat"]
+		return this.spawnGitWithArgs(args)
 	}
 
-	/**
-	 * Gets extended context for complex changes
-	 * @private Internal helper method
-	 */
-	private getExtendedDiff(): string {
-		return this.executeGitCommand("git diff --cached --unified=5")
+	private getGitDiff(filePath: string, options: GitOptions): string {
+		const { staged } = options
+		const args = staged ? ["diff", "--cached", "--", filePath] : ["diff", "--", filePath]
+		return this.spawnGitWithArgs(args)
 	}
 
-	/**
-	 * Gets the current branch name
-	 * @private Internal helper method
-	 */
 	private getCurrentBranch(): string {
-		return this.executeGitCommand("git branch --show-current")
+		return this.spawnGitWithArgs(["branch", "--show-current"])
 	}
 
-	/**
-	 * Gets recent commits for context
-	 * @private Internal helper method
-	 */
 	private getRecentCommits(count: number = 5): string {
-		return this.executeGitCommand(`git log --oneline -${count}`)
+		return this.spawnGitWithArgs(["log", "--oneline", `-${count}`])
 	}
 
 	/**
 	 * Gets all context needed for commit message generation
 	 */
-	public getCommitContext(changes: GitChange[]): string {
+	public getCommitContext(changes: GitChange[], options: GitOptions): string {
+		const { staged } = options
 		try {
 			// Start building the context with the required sections
 			let context = "## Git Context for Commit Message Generation\n\n"
 
 			// Add full diff - essential for understanding what changed
 			try {
-				const stagedDiff = this.getStagedDiff()
-				context += "### Full Diff of Staged Changes\n```diff\n" + stagedDiff + "\n```\n\n"
+				const diff = this.getDiffForChanges(options)
+				const changeType = staged ? "Staged" : "Unstaged"
+				context += `### Full Diff of ${changeType} Changes\n\`\`\`diff\n` + diff + "\n```\n\n"
 			} catch (error) {
-				context += "### Full Diff of Staged Changes\n```diff\n(No diff available)\n```\n\n"
+				const changeType = staged ? "Staged" : "Unstaged"
+				context += `### Full Diff of ${changeType} Changes\n\`\`\`diff\n(No diff available)\n\`\`\`\n\n`
 			}
 
 			// Add statistical summary - helpful for quick overview
 			try {
-				const stagedSummary = this.getStagedSummary()
-				context += "### Statistical Summary\n```\n" + stagedSummary + "\n```\n\n"
+				const summary = this.getSummary(options)
+				context += "### Statistical Summary\n```\n" + summary + "\n```\n\n"
 			} catch (error) {
 				context += "### Statistical Summary\n```\n(No summary available)\n```\n\n"
 			}
@@ -248,5 +273,9 @@ export class GitExtensionService {
 			default:
 				return "Unknown"
 		}
+	}
+
+	public dispose() {
+		this.ignoreController.dispose()
 	}
 }

@@ -49,6 +49,7 @@ import {
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
+	StandardTooltip,
 } from "@src/components/ui"
 
 import { Tab, TabContent, TabHeader, TabList, TabTrigger } from "../common/Tab"
@@ -186,12 +187,16 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 		showTaskTimeline, // kilocode_change
 		terminalCompressProgressBar,
 		maxConcurrentFileReads,
+		allowVeryLargeReads, // kilocode_change
 		condensingApiConfigId,
 		customCondensingPrompt,
 		codebaseIndexConfig,
 		codebaseIndexModels,
 		customSupportPrompts,
 		profileThresholds,
+		systemNotificationsEnabled, // kilocode_change
+		alwaysAllowFollowupQuestions,
+		followupAutoApproveTimeoutMs,
 	} = cachedState
 
 	const apiConfiguration = useMemo(() => cachedState.apiConfiguration ?? {}, [cachedState.apiConfiguration])
@@ -343,17 +348,21 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 			vscode.postMessage({ type: "showAutoApproveMenu", bool: showAutoApproveMenu }) // kilocode_change
 			vscode.postMessage({ type: "maxReadFileLine", value: maxReadFileLine ?? -1 })
 			vscode.postMessage({ type: "maxConcurrentFileReads", value: cachedState.maxConcurrentFileReads ?? 5 })
+			vscode.postMessage({ type: "allowVeryLargeReads", bool: allowVeryLargeReads }) // kilocode_change
 			vscode.postMessage({ type: "currentApiConfigName", text: currentApiConfigName })
 			vscode.postMessage({ type: "updateExperimental", values: experiments })
 			vscode.postMessage({ type: "alwaysAllowModeSwitch", bool: alwaysAllowModeSwitch })
 			vscode.postMessage({ type: "alwaysAllowSubtasks", bool: alwaysAllowSubtasks })
 			vscode.postMessage({ type: "showTaskTimeline", bool: showTaskTimeline }) // kilocode_change
+			vscode.postMessage({ type: "alwaysAllowFollowupQuestions", bool: alwaysAllowFollowupQuestions })
+			vscode.postMessage({ type: "followupAutoApproveTimeoutMs", value: followupAutoApproveTimeoutMs })
 			vscode.postMessage({ type: "condensingApiConfigId", text: condensingApiConfigId || "" })
 			vscode.postMessage({ type: "updateCondensingPrompt", text: customCondensingPrompt || "" })
 			vscode.postMessage({ type: "updateSupportPrompt", values: customSupportPrompts || {} })
 			vscode.postMessage({ type: "upsertApiConfiguration", text: currentApiConfigName, apiConfiguration })
 			vscode.postMessage({ type: "codebaseIndexConfig", values: codebaseIndexConfig })
 			vscode.postMessage({ type: "profileThresholds", values: profileThresholds })
+			vscode.postMessage({ type: "systemNotificationsEnabled", bool: systemNotificationsEnabled }) // kilocode_change
 
 			// Update cachedState to match the current state to prevent isChangeDetected from being set back to true
 			setCachedState((prevState) => ({ ...prevState, ...extensionState }))
@@ -510,27 +519,28 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 					<h3 className="text-vscode-foreground m-0">{t("settings:header.title")}</h3>
 				</div>
 				<div className="flex gap-2">
-					<Button
-						variant={isSettingValid ? "default" : "secondary"}
-						className={!isSettingValid ? "!border-vscode-errorForeground" : ""}
-						title={
+					<StandardTooltip
+						content={
 							!isSettingValid
 								? errorMessage
 								: isChangeDetected
 									? t("settings:header.saveButtonTooltip")
 									: t("settings:header.nothingChangedTooltip")
-						}
-						onClick={handleSubmit}
-						disabled={!isChangeDetected || !isSettingValid}
-						data-testid="save-button">
-						{t("settings:common.save")}
-					</Button>
-					<Button
-						variant="secondary"
-						title={t("settings:header.doneButtonTooltip")}
-						onClick={() => checkUnsaveChanges(onDone)}>
-						{t("settings:common.done")}
-					</Button>
+						}>
+						<Button
+							variant={isSettingValid ? "default" : "secondary"}
+							className={!isSettingValid ? "!border-vscode-errorForeground" : ""}
+							onClick={handleSubmit}
+							disabled={!isChangeDetected || !isSettingValid}
+							data-testid="save-button">
+							{t("settings:common.save")}
+						</Button>
+					</StandardTooltip>
+					<StandardTooltip content={t("settings:header.doneButtonTooltip")}>
+						<Button variant="secondary" onClick={() => checkUnsaveChanges(onDone)}>
+							{t("settings:common.done")}
+						</Button>
+					</StandardTooltip>
 				</div>
 			</TabHeader>
 
@@ -576,7 +586,7 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 						if (isCompactMode) {
 							// Wrap in Tooltip and manually add onClick to the trigger
 							return (
-								<TooltipProvider key={id} delayDuration={0}>
+								<TooltipProvider key={id} delayDuration={300}>
 									<Tooltip>
 										<TooltipTrigger asChild onClick={onSelect}>
 											{/* Clone to avoid ref issues if triggerComponent itself had a key */}
@@ -670,6 +680,8 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 							alwaysAllowModeSwitch={alwaysAllowModeSwitch}
 							alwaysAllowSubtasks={alwaysAllowSubtasks}
 							alwaysAllowExecute={alwaysAllowExecute}
+							alwaysAllowFollowupQuestions={alwaysAllowFollowupQuestions}
+							followupAutoApproveTimeoutMs={followupAutoApproveTimeoutMs}
 							allowedCommands={allowedCommands}
 							setCachedStateField={setCachedStateField}
 						/>
@@ -711,6 +723,8 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 							ttsSpeed={ttsSpeed}
 							soundEnabled={soundEnabled}
 							soundVolume={soundVolume}
+							systemNotificationsEnabled={systemNotificationsEnabled}
+							areSettingsCommitted={!isChangeDetected}
 							setCachedStateField={setCachedStateField}
 						/>
 					)}
@@ -728,6 +742,7 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 							showRooIgnoredFiles={showRooIgnoredFiles}
 							maxReadFileLine={maxReadFileLine}
 							maxConcurrentFileReads={maxConcurrentFileReads}
+							allowVeryLargeReads={allowVeryLargeReads /* kilocode_change */}
 							profileThresholds={profileThresholds}
 							setCachedStateField={setCachedStateField}
 						/>
@@ -774,7 +789,7 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 
 					{/* Language Section */}
 					{activeTab === "language" && (
-						<LanguageSettings language={language || "en"} setCachedStateField={setCachedStateField} />
+						<LanguageSettings language={language || "zh-CN"} setCachedStateField={setCachedStateField} />
 					)}
 
 					{/* kilocode_change */}

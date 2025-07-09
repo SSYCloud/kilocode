@@ -4,11 +4,13 @@
 	"modes": {
 		"title": "โหมด",
 		"createNewMode": "สร้างโหมดใหม่",
+		"importMode": "นำเข้าโหมด",
 		"editModesConfig": "แก้ไขการตั้งค่าโหมด",
 		"editGlobalModes": "แก้ไข Global Modes",
 		"editProjectModes": "แก้ไข Project Modes (.kilocodemodes)",
 		"createModeHelpText": "โหมดคือบุคลิกเฉพาะที่ปรับแต่งพฤติกรรมของ Kilo Code <0>เรียนรู้เกี่ยวกับการใช้โหมด</0> หรือ <1>การปรับแต่งโหมด</1>",
-		"selectMode": "ค้นหาโหมด"
+		"selectMode": "ค้นหาโหมด",
+		"noMatchFound": "ไม่พบโหมดที่ตรงกัน"
 	},
 	"apiConfiguration": {
 		"title": "การตั้งค่า API",
@@ -34,6 +36,11 @@
 		"resetToDefault": "รีเซ็ตเป็นค่าเริ่มต้น",
 		"description": "กำหนดความเชี่ยวชาญและบุคลิกภาพของ Kilo Code สำหรับโหมดนี้ คำอธิบายนี้กำหนดว่า Kilo Code นำเสนอตัวเองอย่างไรและจัดการกับงานอย่างไร"
 	},
+	"description": {
+		"title": "คำอธิบายสั้น (สำหรับมนุษย์)",
+		"resetToDefault": "รีเซ็ตเป็นคำอธิบายเริ่มต้น",
+		"description": "คำอธิบายสั้น ๆ ที่แสดงในดรอปดาวน์ตัวเลือกโหมด"
+	},
 	"whenToUse": {
 		"title": "เมื่อใดควรใช้ (ไม่บังคับ)",
 		"description": "อธิบายว่าควรใช้โหมดนี้เมื่อใด ช่วยให้ Orchestrator เลือกโหมดที่เหมาะสมสำหรับงาน",
@@ -44,6 +51,27 @@
 		"resetToDefault": "รีเซ็ตเป็นค่าเริ่มต้น",
 		"description": "เพิ่มแนวทางพฤติกรรมเฉพาะสำหรับโหมด {{modeName}}",
 		"loadFromFile": "คำแนะนำเฉพาะสำหรับโหมด {{mode}} สามารถโหลดจากโฟลเดอร์ <span>.kilocode-chinese/rules/</span> ใน workspace ของคุณ (.kilocoderules-{{slug}} เลิกใช้แล้วและจะหยุดทำงานเร็วๆ นี้)"
+	},
+	"exportMode": {
+		"title": "ส่งออกโหมด",
+		"description": "ส่งออกโหมดนี้พร้อมกับกฎจากโฟลเดอร์ .kilocode/rules-{{slug}}/ รวมเป็นไฟล์ YAML ที่แชร์ได้ ไฟล์ต้นฉบับจะไม่เปลี่ยนแปลง",
+		"exporting": "กำลังส่งออก..."
+	},
+	"importMode": {
+		"selectLevel": "เลือกที่จะนำเข้าโหมดนี้:",
+		"import": "นำเข้า",
+		"importing": "กำลังนำเข้า...",
+		"global": {
+			"label": "ระดับ Global",
+			"description": "ใช้ได้ในทุกโปรเจ็กต์ หากโหมดที่ส่งออกมีไฟล์กฎ จะถูกสร้างใหม่ในโฟลเดอร์ .kilocode/rules-{slug}/ ระดับ global"
+		},
+		"project": {
+			"label": "ระดับโปรเจ็กต์",
+			"description": "ใช้ได้เฉพาะใน workspace นี้ หากโหมดที่ส่งออกมีไฟล์กฎ จะถูกสร้างใหม่ในโฟลเดอร์ .kilocode/rules-{slug}/"
+		}
+	},
+	"advanced": {
+		"title": "ขั้นสูง: แทนที่ System Prompt"
 	},
 	"globalCustomInstructions": {
 		"title": "คำแนะนำสำหรับทุกโหมด",
@@ -140,6 +168,10 @@
 		"roleDefinition": {
 			"label": "นิยามบทบาท",
 			"description": "กำหนดความเชี่ยวชาญและบุคลิกภาพของ Kilo Code สำหรับโหมดนี้"
+		},
+		"description": {
+			"label": "คำอธิบายสั้น (สำหรับมนุษย์)",
+			"description": "คำอธิบายสั้น ๆ ที่แสดงในดรอปดาวน์ตัวเลือกโหมด"
 		},
 		"whenToUse": {
 			"label": "เมื่อใดควรใช้ (ไม่บังคับ)",

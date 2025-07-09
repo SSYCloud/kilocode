@@ -16,7 +16,12 @@
 		"shareWithOrganization": "Chia sẻ với tổ chức",
 		"shareWithOrganizationDescription": "Chỉ thành viên tổ chức của bạn mới có thể truy cập",
 		"sharePublicly": "Chia sẻ công khai",
-		"sharePubliclyDescription": "Bất kỳ ai có liên kết đều có thể truy cập"
+		"sharePubliclyDescription": "Bất kỳ ai có liên kết đều có thể truy cập",
+		"connectToCloud": "Kết nối với Cloud",
+		"connectToCloudDescription": "Đăng nhập vào Kilo Code Cloud để chia sẻ tác vụ",
+		"sharingDisabledByOrganization": "Chia sẻ bị tổ chức vô hiệu hóa",
+		"shareSuccessOrganization": "Liên kết tổ chức đã được sao chép vào clipboard",
+		"shareSuccessPublic": "Liên kết công khai đã được sao chép vào clipboard"
 	},
 	"history": {
 		"title": "Lịch Sử"
@@ -103,6 +108,7 @@
 	},
 	"selectMode": "Chọn chế độ tương tác",
 	"selectApiConfig": "Chọn cấu hình API",
+	"selectModelConfig": "Chọn mô hình",
 	"enhancePrompt": "Nâng cao yêu cầu với ngữ cảnh bổ sung",
 	"addImages": "Thêm hình ảnh vào tin nhắn",
 	"sendMessage": "Gửi tin nhắn",
@@ -112,6 +118,12 @@
 	"dragFiles": "giữ shift để kéo tệp",
 	"dragFilesImages": "giữ shift để kéo tệp/hình ảnh",
 	"enhancePromptDescription": "Nút 'Nâng cao yêu cầu' giúp cải thiện yêu cầu của bạn bằng cách cung cấp ngữ cảnh bổ sung, làm rõ hoặc diễn đạt lại. Hãy thử nhập yêu cầu tại đây và nhấp vào nút một lần nữa để xem cách thức hoạt động.",
+	"modeSelector": {
+		"title": "Chế độ",
+		"marketplace": "Chợ Chế độ",
+		"settings": "Cài đặt Chế độ",
+		"description": "Các nhân cách chuyên biệt điều chỉnh hành vi của Kilo Code."
+	},
 	"errorReadingFile": "Lỗi khi đọc tệp:",
 	"noValidImages": "Không có hình ảnh hợp lệ nào được xử lý",
 	"separator": "Dấu phân cách",
@@ -229,15 +241,17 @@
 		"tokens": "token"
 	},
 	"followUpSuggest": {
-		"copyToInput": "Sao chép vào ô nhập liệu (hoặc Shift + nhấp chuột)"
+		"copyToInput": "Sao chép vào ô nhập liệu (hoặc Shift + nhấp chuột)",
+		"autoSelectCountdown": "Tự động chọn sau {{count}}s",
+		"countdownDisplay": "{{count}}s"
 	},
 	"announcement": {
 		"title": "🎉 Roo Code {{version}} Đã phát hành",
-		"description": "Roo Code {{version}} mang đến các tính năng mạnh mẽ và cải tiến mới dựa trên phản hồi của bạn.",
+		"description": "Roo Code {{version}} mang đến các tính năng mạnh mẽ mới và cải tiến đáng kể để nâng cao quy trình phát triển của bạn.",
 		"whatsNew": "Có gì mới",
-		"feature1": "<bold>Ra mắt Roo Marketplace</bold> - Marketplace hiện đã hoạt động! Khám phá và cài đặt các chế độ và MCP dễ dàng hơn bao giờ hết.",
-		"feature2": "<bold>Các mô hình Gemini 2.5</bold> - Đã thêm hỗ trợ cho các mô hình Gemini 2.5 Pro, Flash và Flash Lite mới.",
-		"feature3": "<bold>Hỗ trợ tệp Excel & Nhiều hơn nữa</bold> - Đã thêm hỗ trợ tệp Excel (.xlsx) và vô số sửa lỗi cùng cải tiến!",
+		"feature1": "<bold>Chia sẻ Nhiệm vụ 1-Click</bold>: Chia sẻ nhiệm vụ của bạn với đồng nghiệp và cộng đồng ngay lập tức chỉ với một cú nhấp chuột.",
+		"feature2": "<bold>Hỗ trợ Thư mục .roo Toàn cục</bold>: Tải quy tắc và cấu hình từ thư mục .roo toàn cục để có cài đặt nhất quán giữa các dự án.",
+		"feature3": "<bold>Cải thiện Chuyển đổi từ Architect sang Code</bold>: Chuyển đổi mượt mà từ lập kế hoạch trong chế độ Architect sang triển khai trong chế độ Code.",
 		"hideButton": "Ẩn thông báo",
 		"detailsDiscussLinks": "Nhận thêm chi tiết và thảo luận tại <discordLink>Discord</discordLink> và <redditLink>Reddit</redditLink> 🚀"
 	},
@@ -289,7 +303,8 @@
 	"codebaseSearch": {
 		"wantsToSearch": "Kilo Code muốn tìm kiếm trong cơ sở mã cho <code>{{query}}</code>:",
 		"wantsToSearchWithPath": "Kilo Code muốn tìm kiếm trong cơ sở mã cho <code>{{query}}</code> trong <code>{{path}}</code>:",
-		"didSearch": "Đã tìm thấy {{count}} kết quả cho <code>{{query}}</code>:"
+		"didSearch": "Đã tìm thấy {{count}} kết quả cho <code>{{query}}</code>:",
+		"resultTooltip": "Điểm tương tự: {{score}} (nhấp để mở tệp)"
 	},
 	"read-batch": {
 		"approve": {
@@ -305,5 +320,8 @@
 		"indexed": "Đã lập chỉ mục",
 		"error": "Lỗi chỉ mục",
 		"status": "Trạng thái chỉ mục"
+	},
+	"versionIndicator": {
+		"ariaLabel": "Phiên bản {{version}} - Nhấp để xem ghi chú phát hành"
 	}
 }

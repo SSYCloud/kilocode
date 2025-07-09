@@ -10,6 +10,7 @@ import type { ClineMessage } from "@roo-code/types"
 import { ClineApiReqInfo, ClineAskUseMcpServer, ClineSayTool } from "@roo/ExtensionMessage"
 import { COMMAND_OUTPUT_STRING } from "@roo/combineCommandSequences"
 import { safeJsonParse } from "@roo/safeJsonParse"
+import { FollowUpData, SuggestionItem } from "@roo-code/types"
 
 import { useCopyToClipboard } from "@src/utils/clipboard"
 import { useExtensionState } from "@src/context/ExtensionStateContext"
@@ -17,17 +18,17 @@ import { findMatchingResourceOrTemplate } from "@src/utils/mcp"
 import { vscode } from "@src/utils/vscode"
 import { removeLeadingNonAlphanumeric } from "@src/utils/removeLeadingNonAlphanumeric"
 import { getLanguageFromPath } from "@src/utils/getLanguageFromPath"
-import { Button } from "@src/components/ui"
+// import { Button } from "@src/components/ui" // kilocode_change
 
 import { ToolUseBlock, ToolUseBlockHeader } from "../common/ToolUseBlock"
 import CodeAccordian from "../common/CodeAccordian"
 import CodeBlock from "../common/CodeBlock"
 import MarkdownBlock from "../common/MarkdownBlock"
 import { ReasoningBlock } from "./ReasoningBlock"
-import Thumbnails from "../common/Thumbnails"
+// import Thumbnails from "../common/Thumbnails" // kilocode_change
 import McpResourceRow from "../mcp/McpResourceRow"
 
-import { Mention } from "./Mention"
+// import { Mention } from "./Mention" // kilocode_change
 import { CheckpointSaved } from "./checkpoints/CheckpointSaved"
 import { FollowUpSuggest } from "./FollowUpSuggest"
 import { LowCreditWarning } from "../kilocode/chat/LowCreditWarning" // kilocode_change
@@ -45,6 +46,7 @@ import { AutoApprovedRequestLimitWarning } from "./AutoApprovedRequestLimitWarni
 import { CondenseContextErrorRow, CondensingContextRow, ContextCondenseRow } from "./ContextCondenseRow"
 import CodebaseSearchResultsDisplay from "./CodebaseSearchResultsDisplay"
 import { cn } from "@/lib/utils"
+import { KiloChatRowUserFeedback } from "../kilocode/chat/KiloChatRowUserFeedback" // kilocode_change
 
 interface ChatRowProps {
 	message: ClineMessage
@@ -54,9 +56,11 @@ interface ChatRowProps {
 	isStreaming: boolean
 	onToggleExpand: (ts: number) => void
 	onHeightChange: (isTaller: boolean) => void
-	onSuggestionClick?: (answer: string, event?: React.MouseEvent) => void
+	onSuggestionClick?: (suggestion: SuggestionItem, event?: React.MouseEvent) => void
 	onBatchFileResponse?: (response: { [key: string]: boolean }) => void
 	highlighted?: boolean // kilocode_change: Add highlighted prop
+	onChatReset?: () => void // kilocode_change
+	onFollowUpUnmount?: () => void
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -112,7 +116,9 @@ export const ChatRowContent = ({
 	isStreaming,
 	onToggleExpand,
 	onSuggestionClick,
+	onFollowUpUnmount,
 	onBatchFileResponse,
+	onChatReset, // kilocode_change
 }: ChatRowContentProps) => {
 	const { t } = useTranslation()
 	const { apiConfiguration, mcpServers, alwaysAllowMcp, currentCheckpoint } = useExtensionState()
@@ -293,7 +299,7 @@ export const ChatRowContent = ({
 
 	const followUpData = useMemo(() => {
 		if (message.type === "ask" && message.ask === "followup" && !message.partial) {
-			return safeJsonParse<any>(message.text)
+			return safeJsonParse<FollowUpData>(message.text)
 		}
 		return null
 	}, [message.type, message.ask, message.partial, message.text])
@@ -997,29 +1003,15 @@ export const ChatRowContent = ({
 						</div>
 					)
 				case "user_feedback":
+					// kilocode_change start
 					return (
-						<div className="bg-vscode-editor-background border rounded-xs p-1 overflow-hidden whitespace-pre-wrap">
-							<div className="flex justify-between">
-								<div className="flex-grow px-2 py-1 wrap-anywhere">
-									<Mention text={message.text} withShadow />
-								</div>
-								<Button
-									variant="ghost"
-									size="icon"
-									className="shrink-0"
-									disabled={isStreaming}
-									onClick={(e) => {
-										e.stopPropagation()
-										vscode.postMessage({ type: "deleteMessage", value: message.ts })
-									}}>
-									<span className="codicon codicon-trash" />
-								</Button>
-							</div>
-							{message.images && message.images.length > 0 && (
-								<Thumbnails images={message.images} style={{ marginTop: "8px" }} />
-							)}
-						</div>
+						<KiloChatRowUserFeedback
+							message={message}
+							isStreaming={isStreaming}
+							onChatReset={onChatReset}
+						/>
 					)
+				// kilocode_change end
 				case "user_feedback_diff":
 					const tool = safeJsonParse<ClineSayTool>(message.text)
 					return (
@@ -1105,6 +1097,37 @@ export const ChatRowContent = ({
 					const { query = "", results = [] } = parsed?.content || {}
 
 					return <CodebaseSearchResultsDisplay query={query} results={results} />
+				case "browser_action_result":
+					// This should not normally be rendered here as browser_action_result messages
+					// should be grouped into browser sessions and rendered by BrowserSessionRow.
+					// If we see this, it means the message grouping logic has a bug.
+					return (
+						<>
+							{title && (
+								<div style={headerStyle}>
+									{icon}
+									{title}
+								</div>
+							)}
+							<div style={{ paddingTop: 10 }}>
+								<div
+									style={{
+										color: "var(--vscode-errorForeground)",
+										fontFamily: "monospace",
+										fontSize: "12px",
+										padding: "8px",
+										backgroundColor: "var(--vscode-editor-background)",
+										border: "1px solid var(--vscode-editorError-border)",
+										borderRadius: "4px",
+										marginBottom: "8px",
+									}}>
+									⚠️ Browser action result not properly grouped - this is a bug in the message
+									grouping logic
+								</div>
+								<Markdown markdown={message.text} partial={message.partial} />
+							</div>
+						</>
+					)
 				default:
 					return (
 						<>
@@ -1234,6 +1257,7 @@ export const ChatRowContent = ({
 								suggestions={followUpData?.suggest}
 								onSuggestionClick={onSuggestionClick}
 								ts={message?.ts}
+								onUnmount={onFollowUpUnmount}
 							/>
 						</>
 					)

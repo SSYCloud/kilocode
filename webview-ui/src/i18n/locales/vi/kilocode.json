@@ -22,10 +22,23 @@
 		"sections": {
 			"mcp": "Máy chủ MCP"
 		},
+		"contextManagement": {
+			"allowVeryLargeReads": {
+				"label": "Cho phép đọc tệp rất lớn",
+				"description": "Khi bật, Kilo Code sẽ thực hiện đọc tệp hoặc đầu ra MCP rất lớn ngay cả khi có khả năng cao làm tràn cửa sổ ngữ cảnh (kích thước nội dung >80% cửa sổ ngữ cảnh)."
+			}
+		},
 		"provider": {
 			"apiKey": "Khóa API Kilo Code",
 			"login": "Đăng nhập vào Kilo Code",
 			"logout": "Đăng xuất khỏi Kilo Code"
+		},
+		"systemNotifications": {
+			"label": "Bật thông báo hệ thống",
+			"description": "Khi bật, Kilo Code sẽ gửi thông báo hệ thống cho các sự kiện quan trọng như hoàn thành nhiệm vụ hoặc lỗi.",
+			"testButton": "Kiểm tra thông báo",
+			"testTitle": "Kilo Code",
+			"testMessage": "Đây là thông báo kiểm tra từ Kilo Code."
 		}
 	},
 	"chat": {
@@ -42,12 +55,7 @@
 		"dashboard": "Bảng điều khiển",
 		"logOut": "Đăng xuất",
 		"currentBalance": "SỐ DƯ HIỆN TẠI",
-		"loading": "Đang tải...",
-		"signUp": {
-			"title": "Đăng ký Kilo Code",
-			"description": "Đăng ký Kilo Code sẽ cung cấp cho bạn tín dụng miễn phí để bắt đầu. Sử dụng tín dụng của bạn để khám phá các tính năng, thử nghiệm các mô hình mới nhất và tốt nhất, và trải nghiệm lợi ích của Kilo Code mà không cần cam kết.",
-			"termsAndPrivacy": "Bằng cách tiếp tục, bạn đồng ý với <termsLink>Điều khoản Dịch vụ</termsLink> và <privacyLink>Chính sách Bảo mật.</privacyLink>"
-		}
+		"loading": "Đang tải..."
 	},
 	"docs": "Tài liệu",
 	"rules": {
@@ -103,5 +111,10 @@
 			},
 			"clickToScroll": "Xem {{messageType}} (#{{messageNumber}})"
 		}
+	},
+	"userFeedback": {
+		"editCancel": "Hủy",
+		"send": "Gửi",
+		"restoreAndSend": "Khôi phục & Gửi"
 	}
 }

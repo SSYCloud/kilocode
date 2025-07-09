@@ -16,7 +16,12 @@
 		"shareWithOrganization": "Udostępnij organizacji",
 		"shareWithOrganizationDescription": "Tylko członkowie twojej organizacji mogą uzyskać dostęp",
 		"sharePublicly": "Udostępnij publicznie",
-		"sharePubliclyDescription": "Każdy z linkiem może uzyskać dostęp"
+		"sharePubliclyDescription": "Każdy z linkiem może uzyskać dostęp",
+		"connectToCloud": "Połącz z chmurą",
+		"connectToCloudDescription": "Zaloguj się do Kilo Code Cloud, aby udostępniać zadania",
+		"sharingDisabledByOrganization": "Udostępnianie wyłączone przez organizację",
+		"shareSuccessOrganization": "Link organizacji skopiowany do schowka",
+		"shareSuccessPublic": "Link publiczny skopiowany do schowka"
 	},
 	"history": {
 		"title": "Historia"
@@ -103,6 +108,7 @@
 	},
 	"selectMode": "Wybierz tryb interakcji",
 	"selectApiConfig": "Wybierz konfigurację API",
+	"selectModelConfig": "Wybierz model",
 	"enhancePrompt": "Ulepsz podpowiedź dodatkowym kontekstem",
 	"addImages": "Dodaj obrazy do wiadomości",
 	"sendMessage": "Wyślij wiadomość",
@@ -112,6 +118,12 @@
 	"dragFiles": "przytrzymaj shift, aby przeciągnąć pliki",
 	"dragFilesImages": "przytrzymaj shift, aby przeciągnąć pliki/obrazy",
 	"enhancePromptDescription": "Przycisk 'Ulepsz podpowiedź' pomaga ulepszyć Twoją prośbę, dostarczając dodatkowy kontekst, wyjaśnienia lub przeformułowania. Spróbuj wpisać prośbę tutaj i kliknij przycisk ponownie, aby zobaczyć, jak to działa.",
+	"modeSelector": {
+		"title": "Tryby",
+		"marketplace": "Marketplace Trybów",
+		"settings": "Ustawienia Trybów",
+		"description": "Wyspecjalizowane persony, które dostosowują zachowanie Kilo Code."
+	},
 	"errorReadingFile": "Błąd odczytu pliku:",
 	"noValidImages": "Nie przetworzono żadnych prawidłowych obrazów",
 	"separator": "Separator",
@@ -229,15 +241,17 @@
 		"tokens": "tokeny"
 	},
 	"followUpSuggest": {
-		"copyToInput": "Kopiuj do pola wprowadzania (lub Shift + kliknięcie)"
+		"copyToInput": "Kopiuj do pola wprowadzania (lub Shift + kliknięcie)",
+		"autoSelectCountdown": "Automatyczny wybór za {{count}}s",
+		"countdownDisplay": "{{count}}s"
 	},
 	"announcement": {
 		"title": "🎉 Roo Code {{version}} wydany",
-		"description": "Roo Code {{version}} przynosi potężne nowe funkcje i ulepszenia na podstawie Twoich opinii.",
+		"description": "Roo Code {{version}} wprowadza potężne nowe funkcje i znaczące ulepszenia, aby ulepszyć Twój przepływ pracy programistycznej.",
 		"whatsNew": "Co nowego",
-		"feature1": "<bold>Uruchomienie Roo Marketplace</bold> - Marketplace jest już dostępny! Odkrywaj i instaluj tryby oraz MCP łatwiej niż kiedykolwiek wcześniej.",
-		"feature2": "<bold>Modele Gemini 2.5</bold> - Dodano wsparcie dla nowych modeli Gemini 2.5 Pro, Flash i Flash Lite.",
-		"feature3": "<bold>Wsparcie dla plików Excel i więcej</bold> - Dodano wsparcie dla plików Excel (.xlsx) oraz liczne poprawki błędów i ulepszenia!",
+		"feature1": "<bold>Udostępnianie zadań jednym kliknięciem</bold>: Natychmiast udostępniaj swoje zadania współpracownikom i społeczności jednym kliknięciem.",
+		"feature2": "<bold>Wsparcie globalnego katalogu .roo</bold>: Ładuj reguły i konfiguracje z globalnego katalogu .roo dla spójnych ustawień między projektami.",
+		"feature3": "<bold>Ulepszone przejścia z Architekta do Kodu</bold>: Płynne transfery z planowania w trybie Architekta do implementacji w trybie Kodu.",
 		"hideButton": "Ukryj ogłoszenie",
 		"detailsDiscussLinks": "Uzyskaj więcej szczegółów i dołącz do dyskusji na <discordLink>Discord</discordLink> i <redditLink>Reddit</redditLink> 🚀"
 	},
@@ -289,7 +303,8 @@
 	"codebaseSearch": {
 		"wantsToSearch": "Kilo Code chce przeszukać bazę kodu w poszukiwaniu <code>{{query}}</code>:",
 		"wantsToSearchWithPath": "Kilo Code chce przeszukać bazę kodu w poszukiwaniu <code>{{query}}</code> w <code>{{path}}</code>:",
-		"didSearch": "Znaleziono {{count}} wynik(ów) dla <code>{{query}}</code>:"
+		"didSearch": "Znaleziono {{count}} wynik(ów) dla <code>{{query}}</code>:",
+		"resultTooltip": "Wynik podobieństwa: {{score}} (kliknij, aby otworzyć plik)"
 	},
 	"read-batch": {
 		"approve": {
@@ -305,5 +320,8 @@
 		"indexed": "Zaindeksowane",
 		"error": "Błąd indeksu",
 		"status": "Status indeksu"
+	},
+	"versionIndicator": {
+		"ariaLabel": "Wersja {{version}} - Kliknij, aby wyświetlić informacje o wydaniu"
 	}
 }

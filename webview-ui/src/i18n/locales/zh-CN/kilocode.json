@@ -1,9 +1,9 @@
 {
 	"welcome": {
-		"greeting": "欢迎使用 Kilo Code！",
+		"greeting": "欢迎使用 Kilo Code Chinese！",
 		"introText1": "Kilo Code 是一个免费的开源 AI 编程代理。",
 		"introText2": "它适用于最新的 AI 模型，如 Claude 4 Sonnet、Gemini 2.5 Pro、GPT-4.1 以及 450 多个其他模型。",
-		"introText3": "创建免费账户，获得价值 20 美元的 token，可用于任何 AI 模型。",
+		"introText3": "创建免费账户，联系在线客服获得100万 token免费试用额度，可用于任何 AI 模型。",
 		"ctaButton": "创建免费账户",
 		"manualModeButton": "使用你自己的 API 密钥",
 		"alreadySignedUp": "已经注册了？",
@@ -21,6 +21,19 @@
 	"settings": {
 		"sections": {
 			"mcp": "MCP 服务器"
+		},
+		"contextManagement": {
+			"allowVeryLargeReads": {
+				"label": "允许超大文件读取",
+				"description": "启用后，Kilo Code 将执行超大文件或 MCP 输出读取，即使存在高概率溢出上下文窗口（内容大小 >80% 的上下文窗口）。"
+			}
+		},
+		"systemNotifications": {
+			"label": "启用系统通知",
+			"description": "启用后 Kilo Code 将发送系统通知，提醒任务完成或错误等重要事件。",
+			"testButton": "测试通知",
+			"testTitle": "Kilo Code",
+			"testMessage": "这是来自 Kilo Code 的测试通知。"
 		},
 		"provider": {
 			"apiKey": "胜算云 API 密钥",
@@ -103,5 +116,10 @@
 			},
 			"clickToScroll": "查看{{messageType}} (#{{messageNumber}})"
 		}
+	},
+	"userFeedback": {
+		"editCancel": "取消",
+		"send": "发送",
+		"restoreAndSend": "恢复并发送"
 	}
 }

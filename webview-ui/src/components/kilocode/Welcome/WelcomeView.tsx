@@ -5,10 +5,10 @@ import { vscode } from "../../../utils/vscode"
 import { Tab, TabContent } from "../../common/Tab"
 import { useAppTranslation } from "../../../i18n/TranslationContext"
 import { ButtonPrimary } from "../common/ButtonPrimary"
-import { ButtonSecondary } from "../common/ButtonSecondary"
 import { ButtonLink } from "../common/ButtonLink"
 import ApiOptions from "../../settings/ApiOptions"
 import { getShengSuanYunAuthUrl } from "../helpers"
+import { ButtonSecondary } from "../common/ButtonSecondary"
 
 const WelcomeView = () => {
 	const { apiConfiguration, currentApiConfigName, setApiConfiguration, uriScheme, uiKind } = useExtensionState()
@@ -31,10 +31,6 @@ const WelcomeView = () => {
 	return (
 		<Tab>
 			<TabContent className="flex flex-col gap-5">
-				<h2 className="m-0 p-0">{t("kilocode:welcome.greeting")}</h2>
-				<div>{t("kilocode:welcome.introText1")}</div>
-				<div>{t("kilocode:welcome.introText2")}</div>
-				<div>{t("kilocode:welcome.introText3")}</div>
 				{manualConfig ? (
 					<>
 						<ApiOptions

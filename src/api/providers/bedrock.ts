@@ -20,7 +20,7 @@ import {
 	BEDROCK_DEFAULT_TEMPERATURE,
 	BEDROCK_MAX_TOKENS,
 	BEDROCK_DEFAULT_CONTEXT,
-	BEDROCK_REGION_INFO,
+	AWS_INFERENCE_PROFILE_MAPPING,
 } from "@roo-code/types"
 
 import { ApiStream } from "../transform/stream"
@@ -482,7 +482,7 @@ export class AwsBedrockHandler extends BaseProvider implements SingleCompletionH
 				if (streamEvent.contentBlockStart) {
 					const cbStart = streamEvent.contentBlockStart
 
-					// Check if this is a reasoning block (official AWS SDK structure)
+					// Check if this is a reasoning block (AWS SDK structure)
 					if (cbStart.contentBlock?.reasoningContent) {
 						if (cbStart.contentBlockIndex && cbStart.contentBlockIndex > 0) {
 							yield { type: "reasoning", text: "\n" }
@@ -493,7 +493,7 @@ export class AwsBedrockHandler extends BaseProvider implements SingleCompletionH
 						}
 					}
 					// Check for thinking block - handle both possible AWS SDK structures
-					// cbStart.contentBlock: newer/official structure
+					// cbStart.contentBlock: newer structure
 					// cbStart.content_block: alternative structure seen in some AWS SDK versions
 					else if (cbStart.contentBlock?.type === "thinking" || cbStart.content_block?.type === "thinking") {
 						const contentBlock = cbStart.contentBlock || cbStart.content_block
@@ -522,11 +522,11 @@ export class AwsBedrockHandler extends BaseProvider implements SingleCompletionH
 
 					// Process reasoning and text content deltas
 					// Multiple structures are supported for AWS SDK compatibility:
-					// - delta.reasoningContent.text: official AWS docs structure for reasoning
+					// - delta.reasoningContent.text: AWS docs structure for reasoning
 					// - delta.thinking: alternative structure for thinking content
 					// - delta.text: standard text content
 					if (delta) {
-						// Check for reasoningContent property (official AWS SDK structure)
+						// Check for reasoningContent property (AWS SDK structure)
 						if (delta.reasoningContent?.text) {
 							yield {
 								type: "reasoning",
@@ -561,16 +561,47 @@ export class AwsBedrockHandler extends BaseProvider implements SingleCompletionH
 			// Clear timeout on error
 			clearTimeout(timeoutId)
 
-			// Use the extracted error handling method for all errors
+			// Check if this is a throttling error that should trigger retry logic
+			const errorType = this.getErrorType(error)
+
+			// For throttling errors, throw immediately without yielding chunks
+			// This allows the retry mechanism in attemptApiRequest() to catch and handle it
+			// The retry logic in Task.ts (around line 1817) expects errors to be thrown
+			// on the first chunk for proper exponential backoff behavior
+			if (errorType === "THROTTLING") {
+				if (error instanceof Error) {
+					throw error
+				} else {
+					throw new Error("Throttling error occurred")
+				}
+			}
+
+			// For non-throttling errors, use the standard error handling with chunks
 			const errorChunks = this.handleBedrockError(error, true) // true for streaming context
 			// Yield each chunk individually to ensure type compatibility
 			for (const chunk of errorChunks) {
 				yield chunk as any // Cast to any to bypass type checking since we know the structure is correct
 			}
 
-			// Re-throw the error
+			// Re-throw with enhanced error message for retry system
+			const enhancedErrorMessage = this.formatErrorMessage(error, this.getErrorType(error), true)
 			if (error instanceof Error) {
-				throw error
+				const enhancedError = new Error(enhancedErrorMessage)
+				// Preserve important properties from the original error
+				enhancedError.name = error.name
+				// Validate and preserve status property
+				if ("status" in error && typeof (error as any).status === "number") {
+					;(enhancedError as any).status = (error as any).status
+				}
+				// Validate and preserve $metadata property
+				if (
+					"$metadata" in error &&
+					typeof (error as any).$metadata === "object" &&
+					(error as any).$metadata !== null
+				) {
+					;(enhancedError as any).$metadata = (error as any).$metadata
+				}
+				throw enhancedError
 			} else {
 				throw new Error("An unknown error occurred")
 			}
@@ -638,7 +669,26 @@ export class AwsBedrockHandler extends BaseProvider implements SingleCompletionH
 			const errorResult = this.handleBedrockError(error, false) // false for non-streaming context
 			// Since we're in a non-streaming context, we know the result is a string
 			const errorMessage = errorResult as string
-			throw new Error(errorMessage)
+
+			// Create enhanced error for retry system
+			const enhancedError = new Error(errorMessage)
+			if (error instanceof Error) {
+				// Preserve important properties from the original error
+				enhancedError.name = error.name
+				// Validate and preserve status property
+				if ("status" in error && typeof (error as any).status === "number") {
+					;(enhancedError as any).status = (error as any).status
+				}
+				// Validate and preserve $metadata property
+				if (
+					"$metadata" in error &&
+					typeof (error as any).$metadata === "object" &&
+					(error as any).$metadata !== null
+				) {
+					;(enhancedError as any).$metadata = (error as any).$metadata
+				}
+			}
+			throw enhancedError
 		}
 	}
 
@@ -777,7 +827,7 @@ export class AwsBedrockHandler extends BaseProvider implements SingleCompletionH
 			if (originalModelId && result.modelId !== originalModelId) {
 				// If the model ID changed after parsing, it had a region prefix
 				let prefix = originalModelId.replace(result.modelId, "")
-				result.crossRegionInference = AwsBedrockHandler.prefixIsMultiRegion(prefix)
+				result.crossRegionInference = AwsBedrockHandler.isSystemInferenceProfile(prefix)
 			}
 
 			// Check if region in ARN matches provided region (if specified)
@@ -801,29 +851,21 @@ export class AwsBedrockHandler extends BaseProvider implements SingleCompletionH
 	}
 
 	//This strips any region prefix that used on cross-region model inference ARNs
-	private parseBaseModelId(modelId: string) {
+	private parseBaseModelId(modelId: string): string {
 		if (!modelId) {
 			return modelId
 		}
 
-		const knownRegionPrefixes = AwsBedrockHandler.getPrefixList()
-
-		// Find if the model ID starts with any known region prefix
-		const matchedPrefix = knownRegionPrefixes.find((prefix) => modelId.startsWith(prefix))
-
-		if (matchedPrefix) {
-			// Remove the region prefix from the model ID
-			return modelId.substring(matchedPrefix.length)
-		} else {
-			// If no known prefix was found, check for a generic pattern
-			// Look for a pattern where the first segment before a dot doesn't contain dots or colons
-			// and the remaining parts still contain at least one dot
-			const genericPrefixMatch = modelId.match(/^([^.:]+)\.(.+\..+)$/)
-
-			if (genericPrefixMatch) {
-				return genericPrefixMatch[2]
+		// Remove AWS cross-region inference profile prefixes
+		// as defined in AWS_INFERENCE_PROFILE_MAPPING
+		for (const [_, inferenceProfile] of AWS_INFERENCE_PROFILE_MAPPING) {
+			if (modelId.startsWith(inferenceProfile)) {
+				// Remove the inference profile prefix from the model ID
+				return modelId.substring(inferenceProfile.length)
 			}
 		}
+
+		// Return the model ID as-is for all other cases
 		return modelId
 	}
 
@@ -900,14 +942,12 @@ export class AwsBedrockHandler extends BaseProvider implements SingleCompletionH
 			//a model was selected from the drop down
 			modelConfig = this.getModelById(this.options.apiModelId as string)
 
-			if (this.options.awsUseCrossRegionInference) {
-				// Get the current region
-				const region = this.options.awsRegion || ""
-				// Use the helper method to get the appropriate prefix for this region
-				const prefix = AwsBedrockHandler.getPrefixForRegion(region)
-
-				// Apply the prefix if one was found, otherwise use the model ID as is
-				modelConfig.id = prefix ? `${prefix}${modelConfig.id}` : modelConfig.id
+			// Add cross-region inference prefix if enabled
+			if (this.options.awsUseCrossRegionInference && this.options.awsRegion) {
+				const prefix = AwsBedrockHandler.getPrefixForRegion(this.options.awsRegion)
+				if (prefix) {
+					modelConfig.id = `${prefix}${modelConfig.id}`
+				}
 			}
 		}
 
@@ -973,24 +1013,23 @@ export class AwsBedrockHandler extends BaseProvider implements SingleCompletionH
 	 *
 	 *************************************************************************************/
 
-	private static getPrefixList(): string[] {
-		return Object.keys(BEDROCK_REGION_INFO)
-	}
-
 	private static getPrefixForRegion(region: string): string | undefined {
-		for (const [prefix, info] of Object.entries(BEDROCK_REGION_INFO)) {
-			if (info.pattern && region.startsWith(info.pattern)) {
-				return prefix
+		// Use AWS recommended inference profile prefixes
+		// Array is pre-sorted by pattern length (descending) to ensure more specific patterns match first
+		for (const [regionPattern, inferenceProfile] of AWS_INFERENCE_PROFILE_MAPPING) {
+			if (region.startsWith(regionPattern)) {
+				return inferenceProfile
 			}
 		}
+
 		return undefined
 	}
 
-	private static prefixIsMultiRegion(arnPrefix: string): boolean {
-		for (const [prefix, info] of Object.entries(BEDROCK_REGION_INFO)) {
-			if (arnPrefix === prefix) {
-				if (info?.multiRegion) return info.multiRegion
-				else return false
+	private static isSystemInferenceProfile(prefix: string): boolean {
+		// Check if the prefix is defined in AWS_INFERENCE_PROFILE_MAPPING
+		for (const [_, inferenceProfile] of AWS_INFERENCE_PROFILE_MAPPING) {
+			if (prefix === inferenceProfile) {
+				return true
 			}
 		}
 		return false
@@ -1035,19 +1074,32 @@ Please verify:
 			logLevel: "error",
 		},
 		THROTTLING: {
-			patterns: ["throttl", "rate", "limit"],
+			patterns: [
+				"throttl",
+				"rate",
+				"limit",
+				"bedrock is unable to process your request", // AWS Bedrock specific throttling message
+				"please wait",
+				"quota exceeded",
+				"service unavailable",
+				"busy",
+				"overloaded",
+				"too many requests",
+				"request limit",
+				"concurrent requests",
+			],
 			messageTemplate: `Request was throttled or rate limited. Please try:
 1. Reducing the frequency of requests
 2. If using a provisioned model, check its throughput settings
 3. Contact AWS support to request a quota increase if needed
 
-{formattedErrorDetails}
+
 
 `,
 			logLevel: "error",
 		},
 		TOO_MANY_TOKENS: {
-			patterns: ["too many tokens"],
+			patterns: ["too many tokens", "token limit exceeded", "context length", "maximum context length"],
 			messageTemplate: `"Too many tokens" error detected.
 Possible Causes:
 1. Input exceeds model's context window limit
@@ -1060,7 +1112,49 @@ Suggestions:
 2. Split your request into smaller chunks
 3. Use a model with a larger context window
 4. If rate limited, reduce request frequency
-5. Check your Amazon Bedrock quotas and limits`,
+5. Check your Amazon Bedrock quotas and limits
+
+`,
+			logLevel: "error",
+		},
+		SERVICE_QUOTA_EXCEEDED: {
+			patterns: ["service quota exceeded", "service quota", "quota exceeded for model"],
+			messageTemplate: `Service quota exceeded. This error indicates you've reached AWS service limits.
+
+Please try:
+1. Contact AWS support to request a quota increase
+2. Reduce request frequency temporarily
+3. Check your AWS Bedrock quotas in the AWS console
+4. Consider using a different model or region with available capacity
+
+`,
+			logLevel: "error",
+		},
+		MODEL_NOT_READY: {
+			patterns: ["model not ready", "model is not ready", "provisioned throughput not ready", "model loading"],
+			messageTemplate: `Model is not ready or still loading. This can happen with:
+1. Provisioned throughput models that are still initializing
+2. Custom models that are being loaded
+3. Models that are temporarily unavailable
+
+Please try:
+1. Wait a few minutes and retry
+2. Check the model status in AWS Bedrock console
+3. Verify the model is properly provisioned
+
+`,
+			logLevel: "error",
+		},
+		INTERNAL_SERVER_ERROR: {
+			patterns: ["internal server error", "internal error", "server error", "service error"],
+			messageTemplate: `AWS Bedrock internal server error. This is a temporary service issue.
+
+Please try:
+1. Retry the request after a brief delay
+2. If the error persists, check AWS service health
+3. Contact AWS support if the issue continues
+
+`,
 			logLevel: "error",
 		},
 		ON_DEMAND_NOT_SUPPORTED: {
@@ -1119,12 +1213,34 @@ Please check:
 			return "GENERIC"
 		}
 
+		// Check for HTTP 429 status code (Too Many Requests)
+		if ((error as any).status === 429 || (error as any).$metadata?.httpStatusCode === 429) {
+			return "THROTTLING"
+		}
+
+		// Check for AWS Bedrock specific throttling exception names
+		if ((error as any).name === "ThrottlingException" || (error as any).__type === "ThrottlingException") {
+			return "THROTTLING"
+		}
+
 		const errorMessage = error.message.toLowerCase()
 		const errorName = error.name.toLowerCase()
 
-		// Check each error type's patterns
-		for (const [errorType, definition] of Object.entries(AwsBedrockHandler.ERROR_TYPES)) {
-			if (errorType === "GENERIC") continue // Skip the generic type
+		// Check each error type's patterns in order of specificity (most specific first)
+		const errorTypeOrder = [
+			"SERVICE_QUOTA_EXCEEDED", // Most specific - check before THROTTLING
+			"MODEL_NOT_READY",
+			"TOO_MANY_TOKENS",
+			"INTERNAL_SERVER_ERROR",
+			"ON_DEMAND_NOT_SUPPORTED",
+			"NOT_FOUND",
+			"ACCESS_DENIED",
+			"THROTTLING", // Less specific - check after more specific patterns
+		]
+
+		for (const errorType of errorTypeOrder) {
+			const definition = AwsBedrockHandler.ERROR_TYPES[errorType]
+			if (!definition) continue
 
 			// If any pattern matches in either message or name, return this error type
 			if (definition.patterns.some((pattern) => errorMessage.includes(pattern) || errorName.includes(pattern))) {
@@ -1153,37 +1269,6 @@ Please check:
 			const modelConfig = this.getModel()
 			templateVars.modelId = modelConfig.id
 			templateVars.contextWindow = String(modelConfig.info.contextWindow || "unknown")
-
-			// Format error details
-			const errorDetails: Record<string, any> = {}
-			Object.getOwnPropertyNames(error).forEach((prop) => {
-				if (prop !== "stack") {
-					errorDetails[prop] = (error as any)[prop]
-				}
-			})
-
-			// Safely stringify error details to avoid circular references
-			templateVars.formattedErrorDetails = Object.entries(errorDetails)
-				.map(([key, value]) => {
-					let valueStr
-					if (typeof value === "object" && value !== null) {
-						try {
-							// Use a replacer function to handle circular references
-							valueStr = JSON.stringify(value, (k, v) => {
-								if (k && typeof v === "object" && v !== null) {
-									return "[Object]"
-								}
-								return v
-							})
-						} catch (e) {
-							valueStr = "[Complex Object]"
-						}
-					} else {
-						valueStr = String(value)
-					}
-					return `- ${key}: ${valueStr}`
-				})
-				.join("\n")
 		}
 
 		// Add context-specific template variables

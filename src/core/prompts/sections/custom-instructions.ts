@@ -22,13 +22,14 @@ import { isLanguage } from "@roo-code/types"
 
 import { LANGUAGES } from "../../../shared/language"
 import { ClineRulesToggles } from "../../../shared/cline-rules" // kilocode_change
+import { getRooDirectoriesForCwd } from "../../../services/roo-config"
 
 /**
  * Safely read a file and return its trimmed content
  */
 async function safeReadFile(filePath: string): Promise<string> {
 	try {
-		const content = await fs.readFile(filePath, "utf-8")
+		const content = (await fs.readFile(filePath, "utf-8")) ?? ""
 		return content.trim()
 	} catch (err) {
 		const errorCode = (err as NodeJS.ErrnoException).code
@@ -132,12 +133,26 @@ async function readTextFilesFromDirectory(dirPath: string): Promise<Array<{ file
 		// Wait for all asynchronous operations (including recursive ones) to complete
 		await Promise.all(initialPromises)
 
+		// kilocode_change, must be imported at submodule level because the module is imported in the webview-ui
+		const { isBinaryFile } = await import("isbinaryfile")
+
 		const fileContents = await Promise.all(
 			filePaths.map(async (file) => {
 				try {
 					// Check if it's a file (not a directory)
 					const stats = await fs.stat(file)
 					if (stats.isFile()) {
+						// Filter out cache files and system files that shouldn't be in rules
+						if (!shouldIncludeRuleFile(file)) {
+							return null
+						}
+
+						// kilocode_change start
+						if (stats.size > 0 && (await isBinaryFile(file))) {
+							return null
+						}
+						// kilocode_change end
+
 						const content = await safeReadFile(file)
 						return { filename: file, content }
 					}
@@ -148,7 +163,7 @@ async function readTextFilesFromDirectory(dirPath: string): Promise<Array<{ file
 			}),
 		)
 
-		// Filter out null values (directories or failed reads)
+		// Filter out null values (directories, failed reads, or excluded files)
 		return fileContents.filter((item): item is { filename: string; content: string } => item !== null)
 	} catch (err) {
 		return []
@@ -161,55 +176,45 @@ async function readTextFilesFromDirectory(dirPath: string): Promise<Array<{ file
 function formatDirectoryContent(dirPath: string, files: Array<{ filename: string; content: string }>): string {
 	if (files.length === 0) return ""
 
-	return (
-		"\n\n" +
-		files
-			.map((file) => {
-				return `# Rules from ${file.filename}:\n${file.content}`
-			})
-			.join("\n\n")
-	)
+	return files
+		.map((file) => {
+			return `# Rules from ${file.filename}:\n${file.content}`
+		})
+		.join("\n\n")
 }
 
 /**
- * Load rule files from the specified directory
- * kilocode_change: this function is only called when the user doesn't have any rules toggles stored yet
+ * Load rule files from global and project-local directories
+ * Global rules are loaded first, then project-local rules which can override global ones
  */
 export async function loadRuleFiles(cwd: string): Promise<string> {
-	// kilocode_change start: add kilocode directory, leave fallback to roo directory
-	// Check for .kilocode-chinese/rules/ directory
-	const kilocodeRulesDir = path.join(cwd, ".kilocode", "rules")
-	if (await directoryExists(kilocodeRulesDir)) {
-		const files = await readTextFilesFromDirectory(kilocodeRulesDir)
-		if (files.length > 0) {
-			return formatDirectoryContent(kilocodeRulesDir, files)
-		}
-	}
-	// kilocode_change end
+	const rules: string[] = []
+	const rooDirectories = getRooDirectoriesForCwd(cwd)
 
-	// Check for .roo/rules/ directory as fallback
-	const rooRulesDir = path.join(cwd, ".roo", "rules")
-	if (await directoryExists(rooRulesDir)) {
-		const files = await readTextFilesFromDirectory(rooRulesDir)
-		if (files.length > 0) {
-			if (vscodeAPI && !hasShownNonKilocodeRulesMessage) {
-				// kilocode_change: show message to move to .kilocode-chinese/rules/
-				vscodeAPI.window.showWarningMessage(
-					`Loading non-Kilocode rules from ${rooRulesDir}, consider moving to .kilocode-chinese/rules/`,
-				)
-				hasShownNonKilocodeRulesMessage = true
-			} // kilocode_change end
-			return formatDirectoryContent(rooRulesDir, files)
+	// Check for .roo/rules/ directories in order (global first, then project-local)
+	for (const rooDir of rooDirectories) {
+		const rulesDir = path.join(rooDir, "rules")
+		if (await directoryExists(rulesDir)) {
+			const files = await readTextFilesFromDirectory(rulesDir)
+			if (files.length > 0) {
+				const content = formatDirectoryContent(rulesDir, files)
+				rules.push(content)
+			}
 		}
 	}
 
-	// Fall back to existing behavior
-	const ruleFiles = [".kilocoderules", ".roorules", ".clinerules"]
+	// If we found rules in .roo/rules/ directories, return them
+	if (rules.length > 0) {
+		return "\n" + rules.join("\n\n")
+	}
+
+	// Fall back to existing behavior for legacy .roorules/.clinerules files
+	const ruleFiles = [".kilossyrules", ".roorules", ".clinerules"]
 
 	for (const file of ruleFiles) {
 		const content = await safeReadFile(path.join(cwd, file))
 		if (content) {
-			if (file !== ".kilocoderules" && vscodeAPI && !hasShownNonKilocodeRulesMessage) {
+			if (file !== ".kilossyrules" && vscodeAPI && !hasShownNonKilocodeRulesMessage) {
 				// kilocode_change: show message to move to .kilocode-chinese/rules/
 				vscodeAPI.window.showWarningMessage(
 					`Loading non-Kilocode rules from ${file}, consider moving to .kilocode-chinese/rules/`,
@@ -244,32 +249,27 @@ export async function addCustomInstructions(
 	let usedRuleFile = ""
 
 	if (mode) {
-		// kilocode_change start: add kilocode directory, leave fallback to roo directory
-		// Check for .kilocode/rules-${mode}/ directory
-		const kilocodeModeRulesDir = path.join(cwd, ".kilocode", `rules-${mode}`)
-		if (await directoryExists(kilocodeModeRulesDir)) {
-			const files = await readTextFilesFromDirectory(kilocodeModeRulesDir)
-			if (files.length > 0) {
-				modeRuleContent = formatDirectoryContent(kilocodeModeRulesDir, files)
-				usedRuleFile = kilocodeModeRulesDir
-			}
-		}
-		// kilocode_change end
+		const modeRules: string[] = []
+		const rooDirectories = getRooDirectoriesForCwd(cwd)
 
-		// Check for .roo/rules-${mode}/ directory
-		if (!modeRuleContent) {
-			const rooModeRulesDir = path.join(cwd, ".roo", `rules-${mode}`)
-			if (await directoryExists(rooModeRulesDir)) {
-				const files = await readTextFilesFromDirectory(rooModeRulesDir)
+		// Check for .roo/rules-${mode}/ directories in order (global first, then project-local)
+		for (const rooDir of rooDirectories) {
+			const modeRulesDir = path.join(rooDir, `rules-${mode}`)
+			if (await directoryExists(modeRulesDir)) {
+				const files = await readTextFilesFromDirectory(modeRulesDir)
 				if (files.length > 0) {
-					modeRuleContent = formatDirectoryContent(rooModeRulesDir, files)
-					usedRuleFile = rooModeRulesDir
+					const content = formatDirectoryContent(modeRulesDir, files)
+					modeRules.push(content)
 				}
 			}
 		}
 
-		// If no directory exists, fall back to existing behavior
-		if (!modeRuleContent) {
+		// If we found mode-specific rules in .roo/rules-${mode}/ directories, use them
+		if (modeRules.length > 0) {
+			modeRuleContent = "\n" + modeRules.join("\n\n")
+			usedRuleFile = `rules-${mode} directories`
+		} else {
+			// Fall back to existing behavior for legacy files
 			const rooModeRuleFile = `.kilocoderules-${mode}`
 			modeRuleContent = await safeReadFile(path.join(cwd, rooModeRuleFile))
 			if (modeRuleContent) {
@@ -352,4 +352,45 @@ The following additional instructions are provided by the user, and should be fo
 
 ${joinedSections}`
 		: ""
+}
+
+/**
+ * Check if a file should be included in rule compilation.
+ * Excludes cache files and system files that shouldn't be processed as rules.
+ */
+function shouldIncludeRuleFile(filename: string): boolean {
+	const basename = path.basename(filename)
+
+	const cachePatterns = [
+		"*.DS_Store",
+		"*.bak",
+		"*.cache",
+		"*.crdownload",
+		"*.db",
+		"*.dmp",
+		"*.dump",
+		"*.eslintcache",
+		"*.lock",
+		"*.log",
+		"*.old",
+		"*.part",
+		"*.partial",
+		"*.pyc",
+		"*.pyo",
+		"*.stackdump",
+		"*.swo",
+		"*.swp",
+		"*.temp",
+		"*.tmp",
+		"Thumbs.db",
+	]
+
+	return !cachePatterns.some((pattern) => {
+		if (pattern.startsWith("*.")) {
+			const extension = pattern.slice(1)
+			return basename.endsWith(extension)
+		} else {
+			return basename === pattern
+		}
+	})
 }

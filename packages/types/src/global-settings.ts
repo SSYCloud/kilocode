@@ -45,11 +45,14 @@ export const globalSettingsSchema = z.object({
 	alwaysAllowModeSwitch: z.boolean().optional(),
 	alwaysAllowSubtasks: z.boolean().optional(),
 	alwaysAllowExecute: z.boolean().optional(),
+	alwaysAllowFollowupQuestions: z.boolean().optional(),
+	followupAutoApproveTimeoutMs: z.number().optional(),
 	allowedCommands: z.array(z.string()).optional(),
 	allowedMaxRequests: z.number().nullish(),
 	autoCondenseContext: z.boolean().optional(),
 	autoCondenseContextPercent: z.number().optional(),
 	maxConcurrentFileReads: z.number().optional(),
+	allowVeryLargeReads: z.boolean().optional(), // kilocode_change
 
 	browserToolEnabled: z.boolean().optional(),
 	browserViewportSize: z.string().optional(),
@@ -70,6 +73,7 @@ export const globalSettingsSchema = z.object({
 	ttsSpeed: z.number().optional(),
 	soundEnabled: z.boolean().optional(),
 	soundVolume: z.number().optional(),
+	systemNotificationsEnabled: z.boolean().optional(), // kilocode_change
 
 	maxOpenTabsContext: z.number().optional(),
 	maxWorkspaceFiles: z.number().optional(),
@@ -112,6 +116,9 @@ export const globalSettingsSchema = z.object({
 	commitMessageApiConfigId: z.string().optional(), // kilocode_change
 	historyPreviewCollapsed: z.boolean().optional(),
 	profileThresholds: z.record(z.string(), z.number()).optional(),
+	hasOpenedModeSelector: z.boolean().optional(),
+	lastModeExportPath: z.string().optional(),
+	lastModeImportPath: z.string().optional(),
 })
 
 export type GlobalSettings = z.infer<typeof globalSettingsSchema>
@@ -198,6 +205,8 @@ export const EVALS_SETTINGS: RooCodeSettings = {
 	alwaysAllowModeSwitch: true,
 	alwaysAllowSubtasks: true,
 	alwaysAllowExecute: true,
+	alwaysAllowFollowupQuestions: true,
+	followupAutoApproveTimeoutMs: 0,
 	allowedCommands: ["*"],
 
 	browserToolEnabled: false,
@@ -209,6 +218,7 @@ export const EVALS_SETTINGS: RooCodeSettings = {
 	ttsSpeed: 1,
 	soundEnabled: false,
 	soundVolume: 0.5,
+	systemNotificationsEnabled: true, // kilocode_change
 
 	terminalOutputLineLimit: 500,
 	terminalShellIntegrationTimeout: 30000,

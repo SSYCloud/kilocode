@@ -2,17 +2,19 @@ import * as vscode from "vscode"
 import delay from "delay"
 
 import type { CommandId } from "@roo-code/types"
+import { TelemetryService } from "@roo-code/telemetry"
 
 import { getCommand } from "../utils/commands"
 import { ClineProvider } from "../core/webview/ClineProvider"
-import { t } from "../i18n" // kilocode_change
-import { importSettings, exportSettings } from "../core/config/importExport" // kilocode_change
+import { exportSettings } from "../core/config/importExport" // kilocode_change
 import { ContextProxy } from "../core/config/ContextProxy"
 import { focusPanel } from "../utils/focusPanel"
 
 import { registerHumanRelayCallback, unregisterHumanRelayCallback, handleHumanRelayResponse } from "./humanRelay"
 import { handleNewTask } from "./handleTask"
 import { CodeIndexManager } from "../services/code-index/manager"
+import { importSettingsWithFeedback } from "../core/config/importExport"
+import { t } from "../i18n"
 
 /**
  * Helper to get the visible ClineProvider instance or log if not found.
@@ -78,6 +80,8 @@ const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions): Rec
 			return
 		}
 
+		TelemetryService.instance.captureTitleButtonClicked("account")
+
 		visibleProvider.postMessageToWebview({ type: "action", action: "accountButtonClicked" })
 	},
 	plusButtonClicked: async () => {
@@ -87,23 +91,23 @@ const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions): Rec
 			return
 		}
 
+		TelemetryService.instance.captureTitleButtonClicked("plus")
+
 		await visibleProvider.removeClineFromStack()
 		await visibleProvider.postStateToWebview()
 		await visibleProvider.postMessageToWebview({ type: "action", action: "chatButtonClicked" })
 	},
+	mcpButtonClicked: () => {
+		const visibleProvider = getVisibleProviderOrLog(outputChannel)
 
-	// kilocode_change: unused
-	// mcpButtonClicked: () => {
-	// 	const visibleProvider = getVisibleProviderOrLog(outputChannel)
+		if (!visibleProvider) {
+			return
+		}
 
-	// 	if (!visibleProvider) {
-	// 		return
-	// 	}
+		TelemetryService.instance.captureTitleButtonClicked("mcp")
 
-	// 	TelemetryService.instance.captureTitleButtonClicked("mcp")
-
-	// 	visibleProvider.postMessageToWebview({ type: "action", action: "mcpButtonClicked" })
-	// },
+		visibleProvider.postMessageToWebview({ type: "action", action: "mcpButtonClicked" })
+	},
 	promptsButtonClicked: () => {
 		const visibleProvider = getVisibleProviderOrLog(outputChannel)
 
@@ -111,9 +115,13 @@ const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions): Rec
 			return
 		}
 
+		TelemetryService.instance.captureTitleButtonClicked("prompts")
+
 		visibleProvider.postMessageToWebview({ type: "action", action: "promptsButtonClicked" })
 	},
 	popoutButtonClicked: () => {
+		TelemetryService.instance.captureTitleButtonClicked("popout")
+
 		return openClineInNewTab({ context, outputChannel })
 	},
 	openInNewTab: () => openClineInNewTab({ context, outputChannel }),
@@ -123,6 +131,8 @@ const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions): Rec
 		if (!visibleProvider) {
 			return
 		}
+
+		TelemetryService.instance.captureTitleButtonClicked("settings")
 
 		visibleProvider.postMessageToWebview({ type: "action", action: "settingsButtonClicked" })
 		// Also explicitly post the visibility message to trigger scroll reliably
@@ -134,6 +144,8 @@ const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions): Rec
 		if (!visibleProvider) {
 			return
 		}
+
+		TelemetryService.instance.captureTitleButtonClicked("history")
 
 		visibleProvider.postMessageToWebview({ type: "action", action: "historyButtonClicked" })
 	},
@@ -175,6 +187,22 @@ const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions): Rec
 		const { promptForCustomStoragePath } = await import("../utils/storage")
 		await promptForCustomStoragePath()
 	},
+	importSettings: async (filePath?: string) => {
+		const visibleProvider = getVisibleProviderOrLog(outputChannel)
+		if (!visibleProvider) {
+			return
+		}
+
+		await importSettingsWithFeedback(
+			{
+				providerSettingsManager: visibleProvider.providerSettingsManager,
+				contextProxy: visibleProvider.contextProxy,
+				customModesManager: visibleProvider.customModesManager,
+				provider: visibleProvider,
+			},
+			filePath,
+		)
+	},
 	focusPanel: async () => {
 		try {
 			await focusPanel(tabPanel, sidebarPanel)
@@ -211,22 +239,6 @@ const getCommandsMap = ({ context, outputChannel }: RegisterCommandOptions): Rec
 			})
 		} catch (error) {
 			outputChannel.appendLine(`Error in focusChatInput: ${error}`)
-		}
-	},
-	importSettings: async () => {
-		const visibleProvider = getVisibleProviderOrLog(outputChannel)
-		if (!visibleProvider) return
-
-		const { success } = await importSettings({
-			providerSettingsManager: visibleProvider.providerSettingsManager,
-			contextProxy: visibleProvider.contextProxy,
-			customModesManager: visibleProvider.customModesManager,
-		})
-
-		if (success) {
-			visibleProvider.settingsImportedAt = Date.now()
-			await visibleProvider.postStateToWebview()
-			await vscode.window.showInformationMessage(t("kilocode:info.settings_imported"))
 		}
 	},
 	exportSettings: async () => {

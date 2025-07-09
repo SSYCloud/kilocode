@@ -22,10 +22,23 @@
 		"sections": {
 			"mcp": "MCP Sunucuları"
 		},
+		"contextManagement": {
+			"allowVeryLargeReads": {
+				"label": "Çok büyük dosya okumalarına izin ver",
+				"description": "Etkinleştirildiğinde, Kilo Code bağlam penceresini taşma olasılığı yüksek olsa bile çok büyük dosya veya MCP çıktı okumalarını gerçekleştirir (içerik boyutu bağlam penceresinin %80'inden fazla)."
+			}
+		},
 		"provider": {
 			"apiKey": "Kilo Code API Anahtarı",
 			"login": "Kilo Code'a giriş yap",
 			"logout": "Kilo Code'dan çıkış yap"
+		},
+		"systemNotifications": {
+			"label": "Sistem bildirimlerini etkinleştir",
+			"description": "Etkinleştirildiğinde, Kilo Code görev tamamlama veya hatalar gibi önemli olaylar için sistem bildirimleri gönderecektir.",
+			"testButton": "Bildirimi test et",
+			"testTitle": "Kilo Code",
+			"testMessage": "Bu Kilo Code'dan bir test bildirimidir."
 		}
 	},
 	"chat": {
@@ -42,12 +55,7 @@
 		"dashboard": "Kontrol Paneli",
 		"logOut": "Çıkış Yap",
 		"currentBalance": "MEVCUT BAKİYE",
-		"loading": "Yükleniyor...",
-		"signUp": {
-			"title": "Kilo Code'a Kaydol",
-			"description": "Kilo Code'a kaydolmak size başlamak için ücretsiz krediler verir. Özelliklerimizi keşfetmek, en yeni ve en iyi modelleri denemek ve herhangi bir taahhüt olmadan Kilo Code'un avantajlarını deneyimlemek için kredilerinizi kullanın.",
-			"termsAndPrivacy": "Devam ederek <termsLink>Hizmet Şartları</termsLink> ve <privacyLink>Gizlilik Politikası</privacyLink>'nı kabul etmiş olursunuz."
-		}
+		"loading": "Yükleniyor..."
 	},
 	"docs": "Belgeler",
 	"rules": {
@@ -103,5 +111,10 @@
 				"user": "kullanıcı geri bildirimi"
 			}
 		}
+	},
+	"userFeedback": {
+		"editCancel": "İptal",
+		"send": "Gönder",
+		"restoreAndSend": "Geri Yükle ve Gönder"
 	}
 }

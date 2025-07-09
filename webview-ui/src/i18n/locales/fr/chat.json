@@ -16,7 +16,12 @@
 		"shareWithOrganization": "Partager avec l'organisation",
 		"shareWithOrganizationDescription": "Seuls les membres de ton organisation peuvent accéder",
 		"sharePublicly": "Partager publiquement",
-		"sharePubliclyDescription": "Toute personne avec le lien peut accéder"
+		"sharePubliclyDescription": "Toute personne avec le lien peut accéder",
+		"connectToCloud": "Se connecter au Cloud",
+		"connectToCloudDescription": "Connecte-toi à Kilo Code Cloud pour partager des tâches",
+		"sharingDisabledByOrganization": "Partage désactivé par l'organisation",
+		"shareSuccessOrganization": "Lien d'organisation copié dans le presse-papiers",
+		"shareSuccessPublic": "Lien public copié dans le presse-papiers"
 	},
 	"history": {
 		"title": "Historique"
@@ -103,6 +108,7 @@
 	},
 	"selectMode": "Sélectionner le mode d'interaction",
 	"selectApiConfig": "Sélectionner la configuration de l'API",
+	"selectModelConfig": "Sélectionner le modèle",
 	"enhancePrompt": "Améliorer la requête avec un contexte supplémentaire",
 	"addImages": "Ajouter des images au message",
 	"sendMessage": "Envoyer le message",
@@ -112,6 +118,12 @@
 	"dragFiles": "maintenir Maj pour glisser des fichiers",
 	"dragFilesImages": "maintenir Maj pour glisser des fichiers/images",
 	"enhancePromptDescription": "Le bouton 'Améliorer la requête' aide à améliorer votre demande en fournissant un contexte supplémentaire, des clarifications ou des reformulations. Essayez de taper une demande ici et cliquez à nouveau sur le bouton pour voir comment cela fonctionne.",
+	"modeSelector": {
+		"title": "Modes",
+		"marketplace": "Marketplace de Modes",
+		"settings": "Paramètres des Modes",
+		"description": "Personas spécialisés qui adaptent le comportement de Roo."
+	},
 	"errorReadingFile": "Erreur lors de la lecture du fichier :",
 	"noValidImages": "Aucune image valide n'a été traitée",
 	"separator": "Séparateur",
@@ -229,15 +241,17 @@
 		"tokens": "tokens"
 	},
 	"followUpSuggest": {
-		"copyToInput": "Copier vers l'entrée (ou Shift + clic)"
+		"copyToInput": "Copier vers l'entrée (ou Shift + clic)",
+		"autoSelectCountdown": "Sélection automatique dans {{count}}s",
+		"countdownDisplay": "{{count}}s"
 	},
 	"announcement": {
 		"title": "🎉 Roo Code {{version}} est sortie",
-		"description": "Roo Code {{version}} apporte de nouvelles fonctionnalités majeures et des améliorations basées sur vos retours.",
+		"description": "Roo Code {{version}} apporte de puissantes nouvelles fonctionnalités et des améliorations significatives pour améliorer ton flux de travail de développement.",
 		"whatsNew": "Quoi de neuf",
-		"feature1": "<bold>Lancement du Marketplace Roo</bold> : Le marketplace est maintenant en ligne ! Découvrez et installez des modes et des MCPs plus facilement que jamais.",
-		"feature2": "<bold>Modèles Gemini 2.5</bold> : Ajout du support pour les nouveaux modèles Gemini 2.5 Pro, Flash et Flash Lite.",
-		"feature3": "<bold>Support des fichiers Excel et plus</bold> : Ajout du support des fichiers Excel (.xlsx) et de nombreuses corrections de bugs et améliorations !",
+		"feature1": "<bold>Partage de tâches en 1 clic</bold> : Partage tes tâches instantanément avec tes collègues et la communauté en un seul clic.",
+		"feature2": "<bold>Support du répertoire .roo global</bold> : Charge les règles et configurations depuis un répertoire .roo global pour des paramètres cohérents entre les projets.",
+		"feature3": "<bold>Transitions Architecte vers Code améliorées</bold> : Transferts fluides de la planification en mode Architecte vers l'implémentation en mode Code.",
 		"hideButton": "Masquer l'annonce",
 		"detailsDiscussLinks": "Obtenez plus de détails et participez aux discussions sur <discordLink>Discord</discordLink> et <redditLink>Reddit</redditLink> 🚀"
 	},
@@ -289,7 +303,8 @@
 	"codebaseSearch": {
 		"wantsToSearch": "Kilo Code veut rechercher dans la base de code <code>{{query}}</code> :",
 		"wantsToSearchWithPath": "Kilo Code veut rechercher dans la base de code <code>{{query}}</code> dans <code>{{path}}</code> :",
-		"didSearch": "{{count}} résultat(s) trouvé(s) pour <code>{{query}}</code> :"
+		"didSearch": "{{count}} résultat(s) trouvé(s) pour <code>{{query}}</code> :",
+		"resultTooltip": "Score de similarité : {{score}} (cliquer pour ouvrir le fichier)"
 	},
 	"read-batch": {
 		"approve": {
@@ -305,5 +320,8 @@
 		"indexed": "Indexé",
 		"error": "Erreur d'index",
 		"status": "Statut de l'index"
+	},
+	"versionIndicator": {
+		"ariaLabel": "Version {{version}} - Cliquez pour voir les notes de version"
 	}
 }

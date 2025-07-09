@@ -4,11 +4,13 @@
 	"modes": {
 		"title": "Modes",
 		"createNewMode": "Create new mode",
+		"importMode": "Import Mode",
 		"editModesConfig": "Edit modes configuration",
 		"editGlobalModes": "Edit Global Modes",
 		"editProjectModes": "Edit Project Modes (.kilossymodes)",
 		"createModeHelpText": "Modes are specialized personas that tailor Kilo Code's behavior. <0>Learn about Using Modes</0> or <1>Customizing Modes.</1>",
-		"selectMode": "Search modes"
+		"selectMode": "Search modes",
+		"noMatchFound": "No modes found"
 	},
 	"apiConfiguration": {
 		"title": "API Configuration",
@@ -34,9 +36,14 @@
 		"resetToDefault": "Reset to default",
 		"description": "Define Kilo Code's expertise and personality for this mode. This description shapes how Kilo Code presents itself and approaches tasks."
 	},
+	"description": {
+		"title": "Short description (for humans)",
+		"resetToDefault": "Reset to default description",
+		"description": "A brief description shown in the mode selector dropdown."
+	},
 	"whenToUse": {
 		"title": "When to Use (optional)",
-		"description": "Describe when this mode should be used. This helps the Orchestrator choose the right mode for a task.",
+		"description": "Guidance for Kilo Code for when this mode should be used. This helps the Orchestrator choose the right mode for a task.",
 		"resetToDefault": "Reset to default 'When to Use' description"
 	},
 	"customInstructions": {
@@ -44,6 +51,27 @@
 		"resetToDefault": "Reset to default",
 		"description": "Add behavioral guidelines specific to {{modeName}} mode.",
 		"loadFromFile": "Custom instructions specific to {{mode}} mode can also be loaded from the <span>.kilossy/rules/</span> folder in your workspace (.kilossyrules-{{slug}} is deprecated and will stop working soon)."
+	},
+	"exportMode": {
+		"title": "Export Mode",
+		"description": "Export this mode with rules from the .kilocode/rules-{{slug}}/ folder combined into a shareable YAML file. The original files remain unchanged.",
+		"exporting": "Exporting..."
+	},
+	"importMode": {
+		"selectLevel": "Choose where to import this mode:",
+		"import": "Import",
+		"importing": "Importing...",
+		"global": {
+			"label": "Global Level",
+			"description": "Available across all projects. If the exported mode contained rules files, they will be recreated in the global .kilocode/rules-{slug}/ folder."
+		},
+		"project": {
+			"label": "Project Level",
+			"description": "Only available in this workspace. If the exported mode contained rules files, they will be recreated in .kilocode/rules-{slug}/ folder."
+		}
+	},
+	"advanced": {
+		"title": "Advanced: Override System Prompt"
 	},
 	"globalCustomInstructions": {
 		"title": "Custom Instructions for All Modes",
@@ -141,9 +169,13 @@
 			"label": "Role Definition",
 			"description": "Define Kilo Code's expertise and personality for this mode."
 		},
+		"description": {
+			"label": "Short description (for humans)",
+			"description": "A brief description shown in the mode selector dropdown."
+		},
 		"whenToUse": {
 			"label": "When to Use (optional)",
-			"description": "Provide a clear description of when this mode is most effective and what types of tasks it excels at."
+			"description": "Guidance for Kilo Code for when this mode should be used. This helps the Orchestrator choose the right mode for a task."
 		},
 		"tools": {
 			"label": "Available Tools",

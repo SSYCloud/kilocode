@@ -16,7 +16,12 @@
 		"shareWithOrganization": "Поделиться с организацией",
 		"shareWithOrganizationDescription": "Только члены вашей организации могут получить доступ",
 		"sharePublicly": "Поделиться публично",
-		"sharePubliclyDescription": "Любой, у кого есть ссылка, может получить доступ"
+		"sharePubliclyDescription": "Любой, у кого есть ссылка, может получить доступ",
+		"connectToCloud": "Подключиться к облаку",
+		"connectToCloudDescription": "Войди в Kilo Code Cloud, чтобы делиться задачами",
+		"sharingDisabledByOrganization": "Обмен отключен организацией",
+		"shareSuccessOrganization": "Ссылка организации скопирована в буфер обмена",
+		"shareSuccessPublic": "Публичная ссылка скопирована в буфер обмена"
 	},
 	"history": {
 		"title": "История"
@@ -103,8 +108,15 @@
 	"onboarding": "<strong>Ваш список задач в этом рабочем пространстве пуст.</strong> Начните с ввода задачи ниже. Не знаете, с чего начать? Подробнее о возможностях Kilo Code читайте в <DocsLink>документации</DocsLink>.",
 	"selectMode": "Выберите режим взаимодействия",
 	"selectApiConfig": "Выберите конфигурацию API",
+	"selectModelConfig": "Выберите модель",
 	"enhancePrompt": "Улучшить запрос с дополнительным контекстом",
 	"enhancePromptDescription": "Кнопка 'Улучшить запрос' помогает сделать ваш запрос лучше, предоставляя дополнительный контекст, уточнения или переформулировку. Попробуйте ввести запрос и снова нажать кнопку, чтобы увидеть, как это работает.",
+	"modeSelector": {
+		"title": "Режимы",
+		"marketplace": "Маркетплейс режимов",
+		"settings": "Настройки режимов",
+		"description": "Специализированные персоны, которые настраивают поведение Kilo Code."
+	},
 	"addImages": "Добавить изображения к сообщению",
 	"sendMessage": "Отправить сообщение",
 	"typeMessage": "Введите сообщение...",
@@ -220,11 +232,11 @@
 	},
 	"announcement": {
 		"title": "🎉 Выпущен Roo Code {{version}}",
-		"description": "Roo Code {{version}} приносит важные новые функции и улучшения на основе ваших отзывов.",
+		"description": "Roo Code {{version}} приносит мощные новые функции и значительные улучшения для совершенствования вашего рабочего процесса разработки.",
 		"whatsNew": "Что нового",
-		"feature1": "<bold>Запуск Roo Marketplace</bold>: Маркетплейс теперь в сети! Открывайте и устанавливайте режимы и MCP проще, чем когда-либо.",
-		"feature2": "<bold>Модели Gemini 2.5</bold>: Добавлена поддержка новых моделей Gemini 2.5 Pro, Flash и Flash Lite.",
-		"feature3": "<bold>Поддержка файлов Excel и многое другое</bold>: Добавлена поддержка файлов Excel (.xlsx) и множество исправлений ошибок и улучшений!",
+		"feature1": "<bold>Обмен задачами в 1 клик</bold>: Мгновенно делитесь своими задачами с коллегами и сообществом одним кликом.",
+		"feature2": "<bold>Поддержка глобального каталога .roo</bold>: Загружайте правила и конфигурации из глобального каталога .roo для согласованных настроек между проектами.",
+		"feature3": "<bold>Улучшенные переходы от Архитектора к Коду</bold>: Плавные переходы от планирования в режиме Архитектора к реализации в режиме Кода.",
 		"hideButton": "Скрыть объявление",
 		"detailsDiscussLinks": "Подробнее и обсуждение в <discordLink>Discord</discordLink> и <redditLink>Reddit</redditLink> 🚀"
 	},
@@ -239,7 +251,9 @@
 		"tokens": "токены"
 	},
 	"followUpSuggest": {
-		"copyToInput": "Скопировать во ввод (то же, что shift + клик)"
+		"copyToInput": "Скопировать во ввод (то же, что shift + клик)",
+		"autoSelectCountdown": "Автовыбор через {{count}}с",
+		"countdownDisplay": "{{count}}с"
 	},
 	"browser": {
 		"rooWantsToUse": "Kilo Code хочет использовать браузер:",
@@ -289,7 +303,8 @@
 	"codebaseSearch": {
 		"wantsToSearch": "Kilo Code хочет выполнить поиск в кодовой базе по <code>{{query}}</code>:",
 		"wantsToSearchWithPath": "Kilo Code хочет выполнить поиск в кодовой базе по <code>{{query}}</code> в <code>{{path}}</code>:",
-		"didSearch": "Найдено {{count}} результат(ов) для <code>{{query}}</code>:"
+		"didSearch": "Найдено {{count}} результат(ов) для <code>{{query}}</code>:",
+		"resultTooltip": "Оценка схожести: {{score}} (нажмите, чтобы открыть файл)"
 	},
 	"read-batch": {
 		"approve": {
@@ -305,5 +320,8 @@
 		"indexed": "Проиндексировано",
 		"error": "Ошибка индекса",
 		"status": "Статус индекса"
+	},
+	"versionIndicator": {
+		"ariaLabel": "Версия {{version}} - Нажмите, чтобы просмотреть примечания к выпуску"
 	}
 }

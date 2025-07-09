@@ -1,9 +1,6 @@
 import { HTMLAttributes } from "react"
 import { useAppTranslation } from "@/i18n/TranslationContext"
-import { Trans } from "react-i18next"
 import { Info, Download, Upload, TriangleAlert } from "lucide-react"
-
-import { VSCodeLink } from "@vscode/webview-ui-toolkit/react"
 
 import { Package } from "@roo/package"
 import { TelemetrySetting } from "@roo/TelemetrySetting"
@@ -38,27 +35,16 @@ export const About = ({ telemetrySetting, setTelemetrySetting, className, ...pro
 			</SectionHeader>
 
 			<Section>
-				<div>
-					<Trans
-						i18nKey="settings:footer.feedback"
-						components={{
-							githubLink: <VSCodeLink href="https://github.com/SSYCloud/kilocode/tree/ssy" />,
-							redditLink: <VSCodeLink href="https://reddit.com/r/kilocode" />,
-							discordLink: <VSCodeLink href="https://kilocode.ai/discord" />,
-						}}
+				<p>{t("settings:footer.support")}</p>
+				<div className="w-full flex flex-col justify-center items-center">
+					<img
+						className="w-20 h-20"
+						src="https://www.shengsuanyun.com/webp/relation-BMfLRnIZ.webp"
+						alt="customer service"
 					/>
 				</div>
-
-				<div>
-					<Trans
-						i18nKey="settings:footer.support"
-						components={{
-							supportLink: <VSCodeLink href="mailto:hi@kilocode.ai" />,
-						}}
-					/>
-				</div>
-
-				<div className="flex flex-wrap items-center gap-2 mt-2">
+				{/* kilocode_change end */}
+				<div className="w-full flex flex-wrap items-center justify-center gap-2 mt-2">
 					<Button onClick={() => vscode.postMessage({ type: "exportSettings" })} className="w-28">
 						<Upload className="p-0.5" />
 						{t("settings:footer.settings.export")}

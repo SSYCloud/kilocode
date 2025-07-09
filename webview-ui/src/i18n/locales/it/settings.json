@@ -57,6 +57,10 @@
 		"ollamaUrlLabel": "URL Ollama:",
 		"qdrantUrlLabel": "URL Qdrant",
 		"qdrantKeyLabel": "Chiave Qdrant:",
+		"advancedConfigLabel": "Configurazione avanzata",
+		"searchMinScoreLabel": "Soglia punteggio di ricerca",
+		"searchMinScoreDescription": "Punteggio minimo di somiglianza (0.0-1.0) richiesto per i risultati della ricerca. Valori più bassi restituiscono più risultati ma potrebbero essere meno pertinenti. Valori più alti restituiscono meno risultati ma più pertinenti.",
+		"searchMinScoreResetTooltip": "Ripristina al valore predefinito (0.4)",
 		"startIndexingButton": "Avvia indicizzazione",
 		"clearIndexDataButton": "Cancella dati indice",
 		"unsavedSettingsMessage": "Per favore salva le tue impostazioni prima di avviare il processo di indicizzazione.",
@@ -110,6 +114,11 @@
 		"subtasks": {
 			"label": "Sottoattività",
 			"description": "Consenti la creazione e il completamento di attività secondarie senza richiedere approvazione"
+		},
+		"followupQuestions": {
+			"label": "Domanda",
+			"description": "Seleziona automaticamente la prima risposta suggerita per le domande di follow-up dopo il timeout configurato",
+			"timeoutLabel": "Tempo di attesa prima di selezionare automaticamente la prima risposta"
 		},
 		"execute": {
 			"label": "Esegui",
@@ -321,19 +330,19 @@
 			"placeholder": "Predefinito: claude"
 		},
 		"geminiCli": {
-			"description": "Questo provider utilizza l'autenticazione OAuth dello strumento Gemini CLI e non richiede chiavi API.",
-			"oauthPath": "Percorso credenziali OAuth (opzionale)",
+			"description": "Questo provider utilizza l'autenticazione OAuth dallo strumento Gemini CLI e non richiede chiavi API.",
+			"oauthPath": "Percorso Credenziali OAuth (opzionale)",
 			"oauthPathDescription": "Percorso al file delle credenziali OAuth. Lascia vuoto per utilizzare la posizione predefinita (~/.gemini/oauth_creds.json).",
 			"instructions": "Se non ti sei ancora autenticato, esegui",
 			"instructionsContinued": "nel tuo terminale prima.",
-			"setupLink": "Istruzioni di configurazione Gemini CLI",
-			"requirementsTitle": "Requisiti importanti",
+			"setupLink": "Istruzioni di Configurazione Gemini CLI",
+			"requirementsTitle": "Requisiti Importanti",
 			"requirement1": "Prima, devi installare lo strumento Gemini CLI",
 			"requirement2": "Poi, esegui gemini nel tuo terminale e assicurati di accedere con Google",
 			"requirement3": "Funziona solo con account Google personali (non account Google Workspace)",
-			"requirement4": "Non usa chiavi API - l'autenticazione è gestita tramite OAuth",
+			"requirement4": "Non utilizza chiavi API - l'autenticazione è gestita tramite OAuth",
 			"requirement5": "Richiede che lo strumento Gemini CLI sia installato e autenticato prima",
-			"freeAccess": "Accesso di livello gratuito tramite autenticazione OAuth"
+			"freeAccess": "Accesso gratuito tramite autenticazione OAuth"
 		}
 	},
 	"browser": {
@@ -402,7 +411,7 @@
 		},
 		"autoCondenseContext": {
 			"name": "Attiva automaticamente la condensazione intelligente del contesto",
-			"description": "Quando abilitato, Roo condenserà automaticamente il contesto quando viene raggiunta la soglia. Quando disabilitato, puoi ancora attivare manualmente la condensazione del contesto."
+			"description": "Quando abilitato, Kilo Code condenserà automaticamente il contesto quando viene raggiunta la soglia. Quando disabilitato, puoi ancora attivare manualmente la condensazione del contesto."
 		},
 		"openTabs": {
 			"label": "Limite contesto schede aperte",
@@ -592,7 +601,7 @@
 	},
 	"footer": {
 		"feedback": "Se hai domande o feedback, sentiti libero di aprire un issue su <githubLink>https://github.com/SSYCloud/kilocode/tree/ssy</githubLink> o unirti a <redditLink>reddit.com/r/kilocode</redditLink> o <discordLink>kilocode.ai/discord</discordLink>",
-		"support": "Per domande finanziarie, contatta il Supporto Clienti a <supportLink>hi@kilocode.ai</supportLink>",
+		"support": "Per domande finanziarie, contatta il Supporto Clienti a ",
 		"telemetry": {
 			"label": "Consenti segnalazioni anonime di errori e utilizzo",
 			"description": "Aiuta a migliorare Kilo Code inviando dati di utilizzo anonimi e segnalazioni di errori. Non vengono mai inviati codice, prompt o informazioni personali. Consulta la nostra politica sulla privacy per maggiori dettagli."

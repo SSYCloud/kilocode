@@ -31,6 +31,7 @@ import { registerCommitMessageProvider } from "./services/commit-message"
 import { MdmService } from "./services/mdm/MdmService"
 import { migrateSettings } from "./utils/migrateSettings"
 import { checkAndRunAutoLaunchingTask as checkAndRunAutoLaunchingTask } from "./utils/autoLaunchingTask"
+import { autoImportSettings } from "./utils/autoImportSettings"
 import { API } from "./extension/api"
 
 import {
@@ -122,12 +123,13 @@ export async function activate(context: vscode.ExtensionContext) {
 		}),
 	)
 
+	// kilocode_change start
 	if (!context.globalState.get("firstInstallCompleted")) {
-		outputChannel.appendLine("First installation detected, opening Kilo Code sidebar!")
+		outputChannel.appendLine("First installation detected, opening Kilo SSY sidebar!")
 		try {
 			await vscode.commands.executeCommand("kilo-ssy.SidebarProvider.focus")
 
-			outputChannel.appendLine("Opening Kilo Code walkthrough")
+			outputChannel.appendLine("Opening Kilo SSY walkthrough")
 			await vscode.commands.executeCommand(
 				"workbench.action.openWalkthrough",
 				"shengsuan-cloud.kilo-ssy#kiloSSYCodeAgent",
@@ -138,6 +140,20 @@ export async function activate(context: vscode.ExtensionContext) {
 		} catch (error) {
 			outputChannel.appendLine(`Error during first-time setup: ${error.message}`)
 		}
+	}
+	// kilocode_change end
+
+	// Auto-import configuration if specified in settings
+	try {
+		await autoImportSettings(outputChannel, {
+			providerSettingsManager: provider.providerSettingsManager,
+			contextProxy: provider.contextProxy,
+			customModesManager: provider.customModesManager,
+		})
+	} catch (error) {
+		outputChannel.appendLine(
+			`[AutoImport] Error during auto-import: ${error instanceof Error ? error.message : String(error)}`,
+		)
 	}
 
 	registerCommands({ context, outputChannel, provider })
@@ -182,7 +198,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	registerCodeActions(context)
 	registerTerminalActions(context)
 
-	// Allows other extensions to activate once Kilo Code is ready.
+	// Allows other extensions to activate once Kilo SSY is ready.
 	vscode.commands.executeCommand(`${Package.name}.activationCompleted`)
 
 	// Implements the `RooCodeAPI` interface.

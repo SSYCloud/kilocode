@@ -29,14 +29,15 @@ import { Tab, TabContent, TabHeader } from "../common/Tab"
 
 import McpToolRow from "./McpToolRow"
 import McpResourceRow from "./McpResourceRow"
-import McpEnabledToggle from "./McpEnabledToggle"
+// import McpEnabledToggle from "./McpEnabledToggle" // kilocode_change not used
 import { McpErrorRow } from "./McpErrorRow"
 
 type McpViewProps = {
 	onDone: () => void
+	hideHeader?: boolean // kilocode_change
 }
 
-const McpView = ({ onDone }: McpViewProps) => {
+const McpView = ({ onDone, hideHeader = false }: McpViewProps) => {
 	const {
 		mcpServers: servers,
 		alwaysAllowMcp,
@@ -48,8 +49,10 @@ const McpView = ({ onDone }: McpViewProps) => {
 	const { t } = useAppTranslation()
 
 	return (
-		<Tab>
-			<TabHeader className="flex justify-between items-center">
+		// kilocode_change: add relative className
+		<Tab className="relative">
+			{/*  kilocode_change: display header conditionally */}
+			<TabHeader style={{ display: hideHeader ? "none" : "flex" }} className="flex justify-between items-center">
 				<h3 className="text-vscode-foreground m-0">{t("mcp:title")}</h3>
 				<Button onClick={onDone}>{t("mcp:done")}</Button>
 			</TabHeader>
@@ -71,11 +74,12 @@ const McpView = ({ onDone }: McpViewProps) => {
 					</Trans>
 				</div>
 
-				<McpEnabledToggle />
+				{/* <McpEnabledToggle /> kilocode_change: we always enable MCP */}
 
 				{mcpEnabled && (
 					<>
-						<div style={{ marginBottom: 15 }}>
+						{/* kilocode_change: display: none; we always allow mcp server creation */}
+						<div style={{ display: "none", marginBottom: 15 }}>
 							<VSCodeCheckbox
 								checked={enableMcpServerCreation}
 								onChange={(e: any) => {

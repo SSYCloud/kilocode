@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react"
+import { render, screen, fireEvent } from "@/utils/test-utils"
 
 import { TranslationProvider } from "@/i18n/__mocks__/TranslationContext"
 
@@ -25,6 +25,7 @@ describe("AutoApproveToggle", () => {
 		alwaysAllowModeSwitch: true,
 		alwaysAllowSubtasks: false,
 		alwaysAllowExecute: true,
+		alwaysAllowFollowupQuestions: false,
 		onToggle: mockOnToggle,
 	}
 

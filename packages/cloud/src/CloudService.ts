@@ -1,13 +1,20 @@
 import * as vscode from "vscode"
 
-import type { CloudUserInfo, TelemetryEvent, OrganizationAllowList } from "@roo-code/types"
+import type {
+	CloudUserInfo,
+	TelemetryEvent,
+	OrganizationAllowList,
+	ClineMessage,
+	ShareVisibility,
+} from "@roo-code/types"
 import { TelemetryService } from "@roo-code/telemetry"
 
 import { CloudServiceCallbacks } from "./types"
-import { AuthService } from "./AuthService"
+import type { AuthService } from "./auth"
+import { WebAuthService, StaticTokenAuthService } from "./auth"
 import { SettingsService } from "./SettingsService"
 import { TelemetryClient } from "./TelemetryClient"
-import { ShareService } from "./ShareService"
+import { ShareService, TaskNotFoundError } from "./ShareService"
 
 export class CloudService {
 	private static _instance: CloudService | null = null
@@ -37,7 +44,13 @@ export class CloudService {
 		}
 
 		try {
-			this.authService = new AuthService(this.context, this.log)
+			const cloudToken = process.env.ROO_CODE_CLOUD_TOKEN
+			if (cloudToken && cloudToken.length > 0) {
+				this.authService = new StaticTokenAuthService(this.context, cloudToken, this.log)
+			} else {
+				this.authService = new WebAuthService(this.context, this.log)
+			}
+
 			await this.authService.initialize()
 
 			this.authService.on("attempting-session", this.authListener)
@@ -46,8 +59,11 @@ export class CloudService {
 			this.authService.on("logged-out", this.authListener)
 			this.authService.on("user-info", this.authListener)
 
-			this.settingsService = new SettingsService(this.context, this.authService, () =>
-				this.callbacks.stateChanged?.(),
+			this.settingsService = new SettingsService(
+				this.context,
+				this.authService,
+				() => this.callbacks.stateChanged?.(),
+				this.log,
 			)
 			this.settingsService.initialize()
 
@@ -158,9 +174,23 @@ export class CloudService {
 
 	// ShareService
 
-	public async shareTask(taskId: string, visibility: "organization" | "public" = "organization") {
+	public async shareTask(
+		taskId: string,
+		visibility: ShareVisibility = "organization",
+		clineMessages?: ClineMessage[],
+	) {
 		this.ensureInitialized()
-		return this.shareService!.shareTask(taskId, visibility)
+
+		try {
+			return await this.shareService!.shareTask(taskId, visibility)
+		} catch (error) {
+			if (error instanceof TaskNotFoundError && clineMessages) {
+				// Backfill messages and retry
+				await this.telemetryClient!.backfillMessages(clineMessages, taskId)
+				return await this.shareService!.shareTask(taskId, visibility)
+			}
+			throw error
+		}
 	}
 
 	public async canShareTask(): Promise<boolean> {

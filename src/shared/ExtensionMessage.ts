@@ -8,6 +8,7 @@ import type {
 	ClineMessage,
 	OrganizationAllowList,
 	CloudUserInfo,
+	ShareVisibility,
 } from "@roo-code/types"
 
 import { GitCommit } from "../utils/git"
@@ -74,6 +75,9 @@ export interface ExtensionMessage {
 		| "autoApprovalEnabled"
 		| "updateCustomMode"
 		| "deleteCustomMode"
+		| "exportModeResult"
+		| "importModeResult"
+		| "checkRulesDirectoryResult"
 		| "currentCheckpointUpdated"
 		| "showHumanRelayDialog"
 		| "humanRelayResponse"
@@ -108,10 +112,12 @@ export interface ExtensionMessage {
 		| "marketplaceInstallResult"
 		| "marketplaceData"
 		| "mermaidFixResponse" // kilocode_change
+		| "shareTaskSuccess"
 	text?: string
 	payload?: ProfileDataResponsePayload | BalanceDataResponsePayload // kilocode_change: Add payload for profile and balance data
 	action?:
 		| "chatButtonClicked"
+		| "mcpButtonClicked"
 		| "settingsButtonClicked"
 		| "historyButtonClicked"
 		| "promptsButtonClicked"
@@ -159,6 +165,7 @@ export interface ExtensionMessage {
 	url?: string // kilocode_change
 	setting?: string
 	value?: any
+	hasContent?: boolean // For checkRulesDirectoryResult
 	items?: MarketplaceItem[]
 	userInfo?: CloudUserInfo
 	organizationAllowList?: OrganizationAllowList
@@ -171,6 +178,7 @@ export interface ExtensionMessage {
 	marketplaceItems?: MarketplaceItem[]
 	marketplaceInstalledMetadata?: MarketplaceInstalledMetadata
 	fixedCode?: string | null // For mermaidFixResponse // kilocode_change
+	visibility?: ShareVisibility
 }
 
 export type ExtensionState = Pick<
@@ -213,6 +221,7 @@ export type ExtensionState = Pick<
 	// | "showRooIgnoredFiles" // Optional in GlobalSettings, required here.
 	// | "maxReadFileLine" // Optional in GlobalSettings, required here.
 	| "maxConcurrentFileReads" // Optional in GlobalSettings, required here.
+	| "allowVeryLargeReads" // kilocode_change
 	| "terminalOutputLineLimit"
 	| "terminalShellIntegrationTimeout"
 	| "terminalShellIntegrationDisabled"
@@ -246,6 +255,7 @@ export type ExtensionState = Pick<
 	| "codebaseIndexConfig"
 	| "codebaseIndexModels"
 	| "profileThresholds"
+	| "systemNotificationsEnabled" // kilocode_change
 > & {
 	version: string
 	clineMessages: ClineMessage[]
@@ -285,6 +295,7 @@ export type ExtensionState = Pick<
 
 	cloudUserInfo: CloudUserInfo | null
 	cloudIsAuthenticated: boolean
+	cloudApiUrl?: string
 	sharingEnabled: boolean
 	organizationAllowList: OrganizationAllowList
 
@@ -293,6 +304,7 @@ export type ExtensionState = Pick<
 	marketplaceItems?: MarketplaceItem[]
 	marketplaceInstalledMetadata?: { project: Record<string, any>; global: Record<string, any> }
 	profileThresholds: Record<string, number>
+	hasOpenedModeSelector: boolean
 }
 
 export interface ClineSayTool {

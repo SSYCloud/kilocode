@@ -4,6 +4,8 @@
 	"modes": {
 		"title": "Modos",
 		"createNewMode": "Crear nuevo modo",
+		"importMode": "Importar modo",
+		"noMatchFound": "No se encontraron modos",
 		"editModesConfig": "Editar configuración de modos",
 		"editGlobalModes": "Editar modos globales",
 		"editProjectModes": "Editar modos del proyecto (.kilossymodes)",
@@ -34,6 +36,11 @@
 		"resetToDefault": "Restablecer a valores predeterminados",
 		"description": "Define la experiencia y personalidad de Kilo Code para este modo. Esta descripción determina cómo Kilo Code se presenta y aborda las tareas."
 	},
+	"description": {
+		"title": "Descripción breve (para humanos)",
+		"resetToDefault": "Restablecer a la descripción predeterminada",
+		"description": "Una breve descripción que se muestra en el menú desplegable del selector de modo."
+	},
 	"whenToUse": {
 		"title": "Cuándo usar (opcional)",
 		"description": "Describe cuándo se debe usar este modo. Esto ayuda al Orchestrator a elegir el modo correcto para una tarea.",
@@ -44,6 +51,27 @@
 		"resetToDefault": "Restablecer a valores predeterminados",
 		"description": "Agrega directrices de comportamiento específicas para el modo {{modeName}}.",
 		"loadFromFile": "Las instrucciones personalizadas para el modo {{mode}} también se pueden cargar desde la carpeta <span>.kilossy/rules/</span> en tu espacio de trabajo (.kilossyrules-{{slug}} está obsoleto y dejará de funcionar pronto)."
+	},
+	"exportMode": {
+		"title": "Exportar modo",
+		"description": "Exporta este modo con las reglas de la carpeta .kilocode/rules-{{slug}}/ combinadas en un archivo YAML compartible. Los archivos originales permanecen sin cambios.",
+		"exporting": "Exportando..."
+	},
+	"importMode": {
+		"selectLevel": "Elige dónde importar este modo:",
+		"import": "Importar",
+		"importing": "Importando...",
+		"global": {
+			"label": "Nivel global",
+			"description": "Disponible en todos los proyectos. Si el modo exportado contenía archivos de reglas, se recrearán en la carpeta global .kilocode/rules-{slug}/."
+		},
+		"project": {
+			"label": "Nivel de proyecto",
+			"description": "Solo disponible en este espacio de trabajo. Si el modo exportado contenía archivos de reglas, se recrearán en la carpeta .kilocode/rules-{slug}/."
+		}
+	},
+	"advanced": {
+		"title": "Avanzado"
 	},
 	"globalCustomInstructions": {
 		"title": "Instrucciones personalizadas para todos los modos",
@@ -148,6 +176,10 @@
 		"tools": {
 			"label": "Herramientas disponibles",
 			"description": "Selecciona qué herramientas puede usar este modo."
+		},
+		"description": {
+			"label": "Descripción breve (para humanos)",
+			"description": "Una breve descripción que se muestra en el menú desplegable del selector de modo."
 		},
 		"customInstructions": {
 			"label": "Instrucciones personalizadas (opcional)",

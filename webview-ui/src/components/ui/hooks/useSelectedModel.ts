@@ -33,6 +33,8 @@ import {
 	unboundDefaultModelId,
 	litellmDefaultModelId,
 	shengSuanYunDefaultModelId,
+	claudeCodeDefaultModelId,
+	claudeCodeModels,
 } from "@roo-code/types"
 
 import { cerebrasModels, cerebrasDefaultModelId } from "@roo/api" // kilocode_change
@@ -244,7 +246,10 @@ function getSelectedModel({
 			}
 
 			// Fallback to anthropic model if no match found
-			return { id: "Claude 3.7 Sonnet", info: anthropicModels["claude-3-7-sonnet-20250219"] }
+			return {
+				id: "anthropic/claude-3.7-sonnet",
+				info: routerModels["kilocode-openrouter"]["anthropic/claude-3.7-sonnet"],
+			}
 		}
 		case "shengsuanyun": {
 			const id = apiConfiguration.shengSuanYunModelId ?? shengSuanYunDefaultModelId
@@ -255,6 +260,12 @@ function getSelectedModel({
 		}
 		// kilocode_change end
 
+		case "claude-code": {
+			// Claude Code models extend anthropic models but with images and prompt caching disabled
+			const id = apiConfiguration.apiModelId ?? claudeCodeDefaultModelId
+			const info = claudeCodeModels[id as keyof typeof claudeCodeModels]
+			return { id, info: { ...openAiModelInfoSaneDefaults, ...info } }
+		}
 		// case "anthropic":
 		// case "human-relay":
 		// case "fake-ai":

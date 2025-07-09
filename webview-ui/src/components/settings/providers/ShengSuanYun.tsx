@@ -63,7 +63,7 @@ export const ShengSuanYun = ({
 			</div>
 			{!apiConfiguration?.shengSuanYunApiKey && (
 				<VSCodeButtonLink
-					href="https://router.shengsuanyun.com/user/keys"
+					href="https://console.shengsuanyun.com/user/keys"
 					style={{ width: "100%" }}
 					appearance="primary">
 					{t("settings:providers.getShengSuanyunApiKey")}
@@ -93,7 +93,7 @@ export const ShengSuanYun = ({
 				models={routerModels?.shengsuanyun ?? {}}
 				modelIdKey="shengSuanYunModelId"
 				serviceName="ShengSuanYun"
-				serviceUrl="https://router.shengsuanyun.com/"
+				serviceUrl="https://router.shengsuanyun.com/model"
 				organizationAllowList={organizationAllowList}
 			/>
 		</>
