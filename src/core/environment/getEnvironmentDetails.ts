@@ -19,8 +19,11 @@ import { formatResponse } from "../prompts/responses"
 
 import { Task } from "../task/Task"
 
-import { OpenRouterHandler } from "../../api/providers/openrouter" // kilocode_change
-import { t } from "../../i18n" // kilocode_change
+// kilocode_change start
+import { OpenRouterHandler } from "../../api/providers/openrouter"
+import { TelemetryService } from "@roo-code/telemetry"
+import { t } from "../../i18n"
+// kilocode_change end
 
 export async function getEnvironmentDetails(cline: Task, includeFileDetails: boolean = false) {
 	let details = ""
@@ -196,7 +199,8 @@ export async function getEnvironmentDetails(cline: Task, includeFileDetails: boo
 	const timeZoneOffsetHours = Math.floor(Math.abs(timeZoneOffset))
 	const timeZoneOffsetMinutes = Math.abs(Math.round((Math.abs(timeZoneOffset) - timeZoneOffsetHours) * 60))
 	const timeZoneOffsetStr = `${timeZoneOffset >= 0 ? "+" : "-"}${timeZoneOffsetHours}:${timeZoneOffsetMinutes.toString().padStart(2, "0")}`
-	details += `\n\n# Current Time\n${formatter.format(now)} (${timeZone}, UTC${timeZoneOffsetStr})`
+	// kilocode_change: time in ISO format
+	details += `\n\n# Current Time\nCurrent time in ISO 8601 UTC format: ${now.toISOString()}\nUser time zone: ${timeZone}, UTC${timeZoneOffsetStr}`
 
 	// Add context tokens information.
 	const { contextTokens, totalCost } = getApiMetrics(cline.clineMessages)
@@ -206,8 +210,12 @@ export async function getEnvironmentDetails(cline: Task, includeFileDetails: boo
 	if (cline.api instanceof OpenRouterHandler) {
 		try {
 			await cline.api.fetchModel()
-		} catch {
-			await cline.say("error", t("kilocode:notLoggedInError"))
+		} catch (e) {
+			TelemetryService.instance.captureException(e, { context: "getEnvironmentDetails" })
+			await cline.say(
+				"error",
+				t("kilocode:notLoggedInError", { error: e instanceof Error ? e.stack || e.message : String(e) }),
+			)
 			return `<environment_details>\n${details.trim()}\n</environment_details>`
 		}
 	}
@@ -227,13 +235,13 @@ export async function getEnvironmentDetails(cline: Task, includeFileDetails: boo
 		language,
 	} = state ?? {}
 
-	const currentMode = mode ?? defaultModeSlug
-
-	const modeDetails = await getFullModeDetails(currentMode, customModes, customModePrompts, {
+	const modeDetails = await getFullModeDetails(mode ?? defaultModeSlug, customModes, customModePrompts, {
 		cwd: cline.cwd,
 		globalCustomInstructions,
 		language: language ?? formatLanguage(vscode.env.language),
 	})
+
+	const currentMode = modeDetails.slug ?? mode // kilocode_change: don't try to use non-existent modes
 
 	details += `\n\n# Current Mode\n`
 	details += `<slug>${currentMode}</slug>\n`

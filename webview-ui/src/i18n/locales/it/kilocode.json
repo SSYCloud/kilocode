@@ -23,6 +23,7 @@
 			"mcp": "Server MCP"
 		},
 		"provider": {
+			"account": "Account Kilo Code",
 			"apiKey": "Chiave API Kilo Code",
 			"login": "Accedi a Kilo Code",
 			"logout": "Disconnetti da Kilo Code"
@@ -116,5 +117,18 @@
 		"editCancel": "Annulla",
 		"send": "Invia",
 		"restoreAndSend": "Ripristina e Invia"
+	},
+	"ideaSuggestionsBox": {
+		"newHere": "Nuovo qui?",
+		"suggestionText": "<suggestionButton>Clicca qui</suggestionButton> per un'idea fantastica, poi tocca <sendIcon /> e guardami fare magie!",
+		"ideas": {
+			"idea1": "Crea una sfera 3D rotante e luminosa che risponde ai movimenti del mouse. Fai funzionare l'app nel browser.",
+			"idea2": "Crea un sito web portfolio per uno sviluppatore software Python",
+			"idea3": "Crea un mockup di app finanziaria nel browser. Poi testa se funziona",
+			"idea4": "Crea un sito web directory contenente i migliori modelli di generazione video AI attualmente",
+			"idea5": "Crea un generatore di gradienti CSS che esporta fogli di stile personalizzati e mostra un'anteprima live",
+			"idea6": "Genera carte che rivelano contenuti dinamici magnificamente quando ci si passa sopra",
+			"idea7": "Crea un campo stellare interattivo rilassante che si muove con i gesti del mouse"
+		}
 	}
 }

@@ -906,6 +906,8 @@ export class ClineProvider
 				if (task) {
 					task.api = buildApiHandler(providerSettings)
 				}
+
+				await TelemetryService.instance.updateIdentity(providerSettings.kilocodeToken ?? "") // kilocode_change
 			} else {
 				await this.updateGlobalState("listApiConfigMeta", await this.providerSettingsManager.listConfig())
 			}
@@ -969,6 +971,7 @@ export class ClineProvider
 		}
 
 		await this.postStateToWebview()
+		await TelemetryService.instance.updateIdentity(providerSettings.kilocodeToken ?? "") // kilocode_change
 	}
 
 	// Task Management
@@ -1481,6 +1484,7 @@ export class ClineProvider
 			maxOpenTabsContext,
 			maxWorkspaceFiles,
 			browserToolEnabled,
+			telemetrySetting,
 			showRooIgnoredFiles,
 			language,
 			showAutoApproveMenu, // kilocode_change
@@ -1494,6 +1498,7 @@ export class ClineProvider
 			organizationAllowList,
 			maxConcurrentFileReads,
 			allowVeryLargeReads, // kilocode_change
+			autocompleteApiConfigId, // kilocode_change
 			condensingApiConfigId,
 			customCondensingPrompt,
 			codebaseIndexConfig,
@@ -1504,6 +1509,7 @@ export class ClineProvider
 			followupAutoApproveTimeoutMs,
 		} = await this.getState()
 
+		const telemetryKey = process.env.KILOCODE_POSTHOG_API_KEY
 		const machineId = vscode.env.machineId
 
 		const mergedAllowedCommands = this.mergeAllowedCommands(allowedCommands)
@@ -1583,6 +1589,8 @@ export class ClineProvider
 			maxWorkspaceFiles: maxWorkspaceFiles ?? 200,
 			cwd,
 			browserToolEnabled: browserToolEnabled ?? true,
+			telemetrySetting,
+			telemetryKey,
 			machineId,
 			showRooIgnoredFiles: showRooIgnoredFiles ?? true,
 			showAutoApproveMenu: showAutoApproveMenu ?? false, // kilocode_change
@@ -1600,6 +1608,7 @@ export class ClineProvider
 			cloudIsAuthenticated: cloudIsAuthenticated ?? false,
 			sharingEnabled: sharingEnabled ?? false,
 			organizationAllowList,
+			autocompleteApiConfigId, // kilocode_change
 			condensingApiConfigId,
 			customCondensingPrompt,
 			codebaseIndexModels: codebaseIndexModels ?? EMBEDDING_MODEL_PROFILES,
@@ -1742,6 +1751,7 @@ export class ClineProvider
 			customSupportPrompts: stateValues.customSupportPrompts ?? {},
 			enhancementApiConfigId: stateValues.enhancementApiConfigId,
 			commitMessageApiConfigId: stateValues.commitMessageApiConfigId, // kilocode_change
+			autocompleteApiConfigId: stateValues.autocompleteApiConfigId, // kilocode_change
 			experiments: stateValues.experiments ?? experimentDefault,
 			autoApprovalEnabled: stateValues.autoApprovalEnabled ?? true,
 			customModes,
@@ -1749,6 +1759,7 @@ export class ClineProvider
 			maxWorkspaceFiles: stateValues.maxWorkspaceFiles ?? 200,
 			openRouterUseMiddleOutTransform: stateValues.openRouterUseMiddleOutTransform ?? true,
 			browserToolEnabled: stateValues.browserToolEnabled ?? true,
+			telemetrySetting: stateValues.telemetrySetting || "unset",
 			showRooIgnoredFiles: stateValues.showRooIgnoredFiles ?? true,
 			showAutoApproveMenu: stateValues.showAutoApproveMenu ?? false, // kilocode_change
 			showTaskTimeline: stateValues.showTaskTimeline ?? true, // kilocode_change

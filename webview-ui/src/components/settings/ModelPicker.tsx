@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback, useEffect, useRef, Fragment } from "react" // kilocode_change Fragment
+import { useState, useCallback, useEffect, useRef, Fragment } from "react" // kilocode_change Fragment
 import { VSCodeLink } from "@vscode/webview-ui-toolkit/react"
 import { Trans } from "react-i18next"
 import { ChevronsUpDown, Check, X } from "lucide-react"
@@ -7,6 +7,7 @@ import type { ProviderSettings, ModelInfo, OrganizationAllowList } from "@roo-co
 
 import { useAppTranslation } from "@src/i18n/TranslationContext"
 import { useSelectedModel } from "@/components/ui/hooks/useSelectedModel"
+import { usePreferredModels } from "@/components/ui/hooks/kilocode/usePreferredModels" // kilocode_change
 // import { filterModels } from "./utils/organizationFilters" // kilocode_change: not doing this
 import { cn } from "@src/lib/utils"
 import {
@@ -70,37 +71,7 @@ export const ModelPicker = ({
 	const selectTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 	const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-	const modelIds = useMemo(() => {
-		if (!models) return []
-
-		// kilocode_change begin
-		// Sort models by preferredIndex first, then alphabetically
-		const preferredModelIds = []
-		const restModelIds = []
-		// first add the preferred models
-		for (const [key, model] of Object.entries(models)) {
-			if (model.preferredIndex !== undefined && model.preferredIndex !== null) {
-				preferredModelIds.push(key)
-			}
-		}
-		preferredModelIds.sort((a, b) => {
-			const modelA = models[a]
-			const modelB = models[b]
-			return (modelA.preferredIndex ?? 0) - (modelB.preferredIndex ?? 0)
-		})
-
-		// then add the rest
-		for (const [key] of Object.entries(models)) {
-			if (!preferredModelIds.includes(key)) {
-				restModelIds.push(key)
-			}
-		}
-		restModelIds.sort((a, b) => a.localeCompare(b))
-
-		const combinedModelIds = [...preferredModelIds, ...restModelIds]
-		return combinedModelIds
-		// kilocode_change end
-	}, [models])
+	const modelIds = usePreferredModels(models) // kilocode_change
 
 	const { id: selectedModelId, info: selectedModelInfo } = useSelectedModel(apiConfiguration)
 
@@ -218,10 +189,10 @@ export const ModelPicker = ({
 								<CommandGroup>
 									{/* kilocode_change start */}
 									{modelIds.map((model, i) => {
-										const isPreferred = models?.[model]?.preferredIndex !== null
-										const previousModelWasPreferred =
-											models?.[modelIds[i - 1]]?.preferredIndex !== null
-
+										const isPreferred = Number.isInteger(models?.[model]?.preferredIndex)
+										const previousModelWasPreferred = Number.isInteger(
+											models?.[modelIds[i - 1]]?.preferredIndex,
+										)
 										return (
 											<Fragment key={model}>
 												{!isPreferred && previousModelWasPreferred ? <SelectSeparator /> : null}

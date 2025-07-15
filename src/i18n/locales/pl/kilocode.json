@@ -11,7 +11,7 @@
 		"title": "Ostrzeżenie o Niskim Kredycie!",
 		"message": "Sprawdź, czy możesz doładować darmowymi kredytami lub kupić więcej!"
 	},
-	"notLoggedInError": "Nie można ukończyć żądania, upewnij się, że jesteś połączony i zalogowany u wybranego dostawcy.",
+	"notLoggedInError": "Nie można ukończyć żądania, upewnij się, że jesteś połączony i zalogowany u wybranego dostawcy.\n\n{{error}}",
 	"rules": {
 		"actions": {
 			"delete": "Usuń",
@@ -48,5 +48,25 @@
 		"generated": "Kilo: Wiadomość commitu wygenerowana!",
 		"generationFailed": "Kilo: Nie udało się wygenerować komunikatu zatwierdzenia: {{errorMessage}}",
 		"generatingFromUnstaged": "Kilo: Generowanie wiadomości na podstawie niezatwierdzonych zmian"
+	},
+	"autocomplete": {
+		"statusBar": {
+			"disabled": "$(circle-slash) Kilo Ukończone",
+			"enabled": "$(sparkle) Kilo Ukończone",
+			"tooltip": {
+				"lastCompletion": "Ostatnie zakończenie:",
+				"disabled": "Kilo Code automatyczne uzupełnianie (wyłączone)",
+				"basic": "Kilo Code Autocomplete",
+				"tokenError": "Aby korzystać z autouzupełniania, należy ustawić prawidłowy token",
+				"sessionTotal": "Całkowity koszt sesji:",
+				"model": "Model:"
+			},
+			"warning": "$(warning) Kilo - Wykonane",
+			"cost": {
+				"lessThanCent": "<0,01 zł",
+				"zero": "0,00 zł"
+			}
+		},
+		"toggleMessage": "Kilo Zakończone {{status}}"
 	}
 }

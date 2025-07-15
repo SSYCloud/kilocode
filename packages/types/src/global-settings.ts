@@ -113,6 +113,7 @@ export const globalSettingsSchema = z.object({
 	customModePrompts: customModePromptsSchema.optional(),
 	customSupportPrompts: customSupportPromptsSchema.optional(),
 	enhancementApiConfigId: z.string().optional(),
+	autocompleteApiConfigId: z.string().optional(), // kilocode_change
 	commitMessageApiConfigId: z.string().optional(), // kilocode_change
 	historyPreviewCollapsed: z.boolean().optional(),
 	profileThresholds: z.record(z.string(), z.number()).optional(),

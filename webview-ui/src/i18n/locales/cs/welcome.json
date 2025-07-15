@@ -17,7 +17,7 @@
 	"startCustom": "Nebo můžeš přinést svůj vlastní API klíč poskytovatele:",
 	"telemetry": {
 		"title": "Pomoz Vylepšit Kilo Code",
-		"anonymousTelemetry": "Odesílej anonymní data o chybách a používání, abys nám pomohl opravit chyby a vylepšit rozšíření. Žádný kód, prompts ani osobní informace se nikdy neodesílají.",
+		"anonymousTelemetry": "Odesílej data o chybách a používání, abys nám pomohl opravit chyby a vylepšit rozšíření. Žádný kód, prompts ani osobní informace se nikdy neodesílají.",
 		"changeSettings": "Toto můžeš vždy změnit v dolní části <settingsLink>nastavení</settingsLink>",
 		"settings": "nastavení",
 		"allow": "Povolit",

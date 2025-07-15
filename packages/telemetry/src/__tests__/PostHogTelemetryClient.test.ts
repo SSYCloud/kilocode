@@ -66,7 +66,7 @@ describe("PostHogTelemetryClient", () => {
 				"isEventCapturable",
 			).bind(client)
 
-			expect(isEventCapturable(TelemetryEventName.LLM_COMPLETION)).toBe(false)
+			expect(isEventCapturable(TelemetryEventName.TASK_MESSAGE /*kilocode_change*/)).toBe(false)
 		})
 	})
 
@@ -244,7 +244,7 @@ describe("PostHogTelemetryClient", () => {
 			client.updateTelemetryState(true)
 
 			await client.capture({
-				event: TelemetryEventName.LLM_COMPLETION, // This is in the exclude list.
+				event: TelemetryEventName.TASK_MESSAGE, // This is in the exclude list. // kilocode_change
 				properties: { test: "value" },
 			})
 

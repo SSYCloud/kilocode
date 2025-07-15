@@ -49,6 +49,7 @@ import { editMessageHandler } from "../kilocode/webview/webviewMessageHandlerUti
 const ALLOWED_VSCODE_SETTINGS = new Set(["terminal.integrated.inheritEnv"])
 
 import { MarketplaceManager, MarketplaceItemType } from "../../services/marketplace"
+import { fetchUserDataRPC } from "./getShengSuanYunProfile"
 
 export const webviewMessageHandler = async (
 	provider: ClineProvider,
@@ -130,6 +131,14 @@ export const webviewMessageHandler = async (
 						`Error list api configuration: ${JSON.stringify(error, Object.getOwnPropertyNames(error), 2)}`,
 					),
 				)
+
+			// If user already opted in to telemetry, enable telemetry service
+			provider.getStateToPostToWebview().then(async (/*kilocode_change*/ state) => {
+				const { telemetrySetting } = state
+				const isOptedIn = telemetrySetting === "enabled"
+				TelemetryService.instance.updateTelemetryState(isOptedIn)
+				await TelemetryService.instance.updateIdentity(state.apiConfiguration.kilocodeToken ?? "") // kilocode_change
+			})
 
 			provider.isViewLaunched = true
 			break
@@ -1158,7 +1167,7 @@ export const webviewMessageHandler = async (
 			await provider.postStateToWebview()
 			break
 		case "language":
-			changeLanguage(message.text ?? "en")
+			changeLanguage(message.text ?? "zh-CN")
 			await updateGlobalState("language", message.text as Language)
 			await provider.postStateToWebview()
 			break
@@ -1221,6 +1230,10 @@ export const webviewMessageHandler = async (
 			await updateGlobalState("commitMessageApiConfigId", message.text)
 			await provider.postStateToWebview()
 			break
+		case "autocompleteApiConfigId":
+			await updateGlobalState("autocompleteApiConfigId", message.text)
+			await provider.postStateToWebview()
+			break
 		// kilocode_change end
 		case "condensingApiConfigId":
 			await updateGlobalState("condensingApiConfigId", message.text)
@@ -1272,6 +1285,7 @@ export const webviewMessageHandler = async (
 						`Error enhancing prompt: ${JSON.stringify(error, Object.getOwnPropertyNames(error), 2)}`,
 					)
 
+					TelemetryService.instance.captureException(error, { context: "enhance_prompt" }) // kilocode_change
 					vscode.window.showErrorMessage(t("common:errors.enhance_prompt"))
 					await provider.postMessageToWebview({ type: "enhancedPrompt" })
 				}
@@ -1818,25 +1832,8 @@ export const webviewMessageHandler = async (
 					})
 					break
 				}
-				const header = {
-					headers: {
-						"x-token": token,
-						"Content-Type": "application/json",
-					},
-				}
-				const uri = "https://api.shengsuanyun.com/user/info"
-				const res = await axios.get(uri, header)
-				if (!res.data || !res.data.data || res.data.code != 0) {
-					throw new Error(`Invalid response from ${uri} API`)
-				}
-				const usi = {
-					Email: res.data.data.Email,
-					Nickname: res.data.data.Nickname,
-					HeadImg: res.data.data.HeadImg,
-					Username: res.data.data.Username,
-					Wallet: res.data.data.Wallet,
-					Phone: res.data.data.Phone,
-				}
+				const usi = await fetchUserDataRPC(token)
+				console.log("shengSuanYun profileDataResponse", usi)
 				provider.postMessageToWebview({
 					type: "profileDataResponse",
 					payload: { success: true, data: usi },
@@ -2223,5 +2220,8 @@ export const webviewMessageHandler = async (
 			break
 		}
 		// kilocode_change end
+		case "insertTextToChatArea":
+			provider.postMessageToWebview({ type: "insertTextToChatArea", text: message.text })
+			break
 	}
 }

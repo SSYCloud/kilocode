@@ -4,7 +4,11 @@ import DynamicTextArea from "react-textarea-autosize"
 
 import { mentionRegex, mentionRegexGlobal, unescapeSpaces } from "@roo/context-mentions"
 import { WebviewMessage } from "@roo/WebviewMessage"
-import { Mode, getAllModes } from "@roo/modes"
+import {
+	Mode,
+	defaultModeSlug, // kilochange_change
+	getAllModes,
+} from "@roo/modes"
 import { ExtensionMessage } from "@roo/ExtensionMessage"
 
 import { vscode } from "@/utils/vscode"
@@ -179,7 +183,18 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 					if (message.requestId === searchRequestId) {
 						setFileSearchResults(message.results || [])
 					}
+					// kilocode_change start
+				} else if (message.type === "insertTextToChatArea") {
+					if (message.text) {
+						setInputValue(message.text)
+						setTimeout(() => {
+							if (textAreaRef.current) {
+								textAreaRef.current.focus()
+							}
+						}, 0)
+					}
 				}
+				// kilocode_change end
 			}
 
 			window.addEventListener("message", messageHandler)
@@ -1232,9 +1247,9 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 					className={cn("flex", "justify-between", "items-center", "mt-auto", "pt-0.5")}>
 					<div className={cn("flex", "items-center", "gap-1", "min-w-0")}>
 						<div className="shrink-0">
-							{/* kilocode_change: SelectDropdown instead of ModeSelector */}
+							{/* kilocode_change start: SelectDropdown instead of ModeSelector */}
 							<SelectDropdown
-								value={mode}
+								value={allModes.find((m) => m.slug === mode)?.slug ?? defaultModeSlug}
 								title={t("chat:selectMode")}
 								options={[
 									{
@@ -1243,10 +1258,10 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 										disabled: true,
 										type: DropdownOptionType.SHORTCUT,
 									},
-									...getAllModes(customModes).map((mode) => ({
+									...allModes.map((mode) => ({
 										value: mode.slug,
 										label: mode.name,
-										codicon: mode.iconName, // kilocode_change
+										codicon: mode.iconName,
 										type: DropdownOptionType.ITEM,
 									})),
 									{
@@ -1265,12 +1280,11 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 									vscode.postMessage({ type: "mode", text: value })
 								}}
 								shortcutText={modeShortcutText}
-								// kilocode_change start - VSC Theme
 								triggerClassName={cn(
 									"w-full bg-[var(--background)] border-[var(--vscode-input-border)] hover:bg-[var(--color-vscode-list-hoverBackground)]",
 								)}
-								// kilocode_change end
 							/>
+							{/* kilocode_change end */}
 						</div>
 
 						{/* kilocode_change start - hide if there is only one profile */}

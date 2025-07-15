@@ -23,6 +23,7 @@
 			"mcp": "MCP-servrar"
 		},
 		"provider": {
+			"account": "Kilo Code-konto",
 			"apiKey": "Kilo Code API-nyckel",
 			"login": "Logga in på Kilo Code",
 			"logout": "Logga ut från Kilo Code"
@@ -116,5 +117,18 @@
 		"editCancel": "Avbryt",
 		"send": "Skicka",
 		"restoreAndSend": "Återställ & Skicka"
+	},
+	"ideaSuggestionsBox": {
+		"newHere": "Ny här?",
+		"suggestionText": "<suggestionButton>Klicka här</suggestionButton> för en cool idé, tryck sedan på <sendIcon /> och titta på mig göra magi!",
+		"ideas": {
+			"idea1": "Skapa en roterande, glödande 3D-sfär som reagerar på musrörelser. Få appen att fungera i webbläsaren.",
+			"idea2": "Skapa en portföljwebbplats för en Python-mjukvaruutvecklare",
+			"idea3": "Skapa en finansiell app-mockup i webbläsaren. Testa sedan om den fungerar",
+			"idea4": "Skapa en katalogwebbplats som innehåller de bästa AI-videogenereringsmodellerna just nu",
+			"idea5": "Skapa en CSS-gradientgenerator som exporterar anpassade stilmallar och visar en liveförhandsvisning",
+			"idea6": "Generera kort som vackert avslöjar dynamiskt innehåll när du hovrar över dem",
+			"idea7": "Skapa ett lugnande interaktivt stjärnfält som rör sig med musgester"
+		}
 	}
 }

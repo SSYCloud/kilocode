@@ -4,6 +4,8 @@ import { getModelParams } from "../transform/model-params"
 import { getModels } from "./fetchers/modelCache"
 import { DEEP_SEEK_DEFAULT_TEMPERATURE } from "@roo-code/types"
 import { getKiloBaseUriFromToken } from "../../utils/kilocode-token"
+import { ApiHandlerCreateMessageMetadata } from ".."
+import OpenAI from "openai"
 
 /**
  * A custom OpenRouter handler that overrides the getModel function
@@ -21,6 +23,16 @@ export class KilocodeOpenrouterHandler extends OpenRouterHandler {
 		}
 
 		super(options)
+	}
+
+	override customRequestOptions(metadata?: ApiHandlerCreateMessageMetadata): OpenAI.RequestOptions | undefined {
+		return metadata
+			? {
+					headers: {
+						"X-KiloCode-TaskId": metadata.taskId,
+					},
+				}
+			: undefined
 	}
 
 	override getModel() {

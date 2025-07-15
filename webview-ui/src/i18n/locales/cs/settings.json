@@ -622,8 +622,8 @@
 		"feedback": "Pokud máte nějaké dotazy nebo zpětnou vazbu, neváhejte otevřít problém na <githubLink>github.com/Kilo-Org/kilocode</githubLink> nebo se připojte k <redditLink>reddit.com/r/kilocode</redditLink> nebo <discordLink>kilocode.ai/discord</discordLink>.",
 		"support": "Pro finanční dotazy kontaktujte prosím zákaznickou podporu na <supportLink>https://kilocode.ai/support</supportLink>",
 		"telemetry": {
-			"label": "Povolit anonymní hlášení chyb a používání",
-			"description": "Pomozte vylepšit Kilo Code odesíláním anonymních dat o používání a hlášení chyb. Nikdy se neodesílá žádný kód, výzvy ani osobní informace. Další podrobnosti najdete v našich zásadách ochrany osobních údajů."
+			"label": "Povolit hlášení chyb a používání",
+			"description": "Pomozte vylepšit Kilo Code odesíláním dat o používání a hlášení chyb. Nikdy se neodesílá žádný kód, výzvy ani osobní informace. Další podrobnosti najdete v našich zásadách ochrany osobních údajů."
 		},
 		"settings": {
 			"import": "Importovat",

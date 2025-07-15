@@ -121,7 +121,7 @@ __setMockImplementation(
 // Mock vscode language
 vi.mock("vscode", () => ({
 	env: {
-		language: "en",
+		language: "zh-CN",
 	},
 	workspace: {
 		workspaceFolders: [{ uri: { fsPath: "/test/path" } }],

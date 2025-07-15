@@ -4,6 +4,7 @@ import type {
 	ProviderSettings,
 	HistoryItem,
 	ModeConfig,
+	TelemetrySetting,
 	Experiments,
 	ClineMessage,
 	OrganizationAllowList,
@@ -82,6 +83,7 @@ export interface ExtensionMessage {
 		| "showHumanRelayDialog"
 		| "humanRelayResponse"
 		| "humanRelayCancel"
+		| "insertTextToChatArea" // kilocode_change
 		| "browserToolEnabled"
 		| "browserConnectionResult"
 		| "remoteBrowserEnabled"
@@ -250,6 +252,7 @@ export type ExtensionState = Pick<
 	| "localRulesToggles" // kilocode_change
 	| "globalWorkflowToggles" // kilocode_change
 	| "commitMessageApiConfigId" // kilocode_change
+	| "autocompleteApiConfigId" // kilocode_change
 	| "condensingApiConfigId"
 	| "customCondensingPrompt"
 	| "codebaseIndexConfig"
@@ -287,7 +290,10 @@ export type ExtensionState = Pick<
 	toolRequirements?: Record<string, boolean> // Map of tool names to their requirements (e.g. {"apply_diff": true} if diffEnabled)
 
 	cwd?: string // Current working directory
+	telemetrySetting: TelemetrySetting
+	telemetryKey?: string
 	machineId?: string
+
 	renderContext: "sidebar" | "editor"
 	settingsImportedAt?: number
 	historyPreviewCollapsed?: boolean

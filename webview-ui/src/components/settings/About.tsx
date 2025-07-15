@@ -1,7 +1,6 @@
 import { HTMLAttributes } from "react"
 import { useAppTranslation } from "@/i18n/TranslationContext"
 import { Info, Download, Upload, TriangleAlert } from "lucide-react"
-
 import { Package } from "@roo/package"
 import { TelemetrySetting } from "@roo/TelemetrySetting"
 

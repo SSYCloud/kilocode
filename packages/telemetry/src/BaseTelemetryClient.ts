@@ -65,6 +65,14 @@ export abstract class BaseTelemetryClient implements TelemetryClient {
 
 	public abstract updateTelemetryState(didUserOptIn: boolean): void
 
+	// kilocode_change start
+	public captureException(_error: Error, _properties?: Record<string | number, unknown>): void {}
+
+	public updateIdentity(_kilocodeToken: string): Promise<void> {
+		return Promise.resolve()
+	}
+	// kilocode_change end
+
 	public isTelemetryEnabled(): boolean {
 		return this.telemetryEnabled
 	}

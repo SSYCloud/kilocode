@@ -23,6 +23,7 @@
 			"mcp": "Server MCP"
 		},
 		"provider": {
+			"account": "Akun Kilo Code",
 			"apiKey": "API Key Kilo Code",
 			"login": "Masuk ke Kilo Code",
 			"logout": "Keluar dari Kilo Code"
@@ -116,5 +117,18 @@
 		"editCancel": "Batal",
 		"send": "Kirim",
 		"restoreAndSend": "Pulihkan & Kirim"
+	},
+	"ideaSuggestionsBox": {
+		"newHere": "Baru di sini?",
+		"suggestionText": "<suggestionButton>Klik di sini</suggestionButton> untuk ide yang keren, lalu ketuk <sendIcon /> dan lihat saya melakukan keajaiban!",
+		"ideas": {
+			"idea1": "Buat bola 3D yang berputar dan bersinar yang merespons gerakan mouse. Buat aplikasi berfungsi di browser.",
+			"idea2": "Buat website portfolio untuk pengembang perangkat lunak Python",
+			"idea3": "Buat mockup aplikasi keuangan di browser. Lalu uji apakah berfungsi",
+			"idea4": "Buat website direktori yang berisi model generasi video AI terbaik saat ini",
+			"idea5": "Buat generator gradien CSS yang mengekspor stylesheet kustom dan menampilkan pratinjau langsung",
+			"idea6": "Buat kartu yang mengungkap konten dinamis dengan indah saat dihover",
+			"idea7": "Buat starfield interaktif yang menenangkan yang bergerak dengan gerakan mouse"
+		}
 	}
 }

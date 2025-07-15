@@ -116,7 +116,7 @@ export const SYSTEM_PROMPT = async (
 	mcpHub?: McpHub,
 	diffStrategy?: DiffStrategy,
 	browserViewportSize?: string,
-	mode: Mode = defaultModeSlug,
+	inputMode: Mode = defaultModeSlug, // kilocode_change: name changed to inputMode
 	customModePrompts?: CustomModePrompts,
 	customModes?: ModeConfig[],
 	globalCustomInstructions?: string,
@@ -138,6 +138,9 @@ export const SYSTEM_PROMPT = async (
 		}
 		return undefined
 	}
+
+	const mode =
+		getModeBySlug(inputMode, customModes)?.slug || modes.find((m) => m.slug === inputMode)?.slug || defaultModeSlug // kilocode_change: don't try to use non-existent modes
 
 	// Try to load custom system prompt from file
 	const variablesForPrompt: PromptVariables = {

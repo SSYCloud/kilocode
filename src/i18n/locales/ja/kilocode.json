@@ -11,7 +11,7 @@
 		"title": "クレジット残高警告！",
 		"message": "無料クレジットでチャージするか、追加購入できるか確認してください！"
 	},
-	"notLoggedInError": "リクエストを完了できません。選択したプロバイダーに接続してログインしていることを確認してください。",
+	"notLoggedInError": "リクエストを完了できません。選択したプロバイダーに接続してログインしていることを確認してください。\n\n{{error}}",
 	"rules": {
 		"actions": {
 			"delete": "削除",
@@ -48,5 +48,25 @@
 		"generated": "Kilo: コミットメッセージが生成されました！",
 		"generationFailed": "Kilo: コミットメッセージの生成に失敗しました: {{errorMessage}}",
 		"generatingFromUnstaged": "Kilo: ステージングされていない変更を使用してメッセージを生成中"
+	},
+	"autocomplete": {
+		"statusBar": {
+			"enabled": "$(sparkle) キロ完了",
+			"disabled": "$(circle-slash) キロ コンプリート",
+			"warning": "$(warning) キロ完了",
+			"tooltip": {
+				"disabled": "キロ コード オートコンプリート (無効)",
+				"tokenError": "オートコンプリートを使用するには有効なトークンを設定する必要があります",
+				"lastCompletion": "最後の回答:",
+				"basic": "キロ コード オートコンプリート",
+				"model": "モデル:",
+				"sessionTotal": "セッション合計費用:"
+			},
+			"cost": {
+				"zero": "¥0",
+				"lessThanCent": "<$0.01"
+			}
+		},
+		"toggleMessage": "キロ コンプリート {{status}}"
 	}
 }

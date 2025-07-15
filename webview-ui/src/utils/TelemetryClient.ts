@@ -1,4 +1,4 @@
-// import posthog from "posthog-js" // kilocode_change
+import posthog from "posthog-js"
 
 import { TelemetrySetting } from "@roo/TelemetrySetting"
 
@@ -7,20 +7,21 @@ class TelemetryClient {
 	private static telemetryEnabled: boolean = false
 
 	public updateTelemetryState(telemetrySetting: TelemetrySetting, apiKey?: string, distinctId?: string) {
-		// posthog.reset() // kilocode_change
+		posthog.reset()
 
 		if (telemetrySetting === "enabled" && apiKey && distinctId) {
 			TelemetryClient.telemetryEnabled = true
 
-			// kilocode_change
-			// posthog.init(apiKey, {
-			// 	api_host: "https://us.i.posthog.com",
-			// 	persistence: "localStorage",
-			// 	loaded: () => posthog.identify(distinctId),
-			// 	capture_pageview: false,
-			// 	capture_pageleave: false,
-			// 	autocapture: false,
-			// })
+			posthog.init(apiKey, {
+				api_host: "https://us.i.posthog.com",
+				persistence: "localStorage",
+				loaded: () => posthog.identify(distinctId),
+				capture_pageview: false,
+				capture_pageleave: false,
+				autocapture: false,
+			})
+
+			posthog.identify(distinctId) // kilocode_change: loaded above only works the first time
 		} else {
 			TelemetryClient.telemetryEnabled = false
 		}
@@ -34,17 +35,27 @@ class TelemetryClient {
 		return TelemetryClient.instance
 	}
 
-	// kilocode_change start: no posthog interaction
-	public capture(_eventName: string, _properties?: Record<string, any>) {
+	// kilocode_change start
+	public captureException(error: Error, properties?: Record<string, any>) {
 		if (TelemetryClient.telemetryEnabled) {
 			try {
-				// posthog.capture(eventName, properties)
+				posthog.captureException(error, properties)
 			} catch (_error) {
 				// Silently fail if there's an error capturing an event.
 			}
 		}
 	}
 	// kilocode_change end
+
+	public capture(eventName: string, properties?: Record<string, any>) {
+		if (TelemetryClient.telemetryEnabled) {
+			try {
+				posthog.capture(eventName, properties)
+			} catch (_error) {
+				// Silently fail if there's an error capturing an event.
+			}
+		}
+	}
 }
 
 export const telemetryClient = TelemetryClient.getInstance()

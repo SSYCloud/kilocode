@@ -24,7 +24,10 @@ import { getModelEndpoints } from "./fetchers/modelEndpointCache"
 
 import { DEFAULT_HEADERS } from "./constants"
 import { BaseProvider } from "./base-provider"
-import type { SingleCompletionHandler } from "../index"
+import type {
+	ApiHandlerCreateMessageMetadata, // kilocode_change
+	SingleCompletionHandler,
+} from "../index"
 
 // Add custom interface for OpenRouter params.
 type OpenRouterChatCompletionParams = OpenAI.Chat.ChatCompletionCreateParams & {
@@ -69,9 +72,16 @@ export class OpenRouterHandler extends BaseProvider implements SingleCompletionH
 		this.client = new OpenAI({ baseURL, apiKey, defaultHeaders: DEFAULT_HEADERS })
 	}
 
+	// kilocode_change start
+	customRequestOptions(_metadata?: ApiHandlerCreateMessageMetadata): OpenAI.RequestOptions | undefined {
+		return undefined
+	}
+	// kilocode_change end
+
 	override async *createMessage(
 		systemPrompt: string,
 		messages: Anthropic.Messages.MessageParam[],
+		metadata?: ApiHandlerCreateMessageMetadata, // kilocode_change
 	): AsyncGenerator<ApiStreamChunk> {
 		const model = await this.fetchModel()
 
@@ -134,7 +144,10 @@ export class OpenRouterHandler extends BaseProvider implements SingleCompletionH
 			...(reasoning && { reasoning }),
 		}
 		let stream
-		stream = await this.client.chat.completions.create(completionParams)
+		stream = await this.client.chat.completions.create(
+			completionParams,
+			this.customRequestOptions(metadata), // kilocode_change
+		)
 
 		let lastUsage: CompletionUsage | undefined = undefined
 

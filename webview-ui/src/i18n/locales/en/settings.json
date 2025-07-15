@@ -609,8 +609,8 @@
 		"feedback": "If you have any questions or feedback, feel free to open an issue at <githubLink>https://github.com/SSYCloud/kilocode/tree/ssy</githubLink> or join <redditLink>reddit.com/r/kilocode</redditLink> or <discordLink>kilocode.ai/discord</discordLink>.",
 		"support": "For financial questions, please contact Customer Support at ",
 		"telemetry": {
-			"label": "Allow anonymous error and usage reporting",
-			"description": "Help improve Kilo Code by sending anonymous usage data and error reports. No code, prompts, or personal information is ever sent. See our privacy policy for more details."
+			"label": "Allow error and usage reporting",
+			"description": "Help improve Kilo Code by sending usage data and error reports. No code, prompts, or personal information is ever sent. See our privacy policy for more details."
 		},
 		"settings": {
 			"import": "Import",

@@ -11,7 +11,7 @@
 		"title": "餘額不足警告！",
 		"message": "請檢查是否可以充值免費額度或購買更多額度！"
 	},
-	"notLoggedInError": "無法完成請求，請確保你已連接並登入所選的提供者。",
+	"notLoggedInError": "無法完成請求，請確保你已連接並登入所選的提供者。\n\n{{error}}",
 	"rules": {
 		"actions": {
 			"delete": "刪除",
@@ -40,13 +40,33 @@
 		}
 	},
 	"commitMessage": {
-		"activated": "代码提交消息生成器已激活",
+		"activated": "Kilo: 代码提交消息生成器已激活",
 		"gitNotFound": "⚠️ Git 仓库未找到或 git 不可用",
 		"gitInitError": "⚠️ Git 初始化错误：{{error}}",
 		"generating": "Kilo: 正在生成提交信息...",
-		"noChanges": "千羽: 未发现可供分析的变更",
+		"noChanges": "Kilo: 未发现可供分析的变更",
 		"generated": "Kilo：提交信息已生成！",
 		"generationFailed": "Kilo：无法生成提交信息：{{errorMessage}}",
 		"generatingFromUnstaged": "Kilo: 使用未暂存的更改生成消息"
+	},
+	"autocomplete": {
+		"statusBar": {
+			"disabled": "$(circle-slash) Kilo自动补全",
+			"enabled": "$(sparkle) Kilo自动补全",
+			"tooltip": {
+				"basic": "Kilo自动补全",
+				"lastCompletion": "上次完成：",
+				"disabled": "Kilo自动补全（已禁用）",
+				"sessionTotal": "会话总费用:",
+				"tokenError": "必须设置有效令牌才能使用自动完成功能",
+				"model": "模型："
+			},
+			"warning": "$(warning) Kilo自动补全",
+			"cost": {
+				"lessThanCent": "<$0.01",
+				"zero": "¥0.00"
+			}
+		},
+		"toggleMessage": "Kilo自动补全 {{status}}"
 	}
 }

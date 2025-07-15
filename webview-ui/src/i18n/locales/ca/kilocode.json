@@ -23,6 +23,7 @@
 			"mcp": "Servidors MCP"
 		},
 		"provider": {
+			"account": "Compte de Kilo Code",
 			"apiKey": "Clau API de Kilo Code",
 			"login": "Iniciar sessió a Kilo Code",
 			"logout": "Tancar sessió de Kilo Code"
@@ -116,5 +117,18 @@
 		"editCancel": "Cancel·lar",
 		"send": "Enviar",
 		"restoreAndSend": "Restaurar i Enviar"
+	},
+	"ideaSuggestionsBox": {
+		"newHere": "Nou aquí?",
+		"suggestionText": "<suggestionButton>Fes clic aquí</suggestionButton> per a una idea genial, després toca <sendIcon /> i mira'm fer màgia!",
+		"ideas": {
+			"idea1": "Crea una esfera 3D que giri i brilli i respongui als moviments del ratolí. Fes que l'aplicació funcioni al navegador.",
+			"idea2": "Crea un lloc web de cartera per a un desenvolupador de programari Python",
+			"idea3": "Crea una maqueta d'aplicació financera al navegador. Després prova si funciona",
+			"idea4": "Crea un lloc web directori que contingui els millors models de generació de vídeo d'IA actualment",
+			"idea5": "Crea un generador de gradients CSS que exporti fulls d'estil personalitzats i mostri una previsualització en viu",
+			"idea6": "Genera targetes que revelin contingut dinàmic de manera bonica quan s'hi passi el ratolí per sobre",
+			"idea7": "Crea un camp d'estrelles interactiu i tranquil que es mogui amb gestos del ratolí"
+		}
 	}
 }

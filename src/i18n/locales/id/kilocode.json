@@ -11,7 +11,7 @@
 		"title": "Peringatan Kredit Rendah!",
 		"message": "Periksa apakah kamu bisa mengisi ulang dengan kredit gratis atau beli lebih banyak!"
 	},
-	"notLoggedInError": "Tidak dapat menyelesaikan permintaan, pastikan kamu terhubung dan masuk dengan penyedia yang dipilih.",
+	"notLoggedInError": "Tidak dapat menyelesaikan permintaan, pastikan kamu terhubung dan masuk dengan penyedia yang dipilih.\n\n{{error}}",
 	"rules": {
 		"actions": {
 			"delete": "Hapus",
@@ -48,5 +48,25 @@
 		"generated": "Kilo: Pesan commit telah dibuat!",
 		"generationFailed": "Kilo: Gagal menghasilkan pesan commit: {{errorMessage}}",
 		"generatingFromUnstaged": "Kilo: Membuat pesan menggunakan perubahan yang belum di-stage"
+	},
+	"autocomplete": {
+		"statusBar": {
+			"disabled": "$(circle-slash) Kilo Selesai",
+			"enabled": "$(sparkle) Kilo Selesai",
+			"tooltip": {
+				"basic": "Kilo Code Autocomplete",
+				"disabled": "Kilo Code Autocomplete (dinonaktifkan)",
+				"tokenError": "Token yang valid harus ditetapkan untuk menggunakan autocomplete",
+				"lastCompletion": "Penyelesaian terakhir:",
+				"sessionTotal": "Biaya total sesi:",
+				"model": "Model:"
+			},
+			"warning": "$(warning) Kilo Selesai",
+			"cost": {
+				"zero": "Rp0,00",
+				"lessThanCent": "<Rp0,01"
+			}
+		},
+		"toggleMessage": "Kilo Selesai {{status}}"
 	}
 }

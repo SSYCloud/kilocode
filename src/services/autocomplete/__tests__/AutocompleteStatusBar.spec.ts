@@ -1,6 +1,24 @@
 import { AutocompleteStatusBar } from "../AutocompleteStatusBar"
 
-// Mock vscode module
+vi.mock("../../../i18n", () => ({
+	t: vi.fn((key: string) => {
+		const translations: Record<string, string> = {
+			"kilocode:autocomplete.statusBar.enabled": "$(sparkle) Kilo Complete",
+			"kilocode:autocomplete.statusBar.disabled": "$(circle-slash) Kilo Complete",
+			"kilocode:autocomplete.statusBar.warning": "$(warning) Kilo Complete",
+			"kilocode:autocomplete.statusBar.tooltip.basic": "Kilo Code Autocomplete",
+			"kilocode:autocomplete.statusBar.tooltip.disabled": "Kilo Code Autocomplete (disabled)",
+			"kilocode:autocomplete.statusBar.tooltip.tokenError": "A valid token must be set to use autocomplete",
+			"kilocode:autocomplete.statusBar.tooltip.lastCompletion": "Last completion:",
+			"kilocode:autocomplete.statusBar.tooltip.sessionTotal": "Session total cost:",
+			"kilocode:autocomplete.statusBar.tooltip.model": "Model:",
+			"kilocode:autocomplete.statusBar.cost.zero": "$0.00",
+			"kilocode:autocomplete.statusBar.cost.lessThanCent": "<$0.01",
+		}
+		return translations[key] || key
+	}),
+}))
+
 vi.mock("vscode", () => ({
 	window: {
 		createStatusBarItem: vi.fn(() => ({
@@ -25,7 +43,7 @@ describe("AutocompleteStatusBar", () => {
 		statusBar = new AutocompleteStatusBar({
 			enabled: true,
 			model: "test-model",
-			kilocodeToken: "test-token",
+			hasValidToken: true,
 		})
 	})
 

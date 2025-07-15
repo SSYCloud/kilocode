@@ -15,7 +15,7 @@ export function formatLargeNumber(num: number): string {
 
 export const formatDate = (timestamp: number) => {
 	const date = new Date(timestamp)
-	const locale = i18next.language || "en"
+	const locale = i18next.language || "zh-CN"
 
 	// Get date format style from translations or use default transformations
 	const dateStr = date.toLocaleString(locale, {

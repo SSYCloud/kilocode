@@ -9,6 +9,7 @@ import { useExtensionState } from "@/context/ExtensionStateContext"
 import { VSCodeButtonLink } from "@/components/common/VSCodeButtonLink"
 import { ProfileDataResponsePayload, WebviewMessage } from "@roo/WebviewMessage"
 import { VSCodeButton, VSCodeDivider, VSCodeLink } from "@vscode/webview-ui-toolkit/react"
+import CreditsHistoryTable from "./CreditsHistoryTable"
 
 interface ProfileProps {
 	onDone: () => void
@@ -61,7 +62,7 @@ const Profile: React.FC<ProfileProps> = ({ onDone: _onDone }) => {
 	if (isLoadingUser) {
 		return <></>
 	}
-	const userName = profileData?.Username || profileData?.Nickname || null
+	const user = profileData?.account || null
 	return (
 		<div className="h-full flex flex-col">
 			<div className="w-full flex justify-center">
@@ -72,13 +73,12 @@ const Profile: React.FC<ProfileProps> = ({ onDone: _onDone }) => {
 					<div className="flex flex-col w-full">
 						<div className="flex items-center mb-6 flex-wrap gap-y-4">
 							<div className="flex flex-col">
-								{userName && (
+								{user.Nickname && (
 									<h2 className="text-[var(--vscode-foreground)] m-0 mb-1 text-lg font-medium">
-										{userName}
+										{user.Nickname}
 									</h2>
 								)}
-
-								{profileData.Email && (
+								{user.Email && (
 									<div className="text-sm text-[var(--vscode-descriptionForeground)]">
 										{profileData.Email}
 									</div>
@@ -104,9 +104,18 @@ const Profile: React.FC<ProfileProps> = ({ onDone: _onDone }) => {
 						</VSCodeButton>
 					</div>
 
-					<VSCodeDivider className="w-full my-6" />
+					<VSCodeDivider className="w-full my-3" />
 
-					{profileData.Wallet.Assets < 1 ? (
+					{profileData.balance > 0 ? (
+						<div className="w-full flex flex-col items-center">
+							<div className="text-sm text-[var(--vscode-descriptionForeground)] mb-3">
+								{t("kilocode:profile.currentBalance")}
+							</div>
+							<div className="text-2xl font-bold text-[var(--vscode-foreground)] mb-6 flex items-center gap-2">
+								<span>$ {profileData.balance.toFixed(2)}</span>
+							</div>
+						</div>
+					) : (
 						<div className="w-full flex flex-col items-center">
 							<div className="text-sm text-[var(--vscode-descriptionForeground)] mb-3">
 								进群联系客服，领取100万token免费试用额度
@@ -118,16 +127,15 @@ const Profile: React.FC<ProfileProps> = ({ onDone: _onDone }) => {
 								/>
 							</div>
 						</div>
-					) : (
-						<div className="w-full flex flex-col items-center">
-							<div className="text-sm text-[var(--vscode-descriptionForeground)] mb-3">
-								{t("kilocode:profile.currentBalance")}
-							</div>
-							<div className="text-2xl font-bold text-[var(--vscode-foreground)] mb-6 flex items-center gap-2">
-								<span>￥{(profileData.Wallet.Assets / 10000).toFixed(2)}</span>
-							</div>
-						</div>
 					)}
+					<VSCodeDivider className="w-full my-3" />
+					<div className="flex-grow flex flex-col min-h-0 pb-[0px]">
+						<CreditsHistoryTable
+							isLoading={isLoadingUser}
+							usageData={profileData.usage}
+							paymentsData={profileData.payment}
+						/>
+					</div>
 				</div>
 			) : (
 				<div className="flex flex-col items-center pr-3">

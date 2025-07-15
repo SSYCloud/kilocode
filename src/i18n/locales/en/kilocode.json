@@ -11,7 +11,7 @@
 		"title": "Low Credit Warning!",
 		"message": "Check to see if you can top up with free credits or purchase some more!"
 	},
-	"notLoggedInError": "Cannot complete request, make sure you are connected and logged in with the selected provider.",
+	"notLoggedInError": "Cannot complete request, make sure you are connected and logged in with the selected provider.\n\n{{error}}",
 	"rules": {
 		"actions": {
 			"delete": "Delete",
@@ -48,5 +48,25 @@
 		"generated": "Kilo: Commit message generated!",
 		"generationFailed": "Kilo: Failed to generate commit message: {{errorMessage}}",
 		"generatingFromUnstaged": "Kilo: Generating message using unstaged changes"
+	},
+	"autocomplete": {
+		"statusBar": {
+			"enabled": "$(sparkle) Kilo Complete",
+			"disabled": "$(circle-slash) Kilo Complete",
+			"warning": "$(warning) Kilo Complete",
+			"tooltip": {
+				"basic": "Kilo Code Autocomplete",
+				"disabled": "Kilo Code Autocomplete (disabled)",
+				"tokenError": "A valid token must be set to use autocomplete",
+				"lastCompletion": "Last completion:",
+				"sessionTotal": "Session total cost:",
+				"model": "Model:"
+			},
+			"cost": {
+				"zero": "$0.00",
+				"lessThanCent": "<$0.01"
+			}
+		},
+		"toggleMessage": "Kilo Complete {{status}}"
 	}
 }

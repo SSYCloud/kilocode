@@ -1,5 +1,10 @@
 import { describe, test, expect, vi, beforeEach } from "vitest"
 
+// kilocode_change start
+import os from "os"
+const isWindows = os.platform() === "win32"
+// kilocode_change end
+
 // Mock vscode workspace
 vi.mock("vscode", () => ({
 	workspace: {
@@ -118,7 +123,8 @@ describe("runClaudeCode", () => {
 		expect(typeof result[Symbol.asyncIterator]).toBe("function")
 	})
 
-	test("should use stdin instead of command line arguments for messages", async () => {
+	// kilocode_change start: skip on Windows
+	test.skipIf(isWindows)("should use stdin instead of command line arguments for messages", async () => {
 		const { runClaudeCode } = await import("../run")
 		const messages = [{ role: "user" as const, content: "Hello world!" }]
 		const options = {

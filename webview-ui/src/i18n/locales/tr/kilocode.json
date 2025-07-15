@@ -29,6 +29,7 @@
 			}
 		},
 		"provider": {
+			"account": "Kilo Code Hesabı",
 			"apiKey": "Kilo Code API Anahtarı",
 			"login": "Kilo Code'a giriş yap",
 			"logout": "Kilo Code'dan çıkış yap"
@@ -116,5 +117,18 @@
 		"editCancel": "İptal",
 		"send": "Gönder",
 		"restoreAndSend": "Geri Yükle ve Gönder"
+	},
+	"ideaSuggestionsBox": {
+		"newHere": "Burada yeni misin?",
+		"suggestionText": "Harika bir fikir için <suggestionButton>buraya tıkla</suggestionButton>, sonra <sendIcon /> öğesine dokun ve beni büyü yaparken izle!",
+		"ideas": {
+			"idea1": "Fare hareketlerine yanıt veren dönen, parlayan 3D küre yap. Uygulamanın tarayıcıda çalışmasını sağla.",
+			"idea2": "Bir Python yazılım geliştirici için portföy web sitesi oluştur",
+			"idea3": "Tarayıcıda finansal uygulama maket oluştur. Sonra çalışıp çalışmadığını test et",
+			"idea4": "Şu anda en iyi AI video üretim modellerini içeren bir dizin web sitesi oluştur",
+			"idea5": "Özel stil sayfaları dışa aktaran ve canlı önizleme gösteren CSS gradient üretici oluştur",
+			"idea6": "Fare üzerine geldiğinde dinamik içeriği güzelce ortaya çıkaran kartlar üret",
+			"idea7": "Fare hareketleriyle birlikte hareket eden sakinleştirici etkileşimli yıldız alanı oluştur"
+		}
 	}
 }

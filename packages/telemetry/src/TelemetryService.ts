@@ -46,6 +46,18 @@ export class TelemetryService {
 		this.clients.forEach((client) => client.updateTelemetryState(didUserOptIn))
 	}
 
+	// kilocode_change start
+	public captureException(error: Error, properties?: Record<string | number, unknown>): void {
+		this.clients.forEach((client) => client.captureException(error, properties))
+	}
+
+	public async updateIdentity(kilocodeToken: string) {
+		for (const client of this.clients) {
+			await client.updateIdentity(kilocodeToken)
+		}
+	}
+	// kilocode_change end
+
 	/**
 	 * Generic method to capture any type of event with specified properties
 	 * @param eventName The event name to capture

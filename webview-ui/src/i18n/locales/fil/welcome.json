@@ -17,7 +17,7 @@
 	"startCustom": "O maaari mong dalhin ang iyong provider API key:",
 	"telemetry": {
 		"title": "Tumulong na Mapahusay ang Kilo Code",
-		"anonymousTelemetry": "Magpadala ng anonymous na error at usage data para tulungan kaming ayusin ang mga bug at pahusayin ang extension. Walang code, prompts, o personal na impormasyon ang ipinapadala.",
+		"anonymousTelemetry": "Magpadala ng error at usage data para tulungan kaming ayusin ang mga bug at pahusayin ang extension. Walang code, prompts, o personal na impormasyon ang ipinapadala.",
 		"changeSettings": "Maaari mo itong palaging baguhin sa ibaba ng <settingsLink>settings</settingsLink>",
 		"settings": "settings",
 		"allow": "Payagan",

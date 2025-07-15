@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { SelectDropdown, DropdownOptionType, DropdownOption } from "@/components/ui"
+import { SelectDropdown, DropdownOptionType } from "@/components/ui"
 import type { ProviderSettings } from "@roo-code/types"
 import { vscode } from "@src/utils/vscode"
 import { useAppTranslation } from "@src/i18n/TranslationContext"
@@ -7,6 +7,7 @@ import { cn } from "@src/lib/utils"
 import { prettyModelName } from "../../../utils/prettyModelName"
 import { useProviderModels } from "../hooks/useProviderModels"
 import { getModelIdKey, getSelectedModelId } from "../hooks/useSelectedModel"
+import { usePreferredModels } from "@/components/ui/hooks/kilocode/usePreferredModels"
 
 interface ModelSelectorProps {
 	currentApiConfigName?: string
@@ -24,18 +25,16 @@ export const ModelSelector = ({ currentApiConfigName, apiConfiguration, fallback
 	})
 	const modelIdKey = getModelIdKey({ provider })
 
-	const options: DropdownOption[] = useMemo(() => {
-		if (!providerModels) {
-			return []
-		}
-		return Object.keys(providerModels)
-			.map((modelId) => ({
+	const modelsIds = usePreferredModels(providerModels)
+	const options = useMemo(
+		() =>
+			modelsIds.map((modelId) => ({
 				value: modelId,
 				label: prettyModelName(modelId),
 				type: DropdownOptionType.ITEM,
-			}))
-			.sort((a, b) => a.label.localeCompare(b.label))
-	}, [providerModels])
+			})),
+		[modelsIds],
+	)
 
 	const disabled = isLoading || isError
 

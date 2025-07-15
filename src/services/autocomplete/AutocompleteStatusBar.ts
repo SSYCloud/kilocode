@@ -1,9 +1,10 @@
 import * as vscode from "vscode"
+import { t } from "../../i18n"
 
 interface AutocompleteStatusBarStateParams {
 	enabled?: boolean
 	model?: string
-	kilocodeToken?: string
+	hasValidToken?: boolean
 	totalSessionCost?: number
 	lastCompletionCost?: number
 }
@@ -12,7 +13,7 @@ export class AutocompleteStatusBar {
 	statusBar: vscode.StatusBarItem
 	enabled: boolean
 	model: string
-	kilocodeToken?: string
+	hasValidToken: boolean
 	totalSessionCost?: number
 	lastCompletionCost?: number
 
@@ -20,7 +21,7 @@ export class AutocompleteStatusBar {
 		this.statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100)
 		this.enabled = params.enabled || false
 		this.model = params.model || "default"
-		this.kilocodeToken = params.kilocodeToken
+		this.hasValidToken = params.hasValidToken || false
 		this.totalSessionCost = params.totalSessionCost
 		this.lastCompletionCost = params.lastCompletionCost
 
@@ -28,8 +29,8 @@ export class AutocompleteStatusBar {
 	}
 
 	private init() {
-		this.statusBar.text = "$(sparkle) Kilo Complete"
-		this.statusBar.tooltip = "Kilo Code Autocomplete"
+		this.statusBar.text = t("kilocode:autocomplete.statusBar.enabled")
+		this.statusBar.tooltip = t("kilocode:autocomplete.statusBar.tooltip.basic")
 		this.statusBar.command = "kilo-code.toggleAutocomplete"
 		this.show()
 	}
@@ -47,14 +48,15 @@ export class AutocompleteStatusBar {
 	}
 
 	private humanFormatCost(cost: number): string {
-		if (cost === 0) return "$0.00"
-		if (cost > 0 && cost < 0.01) return "<$0.01" // Less than one cent
+		if (cost === 0) return t("kilocode:autocomplete.statusBar.cost.zero")
+		if (cost > 0 && cost < 0.01) return t("kilocode:autocomplete.statusBar.cost.lessThanCent") // Less than one cent
 		return `$${cost.toFixed(2)}`
 	}
 
 	public update(params: AutocompleteStatusBarStateParams) {
 		this.enabled = params.enabled !== undefined ? params.enabled : this.enabled
-		this.kilocodeToken = params.kilocodeToken !== undefined ? params.kilocodeToken : this.kilocodeToken
+		this.model = params.model !== undefined ? params.model : this.model
+		this.hasValidToken = params.hasValidToken !== undefined ? params.hasValidToken : this.hasValidToken
 		this.totalSessionCost = params.totalSessionCost !== undefined ? params.totalSessionCost : this.totalSessionCost
 		this.lastCompletionCost =
 			params.lastCompletionCost !== undefined ? params.lastCompletionCost : this.lastCompletionCost
@@ -62,24 +64,24 @@ export class AutocompleteStatusBar {
 	}
 
 	private renderDisabled() {
-		this.statusBar.text = "$(circle-slash) Kilo Complete"
-		this.statusBar.tooltip = "Kilo Code Autocomplete (disabled)"
+		this.statusBar.text = t("kilocode:autocomplete.statusBar.disabled")
+		this.statusBar.tooltip = t("kilocode:autocomplete.statusBar.tooltip.disabled")
 	}
 
 	private renderTokenError() {
-		this.statusBar.text = "$(warning) Kilo Complete"
-		this.statusBar.tooltip = "A valid Kilocode token must be set to use autocomplete"
+		this.statusBar.text = t("kilocode:autocomplete.statusBar.warning")
+		this.statusBar.tooltip = t("kilocode:autocomplete.statusBar.tooltip.tokenError")
 	}
 
 	private renderDefault() {
 		const totalCostFormatted = this.humanFormatCost(this.totalSessionCost || 0)
 		const lastCompletionCostFormatted = this.lastCompletionCost?.toFixed(5) || 0
-		this.statusBar.text = `$(sparkle) Kilo Complete (${totalCostFormatted})`
+		this.statusBar.text = `${t("kilocode:autocomplete.statusBar.enabled")} (${totalCostFormatted})`
 		this.statusBar.tooltip = `\
-Kilo Code Autocomplete
-• Last completion: $${lastCompletionCostFormatted}
-• Session total cost: ${totalCostFormatted}
-• Model: ${this.model}\
+${t("kilocode:autocomplete.statusBar.tooltip.basic")}
+• ${t("kilocode:autocomplete.statusBar.tooltip.lastCompletion")} $${lastCompletionCostFormatted}
+• ${t("kilocode:autocomplete.statusBar.tooltip.sessionTotal")} ${totalCostFormatted}
+• ${t("kilocode:autocomplete.statusBar.tooltip.model")} ${this.model}\
 `
 	}
 
@@ -87,7 +89,7 @@ Kilo Code Autocomplete
 		if (!this.enabled) {
 			return this.renderDisabled()
 		}
-		if (!this.kilocodeToken) {
+		if (!this.hasValidToken) {
 			return this.renderTokenError()
 		}
 		return this.renderDefault()

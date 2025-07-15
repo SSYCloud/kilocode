@@ -11,7 +11,7 @@
 		"title": "Warnung: Niedriges Guthaben!",
 		"message": "Prüfen Sie, ob Sie kostenloses Guthaben aufladen oder mehr kaufen können!"
 	},
-	"notLoggedInError": "Anfrage kann nicht abgeschlossen werden. Stelle sicher, dass du mit dem ausgewählten Anbieter verbunden und angemeldet bist.",
+	"notLoggedInError": "Anfrage kann nicht abgeschlossen werden. Stelle sicher, dass du mit dem ausgewählten Anbieter verbunden und angemeldet bist.\n\n{{error}}",
 	"rules": {
 		"actions": {
 			"delete": "Löschen",
@@ -48,5 +48,25 @@
 		"generated": "Kilo: Commit-Nachricht generiert!",
 		"generationFailed": "Kilo: Fehler beim Generieren der Commit-Nachricht: {{errorMessage}}",
 		"generatingFromUnstaged": "Kilo: Nachricht mit nicht bereitgestellten Änderungen generieren"
+	},
+	"autocomplete": {
+		"statusBar": {
+			"disabled": "$(circle-slash) Kilo abgeschlossen",
+			"tooltip": {
+				"basic": "Kilo Code Autocomplete",
+				"sessionTotal": "Gesamtkosten der Sitzung:",
+				"disabled": "Kilo Code Autocomplete (deaktiviert)",
+				"tokenError": "Ein gültiges Token muss eingestellt werden, um die Autovervollständigung zu verwenden",
+				"lastCompletion": "Letzte Vervollständigung:",
+				"model": "Modell:"
+			},
+			"warning": "$(warning) Kilo Abgeschlossen",
+			"enabled": "$(sparkle) Kilo Abgeschlossen",
+			"cost": {
+				"lessThanCent": "<0,01 €",
+				"zero": "0,00 €"
+			}
+		},
+		"toggleMessage": "Kilo vollständig {{status}}"
 	}
 }

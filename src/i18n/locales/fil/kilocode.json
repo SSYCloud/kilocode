@@ -11,7 +11,7 @@
 		"title": "Babala sa Mababang Credit!",
 		"message": "Tingnan kung maaari kang mag-top up ng libreng credits o bumili ng iba pa!"
 	},
-	"notLoggedInError": "Hindi makumpleto ang kahilingan, siguraduhing nakakonekta ka at naka-log in sa napiling provider.",
+	"notLoggedInError": "Hindi makumpleto ang kahilingan, siguraduhing nakakonekta ka at naka-log in sa napiling provider.\n\n{{error}}",
 	"rules": {
 		"actions": {
 			"delete": "Tanggalin",
@@ -48,5 +48,25 @@
 		"generated": "Kilo: Nagenerahan ang mensahe ng commit!",
 		"generationFailed": "Kilo: Nabigong gumawa ng commit message: {{errorMessage}}",
 		"generatingFromUnstaged": "Kilo: Gumagawa ng mensahe gamit ang mga hindi naka-stage na pagbabago"
+	},
+	"autocomplete": {
+		"statusBar": {
+			"disabled": "$(circle-slash) Kilometro Kumpleto",
+			"enabled": "$(sparkle) Kilo Kumpleto",
+			"warning": "$(warning) Kilo Kumpleto",
+			"tooltip": {
+				"basic": "Kilo Code Autocomplete",
+				"disabled": "Kilo Code Autocomplete (naka-disable)",
+				"tokenError": "Dapat may nakatakdang wastong token para magamit ang autocomplete",
+				"lastCompletion": "Huling pagkumpleto:",
+				"sessionTotal": "Kabuuang gastos ng session:",
+				"model": "Modelo:"
+			},
+			"cost": {
+				"lessThanCent": "<$0.01",
+				"zero": "₱0.00"
+			}
+		},
+		"toggleMessage": "Kilo Complete {{status}}"
 	}
 }

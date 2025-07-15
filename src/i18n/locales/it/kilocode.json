@@ -11,7 +11,7 @@
 		"title": "Avviso Credito Basso!",
 		"message": "Verifica se puoi ricaricare con crediti gratuiti o acquistarne altri!"
 	},
-	"notLoggedInError": "Impossibile completare la richiesta, assicurati di essere connesso e di aver effettuato l'accesso con il provider selezionato.",
+	"notLoggedInError": "Impossibile completare la richiesta, assicurati di essere connesso e di aver effettuato l'accesso con il provider selezionato.\n\n{{error}}",
 	"rules": {
 		"actions": {
 			"delete": "Elimina",
@@ -48,5 +48,25 @@
 		"generated": "Kilo: Messaggio di commit generato!",
 		"generationFailed": "Kilo: Impossibile generare il messaggio di commit: {{errorMessage}}",
 		"generatingFromUnstaged": "Kilo: Generazione del messaggio usando modifiche non in staging"
+	},
+	"autocomplete": {
+		"statusBar": {
+			"enabled": "$(sparkle) Kilo Completato",
+			"tooltip": {
+				"basic": "Completamento Automatico Kilo Code",
+				"sessionTotal": "Costo totale della sessione:",
+				"lastCompletion": "Ultimo completamento:",
+				"model": "Modello:",
+				"tokenError": "È necessario impostare un token valido per utilizzare l'autocompletamento",
+				"disabled": "Completamento Automatico Kilo Code (disabilitato)"
+			},
+			"disabled": "$(circle-slash) Kilo Completato",
+			"warning": "$(warning) Kilo Completato",
+			"cost": {
+				"zero": "€0,00",
+				"lessThanCent": "<€0,01"
+			}
+		},
+		"toggleMessage": "Kilo Completato {{status}}"
 	}
 }

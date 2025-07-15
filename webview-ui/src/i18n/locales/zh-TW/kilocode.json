@@ -97,23 +97,23 @@
 		"tooltip": {
 			"clickToScroll": "查看 {{messageType}} (#{{messageNumber}})",
 			"messageTypes": {
-				"browser_action_result": "浏览器操作结果",
-				"browser_action": "浏览器操作",
-				"browser_action_launch": "浏览器启动",
-				"checkpoint_saved": "检查点已保存",
-				"command": "命令执行",
-				"completion_result": "完成结果",
-				"command_output": "命令输出",
-				"condense_context": "压缩上下文",
-				"error": "错误信息",
-				"followup": "后续问题",
-				"mcp_server_response": "MCP服务器响应",
-				"reasoning": "AI推理",
-				"text": "AI回复",
+				"browser_action_result": "瀏覽器操作結果",
+				"browser_action": "瀏覽器操作",
+				"browser_action_launch": "瀏覽器啟動",
+				"checkpoint_saved": "檢查點已儲存",
+				"command": "指令執行",
+				"completion_result": "完成結果",
+				"command_output": "指令輸出",
+				"condense_context": "壓縮上下文",
+				"error": "錯誤訊息",
+				"followup": "後續問題",
+				"mcp_server_response": "MCP 伺服器回應",
+				"reasoning": "AI 推理",
+				"text": "AI 回覆",
 				"tool": "工具使用",
-				"use_mcp_server": "MCP 服务器使用情况",
-				"unknown": "未知消息类型",
-				"user": "用户反馈"
+				"use_mcp_server": "MCP 伺服器使用情況",
+				"unknown": "未知訊息類型",
+				"user": "使用者回饋"
 			}
 		}
 	},
@@ -121,5 +121,18 @@
 		"editCancel": "取消",
 		"send": "發送",
 		"restoreAndSend": "恢復並發送"
+	},
+	"ideaSuggestionsBox": {
+		"newHere": "新用戶？",
+		"suggestionText": "<suggestionButton>點擊這裡</suggestionButton>獲取有趣的想法，然後點按 <sendIcon /> 看我施展魔法！",
+		"ideas": {
+			"idea1": "建立一個旋轉發光的 3D 球體，能夠回應滑鼠移動。讓應用程式在瀏覽器中運行。",
+			"idea2": "為 Python 軟體開發者建立作品集網站",
+			"idea3": "在瀏覽器中建立金融應用程式模型。然後測試是否可以正常運作",
+			"idea4": "建立一個目錄網站，包含目前最好的 AI 影片生成模型",
+			"idea5": "建立一個 CSS 漸層產生器，匯出自訂樣式表並顯示即時預覽",
+			"idea6": "產生在滑鼠停留時優雅展示動態內容的卡片",
+			"idea7": "建立一個寧靜的互動式星空，跟隨滑鼠手勢移動"
+		}
 	}
 }

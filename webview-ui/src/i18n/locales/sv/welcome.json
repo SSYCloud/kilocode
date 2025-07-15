@@ -17,7 +17,7 @@
 	"startCustom": "Eller så kan du ta med din egen leverantörs API-nyckel:",
 	"telemetry": {
 		"title": "Hjälp till att Förbättra Kilo Code",
-		"anonymousTelemetry": "Skicka anonym fel- och användningsdata för att hjälpa oss fixa buggar och förbättra tillägget. Ingen kod, prompts eller personlig information skickas någonsin.",
+		"anonymousTelemetry": "Skicka fel- och användningsdata för att hjälpa oss fixa buggar och förbättra tillägget. Ingen kod, prompts eller personlig information skickas någonsin.",
 		"changeSettings": "Du kan alltid ändra detta längst ner i <settingsLink>inställningarna</settingsLink>",
 		"settings": "inställningar",
 		"allow": "Tillåt",

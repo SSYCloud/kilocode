@@ -23,6 +23,7 @@
 			"mcp": "MCP-servers"
 		},
 		"provider": {
+			"account": "Kilo Code Account",
 			"apiKey": "Kilo Code API-sleutel",
 			"login": "Inloggen bij Kilo Code",
 			"logout": "Uitloggen bij Kilo Code"
@@ -116,5 +117,18 @@
 		"editCancel": "Annuleren",
 		"send": "Verzenden",
 		"restoreAndSend": "Herstellen & Verzenden"
+	},
+	"ideaSuggestionsBox": {
+		"newHere": "Nieuw hier?",
+		"suggestionText": "<suggestionButton>Klik hier</suggestionButton> voor een cool idee, tik dan op <sendIcon /> en kijk hoe ik magie doe!",
+		"ideas": {
+			"idea1": "Maak een draaiende, gloeiende 3D-bol die reageert op muisbewegingen. Laat de app in de browser werken.",
+			"idea2": "Maak een portfoliowebsite voor een Python-softwareontwikkelaar",
+			"idea3": "Maak een financiële app-mockup in de browser. Test dan of het werkt",
+			"idea4": "Maak een directorywebsite met de momenteel beste AI-videogeneratiemodellen",
+			"idea5": "Maak een CSS-gradiëntgenerator die aangepaste stylesheets exporteert en een live-preview toont",
+			"idea6": "Genereer kaarten die dynamische content prachtig onthullen bij hovering",
+			"idea7": "Maak een rustgevend interactief sterrenveld dat beweegt met muisgebaren"
+		}
 	}
 }

@@ -29,6 +29,7 @@
 			}
 		},
 		"provider": {
+			"account": "Tài khoản Kilo Code",
 			"apiKey": "Khóa API Kilo Code",
 			"login": "Đăng nhập vào Kilo Code",
 			"logout": "Đăng xuất khỏi Kilo Code"
@@ -116,5 +117,18 @@
 		"editCancel": "Hủy",
 		"send": "Gửi",
 		"restoreAndSend": "Khôi phục & Gửi"
+	},
+	"ideaSuggestionsBox": {
+		"newHere": "Mới ở đây?",
+		"suggestionText": "<suggestionButton>Nhấp vào đây</suggestionButton> để có một ý tưởng tuyệt vời, sau đó chạm vào <sendIcon /> và xem tôi làm phép thuật!",
+		"ideas": {
+			"idea1": "Tạo một hình cầu 3D quay và phát sáng phản ứng với chuyển động chuột. Làm cho ứng dụng hoạt động trong trình duyệt.",
+			"idea2": "Tạo một trang web portfolio cho nhà phát triển phần mềm Python",
+			"idea3": "Tạo một bản mô phỏng ứng dụng tài chính trong trình duyệt. Sau đó kiểm tra xem nó có hoạt động không",
+			"idea4": "Tạo một trang web thư mục chứa các mô hình tạo video AI tốt nhất hiện tại",
+			"idea5": "Tạo một trình tạo gradient CSS xuất các stylesheet tùy chỉnh và hiển thị bản xem trước trực tiếp",
+			"idea6": "Tạo các thẻ tiết lộ nội dung động một cách đẹp mắt khi di chuột qua",
+			"idea7": "Tạo một trường sao tương tác êm dịu di chuyển theo cử chỉ chuột"
+		}
 	}
 }

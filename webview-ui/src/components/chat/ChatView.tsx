@@ -31,6 +31,7 @@ import { useExtensionState } from "@src/context/ExtensionStateContext"
 import { useSelectedModel } from "@src/components/ui/hooks/useSelectedModel"
 import { StandardTooltip } from "@src/components/ui"
 
+import TelemetryBanner from "../common/TelemetryBanner" // kilocode_change: deactivated for now
 // import VersionIndicator from "../common/VersionIndicator" // kilocode_change: unused
 import { useTaskSearch } from "../history/useTaskSearch"
 import HistoryPreview from "../history/HistoryPreview"
@@ -45,6 +46,7 @@ import SystemPromptWarning from "./SystemPromptWarning"
 import { showSystemNotification } from "@/kilocode/helpers" // kilocode_change
 // import ProfileViolationWarning from "./ProfileViolationWarning" kilocode_change: unused
 import { CheckpointWarning } from "./CheckpointWarning"
+import { IdeaSuggestionsBox } from "../kilocode/chat/IdeaSuggestionsBox" // kilocode_change
 
 export interface ChatViewProps {
 	isHidden: boolean
@@ -98,6 +100,7 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 		alwaysAllowSubtasks,
 		alwaysAllowFollowupQuestions,
 		customModes,
+		telemetrySetting,
 		hasSystemPromptOverride,
 		historyPreviewCollapsed, // Added historyPreviewCollapsed
 		soundEnabled,
@@ -1576,6 +1579,7 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 					)}
 					<div
 						className={` w-full flex flex-col gap-4 m-auto ${isExpanded && tasks.length > 0 ? "mt-0" : ""} px-3.5 min-[370px]:px-10 pt-5 transition-all duration-300`}>
+						{telemetrySetting === "unset" && <TelemetryBanner />}
 						{/* Version indicator in top-right corner - only on welcome screen */}
 						{/* kilocode_change: do not show */}
 						{/* <VersionIndicator
@@ -1584,7 +1588,6 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 						/>
 
 						<RooHero /> */}
-
 						{/* Show the task history preview if expanded and tasks exist */}
 						{taskHistory.length > 0 && isExpanded && <HistoryPreview />}
 						<p className="text-vscode-editor-foreground leading-tight font-vscode-font-family text-center text-balance max-w-[380px] mx-auto">
@@ -1599,6 +1602,7 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 								}}
 							/>
 						</p>
+						{taskHistory.length === 0 && <IdeaSuggestionsBox />} {/* kilocode_change */}
 						{/* <RooTips cycle={false} /> kilocode_change: do not show */}
 					</div>
 				</div>

@@ -607,8 +607,8 @@
 		"feedback": "Kung mayroon kang mga tanong o feedback, huwag mag-atubiling mag-open ng issue sa <githubLink>github.com/Kilo-Org/kilocode</githubLink> o sumali sa <redditLink>reddit.com/r/kilocode</redditLink> o <discordLink>kilocode.ai/discord</discordLink>.",
 		"support": "Para sa mga tanong tungkol sa pananalapi, makipag-ugnayan sa Customer Support sa <supportLink>https://kilocode.ai/support</supportLink>",
 		"telemetry": {
-			"label": "Payagan ang anonymous na pag-ulat ng error at paggamit",
-			"description": "Tumulong na mapabuti ang Kilo Code sa pamamagitan ng pagpapadala ng anonymous na data ng paggamit at mga ulat ng error. Walang code, prompt, o personal na impormasyon ang kailanman ipinapadala. Tingnan ang aming privacy policy para sa karagdagang detalye."
+			"label": "Payagan ang pag-ulat ng error at paggamit",
+			"description": "Tumulong na mapabuti ang Kilo Code sa pamamagitan ng pagpapadala ng data ng paggamit at mga ulat ng error. Walang code, prompt, o personal na impormasyon ang kailanman ipinapadala. Tingnan ang aming privacy policy para sa karagdagang detalye."
 		},
 		"settings": {
 			"import": "Mag-import",

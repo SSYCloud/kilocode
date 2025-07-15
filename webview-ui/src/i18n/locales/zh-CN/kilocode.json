@@ -121,5 +121,18 @@
 		"editCancel": "取消",
 		"send": "发送",
 		"restoreAndSend": "恢复并发送"
+	},
+	"ideaSuggestionsBox": {
+		"newHere": "新用户？",
+		"suggestionText": "<suggestionButton>点击这里</suggestionButton>获取有趣的想法，然后点击 <sendIcon /> 看我施展魔法！",
+		"ideas": {
+			"idea1": "创建一个旋转发光的 3D 球体，能够响应鼠标移动。让应用在浏览器中运行。",
+			"idea2": "为 Python 软件开发者创建作品集网站",
+			"idea3": "在浏览器中创建金融应用模型。然后测试是否可以正常工作",
+			"idea4": "创建一个目录网站，包含目前最好的 AI 视频生成模型",
+			"idea5": "创建一个 CSS 渐变生成器，导出自定义样式表并显示实时预览",
+			"idea6": "生成在鼠标悬停时优雅展示动态内容的卡片",
+			"idea7": "创建一个宁静的交互式星空，跟随鼠标手势移动"
+		}
 	}
 }

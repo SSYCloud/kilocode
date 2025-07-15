@@ -137,6 +137,7 @@ export interface WebviewMessage {
 		| "systemPrompt"
 		| "enhancementApiConfigId"
 		| "commitMessageApiConfigId" // kilocode_change
+		| "autocompleteApiConfigId" // kilocode_change
 		| "updateExperimental"
 		| "autoApprovalEnabled"
 		| "updateCustomMode"
@@ -150,6 +151,7 @@ export interface WebviewMessage {
 		| "maxWorkspaceFiles"
 		| "humanRelayResponse"
 		| "humanRelayCancel"
+		| "insertTextToChatArea" // kilocode_change
 		| "browserToolEnabled"
 		| "showRooIgnoredFiles"
 		| "testBrowserConnection"
@@ -280,6 +282,7 @@ export interface WebviewMessage {
 
 // kilocode_change begin
 export type ProfileData = {
+	kilocodeToken: string
 	user: {
 		id: string
 		name: string
@@ -290,7 +293,7 @@ export type ProfileData = {
 
 export interface ProfileDataResponsePayload {
 	success: boolean
-	data?: ProfileData
+	data?: any
 	error?: string
 }
 

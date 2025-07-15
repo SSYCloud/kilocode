@@ -18,6 +18,10 @@ export type TelemetrySetting = z.infer<typeof telemetrySettingsSchema>
  */
 
 export enum TelemetryEventName {
+	// kilocode_change start
+	COMMIT_MSG_GENERATED = "Commit Message Generated",
+	// kilocode_change end
+
 	TASK_CREATED = "Task Created",
 	TASK_RESTARTED = "Task Reopened",
 	TASK_COMPLETED = "Task Completed",
@@ -122,6 +126,9 @@ export type TelemetryEvent = {
 export const rooCodeTelemetryEventSchema = z.discriminatedUnion("type", [
 	z.object({
 		type: z.enum([
+			// kilocode_change start
+			TelemetryEventName.COMMIT_MSG_GENERATED,
+			// kilocode_change end
 			TelemetryEventName.TASK_CREATED,
 			TelemetryEventName.TASK_RESTARTED,
 			TelemetryEventName.TASK_COMPLETED,
@@ -209,6 +216,10 @@ export interface TelemetryClient {
 	setProvider(provider: TelemetryPropertiesProvider): void
 	capture(options: TelemetryEvent): Promise<void>
 	updateTelemetryState(didUserOptIn: boolean): void
+	// kilocode_change start
+	captureException(error: Error, properties?: Record<string | number, unknown>): void
+	updateIdentity(kilocodeToken: string): Promise<void>
+	// kilocode_change end
 	isTelemetryEnabled(): boolean
 	shutdown(): Promise<void>
 }

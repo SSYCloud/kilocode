@@ -32,6 +32,8 @@ import { ensureBodyPointerEventsRestored } from "@/utils/fixPointerEvents"
 
 import type { ProviderSettings, ExperimentId } from "@roo-code/types"
 
+import { TelemetrySetting } from "@roo/TelemetrySetting"
+
 import { vscode } from "@src/utils/vscode"
 import { useAppTranslation } from "@src/i18n/TranslationContext"
 import { ExtensionStateContextType, useExtensionState } from "@src/context/ExtensionStateContext"
@@ -170,6 +172,7 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 		ttsEnabled,
 		ttsSpeed,
 		soundVolume,
+		telemetrySetting,
 		terminalOutputLineLimit,
 		terminalShellIntegrationTimeout,
 		terminalShellIntegrationDisabled, // Added from upstream
@@ -197,6 +200,7 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 		systemNotificationsEnabled, // kilocode_change
 		alwaysAllowFollowupQuestions,
 		followupAutoApproveTimeoutMs,
+		autocompleteApiConfigId, // kilocode_change
 	} = cachedState
 
 	const apiConfiguration = useMemo(() => cachedState.apiConfiguration ?? {}, [cachedState.apiConfiguration])
@@ -285,6 +289,17 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 		})
 	}, [])
 
+	const setTelemetrySetting = useCallback((setting: TelemetrySetting) => {
+		setCachedState((prevState) => {
+			if (prevState.telemetrySetting === setting) {
+				return prevState
+			}
+
+			setChangeDetected(true)
+			return { ...prevState, telemetrySetting: setting }
+		})
+	}, [])
+
 	const setCustomSupportPromptsField = useCallback((prompts: Record<string, string | undefined>) => {
 		setCachedState((prevState) => {
 			if (JSON.stringify(prevState.customSupportPrompts) === JSON.stringify(prompts)) {
@@ -354,12 +369,14 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 			vscode.postMessage({ type: "alwaysAllowModeSwitch", bool: alwaysAllowModeSwitch })
 			vscode.postMessage({ type: "alwaysAllowSubtasks", bool: alwaysAllowSubtasks })
 			vscode.postMessage({ type: "showTaskTimeline", bool: showTaskTimeline }) // kilocode_change
+			vscode.postMessage({ type: "autocompleteApiConfigId", text: autocompleteApiConfigId }) // kilocode_change
 			vscode.postMessage({ type: "alwaysAllowFollowupQuestions", bool: alwaysAllowFollowupQuestions })
 			vscode.postMessage({ type: "followupAutoApproveTimeoutMs", value: followupAutoApproveTimeoutMs })
 			vscode.postMessage({ type: "condensingApiConfigId", text: condensingApiConfigId || "" })
 			vscode.postMessage({ type: "updateCondensingPrompt", text: customCondensingPrompt || "" })
 			vscode.postMessage({ type: "updateSupportPrompt", values: customSupportPrompts || {} })
 			vscode.postMessage({ type: "upsertApiConfiguration", text: currentApiConfigName, apiConfiguration })
+			vscode.postMessage({ type: "telemetrySetting", text: telemetrySetting })
 			vscode.postMessage({ type: "codebaseIndexConfig", values: codebaseIndexConfig })
 			vscode.postMessage({ type: "profileThresholds", values: profileThresholds })
 			vscode.postMessage({ type: "systemNotificationsEnabled", bool: systemNotificationsEnabled }) // kilocode_change
@@ -683,6 +700,7 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 							alwaysAllowFollowupQuestions={alwaysAllowFollowupQuestions}
 							followupAutoApproveTimeoutMs={followupAutoApproveTimeoutMs}
 							allowedCommands={allowedCommands}
+							allowedMaxRequests={allowedMaxRequests ?? undefined}
 							setCachedStateField={setCachedStateField}
 						/>
 					)}
@@ -797,7 +815,9 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 					{activeTab === "mcp" && <McpView />}
 
 					{/* About Section */}
-					{activeTab === "about" && <About telemetrySetting={"disabled"} setTelemetrySetting={() => {}} />}
+					{activeTab === "about" && (
+						<About telemetrySetting={telemetrySetting} setTelemetrySetting={setTelemetrySetting} />
+					)}
 				</TabContent>
 			</div>
 

@@ -350,29 +350,9 @@ const ApiOptions = ({
 					<div style={{ marginTop: "0px" }} className="text-sm text-vscode-descriptionForeground -mt-2">
 						You get $20 for free!
 					</div>
-
-					<VSCodeTextField
-						value={apiConfiguration?.kilocodeToken || ""}
-						type="password"
-						onInput={handleInputChange("kilocodeToken")}
-						placeholder={t("kilocode:settings.provider.apiKey")}
-						className="w-full">
-						<div className="flex justify-between items-center mb-1">
-							<label className="block font-medium">{t("kilocode:settings.provider.apiKey")}</label>
-						</div>
-					</VSCodeTextField>
-
-					<ModelPicker
-						apiConfiguration={apiConfiguration}
-						setApiConfigurationField={setApiConfigurationField}
-						defaultModelId="claude37"
-						models={routerModels?.["kilocode-openrouter"] ?? {}}
-						modelIdKey="kilocodeModel"
-						serviceName="Kilo Code"
-						serviceUrl="https://kilocode.ai"
-						organizationAllowList={organizationAllowList}
-					/>
-
+					<div>
+						<label className="block font-medium -mb-2">{t("kilocode:settings.provider.account")}</label>
+					</div>
 					{!hideKiloCodeButton &&
 						(apiConfiguration.kilocodeToken ? (
 							<div>
@@ -398,6 +378,28 @@ const ApiOptions = ({
 								{t("kilocode:settings.provider.login")}
 							</VSCodeButtonLink>
 						))}
+
+					<VSCodeTextField
+						value={apiConfiguration?.kilocodeToken || ""}
+						type="password"
+						onInput={handleInputChange("kilocodeToken")}
+						placeholder={t("kilocode:settings.provider.apiKey")}
+						className="w-full">
+						<div className="flex justify-between items-center mb-1">
+							<label className="block font-medium">{t("kilocode:settings.provider.apiKey")}</label>
+						</div>
+					</VSCodeTextField>
+
+					<ModelPicker
+						apiConfiguration={apiConfiguration}
+						setApiConfigurationField={setApiConfigurationField}
+						defaultModelId="claude37"
+						models={routerModels?.["kilocode-openrouter"] ?? {}}
+						modelIdKey="kilocodeModel"
+						serviceName="Kilo Code"
+						serviceUrl="https://kilocode.ai"
+						organizationAllowList={organizationAllowList}
+					/>
 				</>
 			)}
 			{/* kilocode_change end */}

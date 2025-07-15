@@ -166,7 +166,7 @@ const KiloRulesToggleModal: React.FC = () => {
 							</DescriptionWithLink>
 						) : (
 							<DescriptionWithLink
-								href="https://kilocode.ai/docs/advanced-usage/workflows"
+								href="https://kilocode.ai/docs/features/slash-commands/workflows"
 								linkText={t("kilocode:docs")}>
 								{t("kilocode:rules.description.workflows")}{" "}
 								<span className="text-[var(--vscode-foreground)] font-bold">/workflow-name</span>{" "}

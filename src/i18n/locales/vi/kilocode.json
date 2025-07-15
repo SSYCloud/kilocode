@@ -11,7 +11,7 @@
 		"title": "Cảnh Báo Tín Dụng Thấp!",
 		"message": "Kiểm tra xem bạn có thể nạp thêm tín dụng miễn phí hoặc mua thêm không!"
 	},
-	"notLoggedInError": "Không thể hoàn thành yêu cầu, hãy đảm bảo bạn đã kết nối và đăng nhập với nhà cung cấp đã chọn.",
+	"notLoggedInError": "Không thể hoàn thành yêu cầu, hãy đảm bảo bạn đã kết nối và đăng nhập với nhà cung cấp đã chọn.\n\n{{error}}",
 	"rules": {
 		"actions": {
 			"delete": "Xóa",
@@ -48,5 +48,25 @@
 		"generated": "Kilo: Đã tạo thông điệp commit!",
 		"generationFailed": "Kilo: Không thể tạo thông điệp commit: {{errorMessage}}",
 		"generatingFromUnstaged": "Kilo: Tạo tin nhắn sử dụng các thay đổi chưa được đưa vào dàn dựng"
+	},
+	"autocomplete": {
+		"statusBar": {
+			"enabled": "$(sparkle) Hoàn thành Kilo",
+			"disabled": "$(circle-slash) Hoàn Tất Kilo",
+			"warning": "$(warning) Kilo Hoàn Thành",
+			"tooltip": {
+				"disabled": "Tự động hoàn thành Kilo Code (đã tắt)",
+				"basic": "Tự động hoàn thiện Kilo Code",
+				"tokenError": "Phải thiết lập một token hợp lệ để sử dụng tính năng tự động hoàn thành",
+				"lastCompletion": "Lượt hoàn thành cuối cùng:",
+				"model": "Mô hình:",
+				"sessionTotal": "Tổng chi phí phiên:"
+			},
+			"cost": {
+				"zero": "0₫",
+				"lessThanCent": "<$0,01"
+			}
+		},
+		"toggleMessage": "Kilo Hoàn thành {{status}}"
 	}
 }

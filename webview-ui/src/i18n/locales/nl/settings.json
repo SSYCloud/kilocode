@@ -603,8 +603,8 @@
 		"feedback": "Heb je vragen of feedback? Open gerust een issue op <githubLink>https://github.com/SSYCloud/kilocode/tree/ssy</githubLink> of sluit je aan bij <redditLink>reddit.com/r/kilocode</redditLink> of <discordLink>kilocode.ai/discord</discordLink>",
 		"support": "Voor financiële vragen kunt u contact opnemen met de klantenservice via ",
 		"telemetry": {
-			"label": "Anonieme fout- en gebruiksrapportage toestaan",
-			"description": "Help Kilo Code te verbeteren door anonieme gebruiksgegevens en foutmeldingen te verzenden. Er worden nooit code, prompts of persoonlijke gegevens verzonden. Zie ons privacybeleid voor meer informatie."
+			"label": "Fout- en gebruiksrapportage toestaan",
+			"description": "Help Kilo Code te verbeteren door gebruiksgegevens en foutmeldingen te verzenden. Er worden nooit code, prompts of persoonlijke gegevens verzonden. Zie ons privacybeleid voor meer informatie."
 		},
 		"settings": {
 			"import": "Importeren",

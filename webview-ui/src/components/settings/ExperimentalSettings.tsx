@@ -14,6 +14,7 @@ import { SectionHeader } from "./SectionHeader"
 import { Section } from "./Section"
 import { ExperimentalFeature } from "./ExperimentalFeature"
 import { CodeIndexSettings } from "./CodeIndexSettings"
+import AutocompletePromptSettings from "./AutocompletePromptSettings"
 
 type ExperimentalSettingsProps = HTMLAttributes<HTMLDivElement> & {
 	experiments: Experiments
@@ -65,6 +66,26 @@ export const ExperimentalSettings = ({
 										setExperimentEnabled(EXPERIMENT_IDS.MULTI_FILE_APPLY_DIFF, enabled)
 									}
 								/>
+							)
+						}
+						if (config[0] === "AUTOCOMPLETE") {
+							const enabled =
+								experiments[EXPERIMENT_IDS[config[0] as keyof typeof EXPERIMENT_IDS]] ?? false
+							return (
+								<>
+									<ExperimentalFeature
+										key={config[0]}
+										experimentKey={config[0]}
+										enabled={enabled}
+										onChange={(enabled) =>
+											setExperimentEnabled(
+												EXPERIMENT_IDS[config[0] as keyof typeof EXPERIMENT_IDS],
+												enabled,
+											)
+										}
+									/>
+									{enabled && <AutocompletePromptSettings />}
+								</>
 							)
 						}
 						return (

@@ -11,7 +11,7 @@ import TranslationProvider from "@/i18n/TranslationContext"
 export const withI18n: Decorator = (Story) => {
 	useEffect(() => {
 		loadTranslations()
-		i18n.changeLanguage("en") // English
+		i18n.changeLanguage("zh-CN") // English
 	}, [])
 
 	return (

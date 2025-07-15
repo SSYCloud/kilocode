@@ -23,6 +23,7 @@
 			"mcp": "MCPサーバー"
 		},
 		"provider": {
+			"account": "Kilo Code アカウント",
 			"apiKey": "Kilo Code APIキー",
 			"login": "Kilo Codeにログイン",
 			"logout": "Kilo Codeからログアウト"
@@ -116,5 +117,18 @@
 		"editCancel": "キャンセル",
 		"send": "送信",
 		"restoreAndSend": "復元して送信"
+	},
+	"ideaSuggestionsBox": {
+		"newHere": "初めてですか？",
+		"suggestionText": "クールなアイデアのために<suggestionButton>ここをクリック</suggestionButton>してから、<sendIcon />をタップして私がマジックを行うのを見てください！",
+		"ideas": {
+			"idea1": "マウスの動きに反応する回転する光る3D球体を作成してください。アプリをブラウザで動作させてください。",
+			"idea2": "Pythonソフトウェア開発者のためのポートフォリオウェブサイトを作成",
+			"idea3": "ブラウザで金融アプリのモックアップを作成。そして動作するかテストする",
+			"idea4": "現在最高のAIビデオ生成モデルを含むディレクトリウェブサイトを作成",
+			"idea5": "カスタムスタイルシートをエクスポートし、ライブプレビューを表示するCSSグラデーションジェネレーターを作成",
+			"idea6": "ホバー時に動的なコンテンツを美しく表示するカードを生成",
+			"idea7": "マウスジェスチャーに合わせて動く落ち着いたインタラクティブな星空を作成"
+		}
 	}
 }

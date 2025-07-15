@@ -23,6 +23,7 @@
 			"mcp": "MCP 서버"
 		},
 		"provider": {
+			"account": "Kilo Code 계정",
 			"apiKey": "Kilo Code API 키",
 			"login": "Kilo Code에 로그인",
 			"logout": "Kilo Code에서 로그아웃"
@@ -116,5 +117,18 @@
 		"editCancel": "취소",
 		"send": "보내기",
 		"restoreAndSend": "복원 및 보내기"
+	},
+	"ideaSuggestionsBox": {
+		"newHere": "처음이신가요?",
+		"suggestionText": "멋진 아이디어를 위해 <suggestionButton>여기를 클릭</suggestionButton>하세요. 그다음 <sendIcon />를 탭하고 제가 마법을 부리는 것을 보세요!",
+		"ideas": {
+			"idea1": "마우스 움직임에 반응하는 회전하고 빛나는 3D 구체를 만드세요. 앱이 브라우저에서 작동하도록 하세요.",
+			"idea2": "Python 소프트웨어 개발자를 위한 포트폴리오 웹사이트 만들기",
+			"idea3": "브라우저에서 금융 앱 모형을 만드세요. 그다음 작동하는지 테스트하세요",
+			"idea4": "현재 최고의 AI 비디오 생성 모델들을 포함한 디렉터리 웹사이트 만들기",
+			"idea5": "사용자 정의 스타일시트를 내보내고 실시간 미리보기를 보여주는 CSS 그라디언트 생성기 만들기",
+			"idea6": "마우스를 올렸을 때 동적 콘텐츠를 아름답게 보여주는 카드 생성하기",
+			"idea7": "마우스 제스처에 따라 움직이는 차분한 인터랙티브 별빛 만들기"
+		}
 	}
 }

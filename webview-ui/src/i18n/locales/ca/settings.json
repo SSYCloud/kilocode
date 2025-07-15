@@ -603,8 +603,8 @@
 		"feedback": "Si teniu qualsevol pregunta o comentari, no dubteu a obrir un issue a <githubLink>https://github.com/SSYCloud/kilocode/tree/ssy</githubLink> o unir-vos a <redditLink>reddit.com/r/kilocode</redditLink> o <discordLink>kilocode.ai/discord</discordLink>",
 		"support": "Per a qüestions financeres, poseu-vos en contacte amb el Suport al Client a ",
 		"telemetry": {
-			"label": "Permetre informes anònims d'errors i ús",
-			"description": "Ajudeu a millorar Kilo Code enviant dades d'ús anònimes i informes d'errors. Mai s'envia codi, prompts o informació personal. Vegeu la nostra política de privacitat per a més detalls."
+			"label": "Permetre informes d'errors i ús",
+			"description": "Ajuda a millorar Kilo Code enviant dades d'ús i informes d'errors. Mai s'envia codi, prompts o informació personal. Consulta la nostra política de privacitat per a més detalls."
 		},
 		"settings": {
 			"import": "Importar",

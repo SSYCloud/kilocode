@@ -23,6 +23,7 @@
 			"mcp": "MCP Servers"
 		},
 		"provider": {
+			"account": "Account sa Kilo Code",
 			"apiKey": "Kilo Code API Key",
 			"login": "Mag-log in sa Kilo Code",
 			"logout": "Mag-log out mula sa Kilo Code"
@@ -116,5 +117,18 @@
 		"editCancel": "Kanselahin",
 		"send": "Ipadala",
 		"restoreAndSend": "Ibalik at Ipadala"
+	},
+	"ideaSuggestionsBox": {
+		"newHere": "Bago dito?",
+		"suggestionText": "<suggestionButton>I-click dito</suggestionButton> para sa isang magandang ideya, pagkatapos i-tap ang <sendIcon /> at panoorin mo akong gumawa ng mahika!",
+		"ideas": {
+			"idea1": "Gumawa ng umiikot, kumikinang na 3D sphere na tumutuon sa mga galaw ng mouse. Gawing gumagana ang app sa browser.",
+			"idea2": "Lumikha ng portfolio website para sa isang Python software developer",
+			"idea3": "Lumikha ng financial app mockup sa browser. Pagkatapos subukan kung gumagana",
+			"idea4": "Lumikha ng directory website na naglalaman ng mga pinakamahusay na AI video generation models ngayon",
+			"idea5": "Lumikha ng CSS gradient generator na nag-export ng custom stylesheets at nagpapakita ng live preview",
+			"idea6": "Mag-generate ng mga cards na nagbubunyag ng dynamic content nang maganda kapag nag-hover",
+			"idea7": "Lumikha ng mapayapang interactive starfield na gumagalaw sa mga galaw ng mouse"
+		}
 	}
 }

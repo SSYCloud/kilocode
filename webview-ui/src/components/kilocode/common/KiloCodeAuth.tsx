@@ -3,7 +3,7 @@ import { ButtonLink } from "./ButtonLink"
 import { ButtonSecondary } from "./ButtonSecondary"
 import Logo from "./Logo"
 import { useAppTranslation } from "@/i18n/TranslationContext"
-import { getShengSuanYunAuthUrl } from "../helpers"
+import { getKiloCodeBackendSignInUrl, getKiloCodeBackendSignUpUrl } from "../helpers"
 import { useExtensionState } from "@/context/ExtensionStateContext"
 
 interface KiloCodeAuthProps {
@@ -27,7 +27,7 @@ const KiloCodeAuth: React.FC<KiloCodeAuthProps> = ({ onManualConfigClick, classN
 
 			<div className="w-full flex flex-col gap-5">
 				<ButtonLink
-					href={getShengSuanYunAuthUrl(uriScheme)}
+					href={getKiloCodeBackendSignUpUrl(uriScheme)}
 					onClick={() => {
 						if (uiKind === "Web" && onManualConfigClick) {
 							onManualConfigClick()
@@ -44,7 +44,7 @@ const KiloCodeAuth: React.FC<KiloCodeAuthProps> = ({ onManualConfigClick, classN
 
 				<div className="text-center text-vscode-descriptionForeground">
 					{t("kilocode:welcome.alreadySignedUp")}{" "}
-					<a href={getShengSuanYunAuthUrl(uriScheme)} className="underline" style={{ color: "inherit" }}>
+					<a href={getKiloCodeBackendSignInUrl(uriScheme)} className="underline" style={{ color: "inherit" }}>
 						{t("kilocode:welcome.loginText")}
 					</a>
 				</div>
