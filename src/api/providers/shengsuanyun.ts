@@ -55,7 +55,7 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 		this.options = options
 		const baseURL = "https://router.shengsuanyun.com/api/v1"
 		const apiKey = this.options.shengSuanYunApiKey ?? "not-provided"
-		this.client = new OpenAI({ baseURL, apiKey, defaultHeaders: DEFAULT_HEADERS })
+		this.client = new OpenAI({ baseURL, apiKey, defaultHeaders: DEFAULT_HEADERS, timeout: 180000 })
 	}
 
 	override async *createMessage(
@@ -185,20 +185,20 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 				// shengSuanYun returns an error object instead of the OpenAI SDK throwing an error.
 				if ("error" in chunk) {
 					const error = chunk.error as { message?: string; code?: number }
-					console.error(`shengSuanYun API Error: ${error?.code} - ${error?.message}`)
-					throw new Error(`shengSuanYun API Error ${error?.code}: ${error?.message}`)
+					console.error(`shengSuanYun API Error stream: ${error?.code} - ${error?.message}`)
+					throw new Error(`shengSuanYun API Error stream ${error?.code}: ${error?.message}`)
 				}
-
+				if (!chunk.choices || chunk.choices.length === 0) {
+					console.warn("shengSuanYun stream chunk:", chunk)
+					continue
+				}
 				const delta = chunk.choices[0]?.delta
-
 				if ("reasoning" in delta && delta.reasoning && typeof delta.reasoning === "string") {
 					yield { type: "reasoning", text: delta.reasoning }
 				}
-
 				if (delta?.content) {
 					yield { type: "text", text: delta.content }
 				}
-
 				if (chunk.usage) {
 					lastUsage = chunk.usage
 				}
@@ -256,7 +256,7 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 		const response = await this.client.chat.completions.create(completionParams)
 		if ("error" in response) {
 			const error = response.error as { message?: string; code?: number }
-			throw new Error(`shengSuanYun API Error ${error?.code}: ${error?.message}`)
+			throw new Error(`shengSuanYun API Error completePrompt ${error?.code}: ${error?.message}`)
 		}
 		const completion = response as OpenAI.Chat.ChatCompletion
 		return completion.choices[0]?.message?.content || ""
@@ -276,6 +276,6 @@ function makeshengSuanYunErrorReadable(error: any) {
 		}
 		return `Rate limit exceeded, try again later.\n${error?.message || error}`
 	}
-	return `shengSuanYun API Error: ${error?.message || error}`
+	return `shengSuanYun API Error makeshengSuanYunErrorReadable: ${error?.message || error}`
 }
 // kilocode_change end

@@ -68,7 +68,7 @@ const Profile: React.FC<ProfileProps> = ({ onDone: _onDone }) => {
 			<div className="w-full flex justify-center">
 				<Logo />
 			</div>
-			{profileData ? (
+			{user ? (
 				<div className="flex flex-col pr-3 h-full">
 					<div className="flex flex-col w-full">
 						<div className="flex items-center mb-6 flex-wrap gap-y-4">
@@ -147,8 +147,8 @@ const Profile: React.FC<ProfileProps> = ({ onDone: _onDone }) => {
 						<Trans
 							i18nKey="kilocode:profile.signUp.termsAndPrivacy"
 							components={{
-								termsLink: <VSCodeLink href="https://kilocode.ai/terms" />,
-								privacyLink: <VSCodeLink href="https://kilocode.ai/privacy" />,
+								termsLink: <VSCodeLink href="https://docs.router.shengsuanyun.com/terms-of-service" />,
+								privacyLink: <VSCodeLink href="https://docs.router.shengsuanyun.com/privacy-policy" />,
 							}}
 						/>
 					</p>
