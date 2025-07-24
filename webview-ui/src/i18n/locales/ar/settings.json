@@ -39,28 +39,48 @@
 	},
 	"codeIndex": {
 		"title": "فهرسة قاعدة الكود",
+		"description": "اضبط إعدادات فهرسة الكود لتمكين البحث الدلالي في مشروعك. <0>تعرف أكثر</0>",
+		"statusTitle": "الحالة",
 		"enableLabel": "تفعيل فهرسة الكود",
-		"enableDescription": "<0>فهرسة الكود</0> ميزة تجريبية تنشئ فهرس بحث دلالي باستخدام التضمين. هذا يسمح لـ Kilo Code يفهم ويتنقل في المشاريع الكبيرة بشكل أفضل.",
+		"enableDescription": "تفعيل فهرسة الكود لتحسين البحث وفهم السياق",
+		"settingsTitle": "إعدادات الفهرسة",
+		"disabledMessage": "فهرسة الكود معطلة حاليًا. فعّلها في الإعدادات العامة لضبط خيارات الفهرسة.",
 		"providerLabel": "موفّر التضمين",
+		"embedderProviderLabel": "موفّر التضمين",
 		"selectProviderPlaceholder": "اختر المزوّد",
 		"openaiProvider": "OpenAI",
 		"ollamaProvider": "Ollama",
+		"geminiProvider": "Gemini",
+		"geminiApiKeyLabel": "مفتاح API:",
+		"geminiApiKeyPlaceholder": "أدخل مفتاح Gemini API",
 		"openaiCompatibleProvider": "متوافق مع OpenAI",
-		"openaiKeyLabel": "مفتاح OpenAI:",
-		"openaiCompatibleBaseUrlLabel": "الرابط الأساسي:",
-		"openaiCompatibleApiKeyLabel": "مفتاح API:",
-		"openaiCompatibleModelDimensionLabel": "أبعاد التضمين:",
-		"openaiCompatibleModelDimensionPlaceholder": "مثال: 1536",
-		"openaiCompatibleModelDimensionDescription": "حجم مخرجات التضمين لنموذجك. تحقق من توثيق المزوّد. القيم الشائعة: 384، 768، 1536، 3072.",
+		"openAiKeyLabel": "مفتاح OpenAI API",
+		"openAiKeyPlaceholder": "أدخل مفتاح OpenAI API",
+		"openAiCompatibleBaseUrlLabel": "الرابط الأساسي",
+		"openAiCompatibleApiKeyLabel": "مفتاح API",
+		"openAiCompatibleApiKeyPlaceholder": "أدخل مفتاح API",
+		"openAiCompatibleModelDimensionLabel": "بُعد التضمين:",
+		"modelDimensionLabel": "بُعد النموذج",
+		"openAiCompatibleModelDimensionPlaceholder": "مثال: 1536",
+		"openAiCompatibleModelDimensionDescription": "بُعد التضمين (حجم المخرجات) لنموذجك. راجع توثيق المزوّد لهذه القيمة. القيم الشائعة: 384، 768، 1536، 3072.",
 		"modelLabel": "النموذج",
+		"modelPlaceholder": "أدخل اسم النموذج",
+		"selectModel": "اختر نموذج",
 		"selectModelPlaceholder": "اختر نموذج",
 		"ollamaUrlLabel": "رابط Ollama:",
+		"ollamaBaseUrlLabel": "رابط Ollama الأساسي",
 		"qdrantUrlLabel": "رابط Qdrant",
 		"qdrantKeyLabel": "مفتاح Qdrant:",
+		"qdrantApiKeyLabel": "مفتاح Qdrant API",
+		"qdrantApiKeyPlaceholder": "أدخل مفتاح Qdrant API (اختياري)",
+		"setupConfigLabel": "الإعداد",
 		"advancedConfigLabel": "الإعدادات المتقدمة",
 		"searchMinScoreLabel": "حد نقاط البحث",
 		"searchMinScoreDescription": "أدنى نقاط التشابه (0.0-1.0) المطلوبة للنتائج. القيم الأقل تعطي نتائج أكثر لكن قد تكون أقل صلة. القيم الأعلى تعطي نتائج أقل لكن أكثر صلة.",
 		"searchMinScoreResetTooltip": "إعادة للقيمة الافتراضية (0.4)",
+		"searchMaxResultsLabel": "أقصى نتائج البحث",
+		"searchMaxResultsDescription": "أقصى عدد نتائج البحث المُعادة عند الاستعلام عن فهرس الكود. القيم الأعلى توفر سياق أكثر لكن قد تشمل نتائج أقل صلة.",
+		"resetToDefault": "إعادة للافتراضي",
 		"startIndexingButton": "ابدأ الفهرسة",
 		"clearIndexDataButton": "مسح بيانات الفهرسة",
 		"unsavedSettingsMessage": "احفظ الإعدادات قبل بدء الفهرسة.",
@@ -69,7 +89,42 @@
 			"description": "العملية غير قابلة للتراجع. هذا يمسح بيانات الفهرسة نهائيًا.",
 			"cancelButton": "إلغاء",
 			"confirmButton": "مسح البيانات"
+		},
+		"ollamaUrlPlaceholder": "http://localhost:11434",
+		"openAiCompatibleBaseUrlPlaceholder": "https://api.example.com",
+		"modelDimensionPlaceholder": "1536",
+		"qdrantUrlPlaceholder": "http://localhost:6333",
+		"saveError": "فشل في حفظ الإعدادات",
+		"modelDimensions": "({{dimension}} أبعاد)",
+		"saveSuccess": "تم حفظ الإعدادات بنجاح",
+		"saving": "جارٍ الحفظ...",
+		"saveSettings": "حفظ",
+		"indexingStatuses": {
+			"standby": "في الانتظار",
+			"indexing": "جارٍ الفهرسة",
+			"indexed": "مُفهرس",
+			"error": "خطأ"
+		},
+		"close": "إغلاق",
+		"validation": {
+			"qdrantUrlRequired": "رابط Qdrant مطلوب",
+			"invalidQdrantUrl": "رابط Qdrant غير صالح",
+			"invalidOllamaUrl": "رابط Ollama غير صالح",
+			"invalidBaseUrl": "رابط أساسي غير صالح",
+			"openaiApiKeyRequired": "مفتاح OpenAI API مطلوب",
+			"modelSelectionRequired": "اختيار النموذج مطلوب",
+			"apiKeyRequired": "مفتاح API مطلوب",
+			"modelIdRequired": "معرّف النموذج مطلوب",
+			"modelDimensionRequired": "بُعد النموذج مطلوب",
+			"geminiApiKeyRequired": "مفتاح Gemini API مطلوب",
+			"ollamaBaseUrlRequired": "رابط Ollama الأساسي مطلوب",
+			"baseUrlRequired": "الرابط الأساسي مطلوب",
+			"modelDimensionMinValue": "بُعد النموذج يجب أن يكون أكبر من 0"
 		}
+	},
+	"autoApproval": {
+		"title": "الموافقة التلقائية",
+		"description": "السماح لـ Kilo Code بتنفيذ العمليات تلقائيًا بدون طلب الموافقة. فعّل هذه الإعدادات فقط إذا كنت تثق بالذكاء الاصطناعي تمامًا وتفهم المخاطر الأمنية المرتبطة."
 	},
 	"autoApprove": {
 		"description": "خلّ Kilo Code ينفذ العمليات تلقائيًا بدون موافقة. فعّلها فقط إذا كنت واثق من الأمان.",
@@ -125,18 +180,29 @@
 			"description": "تنفيذ أوامر الطرفية المسموحة تلقائيًا",
 			"allowedCommands": "أوامر التنفيذ التلقائي المسموحة",
 			"allowedCommandsDescription": "بادئات الأوامر المسموح بها عند تفعيل \"الموافقة الدائمة على التنفيذ\". أضف * للسماح بكل الأوامر (بحذر).",
+			"deniedCommands": "الأوامر المرفوضة",
+			"deniedCommandsDescription": "بادئات الأوامر التي سيتم رفضها تلقائيًا بدون طلب الموافقة. في حالة التعارض مع الأوامر المسموحة، تأخذ أطول بادئة مطابقة الأولوية. أضف * لرفض جميع الأوامر.",
 			"commandPlaceholder": "أدخل بادئة الأمر (مثال: 'git ')",
-			"addButton": "إضافة"
+			"deniedCommandPlaceholder": "أدخل بادئة الأمر المرفوض (مثال: 'rm -rf')",
+			"addButton": "إضافة",
+			"autoDenied": "الأوامر التي تبدأ بـ `{{prefix}}` محظورة من قبل المستخدم. لا تتجاوز هذا القيد بتشغيل أمر آخر."
 		},
 		"showMenu": {
-			"label": "إظهار قائمة الموافقة التلقائية",
-			"description": "تظهر القائمة أسفل المحادثة للوصول السريع."
+			"label": "إظهار قائمة الموافقة التلقائية في عرض المحادثة",
+			"description": "عند التفعيل، ستظهر قائمة الموافقة التلقائية في أسفل عرض المحادثة، مما يتيح الوصول السريع لإعدادات الموافقة التلقائية"
+		},
+		"updateTodoList": {
+			"label": "المهام",
+			"description": "تحديث قائمة المهام تلقائيًا بدون موافقة"
 		},
 		"apiRequestLimit": {
 			"title": "أقصى الطلبات",
 			"description": "عدد طلبات API قبل طلب الموافقة.",
 			"unlimited": "غير محدود"
-		}
+		},
+		"toggleAriaLabel": "تبديل الموافقة التلقائية",
+		"disabledAriaLabel": "الموافقة التلقائية معطلة - اختر الخيارات أولاً",
+		"selectOptionsFirst": "اختر خيار واحد على الأقل أدناه لتفعيل الموافقة التلقائية"
 	},
 	"providers": {
 		"providerDocumentation": "توثيق {{provider}}",
@@ -156,6 +222,8 @@
 		"createProfile": "إنشاء الملف",
 		"cannotDeleteOnlyProfile": "ما تقدر تحذف الملف الوحيد",
 		"searchPlaceholder": "بحث في الملفات",
+		"searchProviderPlaceholder": "بحث في المزوّدين",
+		"noProviderMatchFound": "لم يتم العثور على مزوّدين",
 		"noMatchFound": "ما فيه ملفات مطابقة",
 		"vscodeLmDescription": "واجهة VS Code Language Model تسمح بتشغيل نماذج من إضافات أخرى مثل GitHub Copilot.",
 		"awsCustomArnUse": "أدخل ARN صحيح لنموذج Amazon Bedrock. أمثلة:",
@@ -196,6 +264,18 @@
 		"getGeminiApiKey": "احصل على مفتاح Gemini",
 		"openAiApiKey": "مفتاح OpenAI",
 		"apiKey": "مفتاح API",
+		"anthropic": {
+			"baseUrl": "الرابط الأساسي",
+			"baseUrlDescription": "رابط أساسي مخصص لـ Anthropic API (اختياري)"
+		},
+		"openai": {
+			"baseUrl": "الرابط الأساسي",
+			"baseUrlDescription": "رابط أساسي مخصص لـ OpenAI API (اختياري)"
+		},
+		"openrouter": {
+			"baseUrl": "الرابط الأساسي",
+			"baseUrlDescription": "رابط أساسي مخصص لـ OpenRouter API (اختياري)"
+		},
 		"openAiBaseUrl": "الرابط الأساسي",
 		"getOpenAiApiKey": "احصل على مفتاح OpenAI",
 		"mistralApiKey": "مفتاح Mistral",
@@ -315,6 +395,12 @@
 			"label": "معدل الطلب",
 			"description": "أقل وقت بين طلبات API."
 		},
+		"consecutiveMistakeLimit": {
+			"label": "حد الأخطاء والتكرار",
+			"description": "عدد الأخطاء المتتالية أو الإجراءات المتكررة قبل إظهار حوار 'Kilo Code يواجه مشكلة'",
+			"unlimitedDescription": "إعادة المحاولة غير المحدودة مفعلة (المتابعة التلقائية). لن يظهر الحوار أبداً.",
+			"warning": "⚠️ تعيين القيمة إلى 0 يسمح بإعادة المحاولة غير المحدودة مما قد يستهلك استخدام API كبير"
+		},
 		"reasoningEffort": {
 			"label": "جهد الاستنتاج",
 			"high": "عالي",
@@ -325,7 +411,9 @@
 		"claudeCode": {
 			"pathLabel": "مسار Claude Code",
 			"description": "مسار CLI اختياري (الافتراضي 'claude').",
-			"placeholder": "الافتراضي: claude"
+			"placeholder": "الافتراضي: claude",
+			"maxTokensLabel": "أقصى توكنات المخرجات",
+			"maxTokensDescription": "الحد الأقصى لعدد توكنات المخرجات لردود Claude Code. الافتراضي هو 8000."
 		},
 		"geminiCli": {
 			"description": "يستخدم OAuth من أداة Gemini CLI ولا يحتاج مفاتيح.",
@@ -503,6 +591,9 @@
 			"description": "تفعيل يورّث متغيرات بيئة نظامك."
 		}
 	},
+	"advancedSettings": {
+		"title": "الإعدادات المتقدمة"
+	},
 	"advanced": {
 		"diff": {
 			"label": "التعديل عبر Diff",
@@ -524,6 +615,10 @@
 				"label": "دقة المطابقة",
 				"description": "تحكّم في دقة مطابقة الأقسام."
 			}
+		},
+		"todoList": {
+			"label": "تفعيل أداة قائمة المهام",
+			"description": "عند التفعيل، يمكن لـ Kilo Code إنشاء وإدارة قوائم المهام لتتبع تقدم المهام. هذا يساعد في تنظيم المهام المعقدة إلى خطوات قابلة للإدارة."
 		}
 	},
 	"experimental": {
@@ -597,7 +692,7 @@
 		}
 	},
 	"modelPicker": {
-		"automaticFetch": "الإضافة تجيب أحدث النماذج من <serviceLink>{{serviceName}}</serviceLink>. إذا متردد، Kilo Code يعمل أفضل مع <defaultModelLink>{{defaultModelId}}</defaultModelLink>. جرّب كلمة \"free\" للخيارات المجانية.",
+		"automaticFetch": "الإضافة تجلب تلقائياً أحدث قائمة بالنماذج المتاحة على <serviceLink>{{serviceName}}</serviceLink>. إذا كنت غير متأكد من النموذج الذي تختاره، فإن Kilo Code يعمل بشكل أفضل مع <defaultModelLink>{{defaultModelId}}</defaultModelLink>.",
 		"label": "النموذج",
 		"searchPlaceholder": "بحث",
 		"noMatchFound": "ما فيه تطابق",

@@ -26,7 +26,11 @@
 			"account": "Kilo Code Konto",
 			"apiKey": "Kilo Code API-Schlüssel",
 			"login": "Bei Kilo Code anmelden",
-			"logout": "Von Kilo Code abmelden"
+			"logout": "Von Kilo Code abmelden",
+			"providerRouting": {
+				"title": "Kilo Code - OpenRouter-Anbieter-Routing",
+				"description": "Kilo Code leitet Anfragen an die besten verfügbaren Anbieter für dein Modell weiter. Standardmäßig werden Anfragen über die Top-Anbieter verteilt, um die Betriebszeit zu maximieren. Du kannst jedoch einen bestimmten Anbieter für dieses Modell auswählen."
+			}
 		},
 		"contextManagement": {
 			"allowVeryLargeReads": {
@@ -129,6 +133,27 @@
 			"idea5": "Erstelle einen CSS-Gradienten-Generator, der benutzerdefinierte Stylesheets exportiert und eine Live-Vorschau zeigt",
 			"idea6": "Generiere Karten, die beim Hovern schön dynamischen Inhalt offenbaren",
 			"idea7": "Erstelle ein beruhigendes interaktives Sternfeld, das sich mit Mausgesten bewegt"
+		}
+	},
+	"ghost": {
+		"title": "Inline-Unterstützung",
+		"settings": {
+			"enableQuickInlineTaskKeybinding": {
+				"label": "Schnelle Inline-Aufgabe",
+				"description": "Brauchst du nur eine schnelle Änderung? Wähle etwas Code aus (oder auch nicht!) und drücke Cmd+I. Beschreibe dein Ziel in einfachem Deutsch (\"erstelle eine React-Komponente mit diesen Props\", \"füge Fehlerbehandlung zu dieser Funktion hinzu\") und erhalte mehrere, sofort einsetzbare Vorschläge direkt in deinem Editor. <DocsLink>Siehe Tastenkombination</DocsLink>"
+			},
+			"enableAutoInlineTaskKeybinding": {
+				"label": "Auto Inline Aufgabe",
+				"description": "Brauchen Sie eine schnelle Korrektur, Vervollständigung oder Umstrukturierung? Kilo nutzt den umliegenden Kontext, um sofortige Verbesserungen anzubieten und Sie im Flow zu halten. <DocsLink>Tastenkombination anzeigen</DocsLink>"
+			},
+			"provider": "Anbieter",
+			"apiConfigId": {
+				"label": "API-Konfiguration",
+				"current": "Aktuell ausgewählte API-Konfiguration verwenden",
+				"description": "Wähle eine API-Konfiguration für Inline-Assist-Prompts aus oder verwende einfach die aktuell ausgewählte"
+			},
+			"triggers": "Auslöser",
+			"keybindingDescription": "Inline-Assistenzfunktionen werden durch Befehle ausgelöst. Sie können die <DocsLink>Tastaturkürzel hier konfigurieren</DocsLink>."
 		}
 	}
 }

@@ -42,7 +42,7 @@ import {
 	CodeActionProvider,
 } from "./activate"
 import { initializeI18n } from "./i18n"
-// import { registerGhostProvider } from "./services/ghost" // kilocode_change
+import { registerGhostProvider } from "./services/ghost" // kilocode_change
 
 /**
  * Built using https://github.com/microsoft/vscode-webview-ui-toolkit
@@ -100,6 +100,12 @@ export async function activate(context: vscode.ExtensionContext) {
 		context.globalState.update("allowedCommands", defaultCommands)
 	}
 
+	// kilocode_change start
+	if (!context.globalState.get("firstInstallCompleted")) {
+		context.globalState.update("telemetrySetting", "enabled")
+	}
+	// kilocode_change end
+
 	const contextProxy = await ContextProxy.getInstance(context)
 	const codeIndexManager = CodeIndexManager.getInstance(context)
 
@@ -136,11 +142,10 @@ export async function activate(context: vscode.ExtensionContext) {
 				"shengsuan-cloud.kilo-ssy#kiloSSYCodeAgent",
 				false,
 			)
-
-			context.globalState.update("telemetrySetting", "enabled")
-			context.globalState.update("firstInstallCompleted", true)
 		} catch (error) {
 			outputChannel.appendLine(`Error during first-time setup: ${error.message}`)
+		} finally {
+			context.globalState.update("firstInstallCompleted", true)
 		}
 	}
 	// kilocode_change end
@@ -196,7 +201,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	)
 
 	registerAutocomplete(context) // kilocode_change
-	// registerGhostProvider(context) // kilocode_change
+	registerGhostProvider(context) // kilocode_change
 	registerCommitMessageProvider(context, outputChannel) // kilocode_change
 	registerCodeActions(context)
 	registerTerminalActions(context)

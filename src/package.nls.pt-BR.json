@@ -29,10 +29,22 @@
 	"command.profile.title": "Perfil",
 	"configuration.title": "Kilo Code AI Agent-Chinese",
 	"commands.allowedCommands.description": "Comandos que podem ser executados automaticamente quando 'Sempre aprovar operações de execução' está ativado",
+	"commands.deniedCommands.description": "Prefixos de comandos que serão automaticamente negados sem solicitar aprovação. Em caso de conflitos com comandos permitidos, a correspondência de prefixo mais longa tem precedência. Adicione * para negar todos os comandos.",
+	"commands.commandExecutionTimeout.description": "Tempo máximo em segundos para aguardar a conclusão da execução do comando antes do timeout (0 = sem timeout, 1-600s, padrão: 0s)",
 	"settings.vsCodeLmModelSelector.description": "Configurações para a API do modelo de linguagem do VSCode",
 	"settings.vsCodeLmModelSelector.vendor.description": "O fornecedor do modelo de linguagem (ex: copilot)",
 	"settings.vsCodeLmModelSelector.family.description": "A família do modelo de linguagem (ex: gpt-4)",
 	"settings.customStoragePath.description": "Caminho de armazenamento personalizado. Deixe vazio para usar o local padrão. Suporta caminhos absolutos (ex: 'D:\\KiloCodeStorage')",
 	"settings.enableCodeActions.description": "Habilitar correções rápidas do Kilo Code.",
-	"settings.autoImportSettingsPath.description": "Caminho para um arquivo de configuração do Kilo Code para importar automaticamente na inicialização da extensão. Suporta caminhos absolutos e caminhos relativos ao diretório inicial (por exemplo, '~/Documents/kilo-code-settings.json'). Deixe em branco para desativar a importação automática."
+	"settings.autoImportSettingsPath.description": "Caminho para um arquivo de configuração do Kilo Code para importar automaticamente na inicialização da extensão. Suporta caminhos absolutos e caminhos relativos ao diretório inicial (por exemplo, '~/Documents/kilo-code-settings.json'). Deixe em branco para desativar a importação automática.",
+	"ghost.input.title": "Pressione 'Enter' para confirmar ou 'Escape' para cancelar",
+	"ghost.input.placeholder": "Descreva o que você quer fazer...",
+	"ghost.commands.generateSuggestions": "Kilo Code: Gerar Sugestões de Edição",
+	"ghost.commands.displaySuggestions": "Exibir Sugestões de Edição",
+	"ghost.commands.cancelSuggestions": "Cancelar Sugestões de Edição",
+	"ghost.commands.applyCurrentSuggestion": "Aplicar Sugestão de Edição Atual",
+	"ghost.commands.applyAllSuggestions": "Aplicar Todas as Sugestões de Edição",
+	"ghost.commands.promptCodeSuggestion": "Tarefa Rápida",
+	"ghost.commands.goToNextSuggestion": "Ir Para a Próxima Sugestão",
+	"ghost.commands.goToPreviousSuggestion": "Ir Para a Sugestão Anterior"
 }

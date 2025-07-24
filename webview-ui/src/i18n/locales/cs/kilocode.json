@@ -26,7 +26,11 @@
 			"account": "Účet Kilo Code",
 			"apiKey": "Kilo Code API Key",
 			"login": "Přihlásit se do Kilo Code",
-			"logout": "Odhlásit se z Kilo Code"
+			"logout": "Odhlásit se z Kilo Code",
+			"providerRouting": {
+				"title": "Kilo Code - Směrování poskytovatelů OpenRouter",
+				"description": "Kilo Code směruje požadavky na nejlepší dostupné poskytovatele pro váš model. Ve výchozím nastavení jsou požadavky rozloženy mezi nejlepší poskytovatele, aby se maximalizovala doba provozu. Můžete si však vybrat konkrétního poskytovatele, kterého chcete pro tento model použít."
+			}
 		},
 		"contextManagement": {
 			"allowVeryLargeReads": {
@@ -129,6 +133,27 @@
 			"idea5": "Vytvoř generátor CSS gradientů, který exportuje vlastní styly a zobrazuje živý náhled",
 			"idea6": "Vygeneruj karty, které krásně odhalí dynamický obsah při najetí myší",
 			"idea7": "Vytvoř uklidňující interaktivní hvězdné pole, které se pohybuje s gesty myši"
+		}
+	},
+	"ghost": {
+		"title": "Inline asistence",
+		"settings": {
+			"enableQuickInlineTaskKeybinding": {
+				"label": "Rychlý inline úkol",
+				"description": "Potřebujete jen rychlou změnu? Vyberte nějaký kód (nebo ne!) a stiskněte Cmd+I. Popište svůj cíl běžnou češtinou (\"vytvořit React komponentu s těmito props\", \"přidat ošetření chyb do této funkce\") a získejte několik připravených návrhů přímo ve svém editoru. <DocsLink>Zobrazit zkratku</DocsLink>"
+			},
+			"enableAutoInlineTaskKeybinding": {
+				"label": "Automatický inline úkol",
+				"description": "Potřebujete rychlou opravu, doplnění nebo refaktoring? Kilo využije okolní kontext a nabídne okamžitá vylepšení, abyste neztratili tempo. <DocsLink>Zobrazit klávesovou zkratku</DocsLink>"
+			},
+			"provider": "Poskytovatel",
+			"apiConfigId": {
+				"label": "Konfigurace API",
+				"current": "Použít aktuálně vybranou konfiguraci API",
+				"description": "Vyberte konfiguraci API, kterou chcete použít pro výzvy Inline Assist, nebo prostě použijte tu, která je aktuálně vybrána"
+			},
+			"triggers": "Spouštěče",
+			"keybindingDescription": "Funkce Inline Assist jsou spouštěny příkazy. <DocsLink>Klávesové zkratky si můžete nakonfigurovat zde</DocsLink>."
 		}
 	}
 }

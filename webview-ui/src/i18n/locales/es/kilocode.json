@@ -26,7 +26,11 @@
 			"account": "Cuenta de Kilo Code",
 			"apiKey": "Clave API de Kilo Code",
 			"login": "Iniciar sesión en Kilo Code",
-			"logout": "Cerrar sesión de Kilo Code"
+			"logout": "Cerrar sesión de Kilo Code",
+			"providerRouting": {
+				"title": "Kilo Code - Enrutamiento de proveedores de OpenRouter",
+				"description": "Kilo Code enruta las solicitudes a los mejores proveedores disponibles para su modelo. De forma predeterminada, las solicitudes se equilibran en carga entre los principales proveedores para maximizar el tiempo de actividad. Sin embargo, puede elegir un proveedor específico para usar para este modelo."
+			}
 		},
 		"contextManagement": {
 			"allowVeryLargeReads": {
@@ -129,6 +133,27 @@
 			"idea5": "Crea un generador de gradientes CSS que exporte hojas de estilo personalizadas y muestre una vista previa en vivo",
 			"idea6": "Genera tarjetas que revelen contenido dinámico de forma hermosa al pasar el ratón por encima",
 			"idea7": "Crea un campo de estrellas interactivo y relajante que se mueva con gestos del ratón"
+		}
+	},
+	"ghost": {
+		"title": "Asistencia en línea",
+		"settings": {
+			"enableQuickInlineTaskKeybinding": {
+				"label": "Tarea Rápida en Línea",
+				"description": "¿Solo necesitas un cambio rápido? Selecciona algo de código (¡o no!) y presiona Cmd+I. Describe tu objetivo en lenguaje sencillo (\"crear un componente de React con estas propiedades\", \"agregar manejo de errores a esta función\"), y obtén múltiples sugerencias listas para usar directamente en tu editor. <DocsLink>Ver atajo</DocsLink>"
+			},
+			"enableAutoInlineTaskKeybinding": {
+				"label": "Tarea en Línea Automática",
+				"description": "¿Necesitas una solución rápida, completar algo o refactorizar? Kilo utilizará el contexto circundante para ofrecer mejoras inmediatas, manteniéndote en el flujo de trabajo. <DocsLink>Ver atajo</DocsLink>"
+			},
+			"provider": "Proveedor",
+			"apiConfigId": {
+				"label": "Configuración de API",
+				"current": "Usar la configuración de API seleccionada actualmente",
+				"description": "Selecciona una configuración de API para usar en los prompts de Asistencia en Línea, o simplemente usa la que esté seleccionada actualmente"
+			},
+			"keybindingDescription": "Las funciones de Asistencia Integrada se activan mediante comandos. Puedes configurar los <DocsLink>atajos de teclado aquí</DocsLink>.",
+			"triggers": "Disparadores"
 		}
 	}
 }

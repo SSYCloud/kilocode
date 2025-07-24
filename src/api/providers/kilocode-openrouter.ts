@@ -2,10 +2,11 @@ import { ApiHandlerOptions, ModelRecord } from "../../shared/api"
 import { OpenRouterHandler } from "./openrouter"
 import { getModelParams } from "../transform/model-params"
 import { getModels } from "./fetchers/modelCache"
-import { DEEP_SEEK_DEFAULT_TEMPERATURE } from "@roo-code/types"
+import { DEEP_SEEK_DEFAULT_TEMPERATURE, kilocodeDefaultModelId } from "@roo-code/types"
 import { getKiloBaseUriFromToken } from "../../utils/kilocode-token"
 import { ApiHandlerCreateMessageMetadata } from ".."
 import OpenAI from "openai"
+import { getModelEndpoints } from "./fetchers/modelEndpointCache"
 
 /**
  * A custom OpenRouter handler that overrides the getModel function
@@ -40,7 +41,7 @@ export class KilocodeOpenrouterHandler extends OpenRouterHandler {
 		let info
 		let defaultTemperature = 0
 
-		const selectedModel = this.options.kilocodeModel ?? "gemini25"
+		const selectedModel = this.options.kilocodeModel ?? kilocodeDefaultModelId
 
 		// Map the selected model to the corresponding OpenRouter model ID
 		// legacy mapping
@@ -57,10 +58,17 @@ export class KilocodeOpenrouterHandler extends OpenRouterHandler {
 			id = modelMapping[selectedModel as keyof typeof modelMapping]
 		}
 
-		if (this.models[id]) {
+		if (Object.keys(this.models).length === 0) {
+			throw new Error("Failed to load Kilo Code provider model list.")
+		} else if (this.models[id]) {
 			info = this.models[id]
 		} else {
 			throw new Error(`Unsupported model: ${selectedModel}`)
+		}
+
+		// If a specific provider is requested, use the endpoint for that provider.
+		if (this.options.openRouterSpecificProvider && this.endpoints[this.options.openRouterSpecificProvider]) {
+			info = this.endpoints[this.options.openRouterSpecificProvider]
 		}
 
 		const isDeepSeekR1 = id.startsWith("deepseek/deepseek-r1") || id === "perplexity/sonar-reasoning"
@@ -80,10 +88,21 @@ export class KilocodeOpenrouterHandler extends OpenRouterHandler {
 		if (!this.options.kilocodeToken || !this.options.openRouterBaseUrl) {
 			throw new Error("KiloCode token + baseUrl is required to fetch models")
 		}
-		this.models = await getModels({
-			provider: "kilocode-openrouter",
-			kilocodeToken: this.options.kilocodeToken,
-		})
+
+		const [models, endpoints] = await Promise.all([
+			getModels({
+				provider: "kilocode-openrouter",
+				kilocodeToken: this.options.kilocodeToken,
+			}),
+			getModelEndpoints({
+				router: "openrouter",
+				modelId: this.options.kilocodeModel,
+				endpoint: this.options.openRouterSpecificProvider,
+			}),
+		])
+
+		this.models = models
+		this.endpoints = endpoints
 		return this.getModel()
 	}
 }

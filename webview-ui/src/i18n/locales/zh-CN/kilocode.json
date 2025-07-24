@@ -38,7 +38,12 @@
 		"provider": {
 			"apiKey": "胜算云 API 密钥",
 			"login": "登录胜算云",
-			"logout": "退出胜算云"
+			"logout": "退出胜算云",
+			"account": "Kilo Code 账号",
+			"providerRouting": {
+				"title": "Kilo Code - OpenRouter 提供商路由",
+				"description": "Kilo Code 将请求路由到您模型的最佳可用提供商。默认情况下，请求会在顶级提供商之间进行负载均衡，以最大限度地延长正常运行时间。但是，您可以选择要用于此模型的特定提供商。"
+			}
 		}
 	},
 	"chat": {
@@ -133,6 +138,27 @@
 			"idea5": "创建一个 CSS 渐变生成器，导出自定义样式表并显示实时预览",
 			"idea6": "生成在鼠标悬停时优雅展示动态内容的卡片",
 			"idea7": "创建一个宁静的交互式星空，跟随鼠标手势移动"
+		}
+	},
+	"ghost": {
+		"title": "内联辅助",
+		"settings": {
+			"enableQuickInlineTaskKeybinding": {
+				"label": "快速内联任务",
+				"description": "只需要一个快速的调整？选中一些代码（或者不选！）然后按下Cmd+I。用简单的英语描述你的目标（\"创建一个带有这些属性的React组件\"，\"为这个函数添加错误处理\"），然后在编辑器中直接获取多个可立即使用的建议。<DocsLink>查看快捷键</DocsLink>"
+			},
+			"enableAutoInlineTaskKeybinding": {
+				"label": "自动内联任务",
+				"description": "需要快速修复、完成或重构代码？Kilo 将使用周围的上下文提供即时改进，让您保持工作流畅。<DocsLink>查看快捷键</DocsLink>"
+			},
+			"provider": "提供商",
+			"apiConfigId": {
+				"label": "API 配置",
+				"current": "使用当前选择的 API 配置",
+				"description": "为内联辅助提示选择一个 API 配置，或者只使用当前选择的配置"
+			},
+			"triggers": "触发器",
+			"keybindingDescription": "内联助手功能由命令触发。您可以在<DocsLink>这里配置键盘快捷键</DocsLink>。"
 		}
 	}
 }

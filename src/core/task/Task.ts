@@ -20,8 +20,11 @@ import {
 	type ClineMessage,
 	type ClineSay,
 	type ToolProgressStatus,
+	DEFAULT_CONSECUTIVE_MISTAKE_LIMIT,
 	type HistoryItem,
 	TelemetryEventName,
+	TodoItem,
+	getApiProtocol,
 } from "@roo-code/types"
 import { TelemetryService } from "@roo-code/telemetry"
 import { CloudService } from "@roo-code/cloud"
@@ -41,6 +44,7 @@ import { ClineAskResponse } from "../../shared/WebviewMessage"
 import { defaultModeSlug } from "../../shared/modes"
 import { DiffStrategy } from "../../shared/tools"
 import { EXPERIMENT_IDS, experiments } from "../../shared/experiments"
+import { getModelMaxOutputTokens } from "../../shared/api"
 
 // services
 import { UrlContentFetcher } from "../../services/browser/UrlContentFetcher"
@@ -92,6 +96,7 @@ import { parseMentions } from "../mentions" // kilocode_change
 import { parseKiloSlashCommands } from "../slash-commands/kilo" // kilocode_change
 import { GlobalFileNames } from "../../shared/globalFileNames" // kilocode_change
 import { ensureLocalKilorulesDirExists } from "../context/instructions/kilo-rules" // kilocode_change
+import { restoreTodoListForTask } from "../tools/updateTodoListTool"
 
 // Constants
 const MAX_EXPONENTIAL_BACKOFF_SECONDS = 600 // 10 minutes
@@ -134,6 +139,7 @@ type UserContent = Array<Anthropic.ContentBlockParam> // kilocode_change
 export class Task extends EventEmitter<ClineEvents> {
 	private context: vscode.ExtensionContext // kilocode_change
 
+	todoList?: TodoItem[]
 	readonly taskId: string
 	private taskIsFavorited?: boolean // kilocode_change
 	readonly instanceId: string
@@ -225,7 +231,7 @@ export class Task extends EventEmitter<ClineEvents> {
 		enableDiff = false,
 		enableCheckpoints = true,
 		fuzzyMatchThreshold = 1.0,
-		consecutiveMistakeLimit = 3,
+		consecutiveMistakeLimit = DEFAULT_CONSECUTIVE_MISTAKE_LIMIT,
 		task,
 		images,
 		historyItem,
@@ -266,7 +272,7 @@ export class Task extends EventEmitter<ClineEvents> {
 		this.browserSession = new BrowserSession(provider.context)
 		this.diffEnabled = enableDiff
 		this.fuzzyMatchThreshold = fuzzyMatchThreshold
-		this.consecutiveMistakeLimit = consecutiveMistakeLimit
+		this.consecutiveMistakeLimit = consecutiveMistakeLimit ?? DEFAULT_CONSECUTIVE_MISTAKE_LIMIT
 		this.providerRef = new WeakRef(provider)
 		this.globalStoragePath = provider.context.globalStorageUri.fsPath
 		this.diffViewProvider = new DiffViewProvider(this.cwd)
@@ -396,6 +402,7 @@ export class Task extends EventEmitter<ClineEvents> {
 
 	public async overwriteClineMessages(newMessages: ClineMessage[]) {
 		this.clineMessages = newMessages
+		restoreTodoListForTask(this)
 		await this.saveClineMessages()
 	}
 
@@ -1179,7 +1186,7 @@ export class Task extends EventEmitter<ClineEvents> {
 			throw new Error(`[KiloCode#recursivelyMakeClineRequests] task ${this.taskId}.${this.instanceId} aborted`)
 		}
 
-		if (this.consecutiveMistakeCount >= this.consecutiveMistakeLimit) {
+		if (this.consecutiveMistakeLimit > 0 && this.consecutiveMistakeCount >= this.consecutiveMistakeLimit) {
 			const { response, text, images } = await this.ask(
 				"mistake_limit_reached",
 				t("common:errors.mistake_limit_guidance"),
@@ -1229,11 +1236,16 @@ export class Task extends EventEmitter<ClineEvents> {
 		// top-down build file structure of project which for large projects can
 		// take a few seconds. For the best UX we show a placeholder api_req_started
 		// message with a loading spinner as this happens.
+
+		// Determine API protocol based on provider
+		const apiProtocol = getApiProtocol(this.apiConfiguration.apiProvider)
+
 		await this.say(
 			"api_req_started",
 			JSON.stringify({
 				request:
 					userContent.map((block) => formatContentBlockToMarkdown(block)).join("\n\n") + "\n\nLoading...",
+				apiProtocol,
 			}),
 		)
 
@@ -1274,6 +1286,7 @@ export class Task extends EventEmitter<ClineEvents> {
 
 		this.clineMessages[lastApiReqIndex].text = JSON.stringify({
 			request: finalUserContent.map((block) => formatContentBlockToMarkdown(block)).join("\n\n"),
+			apiProtocol,
 		} satisfies ClineApiReqInfo)
 
 		await this.saveClineMessages()
@@ -1294,8 +1307,9 @@ export class Task extends EventEmitter<ClineEvents> {
 			// of prices in tasks from history (it's worth removing a few months
 			// from now).
 			const updateApiReqMsg = (cancelReason?: ClineApiReqCancelReason, streamingFailedMessage?: string) => {
+				const existingData = JSON.parse(this.clineMessages[lastApiReqIndex].text || "{}")
 				this.clineMessages[lastApiReqIndex].text = JSON.stringify({
-					...JSON.parse(this.clineMessages[lastApiReqIndex].text || "{}"),
+					...existingData,
 					tokensIn: inputTokens,
 					tokensOut: outputTokens,
 					cacheWrites: cacheWriteTokens,
@@ -1379,7 +1393,13 @@ export class Task extends EventEmitter<ClineEvents> {
 			this.isStreaming = true
 
 			try {
-				for await (const chunk of stream) {
+				// kilocode change: use manual iterator instead of for ... of
+				const iterator = stream[Symbol.asyncIterator]()
+				let item = await iterator.next()
+				while (!item.done) {
+					const chunk = item.value
+					item = await iterator.next()
+
 					if (!chunk) {
 						// Sometimes chunk is undefined, no idea that can cause
 						// it, but this workaround seems to fix it.
@@ -1452,6 +1472,52 @@ export class Task extends EventEmitter<ClineEvents> {
 						break
 					}
 				}
+
+				// kilocode_change start: continue stream in background to ensure we have all usage info
+				const drainStreamInBackground = async () => {
+					const prefix = `[Request ${lastApiReqIndex}]`
+					console.debug(`${prefix} Parsing assistant messages done, continuing stream in background...`)
+					let usageFound = false
+					while (!item.done) {
+						const chunk = item.value
+						item = await iterator.next()
+						if (chunk && chunk.type === "usage") {
+							usageFound = true
+							inputTokens += chunk.inputTokens
+							outputTokens += chunk.outputTokens
+							cacheWriteTokens += chunk.cacheWriteTokens ?? 0
+							cacheReadTokens += chunk.cacheReadTokens ?? 0
+							totalCost = chunk.totalCost
+						}
+					}
+					if (usageFound) {
+						console.debug(`${prefix} Stream done, updating request message with usage info`)
+						updateApiReqMsg()
+					} else {
+						console.debug(`${prefix} Stream done`)
+					}
+					if (inputTokens > 0 || outputTokens > 0 || cacheWriteTokens > 0 || cacheReadTokens > 0) {
+						TelemetryService.instance.captureLlmCompletion(this.taskId, {
+							inputTokens,
+							outputTokens,
+							cacheWriteTokens,
+							cacheReadTokens,
+							cost:
+								totalCost ??
+								calculateApiCostAnthropic(
+									this.api.getModel().info,
+									inputTokens,
+									outputTokens,
+									cacheWriteTokens,
+									cacheReadTokens,
+								),
+						})
+					} else {
+						console.warn(`${prefix} No usage data after the stream completed`)
+					}
+				}
+				drainStreamInBackground() // no await so it runs in the background
+				// kilocode_change end
 			} catch (error) {
 				// Abandoned happens when extension is no longer waiting for the
 				// Cline instance to finish aborting (error is thrown here when
@@ -1483,23 +1549,24 @@ export class Task extends EventEmitter<ClineEvents> {
 				this.isStreaming = false
 			}
 
-			if (inputTokens > 0 || outputTokens > 0 || cacheWriteTokens > 0 || cacheReadTokens > 0) {
-				TelemetryService.instance.captureLlmCompletion(this.taskId, {
-					inputTokens,
-					outputTokens,
-					cacheWriteTokens,
-					cacheReadTokens,
-					cost:
-						totalCost ??
-						calculateApiCostAnthropic(
-							this.api.getModel().info,
-							inputTokens,
-							outputTokens,
-							cacheWriteTokens,
-							cacheReadTokens,
-						),
-				})
-			}
+			// kilocode_change: this was moved to the drainStreamInBackground() function above
+			//if (inputTokens > 0 || outputTokens > 0 || cacheWriteTokens > 0 || cacheReadTokens > 0) {
+			//	TelemetryService.instance.captureLlmCompletion(this.taskId, {
+			//		inputTokens,
+			//		outputTokens,
+			//		cacheWriteTokens,
+			//		cacheReadTokens,
+			//		cost:
+			//			totalCost ??
+			//			calculateApiCostAnthropic(
+			//				this.api.getModel().info,
+			//				inputTokens,
+			//				outputTokens,
+			//				cacheWriteTokens,
+			//				cacheReadTokens,
+			//			),
+			//	})
+			//}
 
 			// Need to call here in case the stream was aborted.
 			if (this.abort || this.abandoned) {
@@ -1723,6 +1790,7 @@ export class Task extends EventEmitter<ClineEvents> {
 			language,
 			maxConcurrentFileReads,
 			maxReadFileLine,
+			apiConfiguration,
 		} = state ?? {}
 
 		return await (async () => {
@@ -1752,6 +1820,7 @@ export class Task extends EventEmitter<ClineEvents> {
 				maxReadFileLine !== -1,
 				{
 					maxConcurrentFileReads,
+					todoListEnabled: apiConfiguration?.todoListEnabled,
 				},
 			)
 		})()
@@ -1820,15 +1889,13 @@ export class Task extends EventEmitter<ClineEvents> {
 		const { contextTokens } = this.getTokenUsage()
 
 		if (contextTokens) {
-			// Default max tokens value for thinking models when no specific
-			// value is set.
-			const DEFAULT_THINKING_MODEL_MAX_TOKENS = 16_384
-
 			const modelInfo = this.api.getModel().info
 
-			const maxTokens = modelInfo.supportsReasoningBudget
-				? this.apiConfiguration.modelMaxTokens || DEFAULT_THINKING_MODEL_MAX_TOKENS
-				: modelInfo.maxTokens
+			const maxTokens = getModelMaxOutputTokens({
+				modelId: this.api.getModel().id,
+				model: modelInfo,
+				settings: this.apiConfiguration,
+			})
 
 			const contextWindow = modelInfo.contextWindow
 

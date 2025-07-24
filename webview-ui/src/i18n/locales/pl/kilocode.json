@@ -26,7 +26,11 @@
 			"account": "Konto Kilo Code",
 			"apiKey": "Klucz API Kilo Code",
 			"login": "Zaloguj się do Kilo Code",
-			"logout": "Wyloguj się z Kilo Code"
+			"logout": "Wyloguj się z Kilo Code",
+			"providerRouting": {
+				"title": "Kilo Code - Routing dostawców OpenRouter",
+				"description": "Kilo Code kieruje żądania do najlepszych dostępnych dostawców dla Twojego modelu. Domyślnie żądania są równoważone obciążeniem między najlepszymi dostawcami, aby zmaksymalizować czas działania. Możesz jednak wybrać konkretnego dostawcę do użycia dla tego modelu."
+			}
 		},
 		"contextManagement": {
 			"allowVeryLargeReads": {
@@ -129,6 +133,27 @@
 			"idea5": "Stwórz generator gradientów CSS, który eksportuje niestandardowe arkusze stylów i pokazuje podgląd na żywo",
 			"idea6": "Wygeneruj karty, które pięknie ujawniają dynamiczną zawartość po najechaniu myszą",
 			"idea7": "Stwórz uspokajające interaktywne pole gwiazd, które porusza się wraz z gestami myszy"
+		}
+	},
+	"ghost": {
+		"title": "Pomoc w tekście",
+		"settings": {
+			"enableQuickInlineTaskKeybinding": {
+				"label": "Szybkie zadanie w tekście",
+				"description": "Potrzebujesz tylko szybkiej zmiany? Zaznacz jakiś kod (albo nie!) i naciśnij Cmd+I. Opisz swój cel zwykłym językiem (\"stwórz komponent React z tymi propsami\", \"dodaj obsługę błędów do tej funkcji\"), i otrzymaj wiele gotowych do użycia sugestii bezpośrednio w swoim edytorze. <DocsLink>Zobacz skrót</DocsLink>"
+			},
+			"enableAutoInlineTaskKeybinding": {
+				"label": "Zadanie automatyczne w linii",
+				"description": "Potrzebujesz szybkiej poprawki, uzupełnienia lub refaktoryzacji? Kilo użyje otaczającego kontekstu, aby zaproponować natychmiastowe usprawnienia, pozwalając Ci pozostać w stanie flow. <DocsLink>Zobacz skrót</DocsLink>"
+			},
+			"provider": "Dostawca",
+			"apiConfigId": {
+				"label": "Konfiguracja API",
+				"current": "Użyj aktualnie wybranej konfiguracji API",
+				"description": "Wybierz konfigurację API do użycia w podpowiedziach Inline Assist lub po prostu użyj tej, która jest aktualnie wybrana"
+			},
+			"triggers": "Wyzwalacze",
+			"keybindingDescription": "Funkcje Inline Assist są uruchamiane za pomocą poleceń. Możesz skonfigurować <DocsLink>skróty klawiaturowe tutaj</DocsLink>."
 		}
 	}
 }

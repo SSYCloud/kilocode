@@ -21,6 +21,16 @@ vi.mock("@vscode/webview-ui-toolkit/react", () => ({
 	VSCodeRadio: ({ value, checked }: any) => <input type="radio" value={value} checked={checked} />,
 	VSCodeRadioGroup: ({ children }: any) => <div>{children}</div>,
 	VSCodeButton: ({ children }: any) => <div>{children}</div>,
+	VSCodeCheckbox: ({ children, checked, onChange }: any) => (
+		<label>
+			<input
+				type="checkbox"
+				checked={checked}
+				onChange={(e) => onChange && onChange({ target: { checked: e.target.checked } })}
+			/>
+			{children}
+		</label>
+	),
 }))
 
 // Mock other components
@@ -88,6 +98,32 @@ vi.mock("@/components/ui", () => ({
 			<input type="range" value={value || 0} onChange={(e) => onChange(parseFloat(e.target.value))} />
 		</div>
 	),
+	SearchableSelect: ({ value, onValueChange, options, placeholder, "data-testid": dataTestId }: any) => (
+		<div className="searchable-select-mock" data-testid={dataTestId || "provider-popover-trigger"}>
+			<select value={value} onChange={(e) => onValueChange && onValueChange(e.target.value)}>
+				<option value="">{placeholder || "Select..."}</option>
+				{options?.map((option: any) => (
+					<option key={option.value} value={option.value}>
+						{option.label}
+					</option>
+				))}
+			</select>
+		</div>
+	),
+	// Add Collapsible components
+	Collapsible: ({ children, open }: any) => (
+		<div className="collapsible-mock" data-open={open}>
+			{children}
+		</div>
+	),
+	CollapsibleTrigger: ({ children, className, onClick }: any) => (
+		<div className={`collapsible-trigger-mock ${className || ""}`} onClick={onClick}>
+			{children}
+		</div>
+	),
+	CollapsibleContent: ({ children, className }: any) => (
+		<div className={`collapsible-content-mock ${className || ""}`}>{children}</div>
+	),
 }))
 
 vi.mock("../TemperatureControl", () => ({
@@ -143,6 +179,22 @@ vi.mock("../DiffSettingsControl", () => ({
 					step={0.005}
 				/>
 			</div>
+		</div>
+	),
+}))
+
+// Mock TodoListSettingsControl for tests
+vi.mock("../TodoListSettingsControl", () => ({
+	TodoListSettingsControl: ({ todoListEnabled, onChange }: any) => (
+		<div data-testid="todo-list-settings-control">
+			<label>
+				Enable todo list tool
+				<input
+					type="checkbox"
+					checked={todoListEnabled}
+					onChange={(e) => onChange("todoListEnabled", e.target.checked)}
+				/>
+			</label>
 		</div>
 	),
 }))
@@ -291,6 +343,34 @@ describe("ApiOptions", () => {
 		// Note: We don't need to test the actual ThinkingBudget component functionality here
 		// since we have separate tests for that component. We just need to verify that
 		// it's included in the ApiOptions component when appropriate.
+	})
+
+	// kilocode_change: skip, we use a custom provider select component
+	it.skip("filters providers by search input and shows no match message when appropriate", () => {
+		renderApiOptions({
+			apiConfiguration: {},
+			setApiConfigurationField: () => {},
+		})
+
+		// The SearchableSelect mock renders inside a div with the test id
+		const providerSelectContainer = screen.getByTestId("provider-select")
+		expect(providerSelectContainer).toBeInTheDocument()
+
+		// Get the actual select element inside the container
+		const providerSelect = providerSelectContainer.querySelector("select") as HTMLSelectElement
+		expect(providerSelect).toBeInTheDocument()
+
+		// Check that we have options
+		const options = providerSelect.querySelectorAll("option")
+		expect(options.length).toBeGreaterThan(1) // Should have placeholder + actual options
+
+		// Check that OpenAI option exists
+		const optionTexts = Array.from(options).map((opt) => opt.textContent)
+		expect(optionTexts).toContain("OpenAI")
+		expect(optionTexts).toContain("Anthropic")
+
+		// Note: The mock doesn't implement search functionality, so we're just verifying
+		// that the select element is rendered with the expected options
 	})
 
 	describe("OpenAI provider tests", () => {

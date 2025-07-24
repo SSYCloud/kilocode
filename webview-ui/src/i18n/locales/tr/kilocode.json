@@ -32,7 +32,11 @@
 			"account": "Kilo Code Hesabı",
 			"apiKey": "Kilo Code API Anahtarı",
 			"login": "Kilo Code'a giriş yap",
-			"logout": "Kilo Code'dan çıkış yap"
+			"logout": "Kilo Code'dan çıkış yap",
+			"providerRouting": {
+				"title": "Kilo Code - OpenRouter Sağlayıcı Yönlendirme",
+				"description": "Kilo Code, modeliniz için en iyi kullanılabilir sağlayıcılara istekleri yönlendirir. Varsayılan olarak, çalışma süresini en üst düzeye çıkarmak için istekler en iyi sağlayıcılar arasında yük dengelenir. Ancak, bu model için kullanılacak belirli bir sağlayıcı seçebilirsiniz."
+			}
 		},
 		"systemNotifications": {
 			"label": "Sistem bildirimlerini etkinleştir",
@@ -129,6 +133,27 @@
 			"idea5": "Özel stil sayfaları dışa aktaran ve canlı önizleme gösteren CSS gradient üretici oluştur",
 			"idea6": "Fare üzerine geldiğinde dinamik içeriği güzelce ortaya çıkaran kartlar üret",
 			"idea7": "Fare hareketleriyle birlikte hareket eden sakinleştirici etkileşimli yıldız alanı oluştur"
+		}
+	},
+	"ghost": {
+		"title": "Satır İçi Yardım",
+		"settings": {
+			"enableQuickInlineTaskKeybinding": {
+				"label": "Hızlı Satır İçi Görev",
+				"description": "Sadece hızlı bir değişikliğe mi ihtiyacınız var? Biraz kod seçin (ya da seçmeyin!) ve Cmd+I tuşuna basın. Amacınızı sade bir şekilde açıklayın (\"bu prop'larla bir React bileşeni oluştur\", \"bu fonksiyona hata yönetimi ekle\") ve düzenleyicinizde kullanıma hazır birden fazla öneri alın. <DocsLink>Kısayolu gör</DocsLink>"
+			},
+			"enableAutoInlineTaskKeybinding": {
+				"label": "Otomatik Satır İçi Görev",
+				"description": "Hızlı bir düzeltme, tamamlama veya yeniden düzenleme mi gerekiyor? Kilo, çevreleyen bağlamı kullanarak anında iyileştirmeler sunacak, böylece odağınızı kaybetmeyeceksiniz. <DocsLink>Kısayolu gör</DocsLink>"
+			},
+			"provider": "Sağlayıcı",
+			"apiConfigId": {
+				"label": "API Yapılandırması",
+				"current": "Şu anda seçili API yapılandırmasını kullan",
+				"description": "Satır İçi Yardım istemleri için kullanılacak bir API yapılandırması seçin veya o anda seçili olanı kullanın"
+			},
+			"triggers": "Tetikleyiciler",
+			"keybindingDescription": "Satır içi Yardım özellikleri komutlarla tetiklenir. <DocsLink>Klavye kısayollarını buradan</DocsLink> yapılandırabilirsiniz."
 		}
 	}
 }

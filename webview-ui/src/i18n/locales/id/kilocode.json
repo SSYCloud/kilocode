@@ -26,7 +26,11 @@
 			"account": "Akun Kilo Code",
 			"apiKey": "API Key Kilo Code",
 			"login": "Masuk ke Kilo Code",
-			"logout": "Keluar dari Kilo Code"
+			"logout": "Keluar dari Kilo Code",
+			"providerRouting": {
+				"title": "Kilo Code - Perutean Penyedia OpenRouter",
+				"description": "Kilo Code merutekan permintaan ke penyedia terbaik yang tersedia untuk model Anda. Secara default, permintaan diseimbangkan bebannya di seluruh penyedia teratas untuk memaksimalkan waktu aktif. Namun, Anda dapat memilih penyedia tertentu untuk digunakan untuk model ini."
+			}
 		},
 		"contextManagement": {
 			"allowVeryLargeReads": {
@@ -129,6 +133,27 @@
 			"idea5": "Buat generator gradien CSS yang mengekspor stylesheet kustom dan menampilkan pratinjau langsung",
 			"idea6": "Buat kartu yang mengungkap konten dinamis dengan indah saat dihover",
 			"idea7": "Buat starfield interaktif yang menenangkan yang bergerak dengan gerakan mouse"
+		}
+	},
+	"ghost": {
+		"title": "Bantuan Inline",
+		"settings": {
+			"enableQuickInlineTaskKeybinding": {
+				"label": "Tugas Cepat Sebaris",
+				"description": "Hanya butuh perubahan cepat? Pilih beberapa kode (atau tidak perlu!) dan tekan Cmd+I. Jelaskan tujuan Anda dalam bahasa sehari-hari (\"buat komponen React dengan prop ini\", \"tambahkan penanganan kesalahan ke fungsi ini\"), dan dapatkan beberapa saran siap pakai langsung di editor Anda. <DocsLink>Lihat pintasan</DocsLink>"
+			},
+			"enableAutoInlineTaskKeybinding": {
+				"label": "Tugas Otomatis Inline",
+				"description": "Butuh perbaikan cepat, penyelesaian, atau refaktor? Kilo akan menggunakan konteks di sekitarnya untuk menawarkan peningkatan langsung, membuat Anda tetap fokus dalam alur kerja. <DocsLink>Lihat pintasan</DocsLink>"
+			},
+			"provider": "Penyedia",
+			"apiConfigId": {
+				"label": "Konfigurasi API",
+				"current": "Gunakan konfigurasi API yang dipilih saat ini",
+				"description": "Pilih konfigurasi API untuk digunakan untuk prompt Bantuan Inline, atau cukup gunakan apa pun yang saat ini dipilih"
+			},
+			"triggers": "Pemicu",
+			"keybindingDescription": "Fitur Bantuan Inline dipicu oleh perintah. Anda dapat mengonfigurasi <DocsLink>pintasan keyboard di sini</DocsLink>."
 		}
 	}
 }

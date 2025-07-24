@@ -45,7 +45,7 @@
 	},
 	"save": {
 		"title": "Guardar",
-		"tooltip": "Guardar los cambios del archivo"
+		"tooltip": "Guardar los cambios del mensaje"
 	},
 	"tokenProgress": {
 		"availableSpace": "Espacio disponible: {{amount}} tokens",
@@ -112,6 +112,7 @@
 	"enhancePrompt": "Mejorar el mensaje con contexto adicional",
 	"addImages": "Agregar imágenes al mensaje",
 	"sendMessage": "Enviar mensaje",
+	"stopTts": "Detener texto a voz",
 	"typeMessage": "Escribe un mensaje...",
 	"typeTask": "Construir, buscar, preguntar algo",
 	"addContext": "@ para agregar contexto, / para cambiar modos",
@@ -129,6 +130,7 @@
 	"separator": "Separador",
 	"edit": "Editar...",
 	"forNextMode": "para el siguiente modo",
+	"forPreviousMode": "para el modo anterior",
 	"error": "Error",
 	"diffError": {
 		"title": "Edición fallida"
@@ -228,7 +230,10 @@
 	"autoApprove": {
 		"title": "Auto-aprobar:",
 		"none": "Ninguno",
-		"description": "Auto-aprobar permite a Kilo Code realizar acciones sin pedir permiso. Habilita solo para acciones en las que confíes plenamente. Configuración más detallada disponible en <settingsLink>Configuración</settingsLink>."
+		"description": "Auto-aprobar permite a Kilo Code realizar acciones sin pedir permiso. Habilita solo para acciones en las que confíes plenamente. Configuración más detallada disponible en <settingsLink>Configuración</settingsLink>.",
+		"selectOptionsFirst": "Selecciona al menos una opción a continuación para habilitar la aprobación automática",
+		"toggleAriaLabel": "Alternar aprobación automática",
+		"disabledAriaLabel": "Aprobación automática desactivada: seleccione primero las opciones"
 	},
 	"reasoning": {
 		"thinking": "Pensando",
@@ -246,11 +251,11 @@
 		"countdownDisplay": "{{count}}s"
 	},
 	"announcement": {
-		"title": "🎉 Roo Code {{version}} publicado",
-		"description": "Roo Code {{version}} trae poderosas nuevas funcionalidades y mejoras significativas para mejorar tu flujo de trabajo de desarrollo.",
+		"title": "🎉 Kilo Code {{version}} publicado",
+		"description": "Kilo Code {{version}} trae poderosas nuevas funcionalidades y mejoras significativas para mejorar tu flujo de trabajo de desarrollo.",
 		"whatsNew": "Novedades",
-		"feature1": "<bold>Compartir tareas con 1 clic</bold>: Comparte tus tareas instantáneamente con colegas y la comunidad con un solo clic.",
-		"feature2": "<bold>Soporte de directorio .roo global</bold>: Carga reglas y configuraciones desde un directorio .roo global para configuraciones consistentes entre proyectos.",
+		"feature1": "<bold>Indexación de código base graduada de experimental</bold>: La indexación completa del código base ahora es estable y está lista para uso en producción con búsqueda mejorada y comprensión de contexto.",
+		"feature2": "<bold>Nueva función de lista de tareas</bold>: Mantén tus tareas en el buen camino con gestión integrada de tareas que te ayuda a mantenerte organizado y enfocado en tus objetivos de desarrollo.",
 		"feature3": "<bold>Transiciones mejoradas de Arquitecto a Código</bold>: Transferencias fluidas desde la planificación en modo Arquitecto hasta la implementación en modo Código.",
 		"hideButton": "Ocultar anuncio",
 		"detailsDiscussLinks": "Obtén más detalles y participa en <discordLink>Discord</discordLink> y <redditLink>Reddit</redditLink> 🚀"
@@ -287,7 +292,7 @@
 		}
 	},
 	"systemPromptWarning": "ADVERTENCIA: Anulación de instrucciones del sistema personalizada activa. Esto puede romper gravemente la funcionalidad y causar un comportamiento impredecible.",
-	"profileViolationWarning": "El perfil actual infringe la configuración de tu organización",
+	"profileViolationWarning": "El perfil actual no es compatible con la configuración de tu organización",
 	"shellIntegration": {
 		"title": "Advertencia de ejecución de comandos",
 		"description": "Tu comando se está ejecutando sin la integración de shell de terminal de VSCode. Para suprimir esta advertencia, puedes desactivar la integración de shell en la sección <strong>Terminal</strong> de la <settingsLink>configuración de Kilo Code</settingsLink> o solucionar problemas de integración de terminal de VSCode usando el enlace de abajo.",
@@ -303,7 +308,8 @@
 	"codebaseSearch": {
 		"wantsToSearch": "Kilo Code quiere buscar en la base de código <code>{{query}}</code>:",
 		"wantsToSearchWithPath": "Kilo Code quiere buscar en la base de código <code>{{query}}</code> en <code>{{path}}</code>:",
-		"didSearch": "Se encontraron {{count}} resultado(s) para <code>{{query}}</code>:",
+		"didSearch_one": "Se encontró 1 resultado",
+		"didSearch_other": "Se encontraron {{count}} resultados",
 		"resultTooltip": "Puntuación de similitud: {{score}} (haz clic para abrir el archivo)"
 	},
 	"read-batch": {
@@ -323,5 +329,8 @@
 	},
 	"versionIndicator": {
 		"ariaLabel": "Versión {{version}} - Haz clic para ver las notas de la versión"
+	},
+	"editMessage": {
+		"placeholder": "Edita tu mensaje..."
 	}
 }

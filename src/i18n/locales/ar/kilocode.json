@@ -40,14 +40,14 @@
 		}
 	},
 	"commitMessage": {
-		"activated": "تم تفعيل منشئ رسائل التزام كود كيلو",
+		"activated": "تم تفعيل منشئ رسائل التزام Kilo Code",
 		"gitNotFound": "⚠️ مستودع Git غير موجود أو Git غير متاح",
 		"gitInitError": "⚠️ خطأ في تهيئة Git: {{error}}",
-		"generating": "كيلو: جارٍ إنشاء رسالة الالتزام...",
-		"noChanges": "كيلو: لم يتم العثور على تغييرات للتحليل",
-		"generated": "كيلو: تم إنشاء رسالة الالتزام!",
+		"generating": "Kilo: جارٍ إنشاء رسالة الالتزام...",
+		"noChanges": "Kilo: لم يتم العثور على تغييرات للتحليل",
+		"generated": "Kilo: تم إنشاء رسالة الالتزام!",
 		"generationFailed": "Kilo: فشل في إنشاء رسالة الالتزام: {{errorMessage}}",
-		"generatingFromUnstaged": "كيلو: إنشاء رسالة باستخدام التغييرات غير المرحلة",
+		"generatingFromUnstaged": "Kilo: إنشاء رسالة باستخدام التغييرات غير المرحلة",
 		"analyzingChanges": "Kilo: جاري تحليل التعديلات الجاهزة...",
 		"noStagedChangesRepo": "Kilo: ما فيه تعديلات مضافة في مستودع git",
 		"noStagedChanges": "Kilo: ما فيه تعديلات مضافة لتحليلها",
@@ -58,21 +58,54 @@
 	"autocomplete": {
 		"statusBar": {
 			"tooltip": {
-				"basic": "كيلو كود الإكمال التلقائي",
-				"disabled": "إكمال تلقائي لكود كيلو (معطل)",
+				"basic": "Kilo Code الإكمال التلقائي",
+				"disabled": "إكمال تلقائي لـ Kilo Code (معطل)",
 				"sessionTotal": "التكلفة الإجمالية للجلسة:",
 				"tokenError": "يجب تعيين رمز صالح لاستخدام الإكمال التلقائي",
 				"lastCompletion": "الإكمال الأخير:",
 				"model": "النموذج:"
 			},
-			"disabled": "$(circle-slash) كيلو مكتمل",
-			"warning": "$(warning) اكتمل كيلو",
-			"enabled": "$(sparkle) كيلو مكتمل",
+			"disabled": "$(circle-slash) Kilo إكمال تلقائي",
+			"warning": "$(warning) Kilo إكمال تلقائي",
+			"enabled": "$(sparkle) Kilo إكمال تلقائي",
 			"cost": {
 				"zero": "0.00 دولار",
 				"lessThanCent": "<$0.01"
 			}
 		},
-		"toggleMessage": "كيلو كُمبليت {{status}}"
+		"toggleMessage": "Kilo إكمال تلقائي {{status}}"
+	},
+	"ghost": {
+		"progress": {
+			"analyzing": "جارِ تحليل الكود الخاص بك...",
+			"showing": "عرض التعديلات المقترحة...",
+			"generating": "جاري توليد التعديلات المقترحة...",
+			"processing": "جارِ معالجة التعديلات المقترحة...",
+			"title": "Kilo Code"
+		},
+		"input": {
+			"title": "Kilo Code: مهمة سريعة",
+			"placeholder": "مثلاً، 'أعد هيكلة هذه الدالة لتكون أكثر كفاءة'"
+		},
+		"commands": {
+			"displaySuggestions": "عرض التعديلات المقترحة",
+			"generateSuggestions": "Kilo Code: توليد تعديلات مقترحة",
+			"applyCurrentSuggestion": "تطبيق التعديل المُقترح الحالي",
+			"cancelSuggestions": "إلغاء التعديلات المقترحة",
+			"promptCodeSuggestion": "مهمة سريعة",
+			"applyAllSuggestions": "تطبيق كافة التعديلات المقترحة",
+			"category": "Kilo Code"
+		},
+		"codeAction": {
+			"title": "Kilo Code: التعديلات المقترحة"
+		},
+		"chatParticipant": {
+			"fullName": "Kilo Code وكيل",
+			"description": "يمكنني مساعدتك بالمهام السريعة والتعديلات المقترحة.",
+			"name": "وكيل"
+		},
+		"messages": {
+			"provideCodeSuggestions": "جارٍ تقديم اقتراحات الرمز..."
+		}
 	}
 }

@@ -93,6 +93,9 @@
 		"title": "إلغاء",
 		"tooltip": "إلغاء العملية الحالية"
 	},
+	"editMessage": {
+		"placeholder": "عدّل رسالتك..."
+	},
 	"scrollToBottom": "انزل لنهاية المحادثة",
 	"about": "أنشئ، أعِد هيكلة، واصلِح الأكواد بمساعدة الذكاء. اطّلع على <DocsLink>التوثيق</DocsLink> لتعرف أكثر.",
 	"onboarding": "قائمة المهام فاضية في هالمساحة.",
@@ -122,11 +125,12 @@
 		"title": "الأنماط",
 		"marketplace": "سوق الأنماط",
 		"settings": "إعدادات الأنماط",
-		"description": "شخصيات متخصصة تضبط سلوك Roo."
+		"description": "شخصيات متخصصة تضبط سلوك Kilo Code."
 	},
 	"enhancePromptDescription": "زر «حسّن الموجه» يطوّر موجهك بإضافة سياق أو توضيح أو إعادة صياغة. جرّب اكتب موجه هنا ثم اضغط الزر مرة ثانية وشوف النتيجة.",
 	"addImages": "أضف صور للرسالة",
 	"sendMessage": "أرسل الرسالة",
+	"stopTts": "أوقف النطق الآلي",
 	"typeMessage": "اكتب رسالة...",
 	"typeTask": "ابنِ، ابحث، اسأل عن شي",
 	"addContext": "@ لإضافة سياق، / للتبديل بين الأنماط",
@@ -137,6 +141,7 @@
 	"separator": "فاصل",
 	"edit": "تحرير...",
 	"forNextMode": "للنمط التالي",
+	"forPreviousMode": "للنمط السابق",
 	"apiRequest": {
 		"title": "طلب API",
 		"failed": "فشل طلب API",
@@ -208,8 +213,13 @@
 	"codebaseSearch": {
 		"wantsToSearch": "Kilo Code يريد البحث في الكود عن <code>{{query}}</code>:",
 		"wantsToSearchWithPath": "Kilo Code يريد البحث في الكود عن <code>{{query}}</code> في <code>{{path}}</code>:",
-		"didSearch": "تم العثور على {{count}} نتيجة لـ <code>{{query}}</code>:",
+		"didSearch_one": "تم العثور على نتيجة واحدة",
+		"didSearch_other": "تم العثور على {{count}} نتيجة",
 		"resultTooltip": "درجة التشابه: {{score}} (انقر لفتح الملف)"
+	},
+	"searchResults": {
+		"title": "نتائج البحث",
+		"noResults": "لا توجد نتائج"
 	},
 	"commandOutput": "مخرجات الأمر",
 	"response": "الاستجابة",
@@ -248,13 +258,20 @@
 	"autoApprove": {
 		"title": "الموافقة التلقائية:",
 		"none": "لا شيء",
-		"description": "الموافقة التلقائية تسمح لـ Kilo Code بتنفيذ إجراءات دون طلب إذن. فعّلها فقط للإجراءات اللي تثق فيها تماماً. إعدادات تفصيلية أكثر متوفرة في <settingsLink>الإعدادات</settingsLink>."
+		"description": "الموافقة التلقائية تسمح لـ Kilo Code بتنفيذ إجراءات دون طلب إذن. فعّلها فقط للإجراءات اللي تثق فيها تماماً. إعدادات تفصيلية أكثر متوفرة في <settingsLink>الإعدادات</settingsLink>.",
+		"selectOptionsFirst": "اختر خيار واحد على الأقل أدناه لتفعيل الموافقة التلقائية",
+		"toggleAriaLabel": "تبديل الموافقة التلقائية",
+		"disabledAriaLabel": "الموافقة التلقائية معطّلة - اختر الخيارات أولاً"
+	},
+	"autoApproval": {
+		"approveAll": "الموافقة على الكل",
+		"approveAllTooltip": "وافق على كل الإجراءات تلقائياً"
 	},
 	"announcement": {
-		"title": "🎉 Roo Code {{version}} تم إطلاقه",
-		"description": "Roo Code {{version}} يجلب ميزات وتحسينات كبيرة بناءً على ملاحظاتكم.",
+		"title": "🎉 Kilo Code {{version}} تم إطلاقه",
+		"description": "Kilo Code {{version}} يجلب ميزات وتحسينات كبيرة بناءً على ملاحظاتكم.",
 		"whatsNew": "الجديد",
-		"feature1": "<bold>إطلاق سوق Roo</bold>: السوق صار متاح! اكتشف وثبّت الأنماط و MCPs بسهولة.",
+		"feature1": "<bold>إطلاق سوق Kilo Code</bold>: السوق صار متاح! اكتشف وثبّت الأنماط و MCPs بسهولة.",
 		"feature2": "<bold>نماذج Gemini 2.5</bold>: دعم نماذج Gemini 2.5 Pro و Flash و Flash Lite.",
 		"feature3": "<bold>دعم ملفات Excel والمزيد</bold>: دعم ملفات .xlsx بالإضافة لكثير من الإصلاحات والتحسينات!",
 		"hideButton": "إخفاء الإعلان",

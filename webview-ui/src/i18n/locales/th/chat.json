@@ -93,6 +93,9 @@
 		"title": "ยกเลิก",
 		"tooltip": "ยกเลิกการดำเนินการปัจจุบัน"
 	},
+	"editMessage": {
+		"placeholder": "แก้ไขข้อความของคุณ..."
+	},
 	"scrollToBottom": "เลื่อนไปด้านล่างของแชท",
 	"about": "สร้าง รีแฟคเตอร์ และดีบักโค้ดด้วยความช่วยเหลือจาก AI ดู<DocsLink>เอกสาร</DocsLink>ของเราเพื่อเรียนรู้เพิ่มเติม",
 	"onboarding": "รายการงานของคุณในเวิร์กสเปซนี้ว่างเปล่า",
@@ -127,6 +130,7 @@
 	},
 	"addImages": "เพิ่มรูปภาพในข้อความ",
 	"sendMessage": "ส่งข้อความ",
+	"stopTts": "หยุดการอ่านเสียง",
 	"typeMessage": "พิมพ์ข้อความ...",
 	"typeTask": "สร้าง ค้นหา ถามอะไรก็ได้",
 	"addContext": "@ เพื่อเพิ่มบริบท, / เพื่อเปลี่ยนโหมด",
@@ -137,6 +141,7 @@
 	"separator": "ตัวแบ่ง",
 	"edit": "แก้ไข...",
 	"forNextMode": "สำหรับโหมดถัดไป",
+	"forPreviousMode": "สำหรับโหมดก่อนหน้า",
 	"apiRequest": {
 		"title": "คำขอ API",
 		"failed": "คำขอ API ล้มเหลว",
@@ -208,7 +213,8 @@
 	"codebaseSearch": {
 		"wantsToSearch": "Kilo Code ต้องการค้นหาในโค้ดเบสสำหรับ <code>{{query}}</code>:",
 		"wantsToSearchWithPath": "Kilo Code ต้องการค้นหาในโค้ดเบสสำหรับ <code>{{query}}</code> ใน <code>{{path}}</code>:",
-		"didSearch": "พบ {{count}} ผลลัพธ์สำหรับ <code>{{query}}</code>:",
+		"didSearch_one": "พบ 1 ผลลัพธ์",
+		"didSearch_other": "พบ {{count}} ผลลัพธ์",
 		"resultTooltip": "คะแนนความคล้ายคลึง: {{score}} (คลิกเพื่อเปิดไฟล์)"
 	},
 	"commandOutput": "ผลลัพธ์คำสั่ง",
@@ -248,13 +254,16 @@
 	"autoApprove": {
 		"title": "อนุมัติอัตโนมัติ:",
 		"none": "ไม่มี",
-		"description": "การอนุมัติอัตโนมัติอนุญาตให้ Kilo Code ดำเนินการโดยไม่ต้องขออนุญาต เปิดใช้งานเฉพาะสำหรับการดำเนินการที่คุณเชื่อถืออย่างเต็มที่ การกำหนดค่าโดยละเอียดเพิ่มเติมมีใน<settingsLink>การตั้งค่า</settingsLink>"
+		"description": "การอนุมัติอัตโนมัติอนุญาตให้ Kilo Code ดำเนินการโดยไม่ต้องขออนุญาต เปิดใช้งานเฉพาะสำหรับการดำเนินการที่คุณเชื่อถืออย่างเต็มที่ การกำหนดค่าโดยละเอียดเพิ่มเติมมีใน<settingsLink>การตั้งค่า</settingsLink>",
+		"selectOptionsFirst": "เลือกอย่างน้อยหนึ่งตัวเลือกด้านล่างเพื่อเปิดใช้งานการอนุมัติอัตโนมัติ",
+		"toggleAriaLabel": "สลับการอนุมัติอัตโนมัติ",
+		"disabledAriaLabel": "การอนุมัติอัตโนมัติปิดใช้งาน - เลือกตัวเลือกก่อน"
 	},
 	"announcement": {
-		"title": "🎉 เปิดตัว Roo Code {{version}}",
-		"description": "Roo Code {{version}} นำเสนอฟีเจอร์ใหม่ที่สำคัญและการปรับปรุงตามคำติชมของคุณ",
+		"title": "🎉 เปิดตัว Kilo Code {{version}}",
+		"description": "Kilo Code {{version}} นำเสนอฟีเจอร์ใหม่ที่สำคัญและการปรับปรุงตามคำติชมของคุณ",
 		"whatsNew": "มีอะไรใหม่",
-		"feature1": "<bold>เปิดตัว Roo Marketplace</bold>: ตลาดกลางเปิดให้บริการแล้ว! ค้นพบและติดตั้งโหมดและ MCP ได้ง่ายกว่าที่เคย",
+		"feature1": "<bold>เปิดตัว Kilo Code Marketplace</bold>: ตลาดกลางเปิดให้บริการแล้ว! ค้นพบและติดตั้งโหมดและ MCP ได้ง่ายกว่าที่เคย",
 		"feature2": "<bold>โมเดล Gemini 2.5</bold>: เพิ่มการรองรับโมเดล Gemini 2.5 Pro, Flash และ Flash Lite ใหม่",
 		"feature3": "<bold>รองรับไฟล์ Excel และอื่นๆ</bold>: เพิ่มการรองรับไฟล์ Excel (.xlsx) และการแก้ไขข้อผิดพลาดและการปรับปรุงมากมาย!",
 		"hideButton": "ซ่อนประกาศ",

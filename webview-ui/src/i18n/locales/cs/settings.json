@@ -39,28 +39,48 @@
 	},
 	"codeIndex": {
 		"title": "Indexování kódové báze",
+		"description": "Nakonfigurujte nastavení indexování kódové báze pro povolení sémantického vyhledávání vašeho projektu. <0>Dozvědět se více</0>",
+		"statusTitle": "Stav",
 		"enableLabel": "Povolit indexování kódové báze",
-		"enableDescription": "<0>Indexování kódové báze</0> je experimentální funkce, která vytváří sémantický vyhledávací index vašeho projektu pomocí vkládání AI. To umožňuje Kilo Code lépe porozumět a navigovat ve velkých kódových bázích hledáním relevantního kódu na základě významu, nikoli pouze klíčových slov.",
+		"enableDescription": "Povolit indexování kódu pro lepší vyhledávání a porozumění kontextu",
+		"settingsTitle": "Nastavení indexování",
+		"disabledMessage": "Indexování kódové báze je aktuálně zakázáno. Povolte jej v globálních nastaveních pro konfiguraci možností indexování.",
 		"providerLabel": "Poskytovatel vkládání",
+		"embedderProviderLabel": "Poskytovatel vkládání",
 		"selectProviderPlaceholder": "Vyberte poskytovatele",
 		"openaiProvider": "OpenAI",
 		"ollamaProvider": "Ollama",
+		"geminiProvider": "Gemini",
+		"geminiApiKeyLabel": "Klíč API:",
+		"geminiApiKeyPlaceholder": "Zadejte svůj klíč API Gemini",
 		"openaiCompatibleProvider": "Kompatibilní s OpenAI",
-		"openaiKeyLabel": "Klíč OpenAI:",
-		"openaiCompatibleBaseUrlLabel": "Základní URL:",
-		"openaiCompatibleApiKeyLabel": "Klíč API:",
-		"openaiCompatibleModelDimensionLabel": "Dimenze vkládání:",
-		"openaiCompatibleModelDimensionPlaceholder": "např. 1536",
-		"openaiCompatibleModelDimensionDescription": "Dimenze vkládání (velikost výstupu) pro váš model. Zkontrolujte dokumentaci svého poskytovatele pro tuto hodnotu. Běžné hodnoty: 384, 768, 1536, 3072.",
+		"openAiKeyLabel": "Klíč API OpenAI",
+		"openAiKeyPlaceholder": "Zadejte svůj klíč API OpenAI",
+		"openAiCompatibleBaseUrlLabel": "Základní URL",
+		"openAiCompatibleApiKeyLabel": "Klíč API",
+		"openAiCompatibleApiKeyPlaceholder": "Zadejte svůj klíč API",
+		"openAiCompatibleModelDimensionLabel": "Dimenze vkládání:",
+		"modelDimensionLabel": "Dimenze modelu",
+		"openAiCompatibleModelDimensionPlaceholder": "např. 1536",
+		"openAiCompatibleModelDimensionDescription": "Dimenze vkládání (velikost výstupu) pro váš model. Zkontrolujte dokumentaci svého poskytovatele pro tuto hodnotu. Běžné hodnoty: 384, 768, 1536, 3072.",
 		"modelLabel": "Model",
+		"modelPlaceholder": "Zadejte název modelu",
+		"selectModel": "Vyberte model",
 		"selectModelPlaceholder": "Vyberte model",
 		"ollamaUrlLabel": "URL Ollama:",
+		"ollamaBaseUrlLabel": "Základní URL Ollama",
 		"qdrantUrlLabel": "URL Qdrant",
 		"qdrantKeyLabel": "Klíč Qdrant:",
+		"qdrantApiKeyLabel": "Klíč API Qdrant",
+		"qdrantApiKeyPlaceholder": "Zadejte svůj klíč API Qdrant (volitelné)",
+		"setupConfigLabel": "Nastavení",
 		"advancedConfigLabel": "Pokročilá konfigurace",
 		"searchMinScoreLabel": "Prahová hodnota skóre vyhledávání",
 		"searchMinScoreDescription": "Minimální skóre podobnosti (0.0-1.0) požadované pro výsledky vyhledávání. Nižší hodnoty vrátí více výsledků, ale mohou být méně relevantní. Vyšší hodnoty vrátí méně, ale relevantnější výsledky.",
 		"searchMinScoreResetTooltip": "Obnovit na výchozí hodnotu (0.4)",
+		"searchMaxResultsLabel": "Maximální počet výsledků vyhledávání",
+		"searchMaxResultsDescription": "Maximální počet výsledků vyhledávání, které se vrátí při dotazování indexu kódové báze. Vyšší hodnoty poskytují více kontextu, ale mohou zahrnovat méně relevantní výsledky.",
+		"resetToDefault": "Obnovit na výchozí",
 		"startIndexingButton": "Spustit indexování",
 		"clearIndexDataButton": "Vymazat data indexu",
 		"unsavedSettingsMessage": "Před spuštěním procesu indexování prosím uložte nastavení.",
@@ -69,7 +89,42 @@
 			"description": "Tuto akci nelze vrátit zpět. Tímto trvale smažete data indexu vaší kódové báze.",
 			"cancelButton": "Zrušit",
 			"confirmButton": "Vymazat data"
+		},
+		"ollamaUrlPlaceholder": "http://localhost:11434",
+		"openAiCompatibleBaseUrlPlaceholder": "https://api.example.com",
+		"modelDimensionPlaceholder": "1536",
+		"qdrantUrlPlaceholder": "http://localhost:6333",
+		"saveError": "Nepodařilo se uložit nastavení",
+		"modelDimensions": "({{dimension}} dimenzí)",
+		"saveSuccess": "Nastavení bylo úspěšně uloženo",
+		"saving": "Ukládání...",
+		"saveSettings": "Uložit",
+		"indexingStatuses": {
+			"standby": "Pohotovost",
+			"indexing": "Indexování",
+			"indexed": "Indexováno",
+			"error": "Chyba"
+		},
+		"close": "Zavřít",
+		"validation": {
+			"qdrantUrlRequired": "URL Qdrant je povinné",
+			"invalidQdrantUrl": "Neplatné URL Qdrant",
+			"invalidOllamaUrl": "Neplatné URL Ollama",
+			"invalidBaseUrl": "Neplatné základní URL",
+			"openaiApiKeyRequired": "Klíč API OpenAI je povinný",
+			"modelSelectionRequired": "Výběr modelu je povinný",
+			"apiKeyRequired": "Klíč API je povinný",
+			"modelIdRequired": "ID modelu je povinné",
+			"modelDimensionRequired": "Dimenze modelu je povinná",
+			"geminiApiKeyRequired": "Klíč API Gemini je povinný",
+			"ollamaBaseUrlRequired": "Základní URL Ollama je povinné",
+			"baseUrlRequired": "Základní URL je povinné",
+			"modelDimensionMinValue": "Dimenze modelu musí být větší než 0"
 		}
+	},
+	"autoApproval": {
+		"title": "Automatické schválení",
+		"description": "Povolit Kilo Code automaticky provádět operace bez nutnosti schválení. Povolte tato nastavení pouze v případě, že plně důvěřujete AI a rozumíte souvisejícím bezpečnostním rizikům."
 	},
 	"autoApprove": {
 		"description": "Povolit Kilo Code automaticky provádět operace bez nutnosti schválení. Povolte tato nastavení pouze v případě, že plně důvěřujete AI a rozumíte souvisejícím bezpečnostním rizikům.",
@@ -124,19 +179,30 @@
 			"label": "Spustit",
 			"description": "Automaticky spouštět povolené příkazy terminálu bez nutnosti schválení",
 			"allowedCommands": "Povolené příkazy pro automatické spuštění",
-			"allowedCommandsDescription": "Předpony příkazů, které mohou být automaticky spuštěny, když je povoleno „Vždy schvalovat operace spuštění“. Přidejte * pro povolení všech příkazů (používejte s opatrností).",
+			"allowedCommandsDescription": "Předpony příkazů, které mohou být automaticky spuštěny, když je povoleno \"Vždy schvalovat operace spuštění\". Přidejte * pro povolení všech příkazů (používejte s opatrností).",
+			"deniedCommands": "Zakázané příkazy",
+			"deniedCommandsDescription": "Předpony příkazů, které budou automaticky zamítnuty bez žádosti o schválení. V případě konfliktů s povolenými příkazy má přednost nejdelší shoda předpony. Přidejte * pro zamítnutí všech příkazů.",
 			"commandPlaceholder": "Zadejte předponu příkazu (např. 'git ')",
-			"addButton": "Přidat"
+			"deniedCommandPlaceholder": "Zadejte předponu příkazu k zamítnutí (např. 'rm -rf')",
+			"addButton": "Přidat",
+			"autoDenied": "Příkazy s předponou `{{prefix}}` byly uživatelem zakázány. Neobcházejte toto omezení spuštěním jiného příkazu."
 		},
 		"showMenu": {
 			"label": "Zobrazit nabídku automatického schválení v zobrazení chatu",
 			"description": "Pokud je povoleno, nabídka automatického schválení se zobrazí v dolní části zobrazení chatu, což umožní rychlý přístup k nastavení automatického schválení"
 		},
+		"updateTodoList": {
+			"label": "Todo",
+			"description": "Automaticky aktualizovat seznam úkolů bez nutnosti schválení"
+		},
 		"apiRequestLimit": {
 			"title": "Maximální počet žádostí",
 			"description": "Automaticky provést tento počet žádostí API předtím, než požádá o schválení k pokračování v úkolu.",
 			"unlimited": "Neomezeně"
-		}
+		},
+		"toggleAriaLabel": "Přepnout automatické schválení",
+		"disabledAriaLabel": "Automatické schválení zakázáno - nejprve vyberte možnosti",
+		"selectOptionsFirst": "Vyberte alespoň jednu možnost níže pro povolení automatického schválení"
 	},
 	"providers": {
 		"providerDocumentation": "Dokumentace {{provider}}",
@@ -156,6 +222,8 @@
 		"createProfile": "Vytvořit profil",
 		"cannotDeleteOnlyProfile": "Nelze smazat jediný profil",
 		"searchPlaceholder": "Hledat profily",
+		"searchProviderPlaceholder": "Hledat poskytovatele",
+		"noProviderMatchFound": "Nebyli nalezeni žádní poskytovatelé",
 		"noMatchFound": "Nebyly nalezeny žádné odpovídající profily",
 		"vscodeLmDescription": "API jazykového modelu VS Code vám umožňuje spouštět modely poskytované jinými rozšířeními VS Code (včetně, ale nejen, GitHub Copilot). Nejjednodušší způsob, jak začít, je nainstalovat rozšíření Copilot a Copilot Chat z VS Code Marketplace.",
 		"awsCustomArnUse": "Zadejte platný Amazon Bedrock ARN pro model, který chcete použít. Příklady formátu:",
@@ -196,6 +264,18 @@
 		"getGeminiApiKey": "Získat klíč API Gemini",
 		"openAiApiKey": "Klíč API OpenAI",
 		"apiKey": "Klíč API",
+		"anthropic": {
+			"baseUrl": "Základní URL",
+			"baseUrlDescription": "Vlastní základní URL pro Anthropic API (volitelné)"
+		},
+		"openai": {
+			"baseUrl": "Základní URL",
+			"baseUrlDescription": "Vlastní základní URL pro OpenAI API (volitelné)"
+		},
+		"openrouter": {
+			"baseUrl": "Základní URL",
+			"baseUrlDescription": "Vlastní základní URL pro OpenRouter API (volitelné)"
+		},
 		"openAiBaseUrl": "Základní URL",
 		"getOpenAiApiKey": "Získat klíč API OpenAI",
 		"mistralApiKey": "Klíč API Mistral",
@@ -315,6 +395,12 @@
 			"label": "Omezení rychlosti",
 			"description": "Minimální čas mezi požadavky API."
 		},
+		"consecutiveMistakeLimit": {
+			"label": "Limit chyb a opakování",
+			"description": "Počet po sobě jdoucích chyb nebo opakovaných akcí před zobrazením dialogu 'Kilo Code má problémy'",
+			"unlimitedDescription": "Neomezené opakování povoleno (automatické pokračování). Dialog se nikdy nezobrazí.",
+			"warning": "⚠️ Nastavení na 0 umožňuje neomezené opakování, což může spotřebovat značné množství API využití"
+		},
 		"reasoningEffort": {
 			"label": "Úsilí modelu při uvažování",
 			"high": "Vysoké",
@@ -325,7 +411,9 @@
 		"claudeCode": {
 			"pathLabel": "Cesta ke Claude Code",
 			"description": "Volitelná cesta k vašemu CLI Claude Code. Ve výchozím nastavení 'claude', pokud není nastaveno.",
-			"placeholder": "Výchozí: claude"
+			"placeholder": "Výchozí: claude",
+			"maxTokensLabel": "Maximální počet výstupních tokenů",
+			"maxTokensDescription": "Maximální počet výstupních tokenů pro odpovědi Claude Code. Výchozí je 8000."
 		},
 		"geminiCli": {
 			"description": "Tento poskytovatel používá OAuth autentizaci z nástroje Gemini CLI a nevyžaduje klíče API.",
@@ -341,21 +429,6 @@
 			"requirement4": "Nepoužívá klíče API - ověřování je řešeno přes OAuth",
 			"requirement5": "Vyžaduje, aby byl nástroj Gemini CLI nejdříve nainstalován a ověřen",
 			"freeAccess": "Přístup k bezplatné úrovni prostřednictvím OAuth autentizace"
-		},
-		"geminiCli": {
-			"description": "Tento poskytovatel používá OAuth autentifikaci nástroje Gemini CLI a nevyžaduje API klíče.",
-			"oauthPath": "Cesta k OAuth přihlašovacím údajům (volitelné)",
-			"oauthPathDescription": "Cesta k souboru OAuth přihlašovacích údajů. Nechte prázdné pro použití výchozího umístění (~/.gemini/oauth_creds.json).",
-			"instructions": "Pokud jste se ještě neověřili, spusťte",
-			"instructionsContinued": "ve svém terminálu nejprve.",
-			"setupLink": "Pokyny k nastavení Gemini CLI",
-			"requirementsTitle": "Důležité požadavky",
-			"requirement1": "Nejprve musíte nainstalovat nástroj Gemini CLI",
-			"requirement2": "Poté spusťte gemini ve svém terminálu a ujistěte se, že se přihlásíte pomocí Google",
-			"requirement3": "Funguje pouze s osobními Google účty (ne Google Workspace účty)",
-			"requirement4": "Nepoužívá API klíče - autentifikace je zpracována přes OAuth",
-			"requirement5": "Vyžaduje, aby byl nástroj Gemini CLI nejprve nainstalován a ověřen",
-			"freeAccess": "Bezplatný přístup přes OAuth autentifikaci"
 		}
 	},
 	"browser": {
@@ -518,7 +591,21 @@
 			"description": "Pokud je povoleno, terminál bude dědit proměnné prostředí z rodičovského procesu VSCode, jako jsou nastavení integrace shellu definovaná v profilu uživatele. Tím se přímo přepíná globální nastavení VSCode `terminal.integrated.inheritEnv`. <0>Dozvědět se více</0>"
 		}
 	},
+	"advancedSettings": {
+		"title": "Pokročilá nastavení",
+		"description": "Pokročilá nastavení pro vývojáře a pokročilé uživatele",
+		"enableDebugMode": "Povolit režim ladění",
+		"enableDebugModeDescription": "Povolit režim ladění pro zobrazení dalších informací pro vývoj a řešení problémů",
+		"maxTokens": "Maximální počet tokenů",
+		"maxTokensDescription": "Maximální počet tokenů v odpovědi"
+	},
 	"advanced": {
+		"title": "Pokročilá nastavení",
+		"description": "Pokročilá nastavení pro vývojáře a pokročilé uživatele",
+		"enableDebugMode": "Povolit režim ladění",
+		"enableDebugModeDescription": "Povolit režim ladění pro zobrazení dalších informací pro vývoj a řešení problémů",
+		"maxTokens": "Maximální počet tokenů",
+		"maxTokensDescription": "Maximální počet tokenů v odpovědi",
 		"diff": {
 			"label": "Povolit úpravy prostřednictvím diffů",
 			"description": "Pokud je povoleno, Kilo Code bude moci rychleji upravovat soubory a automaticky odmítne zkrácené zápisy celých souborů. Nejlépe funguje s nejnovějším modelem Claude 4 Sonnet.",
@@ -539,6 +626,10 @@
 				"label": "Přesnost shody",
 				"description": "Tento posuvník řídí, jak přesně musí sekce kódu odpovídat při aplikaci diffů. Nižší hodnoty umožňují flexibilnější shodu, ale zvyšují riziko nesprávných nahrazení. Používejte hodnoty pod 100% s extrémní opatrností."
 			}
+		},
+		"todoList": {
+			"label": "Povolit nástroj seznamu úkolů",
+			"description": "Pokud je povoleno, Kilo Code může vytvářet a spravovat seznamy úkolů pro sledování průběhu úkolu. To pomáhá organizovat složité úkoly do zvládnutelných kroků."
 		}
 	},
 	"experimental": {
@@ -612,7 +703,7 @@
 		}
 	},
 	"modelPicker": {
-		"automaticFetch": "Rozšíření automaticky načítá nejnovější seznam modelů dostupných na <serviceLink>{{serviceName}}</serviceLink>. Pokud si nejste jisti, který model vybrat, Kilo Code funguje nejlépe s <defaultModelLink>{{defaultModelId}}</defaultModelLink>. Můžete také zkusit vyhledat \"free\" pro aktuálně dostupné bezplatné možnosti.",
+		"automaticFetch": "Rozšíření automaticky načítá nejnovější seznam modelů dostupných na <serviceLink>{{serviceName}}</serviceLink>. Pokud si nejste jisti, který model vybrat, Kilo Code funguje nejlépe s <defaultModelLink>{{defaultModelId}}</defaultModelLink>.",
 		"label": "Model",
 		"searchPlaceholder": "Hledat",
 		"noMatchFound": "Nebyla nalezena žádná shoda",

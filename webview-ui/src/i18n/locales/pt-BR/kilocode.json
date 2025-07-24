@@ -26,7 +26,11 @@
 			"account": "Conta Kilo Code",
 			"apiKey": "Chave de API do Kilo Code",
 			"login": "Entrar no Kilo Code",
-			"logout": "Sair do Kilo Code"
+			"logout": "Sair do Kilo Code",
+			"providerRouting": {
+				"title": "Kilo Code - Roteamento de Provedor OpenRouter",
+				"description": "O Kilo Code roteia as solicitações para os melhores provedores disponíveis para o seu modelo. Por padrão, as solicitações são balanceadas em carga entre os principais provedores para maximizar o tempo de atividade. No entanto, você pode escolher um provedor específico para usar para este modelo."
+			}
 		},
 		"contextManagement": {
 			"allowVeryLargeReads": {
@@ -129,6 +133,27 @@
 			"idea5": "Crie um gerador de gradientes CSS que exporta folhas de estilo personalizadas e mostra uma prévia ao vivo",
 			"idea6": "Gere cards que revelam conteúdo dinâmico de forma bonita quando você passa o mouse sobre eles",
 			"idea7": "Crie um campo de estrelas interativo relaxante que se move com gestos do mouse"
+		}
+	},
+	"ghost": {
+		"title": "Assistência em linha",
+		"settings": {
+			"enableQuickInlineTaskKeybinding": {
+				"label": "Tarefa Rápida em Linha",
+				"description": "Precisa apenas de uma mudança rápida? Selecione algum código (ou não!) e pressione Cmd+I. Descreva seu objetivo em linguagem simples (\"criar um componente React com essas props\", \"adicionar tratamento de erro a esta função\") e receba múltiplas sugestões prontas para uso diretamente no seu editor. <DocsLink>Ver atalho</DocsLink>"
+			},
+			"enableAutoInlineTaskKeybinding": {
+				"label": "Tarefa Automática em Linha",
+				"description": "Precisa de uma correção rápida, preenchimento ou refatoração? Kilo usará o contexto ao redor para oferecer melhorias imediatas, mantendo seu fluxo de trabalho. <DocsLink>Ver atalho</DocsLink>"
+			},
+			"provider": "Provedor",
+			"apiConfigId": {
+				"label": "Configuração de API",
+				"current": "Usar configuração de API atualmente selecionada",
+				"description": "Selecione uma configuração de API para usar nos prompts do Inline Assist ou apenas use o que estiver selecionado no momento"
+			},
+			"triggers": "Gatilhos",
+			"keybindingDescription": "Os recursos de Assistência em Linha são acionados por comandos. Você pode configurar os <DocsLink>atalhos de teclado aqui</DocsLink>."
 		}
 	}
 }

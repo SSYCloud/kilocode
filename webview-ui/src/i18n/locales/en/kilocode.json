@@ -26,7 +26,11 @@
 			"account": "Kilo Code Account",
 			"apiKey": "Kilo Code API Key",
 			"login": "Log in at Kilo Code",
-			"logout": "Log out from Kilo Code"
+			"logout": "Log out from Kilo Code",
+			"providerRouting": {
+				"title": "Kilo Code - OpenRouter Provider Routing",
+				"description": "Kilo Code routes requests to the best available providers for your model. By default, requests are load balanced across the top providers to maximize uptime. However, you can choose a specific provider to use for this model."
+			}
 		},
 		"contextManagement": {
 			"allowVeryLargeReads": {
@@ -129,6 +133,27 @@
 			"idea5": "Create a CSS gradient generator that exports custom stylesheets and shows a live preview",
 			"idea6": "Generate cards that reveal dynamic content beautifully when hovered over",
 			"idea7": "Create a calming interactive starfield that moves with mouse gestures"
+		}
+	},
+	"ghost": {
+		"title": "Inline Assist",
+		"settings": {
+			"triggers": "Triggers",
+			"keybindingDescription": "Inline Assist features are triggered by commands. You can configure the <DocsLink>Keyboard Shortcuts here</DocsLink>.",
+			"enableQuickInlineTaskKeybinding": {
+				"label": "Quick Inline Task",
+				"description": "Only need a quick change? Select some code (or don't!) and hit Cmd+I. Describe your goal in plain English (\"create a React component with these props\", \"add error handling to this function\"), and get multiple, ready-to-use suggestions right in your editor. <DocsLink>See shortcut</DocsLink>"
+			},
+			"enableAutoInlineTaskKeybinding": {
+				"label": "Auto Inline Task",
+				"description": "Need a quick fix, completion, or refactor? Kilo will use the surrounding context to offer immediate improvements, keeping you in the flow. <DocsLink>See shortcut</DocsLink>"
+			},
+			"provider": "Provider",
+			"apiConfigId": {
+				"label": "API Configuration",
+				"current": "Use currently selected API configuration",
+				"description": "Select an API configuration to use for Inline Assist prompts, or just use whatever is currently selected"
+			}
 		}
 	}
 }
