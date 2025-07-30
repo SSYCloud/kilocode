@@ -419,6 +419,7 @@ describe("ClineProvider", () => {
 				options: {},
 				onDidReceiveMessage: vi.fn(),
 				asWebviewUri: vi.fn(),
+				cspSource: "vscode-webview://test-csp-source",
 			},
 			visible: true,
 			onDidDispose: vi.fn().mockImplementation((callback) => {
@@ -493,7 +494,7 @@ describe("ClineProvider", () => {
 
 		// Verify Content Security Policy contains the necessary PostHog domains
 		expect(mockWebviewView.webview.html).toContain(
-			"connect-src https://* https://openrouter.ai https://api.requesty.ai https://us.i.posthog.com https://us-assets.i.posthog.com",
+			"connect-src vscode-webview://test-csp-source https://* https://openrouter.ai https://api.requesty.ai https://us.i.posthog.com https://us-assets.i.posthog.com",
 		)
 
 		// Extract the script-src directive section and verify required security elements
@@ -565,6 +566,7 @@ describe("ClineProvider", () => {
 			sharingEnabled: false,
 			profileThresholds: {},
 			hasOpenedModeSelector: false,
+			diagnosticsEnabled: true,
 		}
 
 		const message: ExtensionMessage = {
@@ -2015,6 +2017,7 @@ describe("Project MCP Settings", () => {
 				options: {},
 				onDidReceiveMessage: vi.fn(),
 				asWebviewUri: vi.fn(),
+				cspSource: "vscode-webview://test-csp-source",
 			},
 			visible: true,
 			onDidDispose: vi.fn(),
@@ -2458,7 +2461,7 @@ describe("ClineProvider - Router Models", () => {
 				unbound: mockModels,
 				litellm: mockModels,
 				"kilocode-openrouter": mockModels,
-				ollama: {},
+				ollama: mockModels, // kilocode_change
 				lmstudio: {},
 			},
 		})
@@ -2491,6 +2494,7 @@ describe("ClineProvider - Router Models", () => {
 			.mockResolvedValueOnce(mockModels) // glama success
 			.mockRejectedValueOnce(new Error("Unbound API error")) // unbound fail
 			.mockRejectedValueOnce(new Error("Kilocode-OpenRouter API error")) // kilocode-openrouter fail
+			.mockRejectedValueOnce(new Error("Ollama API error")) // kilocode_change
 			.mockRejectedValueOnce(new Error("LiteLLM connection failed")) // litellm fail
 
 		await messageHandler({ type: "requestRouterModels" })
@@ -2623,7 +2627,7 @@ describe("ClineProvider - Router Models", () => {
 				unbound: mockModels,
 				litellm: {},
 				"kilocode-openrouter": mockModels,
-				ollama: {},
+				ollama: mockModels, // kilocode_change
 				lmstudio: {},
 			},
 		})

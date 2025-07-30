@@ -14,7 +14,7 @@ src/assets/docs/**
 !dist
 
 # Include the built webview
-**/*.map
+!**/*.map
 !webview-ui/audio
 !webview-ui/build/assets/*.js
 !webview-ui/build/assets/*.ttf
@@ -34,3 +34,4 @@ src/assets/docs/**
 
 # Include .env file for telemetry
 !.env
+assets/docs/**

@@ -45,14 +45,17 @@
 		"enableDescription": "Activer l'indexation du code pour une recherche et une compréhension du contexte améliorées",
 		"settingsTitle": "Paramètres d'indexation",
 		"disabledMessage": "L'indexation de la base de code est actuellement désactivée. Activez-la dans les paramètres globaux pour configurer les options d'indexation.",
-		"providerLabel": "Fournisseur d'embeddings",
+		"profileLabel": "Fournisseur d'embeddings",
 		"embedderProviderLabel": "Fournisseur d'embedder",
-		"selectProviderPlaceholder": "Sélectionner un fournisseur",
+		"selectProfilePlaceholder": "Sélectionner un fournisseur",
 		"openaiProvider": "OpenAI",
 		"ollamaProvider": "Ollama",
 		"geminiProvider": "Gemini",
 		"geminiApiKeyLabel": "Clé API :",
 		"geminiApiKeyPlaceholder": "Entrez votre clé API Gemini",
+		"mistralProvider": "Mistral",
+		"mistralApiKeyLabel": "Clé d'API:",
+		"mistralApiKeyPlaceholder": "Entrez votre clé d'API Mistral",
 		"openaiCompatibleProvider": "Compatible OpenAI",
 		"openAiKeyLabel": "Clé API OpenAI",
 		"openAiKeyPlaceholder": "Entrez votre clé API OpenAI",
@@ -110,6 +113,7 @@
 			"modelIdRequired": "L'ID du modèle est requis",
 			"modelDimensionRequired": "La dimension du modèle est requise",
 			"geminiApiKeyRequired": "La clé API Gemini est requise",
+			"mistralApiKeyRequired": "La clé API Mistral est requise",
 			"ollamaBaseUrlRequired": "L'URL de base Ollama est requise",
 			"baseUrlRequired": "L'URL de base est requise",
 			"modelDimensionMinValue": "La dimension du modèle doit être supérieure à 0"
@@ -256,9 +260,25 @@
 		"getDeepSeekApiKey": "Obtenir la clé API DeepSeek",
 		"shengSuanYunApiKey": "Clé API de ShengSuanYun",
 		"getShengSuanyunApiKey": "Obtenir la clé API de ShengSuanYun",
+		"moonshotApiKey": "Clé API Moonshot",
+		"getMoonshotApiKey": "Obtenir la clé API Moonshot",
+		"moonshotBaseUrl": "Point d'entrée Moonshot",
 		"geminiApiKey": "Clé API Gemini",
 		"getGroqApiKey": "Obtenir la clé API Groq",
 		"groqApiKey": "Clé API Groq",
+		"getHuggingFaceApiKey": "Obtenir la clé API Hugging Face",
+		"huggingFaceApiKey": "Clé API Hugging Face",
+		"huggingFaceModelId": "ID du modèle",
+		"huggingFaceLoading": "Chargement...",
+		"huggingFaceModelsCount": "({{count}} modèles)",
+		"huggingFaceSelectModel": "Sélectionner un modèle...",
+		"huggingFaceSearchModels": "Rechercher des modèles...",
+		"huggingFaceNoModelsFound": "Aucun modèle trouvé",
+		"huggingFaceProvider": "Fournisseur",
+		"huggingFaceProviderAuto": "Automatique",
+		"huggingFaceSelectProvider": "Sélectionner un fournisseur...",
+		"huggingFaceSearchProviders": "Rechercher des fournisseurs...",
+		"huggingFaceNoProvidersFound": "Aucun fournisseur trouvé",
 		"getGeminiApiKey": "Obtenir la clé API Gemini",
 		"openAiApiKey": "Clé API OpenAI",
 		"apiKey": "Clé API",
@@ -274,6 +294,7 @@
 		"litellmBaseUrl": "URL de base LiteLLM",
 		"awsCredentials": "Identifiants AWS",
 		"awsProfile": "Profil AWS",
+		"awsApiKey": "Clé API Amazon Bedrock",
 		"awsProfileName": "Nom du profil AWS",
 		"awsAccessKey": "Clé d'accès AWS",
 		"awsSecretKey": "Clé secrète AWS",
@@ -507,6 +528,22 @@
 			"label": "Limite de lectures simultanées",
 			"description": "Nombre maximum de fichiers que l'outil 'read_file' peut traiter simultanément. Des valeurs plus élevées peuvent accélérer la lecture de plusieurs petits fichiers mais augmentent l'utilisation de la mémoire."
 		},
+		"diagnostics": {
+			"includeMessages": {
+				"label": "Inclure automatiquement les diagnostics dans le contexte",
+				"description": "Lorsque cette option est activée, les messages de diagnostic (erreurs) des fichiers modifiés seront automatiquement inclus dans le contexte. Vous pouvez toujours inclure manuellement tous les diagnostics de l'espace de travail en utilisant @problems."
+			},
+			"maxMessages": {
+				"label": "Nombre maximum de messages de diagnostic",
+				"description": "Nombre maximum de messages de diagnostic à inclure par fichier. Cette limite s'applique à la fois à l'inclusion automatique (lorsque la case est cochée) et aux mentions manuelles @problems. Des valeurs plus élevées fournissent plus de contexte mais augmentent l'utilisation des jetons.",
+				"resetTooltip": "Réinitialiser à la valeur par défaut (50)",
+				"unlimitedLabel": "Illimité"
+			},
+			"delayAfterWrite": {
+				"label": "Délai après les écritures pour permettre aux diagnostics de détecter les problèmes potentiels",
+				"description": "Temps d'attente après les écritures de fichiers avant de continuer, permettant aux outils de diagnostic de traiter les modifications et de détecter les problèmes."
+			}
+		},
 		"condensingThreshold": {
 			"label": "Seuil de condensation du contexte",
 			"selectProfile": "Configurer le seuil pour le profil",
@@ -529,6 +566,10 @@
 		"outputLineLimit": {
 			"label": "Limite de sortie du terminal",
 			"description": "Nombre maximum de lignes à inclure dans la sortie du terminal lors de l'exécution de commandes. Lorsque ce nombre est dépassé, les lignes seront supprimées du milieu, économisant des token. <0>En savoir plus</0>"
+		},
+		"outputCharacterLimit": {
+			"label": "Limite de caractères du terminal",
+			"description": "Nombre maximum de caractères à inclure dans la sortie du terminal lors de l'exécution de commandes. Cette limite prévaut sur la limite de lignes pour éviter les problèmes de mémoire avec des lignes extrêmement longues. Lorsque cette limite est dépassée, la sortie sera tronquée. <0>En savoir plus</0>"
 		},
 		"shellIntegrationTimeout": {
 			"label": "Délai d'intégration du shell du terminal",
@@ -617,10 +658,6 @@
 		"POWER_STEERING": {
 			"name": "Utiliser le mode \"direction assistée\" expérimental",
 			"description": "Lorsqu'il est activé, Kilo Code rappellera plus fréquemment au modèle les détails de sa définition de mode actuelle. Cela conduira à une adhérence plus forte aux définitions de rôles et aux instructions personnalisées, mais utilisera plus de tokens par message."
-		},
-		"AUTOCOMPLETE": {
-			"name": "Utiliser la fonctionnalité expérimentale de \"saisie semi-automatique\"",
-			"description": "Lorsque cette option est activée, Kilo Code fournira des suggestions de code en ligne pendant que vous tapez."
 		},
 		"MULTI_SEARCH_AND_REPLACE": {
 			"name": "Utiliser l'outil diff multi-blocs expérimental",
@@ -751,5 +788,8 @@
 		}
 	},
 	"includeMaxOutputTokens": "Inclure les tokens de sortie maximum",
-	"includeMaxOutputTokensDescription": "Envoyer le paramètre de tokens de sortie maximum dans les requêtes API. Certains fournisseurs peuvent ne pas supporter cela."
+	"includeMaxOutputTokensDescription": "Envoyer le paramètre de tokens de sortie maximum dans les requêtes API. Certains fournisseurs peuvent ne pas supporter cela.",
+	"limitMaxTokensDescription": "Limiter le nombre maximum de tokens dans la réponse",
+	"maxOutputTokensLabel": "Tokens de sortie maximum",
+	"maxTokensGenerateDescription": "Tokens maximum à générer dans la réponse"
 }

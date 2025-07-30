@@ -45,14 +45,17 @@
 		"enableDescription": "Увімкнути індексацію коду для покращеного пошуку та розуміння контексту",
 		"settingsTitle": "Налаштування індексації",
 		"disabledMessage": "Індексація кодової бази наразі вимкнена. Увімкніть її в глобальних налаштуваннях для конфігурації параметрів індексації.",
-		"providerLabel": "Постачальник вбудовувань",
+		"profileLabel": "Постачальник вбудовувань",
 		"embedderProviderLabel": "Постачальник вбудовувань",
-		"selectProviderPlaceholder": "Виберіть постачальника",
+		"selectProfilePlaceholder": "Виберіть постачальника",
 		"openaiProvider": "OpenAI",
 		"ollamaProvider": "Ollama",
 		"geminiProvider": "Gemini",
 		"geminiApiKeyLabel": "Ключ API:",
 		"geminiApiKeyPlaceholder": "Введіть ваш ключ API Gemini",
+		"mistralProvider": "Mistral",
+		"mistralApiKeyLabel": "Ключ API:",
+		"mistralApiKeyPlaceholder": "Введіть ваш ключ API Mistral",
 		"openaiCompatibleProvider": "Сумісний з OpenAI",
 		"openAiKeyLabel": "Ключ API OpenAI",
 		"openAiKeyPlaceholder": "Введіть ваш ключ API OpenAI",
@@ -123,6 +126,7 @@
 			"modelIdRequired": "ID моделі є обов'язковим",
 			"modelDimensionRequired": "Розмірність моделі є обов'язковою",
 			"geminiApiKeyRequired": "Ключ API Gemini є обов'язковим",
+			"mistralApiKeyRequired": "Ключ API Mistral є обов'язковим",
 			"ollamaBaseUrlRequired": "Базовий URL Ollama є обов'язковим",
 			"baseUrlRequired": "Базовий URL є обов'язковим",
 			"modelDimensionMinValue": "Розмірність моделі повинна бути більше 0"
@@ -260,11 +264,28 @@
 		"getChutesApiKey": "Отримати ключ API Chutes",
 		"deepSeekApiKey": "Ключ API DeepSeek",
 		"getDeepSeekApiKey": "Отримати ключ API DeepSeek",
+		"moonshotApiKey": "Ключ API Moonshot",
+		"getMoonshotApiKey": "Отримати ключ API Moonshot",
+		"moonshotBaseUrl": "Точка входу Moonshot",
 		"geminiApiKey": "Ключ API Gemini",
 		"getGroqApiKey": "Отримати ключ API Groq",
 		"groqApiKey": "Ключ API Groq",
 		"getGeminiApiKey": "Отримати ключ API Gemini",
 		"openAiApiKey": "Ключ API OpenAI",
+		"getHuggingFaceApiKey": "Отримати ключ API Hugging Face",
+		"huggingFaceApiKey": "Ключ API Hugging Face",
+		"huggingFaceModelId": "ID моделі",
+		"huggingFaceLoading": "Завантаження...",
+		"huggingFaceModelsCount": "({{count}} моделей)",
+		"huggingFaceSelectModel": "Виберіть модель...",
+		"huggingFaceSearchModels": "Пошук моделей...",
+		"huggingFaceNoModelsFound": "Моделі не знайдено",
+		"huggingFaceProvider": "Постачальник",
+		"huggingFaceProviderAuto": "Автоматично",
+		"huggingFaceSelectProvider": "Виберіть постачальника...",
+		"huggingFaceSearchProviders": "Пошук постачальників...",
+		"huggingFaceNoProvidersFound": "Постачальників не знайдено",
+		"awsApiKey": "Ключ API Amazon Bedrock",
 		"apiKey": "Ключ API",
 		"openAiBaseUrl": "Базовий URL",
 		"getOpenAiApiKey": "Отримати ключ API OpenAI",
@@ -525,6 +546,22 @@
 			"profileDescription": "Власний поріг лише для цього профілю (перевизначає глобальний за замовчуванням)",
 			"inheritDescription": "Цей профіль успадковує глобальний поріг за замовчуванням ({{threshold}}%)",
 			"usesGlobal": "(використовує глобальний {{threshold}}%)"
+		},
+		"diagnostics": {
+			"includeMessages": {
+				"label": "Автоматично включати діагностику в контекст",
+				"description": "Коли увімкнено, діагностичні повідомлення (помилки) з відредагованих файлів будуть автоматично включені в контекст. Ви завжди можете вручну включити всю діагностику робочого простору, використовуючи @problems."
+			},
+			"maxMessages": {
+				"label": "Максимальна кількість діагностичних повідомлень",
+				"description": "Обмежує кількість діагностичних повідомлень (помилки, попередження), включених у контекст. Коли встановлено, буде показано лише цю кількість діагностики, надаючи пріоритет помилкам над попередженнями. Встановіть 0 для необмеженої діагностики.",
+				"resetTooltip": "Скинути до значення за замовчуванням (50)",
+				"unlimitedLabel": "Необмежено"
+			},
+			"delayAfterWrite": {
+				"label": "Затримка після запису для дозволу діагностиці виявити потенційні проблеми",
+				"description": "Час очікування після запису файлів перед продовженням, дозволяючи діагностичним інструментам обробити зміни та виявити проблеми."
+			}
 		}
 	},
 	"terminal": {
@@ -539,6 +576,10 @@
 		"outputLineLimit": {
 			"label": "Обмеження виводу терміналу",
 			"description": "Максимальна кількість рядків, які включаються до виводу терміналу при виконанні команд. При перевищенні рядки будуть видалені з середини, заощаджуючи токени. <0>Дізнатися більше</0>"
+		},
+		"outputCharacterLimit": {
+			"label": "Обмеження символів терміналу",
+			"description": "Максимальна кількість символів, які включаються до виводу терміналу при виконанні команд. Це обмеження має пріоритет над обмеженням рядків для запобігання проблемам з пам'яттю від надзвичайно довгих рядків. При перевищенні вивід буде обрізано. <0>Дізнатися більше</0>"
 		},
 		"shellIntegrationTimeout": {
 			"label": "Тайм-аут інтеграції оболонки терміналу",
@@ -627,10 +668,6 @@
 		"POWER_STEERING": {
 			"name": "Використовувати експериментальний режим \"силового керування\"",
 			"description": "Якщо ввімкнено, Kilo Code частіше нагадуватиме моделі про деталі її поточного визначення режиму. Це призведе до сильнішого дотримання визначень ролей та власних інструкцій, але використовуватиме більше токенів на повідомлення."
-		},
-		"AUTOCOMPLETE": {
-			"name": "Використовувати експериментальну функцію \"автодоповнення\"",
-			"description": "Якщо ввімкнено, Kilo Code надаватиме вбудовані пропозиції коду під час введення. Потрібен Kilo Code API Provider."
 		},
 		"CONCURRENT_FILE_READS": {
 			"name": "Увімкнути одночасне читання файлів",
@@ -754,6 +791,9 @@
 		"customArn": "Власний ARN",
 		"useCustomArn": "Використовувати власний ARN..."
 	},
+	"limitMaxTokensDescription": "Обмежити максимальну кількість токенів у відповіді",
+	"maxOutputTokensLabel": "Максимальні вихідні токени",
+	"maxTokensGenerateDescription": "Максимальна кількість токенів для генерації у відповіді",
 	"includeMaxOutputTokens": "Включити макс. вихідні токени",
 	"includeMaxOutputTokensDescription": "Надсилати параметр макс. вихідних токенів у запитах API. Деякі провайдери можуть не підтримувати це."
 }

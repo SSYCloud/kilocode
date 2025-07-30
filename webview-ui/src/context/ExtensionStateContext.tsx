@@ -34,6 +34,7 @@ export interface ExtensionStateContextType extends ExtensionState {
 	setHoveringTaskTimeline: (value: boolean) => void // kilocode_change
 	systemNotificationsEnabled?: boolean // kilocode_change
 	setSystemNotificationsEnabled: (value: boolean) => void // kilocode_change
+	dismissedNotificationIds: string[] // kilocode_change
 	didHydrateState: boolean
 	showWelcome: boolean
 	theme: any
@@ -106,6 +107,8 @@ export interface ExtensionStateContextType extends ExtensionState {
 	setScreenshotQuality: (value: number) => void
 	terminalOutputLineLimit?: number
 	setTerminalOutputLineLimit: (value: number) => void
+	terminalOutputCharacterLimit?: number
+	setTerminalOutputCharacterLimit: (value: number) => void
 	mcpEnabled: boolean
 	setMcpEnabled: (value: boolean) => void
 	enableMcpServerCreation: boolean
@@ -124,8 +127,7 @@ export interface ExtensionStateContextType extends ExtensionState {
 	setEnhancementApiConfigId: (value: string) => void
 	commitMessageApiConfigId?: string // kilocode_change
 	setCommitMessageApiConfigId: (value: string) => void // kilocode_change
-	autocompleteApiConfigId?: string // kilocode_change
-	setAutocompleteApiConfigId: (value: string) => void // kilocode_change
+	markNotificationAsDismissed: (notificationId: string) => void // kilocode_change
 	ghostServiceSettings?: GhostServiceSettings // kilocode_change
 	setGhostServiceSettings: (value: GhostServiceSettings) => void // kilocode_change
 	setExperimentEnabled: (id: ExperimentId, enabled: boolean) => void
@@ -156,6 +158,10 @@ export interface ExtensionStateContextType extends ExtensionState {
 	routerModels?: RouterModels
 	alwaysAllowUpdateTodoList?: boolean
 	setAlwaysAllowUpdateTodoList: (value: boolean) => void
+	includeDiagnosticMessages?: boolean
+	setIncludeDiagnosticMessages: (value: boolean) => void
+	maxDiagnosticMessages?: number
+	setMaxDiagnosticMessages: (value: number) => void
 }
 
 export const ExtensionStateContext = createContext<ExtensionStateContextType | undefined>(undefined)
@@ -200,6 +206,7 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		browserViewportSize: "900x600",
 		screenshotQuality: 75,
 		terminalOutputLineLimit: 500,
+		terminalOutputCharacterLimit: 50000,
 		terminalShellIntegrationTimeout: 4000,
 		mcpEnabled: true,
 		enableMcpServerCreation: false,
@@ -214,8 +221,8 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		customSupportPrompts: {},
 		experiments: experimentDefault,
 		enhancementApiConfigId: "",
+		dismissedNotificationIds: [], // kilocode_change
 		commitMessageApiConfigId: "", // kilocode_change
-		autocompleteApiConfigId: "", // kilocode_change
 		ghostServiceSettings: {}, // kilocode_change
 		condensingApiConfigId: "", // Default empty string for condensing API config ID
 		customCondensingPrompt: "", // Default empty string for custom condensing prompt
@@ -258,6 +265,8 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		},
 		codebaseIndexModels: { ollama: {}, openai: {} },
 		alwaysAllowUpdateTodoList: true,
+		includeDiagnosticMessages: true,
+		maxDiagnosticMessages: 50,
 	})
 
 	const [didHydrateState, setDidHydrateState] = useState(false)
@@ -471,6 +480,8 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		setScreenshotQuality: (value) => setState((prevState) => ({ ...prevState, screenshotQuality: value })),
 		setTerminalOutputLineLimit: (value) =>
 			setState((prevState) => ({ ...prevState, terminalOutputLineLimit: value })),
+		setTerminalOutputCharacterLimit: (value) =>
+			setState((prevState) => ({ ...prevState, terminalOutputCharacterLimit: value })),
 		setTerminalShellIntegrationTimeout: (value) =>
 			setState((prevState) => ({ ...prevState, terminalShellIntegrationTimeout: value })),
 		setTerminalShellIntegrationDisabled: (value) =>
@@ -489,8 +500,14 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		setEnhancementApiConfigId: (value) =>
 			setState((prevState) => ({ ...prevState, enhancementApiConfigId: value })),
 		// kilocode_change start
-		setAutocompleteApiConfigId: (value) =>
-			setState((prevState) => ({ ...prevState, autocompleteApiConfigId: value })),
+		markNotificationAsDismissed: (notificationId) => {
+			setState((prevState) => {
+				return {
+					...prevState,
+					dismissedNotificationIds: [notificationId, ...(prevState.dismissedNotificationIds || [])],
+				}
+			})
+		},
 		setGhostServiceSettings: (value) => setState((prevState) => ({ ...prevState, ghostServiceSettings: value })),
 		setCommitMessageApiConfigId: (value) =>
 			setState((prevState) => ({ ...prevState, commitMessageApiConfigId: value })),
@@ -539,10 +556,19 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		// kilocode_change start
 		setSystemNotificationsEnabled: (value) =>
 			setState((prevState) => ({ ...prevState, systemNotificationsEnabled: value })),
+		dismissedNotificationIds: state.dismissedNotificationIds || [], // kilocode_change
 		// kilocode_change end
 		alwaysAllowUpdateTodoList: state.alwaysAllowUpdateTodoList,
 		setAlwaysAllowUpdateTodoList: (value) => {
 			setState((prevState) => ({ ...prevState, alwaysAllowUpdateTodoList: value }))
+		},
+		includeDiagnosticMessages: state.includeDiagnosticMessages,
+		setIncludeDiagnosticMessages: (value) => {
+			setState((prevState) => ({ ...prevState, includeDiagnosticMessages: value }))
+		},
+		maxDiagnosticMessages: state.maxDiagnosticMessages,
+		setMaxDiagnosticMessages: (value) => {
+			setState((prevState) => ({ ...prevState, maxDiagnosticMessages: value }))
 		},
 	}
 

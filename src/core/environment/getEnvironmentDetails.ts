@@ -6,6 +6,7 @@ import pWaitFor from "p-wait-for"
 import delay from "delay"
 
 import type { ExperimentId } from "@roo-code/types"
+import { DEFAULT_TERMINAL_OUTPUT_CHARACTER_LIMIT } from "@roo-code/types"
 
 import { EXPERIMENT_IDS, experiments as Experiments } from "../../shared/experiments"
 import { formatLanguage } from "../../shared/language"
@@ -24,6 +25,7 @@ import { formatReminderSection } from "./reminder"
 import { OpenRouterHandler } from "../../api/providers/openrouter"
 import { TelemetryService } from "@roo-code/telemetry"
 import { t } from "../../i18n"
+import { KilocodeOllamaHandler } from "../../api/providers/kilocode-ollama"
 // kilocode_change end
 
 export async function getEnvironmentDetails(cline: Task, includeFileDetails: boolean = false) {
@@ -31,7 +33,11 @@ export async function getEnvironmentDetails(cline: Task, includeFileDetails: boo
 
 	const clineProvider = cline.providerRef.deref()
 	const state = await clineProvider?.getState()
-	const { terminalOutputLineLimit = 500, maxWorkspaceFiles = 200 } = state ?? {}
+	const {
+		terminalOutputLineLimit = 500,
+		terminalOutputCharacterLimit = DEFAULT_TERMINAL_OUTPUT_CHARACTER_LIMIT,
+		maxWorkspaceFiles = 200,
+	} = state ?? {}
 
 	// It could be useful for cline to know if the user went from one or no
 	// file to another between messages, so we always include this context.
@@ -59,7 +65,8 @@ export async function getEnvironmentDetails(cline: Task, includeFileDetails: boo
 	const maxTabs = maxOpenTabsContext ?? 20
 	const openTabPaths = vscode.window.tabGroups.all
 		.flatMap((group) => group.tabs)
-		.map((tab) => (tab.input as vscode.TabInputText)?.uri?.fsPath)
+		.filter((tab) => tab.input instanceof vscode.TabInputText)
+		.map((tab) => (tab.input as vscode.TabInputText).uri.fsPath)
 		.filter(Boolean)
 		.map((absolutePath) => path.relative(cline.cwd, absolutePath).toPosix())
 		.slice(0, maxTabs)
@@ -117,7 +124,11 @@ export async function getEnvironmentDetails(cline: Task, includeFileDetails: boo
 			let newOutput = TerminalRegistry.getUnretrievedOutput(busyTerminal.id)
 
 			if (newOutput) {
-				newOutput = Terminal.compressTerminalOutput(newOutput, terminalOutputLineLimit)
+				newOutput = Terminal.compressTerminalOutput(
+					newOutput,
+					terminalOutputLineLimit,
+					terminalOutputCharacterLimit,
+				)
 				terminalDetails += `\n### New Output\n${newOutput}`
 			}
 		}
@@ -145,7 +156,11 @@ export async function getEnvironmentDetails(cline: Task, includeFileDetails: boo
 				let output = process.getUnretrievedOutput()
 
 				if (output) {
-					output = Terminal.compressTerminalOutput(output, terminalOutputLineLimit)
+					output = Terminal.compressTerminalOutput(
+						output,
+						terminalOutputLineLimit,
+						terminalOutputCharacterLimit,
+					)
 					terminalOutputs.push(`Command: \`${process.command}\`\n${output}`)
 				}
 			}
@@ -197,7 +212,7 @@ export async function getEnvironmentDetails(cline: Task, includeFileDetails: boo
 
 	// kilocode_change start
 	// Be sure to fetch the model information before we need it.
-	if (cline.api instanceof OpenRouterHandler) {
+	if (cline.api instanceof OpenRouterHandler || cline.api instanceof KilocodeOllamaHandler) {
 		try {
 			await cline.api.fetchModel()
 		} catch (e) {

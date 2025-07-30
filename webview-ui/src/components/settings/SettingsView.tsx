@@ -179,6 +179,7 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 		soundVolume,
 		telemetrySetting,
 		terminalOutputLineLimit,
+		terminalOutputCharacterLimit,
 		terminalShellIntegrationTimeout,
 		terminalShellIntegrationDisabled, // Added from upstream
 		terminalCommandDelay,
@@ -205,7 +206,8 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 		alwaysAllowUpdateTodoList,
 		followupAutoApproveTimeoutMs,
 		ghostServiceSettings, // kilocode_change
-		autocompleteApiConfigId, // kilocode_change
+		includeDiagnosticMessages,
+		maxDiagnosticMessages,
 	} = cachedState
 
 	const apiConfiguration = useMemo(() => cachedState.apiConfiguration ?? {}, [cachedState.apiConfiguration])
@@ -361,6 +363,7 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 			vscode.postMessage({ type: "writeDelayMs", value: writeDelayMs })
 			vscode.postMessage({ type: "screenshotQuality", value: screenshotQuality ?? 75 })
 			vscode.postMessage({ type: "terminalOutputLineLimit", value: terminalOutputLineLimit ?? 500 })
+			vscode.postMessage({ type: "terminalOutputCharacterLimit", value: terminalOutputCharacterLimit ?? 50000 })
 			vscode.postMessage({ type: "terminalShellIntegrationTimeout", value: terminalShellIntegrationTimeout })
 			vscode.postMessage({ type: "terminalShellIntegrationDisabled", bool: terminalShellIntegrationDisabled })
 			vscode.postMessage({ type: "terminalCommandDelay", value: terminalCommandDelay })
@@ -380,12 +383,13 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 			vscode.postMessage({ type: "maxReadFileLine", value: maxReadFileLine ?? -1 })
 			vscode.postMessage({ type: "maxConcurrentFileReads", value: cachedState.maxConcurrentFileReads ?? 5 })
 			vscode.postMessage({ type: "allowVeryLargeReads", bool: allowVeryLargeReads }) // kilocode_change
+			vscode.postMessage({ type: "includeDiagnosticMessages", bool: includeDiagnosticMessages })
+			vscode.postMessage({ type: "maxDiagnosticMessages", value: maxDiagnosticMessages ?? 50 })
 			vscode.postMessage({ type: "currentApiConfigName", text: currentApiConfigName })
 			vscode.postMessage({ type: "updateExperimental", values: experiments })
 			vscode.postMessage({ type: "alwaysAllowModeSwitch", bool: alwaysAllowModeSwitch })
 			vscode.postMessage({ type: "alwaysAllowSubtasks", bool: alwaysAllowSubtasks })
 			vscode.postMessage({ type: "showTaskTimeline", bool: showTaskTimeline }) // kilocode_change
-			vscode.postMessage({ type: "autocompleteApiConfigId", text: autocompleteApiConfigId }) // kilocode_change
 			vscode.postMessage({ type: "alwaysAllowFollowupQuestions", bool: alwaysAllowFollowupQuestions })
 			vscode.postMessage({ type: "alwaysAllowUpdateTodoList", bool: alwaysAllowUpdateTodoList })
 			vscode.postMessage({ type: "followupAutoApproveTimeoutMs", value: followupAutoApproveTimeoutMs })
@@ -711,7 +715,6 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 							alwaysAllowWrite={alwaysAllowWrite}
 							alwaysAllowWriteOutsideWorkspace={alwaysAllowWriteOutsideWorkspace}
 							alwaysAllowWriteProtected={alwaysAllowWriteProtected}
-							writeDelayMs={writeDelayMs}
 							alwaysAllowBrowser={alwaysAllowBrowser}
 							alwaysApproveResubmit={alwaysApproveResubmit}
 							requestDelaySeconds={requestDelaySeconds}
@@ -782,8 +785,6 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 						<ContextManagementSettings
 							autoCondenseContext={autoCondenseContext}
 							autoCondenseContextPercent={autoCondenseContextPercent}
-							condensingApiConfigId={condensingApiConfigId}
-							customCondensingPrompt={customCondensingPrompt}
 							listApiConfigMeta={listApiConfigMeta ?? []}
 							maxOpenTabsContext={maxOpenTabsContext}
 							maxWorkspaceFiles={maxWorkspaceFiles ?? 200}
@@ -792,6 +793,9 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 							maxConcurrentFileReads={maxConcurrentFileReads}
 							allowVeryLargeReads={allowVeryLargeReads /* kilocode_change */}
 							profileThresholds={profileThresholds}
+							includeDiagnosticMessages={includeDiagnosticMessages}
+							maxDiagnosticMessages={maxDiagnosticMessages}
+							writeDelayMs={writeDelayMs}
 							setCachedStateField={setCachedStateField}
 						/>
 					)}
@@ -800,6 +804,7 @@ const SettingsView = forwardRef<SettingsViewRef, SettingsViewProps>(({ onDone, t
 					{activeTab === "terminal" && (
 						<TerminalSettings
 							terminalOutputLineLimit={terminalOutputLineLimit}
+							terminalOutputCharacterLimit={terminalOutputCharacterLimit}
 							terminalShellIntegrationTimeout={terminalShellIntegrationTimeout}
 							terminalShellIntegrationDisabled={terminalShellIntegrationDisabled}
 							terminalCommandDelay={terminalCommandDelay}

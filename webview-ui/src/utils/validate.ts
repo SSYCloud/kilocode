@@ -124,6 +124,14 @@ function validateModelsAndKeysProvided(apiConfiguration: ProviderSettings): stri
 				return i18next.t("settings:validation.apiKey")
 			}
 			break
+		case "huggingface":
+			if (!apiConfiguration.huggingFaceApiKey) {
+				return i18next.t("settings:validation.apiKey")
+			}
+			if (!apiConfiguration.huggingFaceModelId) {
+				return i18next.t("settings:validation.modelId")
+			}
+			break
 	}
 
 	return undefined
@@ -190,6 +198,8 @@ function getModelIdForProvider(apiConfiguration: ProviderSettings, provider: str
 			return apiConfiguration.vsCodeLmModelSelector?.id
 		case "shengsuanyun":
 			return apiConfiguration.shengSuanYunModelId
+		case "huggingface":
+			return apiConfiguration.huggingFaceModelId
 		default:
 			return apiConfiguration.apiModelId
 	}

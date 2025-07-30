@@ -9,6 +9,7 @@ import TranslationProvider from "./i18n/TranslationContext"
 import { vscode } from "./utils/vscode"
 import { telemetryClient } from "./utils/TelemetryClient"
 import { TelemetryEventName } from "@roo-code/types"
+import { initializeSourceMaps, exposeSourceMapsForDebugging } from "./utils/sourceMapInitializer"
 import { ExtensionStateContextProvider, useExtensionState } from "./context/ExtensionStateContext"
 import ChatView, { ChatViewRef } from "./components/chat/ChatView"
 import HistoryView from "./components/history/HistoryView"
@@ -21,13 +22,12 @@ import BottomControls from "./components/kilocode/BottomControls" // kilocode_ch
 import Profile from "./components/kilocode/profile/Profile"
 // import { AccountView } from "./components/account/AccountView" // kilocode_change: we have our own profile view
 import { DeleteMessageDialog, EditMessageDialog } from "./components/chat/MessageModificationConfirmationDialog"
+import ErrorBoundary from "./components/ErrorBoundary"
+// import { AccountView } from "./components/account/AccountView" // kilocode_change: we have our own profile view
 import { useAddNonInteractiveClickListener } from "./components/ui/hooks/useNonInteractiveClick"
-import { KiloCodeErrorBoundary } from "./kilocode/KiloCodeErrorBoundary"
+import { TooltipProvider } from "./components/ui/tooltip"
+import { STANDARD_TOOLTIP_DELAY } from "./components/ui/standard-tooltip"
 import McpView from "./components/mcp/McpView"
-// import ProfileView from "./components/kilocode/profile/ProfileView"
-// import { TooltipProvider } from "./components/ui/tooltip"
-// import { STANDARD_TOOLTIP_DELAY } from "./components/ui/standard-tooltip"
-// import { useKiloIdentity } from "./utils/kilocode/useKiloIdentity"
 
 type Tab = "settings" | "history" | "mcp" | "modes" | "chat" | "marketplace" | "account" | "profile" // kilocode_change: add "profile"
 
@@ -205,6 +205,20 @@ const App = () => {
 	// Tell the extension that we are ready to receive messages.
 	useEffect(() => vscode.postMessage({ type: "webviewDidLaunch" }), [])
 
+	// Initialize source map support for better error reporting
+	useEffect(() => {
+		// Initialize source maps for better error reporting in production
+		initializeSourceMaps()
+
+		// Expose source map debugging utilities in production
+		if (process.env.NODE_ENV === "production") {
+			exposeSourceMapsForDebugging()
+		}
+
+		// Log initialization for debugging
+		console.debug("App initialized with source map support")
+	}, [])
+
 	// Focus the WebView when non-interactive content is clicked (only in editor/tab mode)
 	useAddNonInteractiveClickListener(
 		useCallback(() => {
@@ -292,15 +306,17 @@ const App = () => {
 const queryClient = new QueryClient()
 
 const AppWithProviders = () => (
-	<KiloCodeErrorBoundary>
+	<ErrorBoundary>
 		<ExtensionStateContextProvider>
 			<TranslationProvider>
 				<QueryClientProvider client={queryClient}>
-					<App />
+					<TooltipProvider delayDuration={STANDARD_TOOLTIP_DELAY}>
+						<App />
+					</TooltipProvider>
 				</QueryClientProvider>
 			</TranslationProvider>
 		</ExtensionStateContextProvider>
-	</KiloCodeErrorBoundary>
+	</ErrorBoundary>
 )
 
 export default AppWithProviders

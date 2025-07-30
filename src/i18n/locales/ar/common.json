@@ -41,6 +41,7 @@
 		"could_not_open_file_generic": "ما قدرنا نفتح الملف!",
 		"checkpoint_timeout": "انتهى الوقت أثناء محاولة استرجاع الحالة.",
 		"checkpoint_failed": "فشل في استرجاع الحالة.",
+		"git_not_installed": "Git مطلوب لميزة نقاط الحفظ. رجاءً ثبت Git لتفعيل نقاط الحفظ.",
 		"no_workspace": "افتح مجلد مشروع أولاً",
 		"update_support_prompt": "فشل تحديث الرسالة المساعدة",
 		"reset_support_prompt": "فشل إعادة تعيين الرسالة المساعدة",
@@ -131,7 +132,8 @@
 	},
 	"buttons": {
 		"save": "احفظ",
-		"edit": "عدّل"
+		"edit": "عدّل",
+		"learn_more": "اعرف أكثر"
 	},
 	"tasks": {
 		"canceled": "خطأ في المهمة: المستخدم أوقفها وألغى التنفيذ.",
@@ -158,11 +160,17 @@
 			"deleteFailed": "فشل حذف الوضع المخصص: {{error}}",
 			"resetFailed": "فشل إعادة تعيين الأوضاع المخصصة: {{error}}",
 			"modeNotFound": "خطأ في الكتابة: ما لقينا الوضع المحدد",
-			"noWorkspaceForProject": "ما فيه مجلد مشروع مخصص لهذا الوضع"
+			"noWorkspaceForProject": "ما فيه مجلد مشروع مخصص لهذا الوضع",
+			"rulesCleanupFailed": "تم حذف الوضع بنجاح، لكن فشل حذف مجلد القواعد في {{rulesFolderPath}}. قد تحتاج لحذفه يدوياً."
 		},
 		"scope": {
 			"project": "مشروع",
 			"global": "عام"
+		}
+	},
+	"marketplace": {
+		"mode": {
+			"rulesCleanupFailed": "تم إزالة الوضع بنجاح، لكن فشل حذف مجلد القواعد في {{rulesFolderPath}}. قد تحتاج لحذفه يدوياً."
 		}
 	},
 	"mdm": {
@@ -178,6 +186,11 @@
 			"description": "متأكد تبي تحذف هذا الوضع {{scope}}؟ هذا بيحذف كمان مجلد القواعد المرتبط في: {{rulesFolderPath}}",
 			"descriptionNoRules": "متأكد تبي تحذف هذا الوضع المخصص؟",
 			"confirm": "احذف"
+		}
+	},
+	"commands": {
+		"preventCompletionWithOpenTodos": {
+			"description": "منع إكمال المهمة عند وجود مهام غير مكتملة في قائمة المهام"
 		}
 	}
 }

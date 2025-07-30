@@ -168,9 +168,9 @@ const mockContext = {
 } as unknown as vscode.ExtensionContext
 
 // Instead of extending McpHub, create a mock that implements just what we need
-const createMockMcpHub = (): McpHub =>
+const createMockMcpHub = (withServers: boolean = false): McpHub =>
 	({
-		getServers: () => [],
+		getServers: () => (withServers ? [{ name: "test-server", disabled: false }] : []),
 		getMcpServersPath: async () => "/mock/mcp/path",
 		getMcpSettingsFilePath: async () => "/mock/settings/path",
 		dispose: async () => {},
@@ -250,7 +250,7 @@ describe("SYSTEM_PROMPT", () => {
 	})
 
 	it("should include MCP server info when mcpHub is provided", async () => {
-		mockMcpHub = createMockMcpHub()
+		mockMcpHub = createMockMcpHub(true)
 
 		const prompt = await SYSTEM_PROMPT(
 			mockContext,
@@ -577,7 +577,9 @@ describe("SYSTEM_PROMPT", () => {
 
 	it("should exclude update_todo_list tool when todoListEnabled is false", async () => {
 		const settings = {
+			maxConcurrentFileReads: 5,
 			todoListEnabled: false,
+			useAgentRules: true,
 		}
 
 		const prompt = await SYSTEM_PROMPT(
@@ -607,7 +609,9 @@ describe("SYSTEM_PROMPT", () => {
 
 	it("should include update_todo_list tool when todoListEnabled is true", async () => {
 		const settings = {
+			maxConcurrentFileReads: 5,
 			todoListEnabled: true,
+			useAgentRules: true,
 		}
 
 		const prompt = await SYSTEM_PROMPT(
@@ -636,7 +640,9 @@ describe("SYSTEM_PROMPT", () => {
 
 	it("should include update_todo_list tool when todoListEnabled is undefined", async () => {
 		const settings = {
-			// todoListEnabled not set
+			maxConcurrentFileReads: 5,
+			todoListEnabled: true,
+			useAgentRules: true,
 		}
 
 		const prompt = await SYSTEM_PROMPT(

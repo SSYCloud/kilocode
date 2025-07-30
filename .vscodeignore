@@ -64,6 +64,7 @@ webview-ui/node_modules/**
 !src/integrations/theme/default-themes/**
 
 # Ignore doc assets
+src/assets/docs/**
 assets/docs/**
 
 # Include icons and images

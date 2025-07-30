@@ -20,6 +20,7 @@ import {
 	geminiDefaultModelId,
 	geminiCliDefaultModelId,
 	deepSeekDefaultModelId,
+	moonshotDefaultModelId,
 	mistralDefaultModelId,
 	xaiDefaultModelId,
 	groqDefaultModelId,
@@ -63,9 +64,11 @@ import {
 	GeminiCli,
 	Glama,
 	Groq,
+	HuggingFace,
 	LMStudio,
 	LiteLLM,
 	Mistral,
+	Moonshot,
 	Ollama,
 	OpenAI,
 	OpenAICompatible,
@@ -77,6 +80,7 @@ import {
 	XAI,
 	ShengSuanYun,
 	Cerebras, // kilocode_change
+	VirtualQuotaFallbackProvider, // kilocode_change
 } from "./providers"
 
 import { MODELS_BY_PROVIDER, PROVIDERS } from "./constants"
@@ -314,6 +318,7 @@ const ApiOptions = ({
 				gemini: { field: "apiModelId", default: geminiDefaultModelId },
 				"gemini-cli": { field: "apiModelId", default: geminiCliDefaultModelId },
 				deepseek: { field: "apiModelId", default: deepSeekDefaultModelId },
+				moonshot: { field: "apiModelId", default: moonshotDefaultModelId },
 				mistral: { field: "apiModelId", default: mistralDefaultModelId },
 				xai: { field: "apiModelId", default: xaiDefaultModelId },
 				groq: { field: "apiModelId", default: groqDefaultModelId },
@@ -511,6 +516,10 @@ const ApiOptions = ({
 				<DeepSeek apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
 			)}
 
+			{selectedProvider === "moonshot" && (
+				<Moonshot apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
+			)}
+
 			{selectedProvider === "vscode-lm" && (
 				<VSCodeLM apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
 			)}
@@ -527,6 +536,10 @@ const ApiOptions = ({
 				<Groq apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
 			)}
 
+			{selectedProvider === "huggingface" && (
+				<HuggingFace apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
+			)}
+
 			{selectedProvider === "chutes" && (
 				<Chutes apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
 			)}
@@ -534,6 +547,12 @@ const ApiOptions = ({
 			{/* kilocode_change start */}
 			{selectedProvider === "cerebras" && (
 				<Cerebras apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
+			)}
+			{selectedProvider === "virtual-quota-fallback" && (
+				<VirtualQuotaFallbackProvider
+					apiConfiguration={apiConfiguration}
+					setApiConfigurationField={setApiConfigurationField}
+				/>
 			)}
 			{/* kilocode_change end */}
 

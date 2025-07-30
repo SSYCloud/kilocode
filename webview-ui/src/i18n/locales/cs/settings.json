@@ -45,14 +45,17 @@
 		"enableDescription": "Povolit indexování kódu pro lepší vyhledávání a porozumění kontextu",
 		"settingsTitle": "Nastavení indexování",
 		"disabledMessage": "Indexování kódové báze je aktuálně zakázáno. Povolte jej v globálních nastaveních pro konfiguraci možností indexování.",
-		"providerLabel": "Poskytovatel vkládání",
+		"profileLabel": "Poskytovatel vkládání",
 		"embedderProviderLabel": "Poskytovatel vkládání",
-		"selectProviderPlaceholder": "Vyberte poskytovatele",
+		"selectProfilePlaceholder": "Vyberte poskytovatele",
 		"openaiProvider": "OpenAI",
 		"ollamaProvider": "Ollama",
 		"geminiProvider": "Gemini",
 		"geminiApiKeyLabel": "Klíč API:",
 		"geminiApiKeyPlaceholder": "Zadejte svůj klíč API Gemini",
+		"mistralProvider": "Mistral",
+		"mistralApiKeyLabel": "Klíč API:",
+		"mistralApiKeyPlaceholder": "Zadejte svůj klíč API Mistral",
 		"openaiCompatibleProvider": "Kompatibilní s OpenAI",
 		"openAiKeyLabel": "Klíč API OpenAI",
 		"openAiKeyPlaceholder": "Zadejte svůj klíč API OpenAI",
@@ -117,6 +120,7 @@
 			"modelIdRequired": "ID modelu je povinné",
 			"modelDimensionRequired": "Dimenze modelu je povinná",
 			"geminiApiKeyRequired": "Klíč API Gemini je povinný",
+			"mistralApiKeyRequired": "Klíč API Mistral je povinný",
 			"ollamaBaseUrlRequired": "Základní URL Ollama je povinné",
 			"baseUrlRequired": "Základní URL je povinné",
 			"modelDimensionMinValue": "Dimenze modelu musí být větší než 0"
@@ -258,11 +262,28 @@
 		"getChutesApiKey": "Získat klíč API Chutes",
 		"deepSeekApiKey": "Klíč API DeepSeek",
 		"getDeepSeekApiKey": "Získat klíč API DeepSeek",
+		"moonshotApiKey": "Klíč API Moonshot",
+		"getMoonshotApiKey": "Získat klíč API Moonshot",
+		"moonshotBaseUrl": "Vstupní bod Moonshot",
 		"geminiApiKey": "Klíč API Gemini",
 		"getGroqApiKey": "Získat klíč API Groq",
 		"groqApiKey": "Klíč API Groq",
 		"getGeminiApiKey": "Získat klíč API Gemini",
 		"openAiApiKey": "Klíč API OpenAI",
+		"getHuggingFaceApiKey": "Získat klíč API Hugging Face",
+		"huggingFaceApiKey": "Klíč API Hugging Face",
+		"huggingFaceModelId": "ID modelu",
+		"huggingFaceLoading": "Načítání...",
+		"huggingFaceModelsCount": "({{count}} modelů)",
+		"huggingFaceSelectModel": "Vyberte model...",
+		"huggingFaceSearchModels": "Hledat modely...",
+		"huggingFaceNoModelsFound": "Nenalezeny žádné modely",
+		"huggingFaceProvider": "Poskytovatel",
+		"huggingFaceProviderAuto": "Automaticky",
+		"huggingFaceSelectProvider": "Vyberte poskytovatele...",
+		"huggingFaceSearchProviders": "Hledat poskytovatele...",
+		"huggingFaceNoProvidersFound": "Nenalezeni žádní poskytovatelé",
+		"awsApiKey": "Klíč API Amazon Bedrock",
 		"apiKey": "Klíč API",
 		"anthropic": {
 			"baseUrl": "Základní URL",
@@ -535,6 +556,22 @@
 			"profileDescription": "Vlastní prahová hodnota pouze pro tento profil (přepisuje globální výchozí)",
 			"inheritDescription": "Tento profil dědí globální výchozí prahovou hodnotu ({{threshold}}%)",
 			"usesGlobal": "(používá globální {{threshold}}%)"
+		},
+		"diagnostics": {
+			"includeMessages": {
+				"label": "Automaticky zahrnout diagnostiky do kontextu",
+				"description": "Pokud je povoleno, diagnostické zprávy (chyby) z upravovaných souborů budou automaticky zahrnuty do kontextu. Vždy můžete ručně zahrnout všechny diagnostiky pracovního prostoru pomocí @problems."
+			},
+			"maxMessages": {
+				"label": "Maximální počet diagnostických zpráv",
+				"description": "Omezuje počet diagnostických zpráv (chyby, varování) zahrnutých do kontextu. Když je nastaveno, zobrazí se pouze tento počet diagnostik s upřednostněním chyb před varováními. Nastavte na 0 pro neomezené diagnostiky.",
+				"resetTooltip": "Obnovit na výchozí hodnotu (50)",
+				"unlimitedLabel": "Neomezeně"
+			},
+			"delayAfterWrite": {
+				"label": "Zpoždění po zápisu, aby diagnostika mohla detekovat potenciální problémy",
+				"description": "Doba čekání po zápisu souborů před pokračováním, což umožňuje diagnostickým nástrojům zpracovat změny a detekovat problémy."
+			}
 		}
 	},
 	"terminal": {
@@ -549,6 +586,10 @@
 		"outputLineLimit": {
 			"label": "Limit výstupu terminálu",
 			"description": "Maximální počet řádků, které se mají zahrnout do výstupu terminálu při provádění příkazů. Při překročení budou řádky odstraněny ze středu, čímž se ušetří tokeny. <0>Dozvědět se více</0>"
+		},
+		"outputCharacterLimit": {
+			"label": "Limit znaků terminálu",
+			"description": "Maximální počet znaků, které se mají zahrnout do výstupu terminálu při provádění příkazů. Tento limit má přednost před limitem řádků, aby se předešlo problémům s pamětí z extrémně dlouhých řádků. Při překročení bude výstup zkrácen. <0>Dozvědět se více</0>"
 		},
 		"shellIntegrationTimeout": {
 			"label": "Časový limit integrace shellu terminálu",
@@ -648,10 +689,6 @@
 		"POWER_STEERING": {
 			"name": "Použít experimentální režim \"posilovače řízení\"",
 			"description": "Pokud je povoleno, Kilo Code bude modelu častěji připomínat podrobnosti jeho aktuální definice režimu. To povede k silnějšímu dodržování definic rolí a vlastních instrukcí, ale použije více tokenů na zprávu."
-		},
-		"AUTOCOMPLETE": {
-			"name": "Použít experimentální funkci \"automatického doplňování\"",
-			"description": "Pokud je povoleno, Kilo Code bude poskytovat návrhy kódu přímo při psaní. Vyžaduje Kilo Code API Provider."
 		},
 		"CONCURRENT_FILE_READS": {
 			"name": "Povolit souběžné čtení souborů",
@@ -775,6 +812,9 @@
 		"customArn": "Vlastní ARN",
 		"useCustomArn": "Použít vlastní ARN..."
 	},
+	"limitMaxTokensDescription": "Omezit maximální počet tokenů v odpovědi",
+	"maxOutputTokensLabel": "Maximální počet výstupních tokenů",
+	"maxTokensGenerateDescription": "Maximální počet tokenů k vygenerování v odpovědi",
 	"includeMaxOutputTokens": "Zahrnout maximální počet výstupních tokenů",
 	"includeMaxOutputTokensDescription": "Odeslat parametr maximálního počtu výstupních tokenů v požadavcích API. Někteří poskytovatelé to nemusí podporovat."
 }

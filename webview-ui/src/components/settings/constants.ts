@@ -5,6 +5,7 @@ import {
 	bedrockModels,
 	claudeCodeModels,
 	deepSeekModels,
+	moonshotModels,
 	geminiModels,
 	geminiCliModels,
 	mistralModels,
@@ -22,6 +23,7 @@ export const MODELS_BY_PROVIDER: Partial<Record<ProviderName, Record<string, Mod
 	"claude-code": claudeCodeModels,
 	bedrock: bedrockModels,
 	deepseek: deepSeekModels,
+	moonshot: moonshotModels,
 	gemini: geminiModels,
 	"gemini-cli": geminiCliModels, // kilocode_change
 	fireworks: fireworksModels, // kilocode_change
@@ -44,6 +46,7 @@ export const PROVIDERS = [
 	{ value: "gemini", label: "Google Gemini" },
 	{ value: "gemini-cli", label: "Gemini CLI" },
 	{ value: "deepseek", label: "DeepSeek" },
+	{ value: "moonshot", label: "Moonshot" },
 	{ value: "openai-native", label: "OpenAI" },
 	{ value: "openai", label: "OpenAI Compatible" },
 	{ value: "vertex", label: "GCP Vertex AI" },
@@ -58,7 +61,9 @@ export const PROVIDERS = [
 	{ value: "human-relay", label: "Human Relay" },
 	{ value: "xai", label: "xAI (Grok)" },
 	{ value: "groq", label: "Groq" },
+	{ value: "huggingface", label: "Hugging Face" },
 	{ value: "chutes", label: "Chutes AI" },
 	{ value: "cerebras", label: "Cerebras" }, // kilocode_change
+	{ value: "virtual-quota-fallback", label: "Virtual Quota Fallback" }, // kilocode_change
 	{ value: "litellm", label: "LiteLLM" },
 ] // .sort((a, b) => a.label.localeCompare(b.label)) // kilocode_change: Sort providers with kilocode first
