@@ -12,5 +12,7 @@ export function getKiloCodeBackendSignUpUrl(uriScheme: string = "vscode", uiKind
 
 export function getShengSuanYunAuthUrl(uriScheme: string = "vscode") {
 	const id = "kilo-ssy"
-	return `https://router.shengsuanyun.com/auth?from=${id}&callback_url=${encodeURIComponent(`${uriScheme || "vscode"}://shengsuan-cloud.${id}/ssy`)}`
+	const author = "shengsuan-cloud"
+	const from = "CH_0HJ73HTC"
+	return `https://router.shengsuanyun.com/auth?from=${from}&callback_url=${encodeURIComponent(`${uriScheme || "vscode"}://${author}.${id}/ssy`)}`
 }
