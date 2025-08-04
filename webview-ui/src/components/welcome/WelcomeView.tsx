@@ -8,11 +8,12 @@ import { useExtensionState } from "@src/context/ExtensionStateContext"
 import { validateApiConfiguration } from "@src/utils/validate"
 import { vscode } from "@src/utils/vscode"
 import { useAppTranslation } from "@src/i18n/TranslationContext"
-import { getShengSuanYunAuthUrl } from "@src/oauth/urls"
+
 import ApiOptions from "../settings/ApiOptions"
 import { Tab, TabContent } from "../common/Tab"
 
 import RooHero from "./RooHero"
+import { getShengSuanYunAuthUrl } from "../kilocode/helpers"
 
 const WelcomeView = () => {
 	const { apiConfiguration, currentApiConfigName, setApiConfiguration, uriScheme, uiKind /* kilocode_change */ } =

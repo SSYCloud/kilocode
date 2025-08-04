@@ -3,13 +3,13 @@ import Logo from "../common/Logo"
 import { Trans } from "react-i18next"
 import { vscode } from "@/utils/vscode"
 import React, { useEffect } from "react"
-import { getShengSuanYunAuthUrl } from "@/oauth/urls"
 import { useAppTranslation } from "@/i18n/TranslationContext"
 import { useExtensionState } from "@/context/ExtensionStateContext"
 import { VSCodeButtonLink } from "@/components/common/VSCodeButtonLink"
 import { ProfileDataResponsePayload, WebviewMessage } from "@roo/WebviewMessage"
 import { VSCodeButton, VSCodeDivider, VSCodeLink } from "@vscode/webview-ui-toolkit/react"
 import CreditsHistoryTable from "./CreditsHistoryTable"
+import { getShengSuanYunAuthUrl } from "../helpers"
 
 interface ProfileProps {
 	onDone: () => void
