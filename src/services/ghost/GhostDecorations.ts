@@ -4,9 +4,10 @@ import { GhostSuggestionsState } from "./GhostSuggestions"
 const ADDITION_DECORATION_OPTIONS: vscode.DecorationRenderOptions = {
 	after: {
 		margin: "0 0 0 0.1em",
-		color: new vscode.ThemeColor("editor.foreground"),
+		color: new vscode.ThemeColor("editor.background"),
 		backgroundColor: new vscode.ThemeColor("editorGutter.addedBackground"),
 	},
+	opacity: "0.8",
 	isWholeLine: false,
 	overviewRulerColor: new vscode.ThemeColor("editorGutter.addedBackground"),
 	overviewRulerLane: vscode.OverviewRulerLane.Right,
@@ -24,7 +25,7 @@ const ADDITION_ACTIVE_DECORATION_OPTIONS: vscode.DecorationRenderOptions = {
 
 const DELETION_DECORATION_OPTIONS: vscode.DecorationRenderOptions = {
 	isWholeLine: false,
-	color: new vscode.ThemeColor("editor.foreground"),
+	color: new vscode.ThemeColor("editor.background"),
 	backgroundColor: new vscode.ThemeColor("editorGutter.deletedBackground"),
 	opacity: "0.8",
 	overviewRulerColor: new vscode.ThemeColor("editorGutter.deletedBackground"),

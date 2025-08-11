@@ -7,6 +7,7 @@ import * as fs from "fs"
 import { fileURLToPath } from "url"
 import { camelCase } from "change-case"
 import { setupConsoleLogging, cleanLogMessage } from "../helpers/console-logging"
+import { closeAllTabs } from "../helpers"
 
 // ES module equivalent of __dirname
 const __filename = fileURLToPath(import.meta.url)
@@ -33,6 +34,8 @@ export const test = base.extend<TestFixtures>({
 		}
 
 		const defaultCachePath = await createTempDir()
+		const userDataDir = path.join(defaultCachePath, "user-data")
+		seedUserSettings(userDataDir)
 
 		// Use the pre-downloaded VS Code from global setup
 		const vscodePath = process.env.VSCODE_EXECUTABLE_PATH
@@ -42,6 +45,12 @@ export const test = base.extend<TestFixtures>({
 
 		const electronApp = await _electron.launch({
 			executablePath: vscodePath,
+			env: {
+				...process.env,
+				VSCODE_SKIP_GETTING_STARTED: "1",
+				VSCODE_DISABLE_WORKSPACE_TRUST: "1",
+				ELECTRON_DISABLE_SECURITY_WARNINGS: "1",
+			},
 			args: [
 				"--no-sandbox",
 				"--disable-gpu-sandbox",
@@ -60,9 +69,16 @@ export const test = base.extend<TestFixtures>({
 				"--disable-crash-reporter",
 				"--enable-logging",
 				"--log-level=0",
+				"--disable-extensions-except=kilocode.kilo-code",
+				"--disable-extension-recommendations",
+				"--disable-extension-update-check",
+				"--disable-default-apps",
+				"--disable-background-timer-throttling",
+				"--disable-renderer-backgrounding",
+				"--disable-component-extensions-with-background-pages",
 				`--extensionDevelopmentPath=${path.resolve(__dirname, "..", "..", "..", "src")}`,
 				`--extensions-dir=${path.join(defaultCachePath, "extensions")}`,
-				`--user-data-dir=${path.join(defaultCachePath, "user-data")}`,
+				`--user-data-dir=${userDataDir}`,
 				"--enable-proposed-api=kilocode.kilo-code",
 				await createProject(),
 			],
@@ -175,8 +191,17 @@ export const test = base.extend<TestFixtures>({
 		}
 	},
 
-	takeScreenshot: async ({ workbox }, use) => {
+	takeScreenshot: async ({ workbox: page }, use) => {
 		await use(async (name?: string) => {
+			await closeAllTabs(page)
+
+			const activatingStatus = page.locator("text=Activating Extensions")
+			const activatingStatusCount = await activatingStatus.count()
+			if (activatingStatusCount > 0) {
+				console.log("⌛️ Waiting for `Activating Extensions` to go away...")
+				await activatingStatus.waitFor({ state: "hidden", timeout: 10000 })
+			}
+
 			const testInfo = test.info()
 			// Extract test suite from the test file name or use a default
 			const fileName = testInfo.file.split("/").pop()?.replace(".test.ts", "") || "unknown"
@@ -191,8 +216,24 @@ export const test = base.extend<TestFixtures>({
 				.replace(/^-|-$/g, "") // Remove leading/trailing dashes
 
 			const screenshotPath = test.info().outputPath(`${hierarchicalName}.png`)
-			await workbox.screenshot({ path: screenshotPath, fullPage: true })
+			await page.screenshot({ path: screenshotPath, fullPage: true })
 			console.log(`📸 Screenshot captured: ${hierarchicalName}`)
 		})
 	},
 })
+
+function seedUserSettings(userDataDir: string) {
+	const userDir = path.join(userDataDir, "User")
+	const settingsPath = path.join(userDir, "settings.json")
+	fs.mkdirSync(userDir, { recursive: true })
+
+	const settings = {
+		"workbench.startupEditor": "none", // hides 'Get Started'
+		"workbench.tips.enabled": false,
+		"update.showReleaseNotes": false,
+		"extensions.ignoreRecommendations": true,
+		"telemetry.telemetryLevel": "off",
+	}
+
+	fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2))
+}

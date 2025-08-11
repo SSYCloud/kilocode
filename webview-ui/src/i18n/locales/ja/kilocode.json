@@ -4,7 +4,7 @@
 		"introText1": "Kilo Codeは無料のオープンソースAIコーディングエージェントです。",
 		"introText2": "Claude 4 Sonnet、Gemini 2.5 Pro、GPT-4.1、その他450以上の最新のAIモデルと連携します。",
 		"introText3": "無料アカウントを作成して、任意のAIモデルで使用できる$20のトークンを取得しましょう。",
-		"ctaButton": "無料アカウントを作成",
+		"ctaButton": "始める",
 		"manualModeButton": "自分のAPIキーを使う",
 		"alreadySignedUp": "すでに登録済みですか？",
 		"loginText": "こちらからログイン"
@@ -12,6 +12,11 @@
 	"lowCreditWarning": {
 		"addCredit": "クレジットを追加",
 		"lowBalance": "Kilo Codeの残高が少なくなっています"
+	},
+	"pricing": {
+		"costUnknown": "コスト不明",
+		"costUnknownDescription": "APIプロバイダーがコストデータを提供しなかったか、リクエストがキャンセルされました。",
+		"discoverModelPricing": "モデルの価格と機能を確認"
 	},
 	"notifications": {
 		"toolRequest": "ツールのリクエストが承認待ちです",
@@ -44,6 +49,16 @@
 			"testButton": "通知をテスト",
 			"testTitle": "Kilo Code",
 			"testMessage": "これはKilo Codeからのテスト通知です。"
+		},
+		"terminal": {
+			"commandGenerator": {
+				"apiConfigId": {
+					"label": "API設定",
+					"description": "ターミナルコマンドの生成に使用するAPI設定を選択してください。デフォルト設定を使用する場合は「現在の設定を使用」のままにしてください。",
+					"current": "現在の設定を使用"
+				},
+				"provider": "ターミナルコマンドジェネレータープロバイダー"
+			}
 		}
 	},
 	"chat": {
@@ -60,7 +75,14 @@
 		"dashboard": "ダッシュボード",
 		"logOut": "ログアウト",
 		"currentBalance": "現在の残高",
-		"loading": "読み込み中..."
+		"loading": "読み込み中...",
+		"shop": {
+			"title": "クレジット購入",
+			"popular": "人気",
+			"credits": "クレジット",
+			"action": "今すぐ購入",
+			"viewAll": "すべての価格オプションを表示"
+		}
 	},
 	"docs": "ドキュメント",
 	"rules": {

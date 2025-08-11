@@ -18,6 +18,8 @@ import { ContextProxy } from "../../core/config/ContextProxy"
 import { ProviderSettingsManager } from "../../core/config/ProviderSettingsManager"
 import { GhostContext } from "./GhostContext"
 import { TelemetryService } from "@roo-code/telemetry"
+import { ClineProvider } from "../../core/webview/ClineProvider"
+import { experiments, EXPERIMENT_IDS } from "../../shared/experiments"
 
 export class GhostProvider {
 	private static instance: GhostProvider | null = null
@@ -28,10 +30,12 @@ export class GhostProvider {
 	private workspaceEdit: GhostWorkspaceEdit
 	private suggestions: GhostSuggestionsState = new GhostSuggestionsState()
 	private context: vscode.ExtensionContext
+	private cline: ClineProvider
 	private providerSettingsManager: ProviderSettingsManager
 	private settings: GhostServiceSettings | null = null
 	private ghostContext: GhostContext
 
+	private enabled: boolean = false
 	private taskId: string | null = null
 
 	// Status bar integration
@@ -43,8 +47,9 @@ export class GhostProvider {
 	public codeActionProvider: GhostCodeActionProvider
 	public codeLensProvider: GhostCodeLensProvider
 
-	private constructor(context: vscode.ExtensionContext) {
+	private constructor(context: vscode.ExtensionContext, cline: ClineProvider) {
 		this.context = context
+		this.cline = cline
 		this.decorations = new GhostDecorations()
 		this.documentStore = new GhostDocumentStore()
 		this.strategy = new GhostStrategy()
@@ -53,6 +58,7 @@ export class GhostProvider {
 		this.model = new GhostModel()
 		this.ghostContext = new GhostContext(this.documentStore)
 
+		this.loadSettings()
 		this.initializeStatusBar()
 
 		// Register the providers
@@ -74,7 +80,7 @@ export class GhostProvider {
 	 */
 	private onDidCloseTextDocument(document: vscode.TextDocument): void {
 		// Only process file documents
-		if (document.uri.scheme !== "file") {
+		if (!this.enabled || document.uri.scheme !== "file") {
 			return
 		}
 
@@ -87,7 +93,7 @@ export class GhostProvider {
 	 */
 	private async onDidOpenTextDocument(document: vscode.TextDocument): Promise<void> {
 		// Only process file documents
-		if (document.uri.scheme !== "file") {
+		if (!this.enabled || document.uri.scheme !== "file") {
 			return
 		}
 
@@ -102,7 +108,7 @@ export class GhostProvider {
 	 */
 	private async onDidChangeTextDocument(event: vscode.TextDocumentChangeEvent): Promise<void> {
 		// Only process file documents
-		if (event.document.uri.scheme !== "file") {
+		if (!this.enabled || event.document.uri.scheme !== "file") {
 			return
 		}
 
@@ -115,7 +121,24 @@ export class GhostProvider {
 	}
 
 	private loadSettings() {
-		return ContextProxy.instance?.getValues?.()?.ghostServiceSettings
+		const state = ContextProxy.instance?.getValues?.()
+		const experimentEnabled = experiments.isEnabled(state.experiments ?? {}, EXPERIMENT_IDS.INLINE_ASSIST)
+		if (this.enabled && !experimentEnabled) {
+			this.disable()
+		}
+		if (!this.enabled && experimentEnabled) {
+			this.enable()
+		}
+		this.enabled = experimentEnabled
+		return state.ghostServiceSettings
+	}
+
+	private async saveSettings() {
+		if (!this.settings) {
+			return
+		}
+		await ContextProxy.instance?.setValues?.({ ghostServiceSettings: this.settings })
+		await this.cline.postStateToWebview()
 	}
 
 	public async reload() {
@@ -125,21 +148,25 @@ export class GhostProvider {
 		this.updateStatusBar()
 	}
 
-	public static getInstance(context?: vscode.ExtensionContext): GhostProvider {
+	public static initialize(context: vscode.ExtensionContext, cline: ClineProvider): GhostProvider {
+		if (GhostProvider.instance) {
+			throw new Error("GhostProvider is already initialized. Use getInstance() instead.")
+		}
+		GhostProvider.instance = new GhostProvider(context, cline)
+		return GhostProvider.instance
+	}
+
+	public static getInstance(): GhostProvider {
 		if (!GhostProvider.instance) {
-			if (!context) {
-				throw new Error("ExtensionContext is required for first initialization of GhostProvider")
-			}
-			GhostProvider.instance = new GhostProvider(context)
+			throw new Error("GhostProvider is not initialized. Call initialize() first.")
 		}
 		return GhostProvider.instance
 	}
 
-	public getDocumentStore() {
-		return this.documentStore
-	}
-
 	public async promptCodeSuggestion() {
+		if (!this.enabled) {
+			return
+		}
 		this.taskId = crypto.randomUUID()
 
 		TelemetryService.instance.captureEvent(TelemetryEventName.INLINE_ASSIST_QUICK_TASK, {
@@ -165,6 +192,9 @@ export class GhostProvider {
 	}
 
 	public async codeSuggestion() {
+		if (!this.enabled) {
+			return
+		}
 		const editor = vscode.window.activeTextEditor
 		if (!editor) {
 			return
@@ -261,6 +291,9 @@ export class GhostProvider {
 	}
 
 	public async onDidChangeActiveTextEditor(editor: vscode.TextEditor | undefined) {
+		if (!this.enabled) {
+			return
+		}
 		if (!editor) {
 			return
 		}
@@ -281,6 +314,9 @@ export class GhostProvider {
 	}
 
 	public async displaySuggestions() {
+		if (!this.enabled) {
+			return
+		}
 		const editor = vscode.window.activeTextEditor
 		if (!editor) {
 			return
@@ -334,6 +370,9 @@ export class GhostProvider {
 	}
 
 	public hasPendingSuggestions(): boolean {
+		if (!this.enabled) {
+			return false
+		}
 		return this.suggestions.hasSuggestions()
 	}
 
@@ -351,6 +390,9 @@ export class GhostProvider {
 	}
 
 	public async applySelectedSuggestions() {
+		if (!this.enabled) {
+			return
+		}
 		if (!this.hasPendingSuggestions() || this.workspaceEdit.isLocked()) {
 			return
 		}
@@ -381,6 +423,9 @@ export class GhostProvider {
 	}
 
 	public async applyAllSuggestions() {
+		if (!this.enabled) {
+			return
+		}
 		if (!this.hasPendingSuggestions() || this.workspaceEdit.isLocked()) {
 			return
 		}
@@ -395,6 +440,9 @@ export class GhostProvider {
 	}
 
 	public async selectNextSuggestion() {
+		if (!this.enabled) {
+			return
+		}
 		if (!this.hasPendingSuggestions()) {
 			return
 		}
@@ -413,6 +461,9 @@ export class GhostProvider {
 	}
 
 	public async selectPreviousSuggestion() {
+		if (!this.enabled) {
+			return
+		}
 		if (!this.hasPendingSuggestions()) {
 			return
 		}
@@ -431,6 +482,9 @@ export class GhostProvider {
 	}
 
 	private initializeStatusBar() {
+		if (!this.enabled) {
+			return
+		}
 		this.statusBar = new GhostStatusBar({
 			enabled: false,
 			model: "loading...",
@@ -459,10 +513,10 @@ export class GhostProvider {
 
 	private updateStatusBar() {
 		if (!this.statusBar) {
-			return
+			this.initializeStatusBar()
 		}
 
-		this.statusBar.update({
+		this.statusBar?.update({
 			enabled: true,
 			model: this.getCurrentModelName(),
 			hasValidToken: this.hasValidApiToken(),
@@ -471,8 +525,48 @@ export class GhostProvider {
 		})
 	}
 
-	public dispose() {
+	private disposeStatusBar() {
 		this.statusBar?.dispose()
 		this.statusBar = null
+	}
+
+	public dispose() {
+		this.disposeStatusBar()
+	}
+
+	public async disable() {
+		this.settings = {
+			...this.settings,
+			enableAutoInlineTaskKeybinding: false,
+			enableQuickInlineTaskKeybinding: false,
+		}
+		this.disposeStatusBar()
+		await this.cancelSuggestions()
+		await this.saveSettings()
+		await this.updateGlobalContext()
+	}
+
+	public async enable() {
+		this.settings = {
+			...this.settings,
+			enableAutoInlineTaskKeybinding: true,
+			enableQuickInlineTaskKeybinding: true,
+		}
+		this.updateStatusBar()
+		await this.saveSettings()
+		await this.updateGlobalContext()
+	}
+
+	public async showIncompatibilityExtensionPopup() {
+		const message = t("kilocode:ghost.incompatibilityExtensionPopup.message")
+		const disableCopilot = t("kilocode:ghost.incompatibilityExtensionPopup.disableCopilot")
+		const disableInlineAssist = t("kilocode:ghost.incompatibilityExtensionPopup.disableInlineAssist")
+		const response = await vscode.window.showErrorMessage(message, disableCopilot, disableInlineAssist)
+
+		if (response === disableCopilot) {
+			await vscode.commands.executeCommand<any>("github.copilot.completions.disable")
+		} else if (response === disableInlineAssist) {
+			await vscode.commands.executeCommand<any>("kilo-code.ghost.disable")
+		}
 	}
 }

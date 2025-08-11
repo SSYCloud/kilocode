@@ -21,6 +21,7 @@ import { HumanRelayDialog } from "./components/human-relay/HumanRelayDialog"
 import BottomControls from "./components/kilocode/BottomControls" // kilocode_change
 import Profile from "./components/kilocode/profile/Profile"
 // import { AccountView } from "./components/account/AccountView" // kilocode_change: we have our own profile view
+import { MemoryService } from "./services/MemoryService" // kilocode_change
 import { DeleteMessageDialog, EditMessageDialog } from "./components/chat/MessageModificationConfirmationDialog"
 import ErrorBoundary from "./components/ErrorBoundary"
 // import { AccountView } from "./components/account/AccountView" // kilocode_change: we have our own profile view
@@ -28,6 +29,7 @@ import { useAddNonInteractiveClickListener } from "./components/ui/hooks/useNonI
 import { TooltipProvider } from "./components/ui/tooltip"
 import { STANDARD_TOOLTIP_DELAY } from "./components/ui/standard-tooltip"
 import McpView from "./components/mcp/McpView"
+import { useKiloIdentity } from "./utils/kilocode/useKiloIdentity"
 
 type Tab = "settings" | "history" | "mcp" | "modes" | "chat" | "marketplace" | "account" | "profile" // kilocode_change: add "profile"
 
@@ -70,14 +72,14 @@ const App = () => {
 		didHydrateState,
 		showWelcome,
 		shouldShowAnnouncement,
-		// telemetrySetting,
-		// telemetryKey,
-		// machineId,
+		telemetrySetting,
+		telemetryKey,
+		machineId,
 		// cloudUserInfo, // kilocode_change not used
 		// cloudIsAuthenticated, // kilocode_change not used
 		renderContext,
 		mdmCompliant,
-		// apiConfiguration, // kilocode_change
+		apiConfiguration, // kilocode_change
 	} = useExtensionState()
 
 	// Create a persistent state manager
@@ -194,12 +196,18 @@ const App = () => {
 	}, [shouldShowAnnouncement])
 
 	// kilocode_change start
-	// const telemetryDistinctId = useKiloIdentity(apiConfiguration?.kilocodeToken ?? "", machineId ?? "")
-	// useEffect(() => {
-	// 	if (didHydrateState) {
-	// 		telemetryClient.updateTelemetryState(telemetrySetting, telemetryKey, telemetryDistinctId)
-	// 	}
-	// }, [telemetrySetting, telemetryKey, telemetryDistinctId, didHydrateState])
+	const telemetryDistinctId = useKiloIdentity(apiConfiguration?.kilocodeToken ?? "", machineId ?? "")
+	useEffect(() => {
+		if (didHydrateState) {
+			telemetryClient.updateTelemetryState(telemetrySetting, telemetryKey, telemetryDistinctId)
+
+			// kilocode_change start
+			const memoryService = new MemoryService()
+			memoryService.start()
+			return () => memoryService.stop()
+			// kilocode_change end
+		}
+	}, [telemetrySetting, telemetryKey, telemetryDistinctId, didHydrateState])
 	// kilocode_change end
 
 	// Tell the extension that we are ready to receive messages.

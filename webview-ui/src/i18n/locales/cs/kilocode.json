@@ -4,7 +4,7 @@
 		"introText1": "Kilo Code je bezplatný open source AI coding agent.",
 		"introText2": "Funguje s nejnovějšími AI modely jako Claude 4 Sonnet, Gemini 2.5 Pro, GPT-4.1 a více než 450 dalšími.",
 		"introText3": "Vytvoř si bezplatný účet a získej $20 v tokenech pro použití s jakýmkoli AI modelem.",
-		"ctaButton": "Vytvořit bezplatný účet",
+		"ctaButton": "Začít",
 		"manualModeButton": "Použij vlastní API key",
 		"alreadySignedUp": "Už jsi registrovaný?",
 		"loginText": "Přihlas se zde"
@@ -12,6 +12,11 @@
 	"lowCreditWarning": {
 		"addCredit": "Přidat kredit",
 		"lowBalance": "Tvůj Kilo Code zůstatek je nízký"
+	},
+	"pricing": {
+		"costUnknown": "neznámé náklady",
+		"costUnknownDescription": "Poskytovatel API neposkytl žádné údaje o nákladech nebo byl požadavek zrušen.",
+		"discoverModelPricing": "Objevte ceny a možnosti modelů"
 	},
 	"notifications": {
 		"toolRequest": "Požadavek na nástroj čeká na schválení",
@@ -44,6 +49,16 @@
 			"testButton": "Otestovat oznámení",
 			"testTitle": "Kilo Code",
 			"testMessage": "Toto je testovací oznámení z Kilo Code."
+		},
+		"terminal": {
+			"commandGenerator": {
+				"apiConfigId": {
+					"current": "Použít aktuální konfiguraci",
+					"label": "Konfigurace API",
+					"description": "Vyberte, kterou konfiguraci API chcete použít pro generování příkazů do terminálu. Pokud chcete použít výchozí nastavení, ponechte 'Použít aktuální konfiguraci'."
+				},
+				"provider": "Poskytovatel generátoru terminálových příkazů"
+			}
 		}
 	},
 	"chat": {
@@ -60,7 +75,14 @@
 		"dashboard": "Přehled",
 		"logOut": "Odhlásit se",
 		"currentBalance": "AKTUÁLNÍ ZŮSTATEK",
-		"loading": "Načítání..."
+		"loading": "Načítání...",
+		"shop": {
+			"title": "Koupit kredity",
+			"popular": "Populární",
+			"credits": "kredity",
+			"action": "Koupit nyní",
+			"viewAll": "Zobrazit všechny cenové možnosti"
+		}
 	},
 	"docs": "Dokumentace",
 	"rules": {

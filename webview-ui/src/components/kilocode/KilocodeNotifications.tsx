@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react"
 import { useExtensionState } from "@/context/ExtensionStateContext"
 import { VSCodeButton } from "@vscode/webview-ui-toolkit/react"
 import { vscode } from "@/utils/vscode"
+import { telemetryClient } from "@/utils/TelemetryClient"
+import { TelemetryEventName } from "@roo-code/types"
 
 interface NotificationAction {
 	actionText: string
@@ -48,6 +50,10 @@ export const KilocodeNotifications: React.FC = () => {
 		vscode.postMessage({
 			type: "openInBrowser",
 			url: action.actionURL,
+		})
+		telemetryClient.capture(TelemetryEventName.NOTIFICATION_CLICKED, {
+			actionText: action.actionText,
+			actionURL: action.actionURL,
 		})
 	}
 

@@ -12,7 +12,7 @@ import { useAppTranslation } from "@src/i18n/TranslationContext"
 import ApiOptions from "../settings/ApiOptions"
 import { Tab, TabContent } from "../common/Tab"
 
-import RooHero from "./RooHero"
+// import RooHero from "./RooHero"
 import { getShengSuanYunAuthUrl } from "../kilocode/helpers"
 
 const WelcomeView = () => {
@@ -48,18 +48,22 @@ const WelcomeView = () => {
 
 	return (
 		<Tab>
-			<TabContent className="flex flex-col gap-5 p-16">
-				<RooHero />
-				<h2 className="mt-0 mb-0">{t("welcome:greeting")}</h2>
-
-				<div className="font-bold">
+			<TabContent className="flex flex-col gap-3 p-12">
+				{/* <RooHero /> */}
+				<div className="flex flex-col">
+					<h4 className="mt-0 mb-0">
+						{t("welcome:greeting")}
+						<Trans i18nKey="welcome:introduction" />
+					</h4>
+				</div>
+				{/* <div className="font-bold">
 					<p>
 						<Trans i18nKey="welcome:introduction" />
 					</p>
 					<p>
 						<Trans i18nKey="welcome:chooseProvider" />
 					</p>
-				</div>
+				</div> */}
 
 				<div className="mb-4">
 					<p className="font-bold mt-0">{t("welcome:startRouter")}</p>
@@ -81,7 +85,7 @@ const WelcomeView = () => {
 								<a
 									key={index}
 									href={provider.authUrl}
-									className="flex-1 border border-vscode-panel-border hover:bg-secondary rounded-lg py-4 px-6 mb-2 flex flex-row gap-4 cursor-pointer transition-all no-underline text-inherit"
+									className="w-full border border-vscode-panel-border hover:bg-secondary rounded-lg p-6 mb-2 flex flex-col items-center gap-4 cursor-pointer transition-all no-underline text-inherit"
 									target="_blank"
 									rel="noopener noreferrer">
 									<div className="w-10 h-10">
@@ -91,12 +95,10 @@ const WelcomeView = () => {
 											className="w-full h-full object-contain"
 										/>
 									</div>
+									<div className="font-bold text-vscode-foreground">{provider.name}</div>
 									<div>
-										<div className="font-bold text-vscode-foreground">{provider.name}</div>
-										<div>
-											<div className="text-xs text-vscode-descriptionForeground">
-												{provider.description}
-											</div>
+										<div className="text-xs text-vscode-descriptionForeground">
+											{provider.description}
 										</div>
 									</div>
 								</a>

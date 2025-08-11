@@ -99,9 +99,7 @@ export async function getOllamaModels(baseUrl = "http://localhost:11434"): Promi
 		if (error.code === "ECONNREFUSED") {
 			console.warn(`Failed connecting to Ollama at ${baseUrl}`)
 		} else {
-			console.error(
-				`Error fetching Ollama models: ${JSON.stringify(error, Object.getOwnPropertyNames(error), 2)}`,
-			)
+			console.warn(`Error fetching Ollama models: ${JSON.stringify(error, Object.getOwnPropertyNames(error), 2)}`)
 		}
 	}
 

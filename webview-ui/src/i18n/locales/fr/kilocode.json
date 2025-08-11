@@ -4,7 +4,7 @@
 		"introText1": "Kilo Code est un agent de codage IA gratuit et open source.",
 		"introText2": "Il fonctionne avec les derniers modèles d'IA comme Claude 4 Sonnet, Gemini 2.5 Pro, GPT-4.1, et plus de 450 autres.",
 		"introText3": "Créez un compte gratuit et obtenez 20 $ en tokens à utiliser avec n'importe quel modèle d'IA.",
-		"ctaButton": "Créer un compte gratuit",
+		"ctaButton": "Commencer",
 		"manualModeButton": "Utilisez votre propre clé API",
 		"alreadySignedUp": "Déjà inscrit ?",
 		"loginText": "Connectez-vous ici"
@@ -12,6 +12,11 @@
 	"lowCreditWarning": {
 		"addCredit": "Ajouter du crédit",
 		"lowBalance": "Votre solde Kilo Code est bas"
+	},
+	"pricing": {
+		"costUnknown": "coût inconnu",
+		"costUnknownDescription": "Le fournisseur d'API n'a pas fourni de données de coût ou la demande a été annulée.",
+		"discoverModelPricing": "Découvrir les tarifs et capacités du modèle"
 	},
 	"notifications": {
 		"toolRequest": "Demande d'outil en attente d'approbation",
@@ -44,6 +49,16 @@
 			"testButton": "Tester la notification",
 			"testTitle": "Kilo Code",
 			"testMessage": "Ceci est une notification de test de Kilo Code."
+		},
+		"terminal": {
+			"commandGenerator": {
+				"provider": "Fournisseur de Générateur de Commandes Terminal",
+				"apiConfigId": {
+					"description": "Sélectionnez quelle configuration d'API utiliser pour générer des commandes de terminal. Laissez sur 'Utiliser la configuration actuelle' pour utiliser vos paramètres par défaut.",
+					"current": "Utiliser la configuration actuelle",
+					"label": "Configuration de l'API"
+				}
+			}
 		}
 	},
 	"chat": {
@@ -60,7 +75,14 @@
 		"dashboard": "Tableau de bord",
 		"logOut": "Se déconnecter",
 		"currentBalance": "SOLDE ACTUEL",
-		"loading": "Chargement..."
+		"loading": "Chargement...",
+		"shop": {
+			"title": "Acheter des Crédits",
+			"popular": "Populaire",
+			"credits": "crédits",
+			"action": "Acheter Maintenant",
+			"viewAll": "Voir toutes les options de prix"
+		}
 	},
 	"docs": "Documentation",
 	"rules": {

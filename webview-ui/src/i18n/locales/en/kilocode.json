@@ -4,7 +4,7 @@
 		"introText1": "Kilo Code is a free, open source AI coding agent.",
 		"introText2": "It works with the latest AI models like Claude 4 Sonnet, Gemini 2.5 Pro, GPT-4.1, and 450+ more.",
 		"introText3": "Create a free account and get $20 worth of tokens to use across any AI model.",
-		"ctaButton": "Create a free account",
+		"ctaButton": "Get Started",
 		"manualModeButton": "Use your own API key",
 		"alreadySignedUp": "Already signed up?",
 		"loginText": "Log in here"
@@ -12,6 +12,11 @@
 	"lowCreditWarning": {
 		"addCredit": "Add Credit",
 		"lowBalance": "Your Kilo Code balance is low"
+	},
+	"pricing": {
+		"costUnknown": "cost unknown",
+		"costUnknownDescription": "The API Provider did not provide any cost data or the request was canceled.",
+		"discoverModelPricing": "Discover model pricing and capabilities"
 	},
 	"notifications": {
 		"toolRequest": "Tool request waiting for approval",
@@ -44,6 +49,16 @@
 			"testButton": "Test Notification",
 			"testTitle": "Kilo Code",
 			"testMessage": "This is a test notification from Kilo Code."
+		},
+		"terminal": {
+			"commandGenerator": {
+				"provider": "Terminal Command Generator Provider",
+				"apiConfigId": {
+					"label": "API Configuration",
+					"description": "Select which API configuration to use for generating terminal commands. Leave as 'Use Current Configuration' to use your default settings.",
+					"current": "Use Current Configuration"
+				}
+			}
 		}
 	},
 	"chat": {
@@ -60,7 +75,14 @@
 		"dashboard": "Dashboard",
 		"logOut": "Log out",
 		"currentBalance": "CURRENT BALANCE",
-		"loading": "Loading..."
+		"loading": "Loading...",
+		"shop": {
+			"title": "Buy Credits",
+			"popular": "Popular",
+			"credits": "credits",
+			"action": "Buy Now",
+			"viewAll": "View all pricing options"
+		}
 	},
 	"docs": "Docs",
 	"rules": {

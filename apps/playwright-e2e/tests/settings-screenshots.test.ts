@@ -1,15 +1,15 @@
 import { test, expect, type TestFixtures } from "./playwright-base-test"
 import { verifyExtensionInstalled, findWebview, upsertApiConfiguration } from "../helpers/webview-helpers"
 
-test.describe("Settings Screenshots", () => {
-	test("should take screenshots of all settings tabs", async ({ workbox: page, takeScreenshot }: TestFixtures) => {
+test.describe("Settings", () => {
+	test("settings tab screenshot", async ({ workbox: page, takeScreenshot }: TestFixtures) => {
 		await verifyExtensionInstalled(page)
-
 		await upsertApiConfiguration(page)
 
-		// Open the settings
+		// Open the settings then move the mouse to avoid triggering the tooltip
 		page.locator('[aria-label*="Settings"], [title*="Settings"]').first().click()
-		await page.mouse.move(0, 0) // Move the mouse to (0, 0) to avoid triggering the tooltip!
+		await page.mouse.move(0, 0)
+		await page.mouse.click(0, 0)
 
 		const webviewFrame = await findWebview(page)
 		await expect(webviewFrame.locator('[role="tablist"]')).toBeVisible({ timeout: 10000 })
@@ -36,7 +36,7 @@ test.describe("Settings Screenshots", () => {
 			const sectionId = testId?.replace("tab-", "") || `section-${i}`
 
 			console.log(`📸 Taking screenshot of tab: ${tabName} (${sectionId})`)
-			await takeScreenshot(`settings-${sectionId}-${tabName.toLowerCase().replace(/\s+/g, "-")}`)
+			await takeScreenshot(`${i}-settings-${sectionId}-${tabName.toLowerCase().replace(/\s+/g, "-")}`)
 		}
 
 		console.log("✅ All settings tabs screenshots completed")

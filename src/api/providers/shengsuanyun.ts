@@ -106,6 +106,10 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 
 		let maxTokens: number | undefined
 		switch (modelId) {
+			case "anthropic/claude-sonnet-4:thinking":
+			case "anthropic/claude-sonnet-4":
+			case "anthropic/claude-opus-4":
+			case "anthropic/claude-opus-4.1":
 			case "anthropic/claude-3.7-sonnet":
 			case "anthropic/claude-3.7-sonnet:beta":
 			case "anthropic/claude-3.7-sonnet:thinking":
@@ -146,6 +150,7 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 			case "anthropic/claude-3.7-sonnet:beta":
 			case "anthropic/claude-3.7-sonnet:thinking":
 			case "anthropic/claude-3-7-sonnet":
+			case "anthropic/claude-sonnet-4:thinking":
 			case "anthropic/claude-3-7-sonnet:beta": {
 				let budget_tokens = this.options.modelMaxThinkingTokens || 0
 				const reasoningOn = budget_tokens !== 0 ? true : false

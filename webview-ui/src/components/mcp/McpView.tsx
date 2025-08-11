@@ -23,7 +23,7 @@ import {
 	DialogDescription,
 	DialogFooter,
 	ToggleSwitch,
-	StandardTooltip,
+	// StandardTooltip, // kilocode_change: not used
 } from "@src/components/ui"
 import { buildDocLink } from "@src/utils/docLinks"
 
@@ -160,6 +160,7 @@ const McpView = ({ onDone, hideHeader = false }: McpViewProps) => {
 								<span className="codicon codicon-refresh" style={{ marginRight: "6px" }}></span>
 								{t("mcp:refreshMCP")}
 							</Button>
+							{/* kilocode_change
 							<StandardTooltip content={t("mcp:marketplace")}>
 								<Button
 									variant="secondary"
@@ -178,7 +179,13 @@ const McpView = ({ onDone, hideHeader = false }: McpViewProps) => {
 									{t("mcp:marketplace")}
 								</Button>
 							</StandardTooltip>
+							*/}
 						</div>
+						{/* kilocode_change start */}
+						<div className="mt-5">
+							You can find the MCP Marketplace under Settings &gt; MCP Servers &gt; Marketplace
+						</div>
+						{/* kilocode_change end */}
 						<div
 							style={{
 								marginTop: "15px",

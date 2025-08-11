@@ -1,6 +1,6 @@
 {
 	"greeting": "嗨，我是 Kilo Code 中文版 ",
-	"introduction": "<strong>Kilo Code 中文版是领先的自主编程助手。</strong>准备好以前所未有的方式进行架构设计、编码、调试并提升你的工作效率。要继续使用，Kilo Code 需要一个 API 密钥。",
+	"introduction": "一个技术领先的自主编程助手。",
 	"notice": "请先配置大语言模型API提供商",
 	"start": "开始吧！",
 	"routers": {
@@ -8,11 +8,11 @@
 			"description": "智能调度多个大语言模型。"
 		},
 		"shengsuanyun": {
-			"description": "智能调度多个大语言模型。"
+			"description": "专业AI算力平台，旨在为用户提供经济实惠的GPU算力资源，为AI开发者 和厂商打造集开发与弹性推理为一体的云平台。拥有海量的GPU算力资源，让AI开发变得更加轻松。"
 		}
 	},
 	"chooseProvider": "Kilo Code 需要一个 API 密钥才能发挥魔力。",
-	"startRouter": "我们推荐使用 LLM 路由器：",
+	"startRouter": "推荐 LLM 路由器：",
 	"startCustom": "或者你可以使用自己的 API 密钥：",
 	"telemetry": {
 		"title": "帮助改进 Kilo Code",

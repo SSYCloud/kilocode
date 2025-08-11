@@ -4,7 +4,7 @@
 		"introText1": "Kilo Code ist ein kostenloser Open-Source-KI-Coding-Agent.",
 		"introText2": "Er funktioniert mit den neuesten KI-Modellen wie Claude 4 Sonnet, Gemini 2.5 Pro, GPT-4.1 und über 450 weiteren.",
 		"introText3": "Erstelle ein kostenloses Konto und erhalte $20 an Tokens zur Nutzung mit jedem KI-Modell.",
-		"ctaButton": "Kostenloses Konto erstellen",
+		"ctaButton": "Loslegen",
 		"manualModeButton": "Eigenen API-Schlüssel verwenden",
 		"alreadySignedUp": "Bereits registriert?",
 		"loginText": "Hier anmelden"
@@ -12,6 +12,11 @@
 	"lowCreditWarning": {
 		"addCredit": "Guthaben hinzufügen",
 		"lowBalance": "Ihr Kilo Code Guthaben ist niedrig"
+	},
+	"pricing": {
+		"costUnknown": "Kosten unbekannt",
+		"costUnknownDescription": "Der API-Anbieter hat keine Kostendaten bereitgestellt oder die Anfrage wurde abgebrochen.",
+		"discoverModelPricing": "Modellpreise und -funktionen entdecken"
 	},
 	"notifications": {
 		"toolRequest": "Werkzeuganfrage wartet auf Genehmigung",
@@ -44,6 +49,16 @@
 			"testButton": "Benachrichtigung testen",
 			"testTitle": "Kilo Code",
 			"testMessage": "Dies ist eine Testbenachrichtigung von Kilo Code."
+		},
+		"terminal": {
+			"commandGenerator": {
+				"provider": "Generator für Terminal-Befehle",
+				"apiConfigId": {
+					"label": "API-Konfiguration",
+					"current": "Aktuelle Konfiguration verwenden",
+					"description": "Wählen Sie aus, welche API-Konfiguration für die Generierung von Terminal-Befehlen verwendet werden soll. Belassen Sie es bei \"Aktuelle Konfiguration verwenden\", um Ihre Standardeinstellungen zu nutzen."
+				}
+			}
 		}
 	},
 	"chat": {
@@ -60,7 +75,14 @@
 		"dashboard": "Dashboard",
 		"logOut": "Abmelden",
 		"currentBalance": "AKTUELLES GUTHABEN",
-		"loading": "Lädt..."
+		"loading": "Lädt...",
+		"shop": {
+			"title": "Credits kaufen",
+			"popular": "Beliebt",
+			"credits": "Credits",
+			"action": "Jetzt kaufen",
+			"viewAll": "Alle Preisoptionen anzeigen"
+		}
 	},
 	"docs": "Dokumentation",
 	"rules": {

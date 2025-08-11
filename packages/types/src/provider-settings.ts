@@ -24,6 +24,7 @@ export const providerNames = [
 	"mistral",
 	"moonshot",
 	"deepseek",
+	"doubao",
 	"unbound",
 	"requesty",
 	"human-relay",
@@ -38,6 +39,7 @@ export const providerNames = [
 	"cerebras", // kilocode_change
 	"virtual-quota-fallback", // kilocode_change
 	"huggingface",
+	"sambanova",
 ] as const
 
 export const providerNamesSchema = z.enum(providerNames)
@@ -79,6 +81,8 @@ const baseProviderSettingsSchema = z.object({
 	reasoningEffort: reasoningEffortsSchema.optional(),
 	modelMaxTokens: z.number().optional(),
 	modelMaxThinkingTokens: z.number().optional(),
+
+	morphApiKey: z.string().optional(), // kilocode_change: Morph fast apply
 
 	// // kilocode_change start
 	// kilocodeToken: z.string().optional(),
@@ -181,6 +185,8 @@ const lmStudioSchema = baseProviderSettingsSchema.extend({
 const geminiSchema = apiModelIdProviderModelSchema.extend({
 	geminiApiKey: z.string().optional(),
 	googleGeminiBaseUrl: z.string().optional(),
+	enableUrlContext: z.boolean().optional(),
+	enableGrounding: z.boolean().optional(),
 })
 
 // kilocode_change start
@@ -203,6 +209,11 @@ const mistralSchema = apiModelIdProviderModelSchema.extend({
 const deepSeekSchema = apiModelIdProviderModelSchema.extend({
 	deepSeekBaseUrl: z.string().optional(),
 	deepSeekApiKey: z.string().optional(),
+})
+
+const doubaoSchema = apiModelIdProviderModelSchema.extend({
+	doubaoBaseUrl: z.string().optional(),
+	doubaoApiKey: z.string().optional(),
 })
 
 const moonshotSchema = apiModelIdProviderModelSchema.extend({
@@ -250,6 +261,11 @@ const litellmSchema = baseProviderSettingsSchema.extend({
 	litellmBaseUrl: z.string().optional(),
 	litellmApiKey: z.string().optional(),
 	litellmModelId: z.string().optional(),
+	litellmUsePromptCache: z.boolean().optional(),
+})
+
+const sambaNovaSchema = apiModelIdProviderModelSchema.extend({
+	sambaNovaApiKey: z.string().optional(),
 })
 
 // kilocode_change start
@@ -309,6 +325,7 @@ export const providerSettingsSchemaDiscriminated = z.discriminatedUnion("apiProv
 	openAiNativeSchema.merge(z.object({ apiProvider: z.literal("openai-native") })),
 	mistralSchema.merge(z.object({ apiProvider: z.literal("mistral") })),
 	deepSeekSchema.merge(z.object({ apiProvider: z.literal("deepseek") })),
+	doubaoSchema.merge(z.object({ apiProvider: z.literal("doubao") })),
 	moonshotSchema.merge(z.object({ apiProvider: z.literal("moonshot") })),
 	unboundSchema.merge(z.object({ apiProvider: z.literal("unbound") })),
 	requestySchema.merge(z.object({ apiProvider: z.literal("requesty") })),
@@ -324,6 +341,7 @@ export const providerSettingsSchemaDiscriminated = z.discriminatedUnion("apiProv
 	shengSuanYunSchema.merge(z.object({ apiProvider: z.literal("shengsuanyun") })),
 	cerebrasSchema.merge(z.object({ apiProvider: z.literal("cerebras") })), // kilocode_change
 	virtualQuotaFallbackSchema.merge(z.object({ apiProvider: z.literal("virtual-quota-fallback") })), // kilocode_change
+	sambaNovaSchema.merge(z.object({ apiProvider: z.literal("sambanova") })),
 	defaultSchema,
 ])
 
@@ -344,6 +362,7 @@ export const providerSettingsSchema = z.object({
 	...openAiNativeSchema.shape,
 	...mistralSchema.shape,
 	...deepSeekSchema.shape,
+	...doubaoSchema.shape,
 	...moonshotSchema.shape,
 	...unboundSchema.shape,
 	...requestySchema.shape,
@@ -354,6 +373,7 @@ export const providerSettingsSchema = z.object({
 	...huggingFaceSchema.shape,
 	...chutesSchema.shape,
 	...litellmSchema.shape,
+	...sambaNovaSchema.shape,
 	...codebaseIndexProviderSchema.shape,
 	...kilocodeSchema.shape, // kilocode_change
 	...fireworksSchema.shape, // kilocode_change

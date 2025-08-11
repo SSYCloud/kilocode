@@ -23,13 +23,13 @@ import {
 	type TerminalActionPromptType,
 	type HistoryItem,
 	type CloudUserInfo,
-	type MarketplaceItem,
 	requestyDefaultModelId,
 	openRouterDefaultModelId,
 	glamaDefaultModelId,
 	shengSuanYunDefaultModelId,
 	ORGANIZATION_ALLOW_ALL,
 	DEFAULT_TERMINAL_OUTPUT_CHARACTER_LIMIT,
+	DEFAULT_WRITE_DELAY_MS,
 } from "@roo-code/types"
 import { TelemetryService } from "@roo-code/telemetry"
 import { CloudService, getRooCodeApiUrl } from "@roo-code/cloud"
@@ -41,10 +41,9 @@ import { findLast } from "../../shared/array"
 import { supportPrompt } from "../../shared/support-prompt"
 import { GlobalFileNames } from "../../shared/globalFileNames"
 import { ExtensionMessage, MarketplaceInstalledMetadata } from "../../shared/ExtensionMessage"
-import { Mode, defaultModeSlug } from "../../shared/modes"
-import { experimentDefault, experiments, EXPERIMENT_IDS } from "../../shared/experiments"
+import { Mode, defaultModeSlug, getModeBySlug } from "../../shared/modes"
+import { experimentDefault } from "../../shared/experiments"
 import { formatLanguage } from "../../shared/language"
-import { DEFAULT_WRITE_DELAY_MS } from "@roo-code/types"
 import { Terminal } from "../../integrations/terminal/Terminal"
 import { downloadTask } from "../../integrations/misc/export-markdown"
 import { getTheme } from "../../integrations/theme/getTheme"
@@ -77,6 +76,7 @@ import { getWorkspaceGitInfo } from "../../utils/git"
 import { McpDownloadResponse, McpMarketplaceCatalog } from "../../shared/kilocode/mcp" //kilocode_change
 import { McpServer } from "../../shared/mcp" // kilocode_change
 import { OpenRouterHandler } from "../../api/providers" // kilocode_change
+import { stringifyError } from "../../shared/kilocode/errorUtils"
 
 /**
  * https://github.com/microsoft/vscode-webview-ui-toolkit-samples/blob/main/default/weather-webview/src/providers/WeatherViewProvider.ts
@@ -84,13 +84,7 @@ import { OpenRouterHandler } from "../../api/providers" // kilocode_change
  */
 
 export type ClineProviderEvents = {
-	clineCreated: [cline: Task]
-}
-
-class OrganizationAllowListViolationError extends Error {
-	constructor(message: string) {
-		super(message)
-	}
+	taskCreated: [task: Task]
 }
 
 export class ClineProvider
@@ -118,7 +112,7 @@ export class ClineProvider
 
 	public isViewLaunched = false
 	public settingsImportedAt?: number
-	public readonly latestAnnouncementId = "jul-26-2025-3-24-0" // Update for v3.24.0 announcement
+	public readonly latestAnnouncementId = "jul-29-2025-3-25-0" // Update for v3.25.0 announcement
 	public readonly providerSettingsManager: ProviderSettingsManager
 	public readonly customModesManager: CustomModesManager
 
@@ -386,6 +380,7 @@ export class ClineProvider
 				// Errors from terminal commands seem to get swallowed / ignored.
 				vscode.window.showErrorMessage(error.message)
 			}
+
 			throw error
 		}
 	}
@@ -411,7 +406,7 @@ export class ClineProvider
 		this.getState().then(
 			({
 				terminalShellIntegrationTimeout = Terminal.defaultShellIntegrationTimeout,
-				terminalShellIntegrationDisabled = false,
+				terminalShellIntegrationDisabled = true, // kilocode_change: default
 				terminalCommandDelay = 0,
 				terminalZshClearEolMark = true,
 				terminalZshOhMy = false,
@@ -534,7 +529,7 @@ export class ClineProvider
 	// of tasks, each one being a sub task of the previous one until the main
 	// task is finished.
 	public async initClineWithTask(
-		task?: string,
+		text?: string,
 		images?: string[],
 		parentTask?: Task,
 		options: Partial<
@@ -557,7 +552,7 @@ export class ClineProvider
 			throw new OrganizationAllowListViolationError(t("common:errors.violated_organization_allowlist"))
 		}
 
-		const cline = new Task({
+		const task = new Task({
 			context: this.context, // kilocode_change
 			provider: this,
 			apiConfiguration,
@@ -565,27 +560,70 @@ export class ClineProvider
 			enableCheckpoints,
 			fuzzyMatchThreshold,
 			consecutiveMistakeLimit: apiConfiguration.consecutiveMistakeLimit,
-			task,
+			task: text,
 			images,
 			experiments,
 			rootTask: this.clineStack.length > 0 ? this.clineStack[0] : undefined,
 			parentTask,
 			taskNumber: this.clineStack.length + 1,
-			onCreated: (cline) => this.emit("clineCreated", cline),
+			onCreated: (instance) => this.emit("taskCreated", instance),
 			...options,
 		})
 
-		await this.addClineToStack(cline)
+		await this.addClineToStack(task)
 
 		this.log(
-			`[subtasks] ${cline.parentTask ? "child" : "parent"} task ${cline.taskId}.${cline.instanceId} instantiated`,
+			`[subtasks] ${task.parentTask ? "child" : "parent"} task ${task.taskId}.${task.instanceId} instantiated`,
 		)
 
-		return cline
+		return task
 	}
 
 	public async initClineWithHistoryItem(historyItem: HistoryItem & { rootTask?: Task; parentTask?: Task }) {
 		await this.removeClineFromStack()
+
+		// If the history item has a saved mode, restore it and its associated API configuration
+		if (historyItem.mode) {
+			// Validate that the mode still exists
+			const customModes = await this.customModesManager.getCustomModes()
+			const modeExists = getModeBySlug(historyItem.mode, customModes) !== undefined
+
+			if (!modeExists) {
+				// Mode no longer exists, fall back to default mode
+				this.log(
+					`Mode '${historyItem.mode}' from history no longer exists. Falling back to default mode '${defaultModeSlug}'.`,
+				)
+				historyItem.mode = defaultModeSlug
+			}
+
+			await this.updateGlobalState("mode", historyItem.mode)
+
+			// Load the saved API config for the restored mode if it exists
+			const savedConfigId = await this.providerSettingsManager.getModeConfigId(historyItem.mode)
+			const listApiConfig = await this.providerSettingsManager.listConfig()
+
+			// Update listApiConfigMeta first to ensure UI has latest data
+			await this.updateGlobalState("listApiConfigMeta", listApiConfig)
+
+			// If this mode has a saved config, use it
+			if (savedConfigId) {
+				const profile = listApiConfig.find(({ id }) => id === savedConfigId)
+
+				if (profile?.name) {
+					try {
+						await this.activateProviderProfile({ name: profile.name })
+					} catch (error) {
+						// Log the error but continue with task restoration
+						this.log(
+							`Failed to restore API configuration for mode '${historyItem.mode}': ${
+								error instanceof Error ? error.message : String(error)
+							}. Continuing with default configuration.`,
+						)
+						// The task will continue with the current/default configuration
+					}
+				}
+			}
+		}
 
 		const {
 			apiConfiguration,
@@ -595,7 +633,7 @@ export class ClineProvider
 			experiments,
 		} = await this.getState()
 
-		const cline = new Task({
+		const task = new Task({
 			context: this.context, // kilocode_change
 			provider: this,
 			apiConfiguration,
@@ -608,14 +646,16 @@ export class ClineProvider
 			rootTask: historyItem.rootTask,
 			parentTask: historyItem.parentTask,
 			taskNumber: historyItem.number,
-			onCreated: (cline) => this.emit("clineCreated", cline),
+			onCreated: (instance) => this.emit("taskCreated", instance),
 		})
 
-		await this.addClineToStack(cline)
+		await this.addClineToStack(task)
+
 		this.log(
-			`[subtasks] ${cline.parentTask ? "child" : "parent"} task ${cline.taskId}.${cline.instanceId} instantiated`,
+			`[subtasks] ${task.parentTask ? "child" : "parent"} task ${task.taskId}.${task.instanceId} instantiated`,
 		)
-		return cline
+
+		return task
 	}
 
 	public async postMessageToWebview(message: ExtensionMessage) {
@@ -689,7 +729,7 @@ export class ClineProvider
 			"default-src 'none'",
 			`font-src ${webview.cspSource} data:`,
 			`style-src ${webview.cspSource} 'unsafe-inline' https://* http://${localServerUrl} http://0.0.0.0:${localPort}`,
-			`img-src ${webview.cspSource} https://storage.googleapis.com https://img.clerk.com https://router.shengsuanyun.com https://www.shengsuanyun.com data: https://*.googleusercontent.com https://*.googleapis.com https://*.shengsuanyun.com`, // kilocode_change: add https://*.googleusercontent.com and https://*.googleapis.com
+			`img-src ${webview.cspSource} https://storage.googleapis.com https://img.clerk.com https://router.shengsuanyun.com https://www.shengsuanyun.com data: https://*.googleusercontent.com https://*.googleapis.com https://*.shengsuanyun.com https://*.googleusercontent.com https://*.githubusercontent.com`, // kilocode_change: add https://*.googleusercontent.com and https://*.googleapis.com
 			`media-src ${webview.cspSource}`,
 			`script-src 'unsafe-eval' ${webview.cspSource} https://* https://*.posthog.com http://${localServerUrl} http://0.0.0.0:${localPort} 'nonce-${nonce}'`,
 			`connect-src ${webview.cspSource} https://* https://*.posthog.com ws://${localServerUrl} ws://0.0.0.0:${localPort} http://${localServerUrl} http://0.0.0.0:${localPort}`,
@@ -818,6 +858,31 @@ export class ClineProvider
 		if (cline) {
 			TelemetryService.instance.captureModeSwitch(cline.taskId, newMode)
 			cline.emit("taskModeSwitched", cline.taskId, newMode)
+
+			// Store the current mode in case we need to rollback
+			const previousMode = (cline as any)._taskMode
+
+			try {
+				// Update the task history with the new mode first
+				const history = this.getGlobalState("taskHistory") ?? []
+				const taskHistoryItem = history.find((item) => item.id === cline.taskId)
+				if (taskHistoryItem) {
+					taskHistoryItem.mode = newMode
+					await this.updateTaskHistory(taskHistoryItem)
+				}
+
+				// Only update the task's mode after successful persistence
+				;(cline as any)._taskMode = newMode
+			} catch (error) {
+				// If persistence fails, log the error but don't update the in-memory state
+				this.log(
+					`Failed to persist mode switch for task ${cline.taskId}: ${error instanceof Error ? error.message : String(error)}`,
+				)
+
+				// Optionally, we could emit an event to notify about the failure
+				// This ensures the in-memory state remains consistent with persisted state
+				throw error
+			}
 		}
 
 		await this.updateGlobalState("mode", newMode)
@@ -1350,10 +1415,10 @@ export class ClineProvider
 	 */
 	async fetchMarketplaceData() {
 		try {
-			const [marketplaceItems, marketplaceInstalledMetadata] = await Promise.all([
-				this.marketplaceManager.getCurrentItems().catch((error) => {
+			const [marketplaceResult, marketplaceInstalledMetadata] = await Promise.all([
+				this.marketplaceManager.getMarketplaceItems().catch((error) => {
 					console.error("Failed to fetch marketplace items:", error)
-					return [] as MarketplaceItem[]
+					return { organizationMcps: [], marketplaceItems: [], errors: [error.message] }
 				}),
 				this.marketplaceManager.getInstallationMetadata().catch((error) => {
 					console.error("Failed to fetch installation metadata:", error)
@@ -1364,16 +1429,20 @@ export class ClineProvider
 			// Send marketplace data separately
 			this.postMessageToWebview({
 				type: "marketplaceData",
-				marketplaceItems: marketplaceItems || [],
+				organizationMcps: marketplaceResult.organizationMcps || [],
+				marketplaceItems: marketplaceResult.marketplaceItems || [],
 				marketplaceInstalledMetadata: marketplaceInstalledMetadata || { project: {}, global: {} },
+				errors: marketplaceResult.errors,
 			})
 		} catch (error) {
 			console.error("Failed to fetch marketplace data:", error)
 			// Send empty data on error to prevent UI from hanging
 			this.postMessageToWebview({
 				type: "marketplaceData",
+				organizationMcps: [],
 				marketplaceItems: [],
 				marketplaceInstalledMetadata: { project: {}, global: {} },
+				errors: [error instanceof Error ? error.message : String(error)],
 			})
 
 			// Show user-friendly error notification for network issues
@@ -1505,6 +1574,7 @@ export class ClineProvider
 			customSupportPrompts,
 			enhancementApiConfigId,
 			commitMessageApiConfigId, // kilocode_change
+			terminalCommandApiConfigId, // kilocode_change
 			autoApprovalEnabled,
 			customModes,
 			experiments,
@@ -1517,12 +1587,15 @@ export class ClineProvider
 			showAutoApproveMenu, // kilocode_change
 			showTaskTimeline, // kilocode_change
 			maxReadFileLine,
+			maxImageFileSize,
+			maxTotalImageSize,
 			terminalCompressProgressBar,
 			historyPreviewCollapsed,
 			cloudUserInfo,
 			cloudIsAuthenticated,
 			sharingEnabled,
 			organizationAllowList,
+			organizationSettingsVersion,
 			maxConcurrentFileReads,
 			allowVeryLargeReads, // kilocode_change
 			ghostServiceSettings, // kilocode_changes
@@ -1537,6 +1610,7 @@ export class ClineProvider
 			followupAutoApproveTimeoutMs,
 			includeDiagnosticMessages,
 			maxDiagnosticMessages,
+			includeTaskHistoryInEnhance,
 		} = await this.getState()
 
 		const telemetryKey = process.env.KILOCODE_POSTHOG_API_KEY
@@ -1595,7 +1669,7 @@ export class ClineProvider
 			terminalOutputLineLimit: terminalOutputLineLimit ?? 500,
 			terminalOutputCharacterLimit: terminalOutputCharacterLimit ?? DEFAULT_TERMINAL_OUTPUT_CHARACTER_LIMIT,
 			terminalShellIntegrationTimeout: terminalShellIntegrationTimeout ?? Terminal.defaultShellIntegrationTimeout,
-			terminalShellIntegrationDisabled: terminalShellIntegrationDisabled ?? false,
+			terminalShellIntegrationDisabled: terminalShellIntegrationDisabled ?? true, // kilocode_change: default
 			terminalCommandDelay: terminalCommandDelay ?? 0,
 			terminalPowershellCounter: terminalPowershellCounter ?? false,
 			terminalZshClearEolMark: terminalZshClearEolMark ?? true,
@@ -1615,6 +1689,7 @@ export class ClineProvider
 			customSupportPrompts: customSupportPrompts ?? {},
 			enhancementApiConfigId,
 			commitMessageApiConfigId, // kilocode_change
+			terminalCommandApiConfigId, // kilocode_change
 			autoApprovalEnabled: autoApprovalEnabled ?? true,
 			customModes,
 			experiments: experiments ?? experimentDefault,
@@ -1632,6 +1707,8 @@ export class ClineProvider
 			language, // kilocode_change
 			renderContext: this.renderContext,
 			maxReadFileLine: maxReadFileLine ?? -1,
+			maxImageFileSize: maxImageFileSize ?? 5,
+			maxTotalImageSize: maxTotalImageSize ?? 20,
 			maxConcurrentFileReads: maxConcurrentFileReads ?? 5,
 			allowVeryLargeReads: allowVeryLargeReads ?? false, // kilocode_change
 			settingsImportedAt: this.settingsImportedAt,
@@ -1643,6 +1720,7 @@ export class ClineProvider
 			sharingEnabled: sharingEnabled ?? false,
 			organizationAllowList,
 			ghostServiceSettings: ghostServiceSettings ?? {}, // kilocode_change
+			organizationSettingsVersion,
 			condensingApiConfigId,
 			customCondensingPrompt,
 			codebaseIndexModels: codebaseIndexModels ?? EMBEDDING_MODEL_PROFILES,
@@ -1667,6 +1745,7 @@ export class ClineProvider
 			followupAutoApproveTimeoutMs: followupAutoApproveTimeoutMs ?? 60000,
 			includeDiagnosticMessages: includeDiagnosticMessages ?? true,
 			maxDiagnosticMessages: maxDiagnosticMessages ?? 50,
+			includeTaskHistoryInEnhance: includeTaskHistoryInEnhance ?? false,
 		}
 	}
 
@@ -1731,6 +1810,19 @@ export class ClineProvider
 			)
 		}
 
+		let organizationSettingsVersion: number = -1
+
+		try {
+			if (CloudService.hasInstance()) {
+				const settings = CloudService.instance.getOrganizationSettings()
+				organizationSettingsVersion = settings?.version ?? -1
+			}
+		} catch (error) {
+			console.error(
+				`[getState] failed to get organization settings version: ${error instanceof Error ? error.message : String(error)}`,
+			)
+		}
+
 		// Return the same structure as before
 		return {
 			apiConfiguration: providerSettings,
@@ -1775,7 +1867,7 @@ export class ClineProvider
 				stateValues.terminalOutputCharacterLimit ?? DEFAULT_TERMINAL_OUTPUT_CHARACTER_LIMIT,
 			terminalShellIntegrationTimeout:
 				stateValues.terminalShellIntegrationTimeout ?? Terminal.defaultShellIntegrationTimeout,
-			terminalShellIntegrationDisabled: stateValues.terminalShellIntegrationDisabled ?? false,
+			terminalShellIntegrationDisabled: stateValues.terminalShellIntegrationDisabled ?? true, // kilocode_change: default
 			terminalCommandDelay: stateValues.terminalCommandDelay ?? 0,
 			terminalPowershellCounter: stateValues.terminalPowershellCounter ?? false,
 			terminalZshClearEolMark: stateValues.terminalZshClearEolMark ?? true,
@@ -1797,6 +1889,7 @@ export class ClineProvider
 			customSupportPrompts: stateValues.customSupportPrompts ?? {},
 			enhancementApiConfigId: stateValues.enhancementApiConfigId,
 			commitMessageApiConfigId: stateValues.commitMessageApiConfigId, // kilocode_change
+			terminalCommandApiConfigId: stateValues.terminalCommandApiConfigId, // kilocode_change
 			ghostServiceSettings: stateValues.ghostServiceSettings ?? {}, // kilocode_change
 			experiments: stateValues.experiments ?? experimentDefault,
 			autoApprovalEnabled: stateValues.autoApprovalEnabled ?? true,
@@ -1810,6 +1903,8 @@ export class ClineProvider
 			showAutoApproveMenu: stateValues.showAutoApproveMenu ?? false, // kilocode_change
 			showTaskTimeline: stateValues.showTaskTimeline ?? true, // kilocode_change
 			maxReadFileLine: stateValues.maxReadFileLine ?? -1,
+			maxImageFileSize: stateValues.maxImageFileSize ?? 5,
+			maxTotalImageSize: stateValues.maxTotalImageSize ?? 20,
 			maxConcurrentFileReads: stateValues.maxConcurrentFileReads ?? 5,
 			allowVeryLargeReads: stateValues.allowVeryLargeReads ?? false, // kilocode_change
 			systemNotificationsEnabled: stateValues.systemNotificationsEnabled ?? true, // kilocode_change
@@ -1819,6 +1914,7 @@ export class ClineProvider
 			cloudIsAuthenticated,
 			sharingEnabled,
 			organizationAllowList,
+			organizationSettingsVersion,
 			// Explicitly add condensing settings
 			condensingApiConfigId: stateValues.condensingApiConfigId,
 			customCondensingPrompt: stateValues.customCondensingPrompt,
@@ -1842,6 +1938,8 @@ export class ClineProvider
 			// Add diagnostic message settings
 			includeDiagnosticMessages: stateValues.includeDiagnosticMessages ?? true,
 			maxDiagnosticMessages: stateValues.maxDiagnosticMessages ?? 50,
+			// Add includeTaskHistoryInEnhance setting
+			includeTaskHistoryInEnhance: stateValues.includeTaskHistoryInEnhance ?? false,
 		}
 	}
 
@@ -1970,7 +2068,12 @@ export class ClineProvider
 	 * like the current mode, API provider, git repository information, etc.
 	 */
 	public async getTelemetryProperties(): Promise<TelemetryProperties> {
-		const { mode, apiConfiguration, language } = await this.getState()
+		const {
+			mode,
+			apiConfiguration,
+			language,
+			experiments, // kilocode_change
+		} = await this.getState()
 		const task = this.getCurrentCline()
 
 		const packageJSON = this.context.extension?.packageJSON
@@ -2000,7 +2103,32 @@ export class ClineProvider
 				}
 			} catch (error) {
 				return {
-					exception: error instanceof Error ? error.stack || error.message : String(error),
+					modelException: stringifyError(error),
+				}
+			}
+		}
+
+		function getMemory() {
+			try {
+				return { memory: { ...process.memoryUsage() } }
+			} catch (error) {
+				return {
+					memoryException: stringifyError(error),
+				}
+			}
+		}
+
+		function getFastApply() {
+			try {
+				return {
+					fastApply: {
+						morphFastApply: Boolean(experiments.morphFastApply),
+						morphApiKey: Boolean(apiConfiguration.morphApiKey),
+					},
+				}
+			} catch (error) {
+				return {
+					fastApplyException: stringifyError(error),
 				}
 			}
 		}
@@ -2029,7 +2157,11 @@ export class ClineProvider
 			language,
 			mode,
 			apiProvider: apiConfiguration?.apiProvider,
-			...(await getModelId()), // kilocode_change
+			// kilocode_change start
+			...(await getModelId()),
+			...getMemory(),
+			...getFastApply(),
+			// kilocode_change end
 			diffStrategy: task?.diffStrategy?.getName(),
 			isSubtask: task ? !!task.parentTask : undefined,
 			cloudIsAuthenticated,
@@ -2254,4 +2386,10 @@ Here is the project's README to help you get started:\n\n${mcpDetails.readmeCont
 	}
 
 	// kilocode_change end
+}
+
+class OrganizationAllowListViolationError extends Error {
+	constructor(message: string) {
+		super(message)
+	}
 }

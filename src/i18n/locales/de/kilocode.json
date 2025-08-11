@@ -52,12 +52,30 @@
 		"providerRegistered": "Kilo: Commit-Nachrichtenanbieter registriert"
 	},
 	"ghost": {
+		"statusBar": {
+			"enabled": "$(sparkle) Kilo Inline Assist",
+			"disabled": "$(circle-slash) Kilo Inline Assist",
+			"warning": "$(warning) Kilo Inline Assist",
+			"tooltip": {
+				"basic": "Kilo Code Inline-Unterstützung",
+				"disabled": "Kilo Code Inline-Hilfe (deaktiviert)",
+				"tokenError": "Ein gültiges Token muss festgelegt werden, um Inline-Unterstützung zu nutzen",
+				"lastCompletion": "Letzter Vorschlag:",
+				"sessionTotal": "Gesamtkosten der Sitzung:",
+				"model": "Modell:"
+			},
+			"cost": {
+				"zero": "0,00 €",
+				"lessThanCent": "<0,01 €"
+			}
+		},
+		"toggleMessage": "Kilo Inline Assist {{status}}",
 		"progress": {
-			"generating": "Generiere vorgeschlagene Änderungen...",
+			"title": "Kilo Code",
 			"analyzing": "Analysiere deinen Code...",
+			"generating": "Generiere vorgeschlagene Änderungen...",
 			"processing": "Verarbeitung von Änderungsvorschlägen...",
-			"showing": "Zeige Bearbeitungsvorschläge an...",
-			"title": "Kilo Code"
+			"showing": "Zeige Bearbeitungsvorschläge an..."
 		},
 		"input": {
 			"title": "Kilo Code: Schnellaufgabe",
@@ -83,23 +101,25 @@
 		"messages": {
 			"provideCodeSuggestions": "Code-Vorschläge werden bereitgestellt..."
 		},
-		"statusBar": {
-			"disabled": "$(circle-slash) Kilo Inline-Unterstützung",
-			"warning": "$(warning) Kilo Inline Assist",
-			"enabled": "$(sparkle) Kilo Inline Assistent",
-			"tooltip": {
-				"basic": "Kilo Code Inline-Unterstützung",
-				"disabled": "Kilo Code Inline-Hilfe (deaktiviert)",
-				"tokenError": "Ein gültiges Token muss festgelegt werden, um Inline-Unterstützung zu nutzen",
-				"lastCompletion": "Letzter Vorschlag:",
-				"sessionTotal": "Gesamtkosten der Sitzung:",
-				"model": "Modell:"
-			},
-			"cost": {
-				"zero": "0,00 €",
-				"lessThanCent": "<0,01 €"
-			}
+		"incompatibilityExtensionPopup": {
+			"message": "Die Kilo Code Inline Assist wird durch einen Konflikt mit GitHub Copilot blockiert. Um dies zu beheben, musst du die Inline-Vorschläge von Copilot deaktivieren.",
+			"disableCopilot": "Copilot deaktivieren",
+			"disableInlineAssist": "Inline Assist deaktivieren"
+		}
+	},
+	"terminalCommandGenerator": {
+		"inputPrompt": "Kilo: Beschreibe den Befehl, den du generieren möchtest",
+		"generatingProgress": "Kilo: Terminal-Befehl wird generiert...",
+		"noActiveTerminal": "Kilo: Kein aktives Terminal gefunden. Bitte öffnen Sie zuerst ein Terminal.",
+		"inputPlaceholder": "z.B. den Prozess beenden, der auf Port 3001 läuft, große Dateien finden, usw.",
+		"generationFailed": "Kilo: Fehler beim Generieren des Befehls: {{error}}",
+		"commandGenerated": "Kilo: Generierter Befehl: {{command}}",
+		"warningDialog": {
+			"okButton": "Ich verstehe",
+			"title": "Sicherheitswarnung für das Terminal",
+			"message": "Überprüfen Sie alle generierten Befehle doppelt, bevor Sie sie ausführen. Terminal-Aktionen können nicht immer rückgängig gemacht werden - das Ausführen ungeprüfter Befehle kann zu irreversiblem Datenverlust oder Systemschäden führen. Überprüfen und verstehen Sie den Befehl vollständig, bevor Sie fortfahren!",
+			"cancelButton": "Abbrechen"
 		},
-		"toggleMessage": "Kilo Inline Assist {{status}}"
+		"tipMessage": "Kilo: Drücken Sie {{shortcut}}, um Terminal-Befehle zu generieren"
 	}
 }

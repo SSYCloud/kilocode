@@ -219,7 +219,7 @@ export async function getEnvironmentDetails(cline: Task, includeFileDetails: boo
 			TelemetryService.instance.captureException(e, { context: "getEnvironmentDetails" })
 			await cline.say(
 				"error",
-				t("kilocode:notLoggedInError", { error: e instanceof Error ? e.stack || e.message : String(e) }),
+				t("kilocode:notLoggedInError", { error: e instanceof Error ? e.message : String(e) }),
 			)
 			return `<environment_details>\n${details.trim()}\n</environment_details>`
 		}
@@ -292,6 +292,10 @@ export async function getEnvironmentDetails(cline: Task, includeFileDetails: boo
 		}
 	}
 
-	const reminderSection = formatReminderSection(cline.todoList)
+	const todoListEnabled =
+		state && typeof state.apiConfiguration?.todoListEnabled === "boolean"
+			? state.apiConfiguration.todoListEnabled
+			: true
+	const reminderSection = todoListEnabled ? formatReminderSection(cline.todoList) : ""
 	return `<environment_details>\n${details.trim()}\n${reminderSection}\n</environment_details>`
 }

@@ -4,7 +4,7 @@
 		"introText1": "Kilo Code وكيل برمجة مدعوم بالذكاء ومفتوح المصدر ومجاني.",
 		"introText2": "يشتغل مع أحدث نماذج الذكاء مثل Claude 4 Sonnet، Gemini 2.5 Pro، GPT-4.1 وأكثر من 450 نموذج آخر.",
 		"introText3": "أنشئ حساب مجاني وخذ رصيد بقيمة 20 دولار تقدر تستخدمه على أي نموذج.",
-		"ctaButton": "أنشئ حساب مجاني",
+		"ctaButton": "ابدأ الآن",
 		"manualModeButton": "استخدم مفتاح API الخاص بك",
 		"alreadySignedUp": "مسجل من قبل؟",
 		"loginText": "سجّل دخولك هنا"
@@ -12,6 +12,11 @@
 	"lowCreditWarning": {
 		"addCredit": "شحن الرصيد",
 		"lowBalance": "رصيدك في Kilo Code منخفض"
+	},
+	"pricing": {
+		"costUnknown": "التكلفة غير معروفة",
+		"costUnknownDescription": "لم يقدم مزود واجهة برمجة التطبيقات أي بيانات تكلفة أو تم إلغاء الطلب.",
+		"discoverModelPricing": "اكتشف أسعار النماذج وقدراتها"
 	},
 	"notifications": {
 		"toolRequest": "طلب أداة بانتظار الموافقة",
@@ -44,6 +49,16 @@
 			"testButton": "اختبار الإشعار",
 			"testTitle": "Kilo Code",
 			"testMessage": "هذا إشعار اختباري من Kilo Code."
+		},
+		"terminal": {
+			"commandGenerator": {
+				"apiConfigId": {
+					"current": "استخدم الإعدادات الحالية",
+					"label": "إعداد واجهة برمجة التطبيقات",
+					"description": "اختر تكوين واجهة برمجة التطبيقات (API) الذي تريد استخدامه لإنشاء أوامر الطرفية. اترك الإعداد على 'استخدام التكوين الحالي' لاستخدام الإعدادات الافتراضية الخاصة بك."
+				},
+				"provider": "مزود مولّد أوامر الطرفية"
+			}
 		}
 	},
 	"chat": {
@@ -60,7 +75,14 @@
 		"dashboard": "لوحة التحكم",
 		"logOut": "تسجيل الخروج",
 		"currentBalance": "الرصيد الحالي",
-		"loading": "جاري التحميل..."
+		"loading": "جاري التحميل...",
+		"shop": {
+			"title": "شراء الرصيد",
+			"popular": "الأكثر شعبية",
+			"credits": "رصيد",
+			"action": "اشتري الآن",
+			"viewAll": "عرض جميع خيارات الأسعار"
+		}
 	},
 	"docs": "التوثيق",
 	"rules": {
