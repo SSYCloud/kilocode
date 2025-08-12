@@ -29,6 +29,7 @@ import {
 	unboundDefaultModelId,
 	litellmDefaultModelId,
 	kilocodeDefaultModelId,
+	shengSuanYunDefaultModelId,
 } from "@roo-code/types"
 import { cerebrasModels, cerebrasDefaultModelId } from "@roo/api"
 import type { ModelRecord, RouterModels } from "@roo/api"
@@ -47,6 +48,12 @@ const getModelsByProvider = ({
 	routerModels: RouterModels
 }): { models: ModelRecord; defaultModel: string } => {
 	switch (provider) {
+		case "shengsuanyun": {
+			return {
+				models: routerModels.shengsuanyun,
+				defaultModel: shengSuanYunDefaultModelId,
+			}
+		}
 		case "openrouter": {
 			return {
 				models: routerModels.openrouter,
