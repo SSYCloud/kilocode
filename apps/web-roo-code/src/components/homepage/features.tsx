@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 import { Bot, Code, Brain, Wrench, Terminal, Puzzle, Globe, Shield, Zap } from "lucide-react"
 import { FeaturesMobile } from "./features-mobile"
 
