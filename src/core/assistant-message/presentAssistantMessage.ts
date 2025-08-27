@@ -10,6 +10,8 @@ import type { ToolParamName, ToolResponse } from "../../shared/tools"
 import { fetchInstructionsTool } from "../tools/fetchInstructionsTool"
 import { listFilesTool } from "../tools/listFilesTool"
 import { getReadFileToolDescription, readFileTool } from "../tools/readFileTool"
+import { getSimpleReadFileToolDescription, simpleReadFileTool } from "../tools/simpleReadFileTool"
+import { shouldUseSingleFileRead } from "@roo-code/types"
 import { writeToFileTool } from "../tools/writeToFileTool"
 import { applyDiffTool } from "../tools/multiApplyDiffTool"
 import { insertContentTool } from "../tools/insertContentTool"
@@ -26,7 +28,6 @@ import { switchModeTool } from "../tools/switchModeTool"
 import { attemptCompletionTool } from "../tools/attemptCompletionTool"
 import { newTaskTool } from "../tools/newTaskTool"
 
-import { checkpointSave } from "../checkpoints"
 import { updateTodoListTool } from "../tools/updateTodoListTool"
 
 import { formatResponse } from "../prompts/responses"
@@ -163,7 +164,13 @@ export async function presentAssistantMessage(cline: Task, recursionDepth: numbe
 					case "execute_command":
 						return `[${block.name} for '${block.params.command}']`
 					case "read_file":
-						return getReadFileToolDescription(block.name, block.params)
+						// Check if this model should use the simplified description
+						const modelId = cline.api.getModel().id
+						if (shouldUseSingleFileRead(modelId)) {
+							return getSimpleReadFileToolDescription(block.name, block.params)
+						} else {
+							return getReadFileToolDescription(block.name, block.params)
+						}
 					case "fetch_instructions":
 						return `[${block.name} for '${block.params.task}']`
 					case "write_to_file":
@@ -430,6 +437,7 @@ export async function presentAssistantMessage(cline: Task, recursionDepth: numbe
 
 			switch (block.name) {
 				case "write_to_file":
+					await checkpointSaveAndMark(cline)
 					await writeToFileTool(cline, block, askApproval, handleError, pushToolResult, removeClosingTag)
 					break
 				case "update_todo_list":
@@ -449,8 +457,10 @@ export async function presentAssistantMessage(cline: Task, recursionDepth: numbe
 					}
 
 					if (isMultiFileApplyDiffEnabled) {
+						await checkpointSaveAndMark(cline)
 						await applyDiffTool(cline, block, askApproval, handleError, pushToolResult, removeClosingTag)
 					} else {
+						await checkpointSaveAndMark(cline)
 						await applyDiffToolLegacy(
 							cline,
 							block,
@@ -463,9 +473,11 @@ export async function presentAssistantMessage(cline: Task, recursionDepth: numbe
 					break
 				}
 				case "insert_content":
+					await checkpointSaveAndMark(cline)
 					await insertContentTool(cline, block, askApproval, handleError, pushToolResult, removeClosingTag)
 					break
 				case "search_and_replace":
+					await checkpointSaveAndMark(cline)
 					await searchAndReplaceTool(cline, block, askApproval, handleError, pushToolResult, removeClosingTag)
 					break
 				// kilocode_change start: Morph fast apply
@@ -474,8 +486,20 @@ export async function presentAssistantMessage(cline: Task, recursionDepth: numbe
 					break
 				// kilocode_change end
 				case "read_file":
-					await readFileTool(cline, block, askApproval, handleError, pushToolResult, removeClosingTag)
-
+					// Check if this model should use the simplified single-file read tool
+					const modelId = cline.api.getModel().id
+					if (shouldUseSingleFileRead(modelId)) {
+						await simpleReadFileTool(
+							cline,
+							block,
+							askApproval,
+							handleError,
+							pushToolResult,
+							removeClosingTag,
+						)
+					} else {
+						await readFileTool(cline, block, askApproval, handleError, pushToolResult, removeClosingTag)
+					}
 					break
 				case "fetch_instructions":
 					await fetchInstructionsTool(cline, block, askApproval, handleError, pushToolResult)
@@ -563,14 +587,6 @@ export async function presentAssistantMessage(cline: Task, recursionDepth: numbe
 			break
 	}
 
-	const recentlyModifiedFiles = cline.fileContextTracker.getAndClearCheckpointPossibleFile()
-
-	if (recentlyModifiedFiles.length > 0) {
-		// TODO: We can track what file changes were made and only
-		// checkpoint those files, this will be save storage.
-		await checkpointSave(cline)
-	}
-
 	// Seeing out of bounds is fine, it means that the next too call is being
 	// built up and ready to add to assistantMessageContent to present.
 	// When you see the UI inactive during this, it means that a tool is
@@ -623,5 +639,22 @@ export async function presentAssistantMessage(cline: Task, recursionDepth: numbe
 		await yieldPromise()
 		await presentAssistantMessage(cline, recursionDepth + 1)
 		// kilocode_change end
+	}
+}
+
+/**
+ * save checkpoint and mark done in the current streaming task.
+ * @param task The Task instance to checkpoint save and mark.
+ * @returns
+ */
+async function checkpointSaveAndMark(task: Task) {
+	if (task.currentStreamingDidCheckpoint) {
+		return
+	}
+	try {
+		await task.checkpointSave(true)
+		task.currentStreamingDidCheckpoint = true
+	} catch (error) {
+		console.error(`[Task#presentAssistantMessage] Error saving checkpoint: ${error.message}`, error)
 	}
 }

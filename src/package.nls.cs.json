@@ -1,9 +1,9 @@
 {
-	"extension.displayName": "Kilo SSY AI Agent (kombinované funkce Cline / Roo)",
+	"extension.displayName": "Kilo SSY AI Agent (Roo / Cline fork)",
 	"extension.description": "Open Source AI asistent pro kódování pro plánování, vytváření a opravy kódu.",
 	"views.contextMenu.label": "Kilo SSY",
 	"views.terminalMenu.label": "Kilo SSY",
-	"views.activitybar.title": "Kilo SSY (⇧⌘A)",
+	"views.activitybar.title": "Kilo SSY",
 	"views.sidebar.name": "Kilo SSY",
 	"command.newTask.title": "Nový úkol",
 	"command.mcpServers.title": "MCP servery",

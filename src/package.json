@@ -3,7 +3,7 @@
 	"displayName": "%extension.displayName%",
 	"description": "%extension.description%",
 	"publisher": "shengsuan-cloud",
-	"version": "4.73.2",
+	"version": "4.84.0",
 	"icon": "assets/images/panel_light.png",
 	"galleryBanner": {
 		"color": "#FFFFFF",
@@ -314,6 +314,11 @@
 				"when": "editorTextFocus && !editorTabMovesFocus && !inSnippetMode && kilocode.ghost.hasSuggestions"
 			},
 			{
+				"command": "kilo-code.ghost.cancelRequest",
+				"key": "escape",
+				"when": "editorTextFocus && !editorTabMovesFocus && !inSnippetMode && kilocode.ghost.isProcessing"
+			},
+			{
 				"command": "kilo-code.ghost.cancelSuggestions",
 				"key": "escape",
 				"when": "editorTextFocus && !editorTabMovesFocus && !inSnippetMode && kilocode.ghost.hasSuggestions"
@@ -338,13 +343,13 @@
 				"command": "kilo-code.ghost.generateSuggestions",
 				"key": "ctrl+l",
 				"mac": "cmd+l",
-				"when": "editorTextFocus && !editorTabMovesFocus && !inSnippetMode && kilocode.ghost.enableAutoInlineTaskKeybinding && !github.copilot.completions.enabled"
+				"when": "editorTextFocus && !editorTabMovesFocus && !inSnippetMode && kilocode.ghost.enableSmartInlineTaskKeybinding && !github.copilot.completions.enabled"
 			},
 			{
 				"command": "kilo-code.ghost.showIncompatibilityExtensionPopup",
 				"key": "ctrl+l",
 				"mac": "cmd+l",
-				"when": "editorTextFocus && !editorTabMovesFocus && !inSnippetMode && kilocode.ghost.enableAutoInlineTaskKeybinding && github.copilot.completions.enabled"
+				"when": "editorTextFocus && !editorTabMovesFocus && !inSnippetMode && kilocode.ghost.enableSmartInlineTaskKeybinding && github.copilot.completions.enabled"
 			},
 			{
 				"command": "kilo-code.ghost.showIncompatibilityExtensionPopup",
@@ -362,7 +367,7 @@
 			"editor/context": [
 				{
 					"submenu": "kilo-ssy.contextMenu",
-					"group": "navigation"
+					"group": "1"
 				}
 			],
 			"kilo-ssy.contextMenu": [
@@ -386,7 +391,7 @@
 			"terminal/context": [
 				{
 					"submenu": "kilo-ssy.terminalMenu",
-					"group": "navigation"
+					"group": "2"
 				}
 			],
 			"kilo-ssy.terminalMenu": [
@@ -415,23 +420,28 @@
 					"when": "view == kilo-ssy.SidebarProvider"
 				},
 				{
-					"command": "kilo-ssy.historyButtonClicked",
+					"command": "kilo-ssy.marketplaceButtonClicked",
 					"group": "navigation@3",
 					"when": "view == kilo-ssy.SidebarProvider"
 				},
 				{
-					"command": "kilo-ssy.profileButtonClicked",
+					"command": "kilo-ssy.historyButtonClicked",
 					"group": "navigation@4",
 					"when": "view == kilo-ssy.SidebarProvider"
 				},
 				{
-					"command": "kilo-ssy.settingsButtonClicked",
+					"command": "kilo-ssy.profileButtonClicked",
 					"group": "navigation@5",
 					"when": "view == kilo-ssy.SidebarProvider"
 				},
 				{
-					"command": "kilo-ssy.popoutButtonClicked",
+					"command": "kilo-ssy.settingsButtonClicked",
 					"group": "navigation@6",
+					"when": "view == kilo-ssy.SidebarProvider"
+				},
+				{
+					"command": "kilo-ssy.popoutButtonClicked",
+					"group": "navigation@7",
 					"when": "view == kilo-ssy.SidebarProvider"
 				},
 				{
@@ -562,6 +572,13 @@
 					"type": "boolean",
 					"default": true,
 					"description": "%settings.useAgentRules.description%"
+				},
+				"kilo-code.apiRequestTimeout": {
+					"type": "number",
+					"default": 600,
+					"minimum": 0,
+					"maximum": 3600,
+					"description": "%settings.apiRequestTimeout.description%"
 				}
 			}
 		},
@@ -602,7 +619,7 @@
 		"@mistralai/mistralai": "^1.3.6",
 		"@modelcontextprotocol/sdk": "^1.9.0",
 		"@qdrant/js-client-rest": "^1.14.0",
-		"@roo-code/cloud": "workspace:^",
+		"@roo-code/cloud": "^0.18.0",
 		"@roo-code/ipc": "workspace:^",
 		"@roo-code/telemetry": "workspace:^",
 		"@roo-code/types": "workspace:^",
@@ -628,6 +645,7 @@
 		"gray-matter": "^4.0.3",
 		"i18next": "^25.0.0",
 		"ignore": "^7.0.3",
+		"is-wsl": "^3.1.0",
 		"isbinaryfile": "^5.0.2",
 		"lodash.debounce": "^4.0.8",
 		"lru-cache": "^11.1.0",
@@ -635,7 +653,7 @@
 		"monaco-vscode-textmate-theme-converter": "^0.1.7",
 		"node-cache": "^5.1.2",
 		"node-ipc": "^12.0.0",
-		"ollama": "^0.5.16",
+		"ollama": "^0.5.17",
 		"openai": "^5.0.0",
 		"os-name": "^6.0.0",
 		"p-limit": "^6.2.0",
@@ -652,6 +670,7 @@
 		"say": "^0.16.0",
 		"serialize-error": "^12.0.0",
 		"simple-git": "^3.27.0",
+		"socket.io-client": "^4.8.1",
 		"sound-play": "^1.1.0",
 		"stream-json": "^1.8.0",
 		"string-similarity": "^4.0.4",
@@ -661,6 +680,7 @@
 		"tmp": "^0.2.3",
 		"tree-sitter-wasms": "^0.1.12",
 		"turndown": "^7.2.0",
+		"undici": "^7.13.0",
 		"uri-js": "^4.4.1",
 		"uuid": "^11.1.0",
 		"vscode-material-icons": "^0.1.1",

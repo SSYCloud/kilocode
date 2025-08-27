@@ -7,6 +7,7 @@ import { useExtensionState } from "@src/context/ExtensionStateContext"
 import { useAppTranslation } from "@src/i18n/TranslationContext"
 import { AutoApproveToggle, AutoApproveSetting, autoApproveSettingsConfig } from "../settings/AutoApproveToggle"
 import { MaxRequestsInput } from "../settings/MaxRequestsInput" // kilocode_change
+import { MaxCostInput } from "../settings/MaxCostInput" // kilocode_change
 import { StandardTooltip } from "@src/components/ui"
 import { useAutoApprovalState } from "@src/hooks/useAutoApprovalState"
 import { useAutoApprovalToggles } from "@src/hooks/useAutoApprovalToggles"
@@ -22,7 +23,8 @@ const AutoApproveMenu = ({ style }: AutoApproveMenuProps) => {
 		autoApprovalEnabled,
 		setAutoApprovalEnabled,
 		alwaysApproveResubmit,
-		allowedMaxRequests,
+		allowedMaxRequests, // kilocode_change
+		allowedMaxCost, // kilocode_change
 		setAlwaysAllowReadOnly,
 		setAlwaysAllowWrite,
 		setAlwaysAllowExecute,
@@ -33,7 +35,8 @@ const AutoApproveMenu = ({ style }: AutoApproveMenuProps) => {
 		setAlwaysApproveResubmit,
 		setAlwaysAllowFollowupQuestions,
 		setAlwaysAllowUpdateTodoList,
-		setAllowedMaxRequests,
+		setAllowedMaxRequests, // kilocode_change
+		setAllowedMaxCost, // kilocode_change
 	} = useExtensionState()
 
 	const { t } = useAppTranslation()
@@ -245,10 +248,16 @@ const AutoApproveMenu = ({ style }: AutoApproveMenuProps) => {
 					<AutoApproveToggle {...toggles} onToggle={onAutoApproveToggle} />
 
 					{/* kilocode_change start */}
-					<MaxRequestsInput
-						allowedMaxRequests={allowedMaxRequests ?? undefined}
-						onValueChange={(value) => setAllowedMaxRequests(value)}
-					/>
+					<div className="flex gap-2 w-full justify-stretch mb-2">
+						<MaxRequestsInput
+							allowedMaxRequests={allowedMaxRequests ?? undefined}
+							onValueChange={(value) => setAllowedMaxRequests(value)}
+						/>
+						<MaxCostInput
+							allowedMaxCost={allowedMaxCost ?? undefined}
+							onValueChange={(value) => setAllowedMaxCost(value)}
+						/>
+					</div>
 					{/* kilocode_change end */}
 				</div>
 			)}

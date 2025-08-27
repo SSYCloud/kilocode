@@ -7,6 +7,7 @@
 		"tokens": "Tokens:",
 		"cache": "Cache:",
 		"apiCost": "API Cost:",
+		"size": "الحجم",
 		"condenseContext": "تلخيص السياق بذكاء",
 		"contextWindow": "طول السياق:",
 		"closeAndStart": "أغلق المهمة وابدأ جديدة",
@@ -21,7 +22,9 @@
 		"connectToCloudDescription": "سجّل دخولك لـ Kilo Code Cloud لمشاركة المهام",
 		"sharingDisabledByOrganization": "المشاركة معطّلة من قِبَل المنظمة",
 		"shareSuccessOrganization": "تم نسخ رابط المنظمة للحافظة",
-		"shareSuccessPublic": "تم نسخ الرابط العام للحافظة"
+		"shareSuccessPublic": "تم نسخ الرابط العام للحافظة",
+		"expand": "توسيع المهمة",
+		"collapse": "طي المهمة"
 	},
 	"history": {
 		"title": "السجل"
@@ -287,6 +290,12 @@
 	},
 	"announcement": {
 		"title": "🎉 Kilo Code {{version}} تم إطلاقه",
+		"stealthModel": {
+			"feature": "<bold>نموذج سري مجاني لفترة محدودة</bold> - نموذج تفكير سريع جداً يتفوق في البرمجة الذكية مع نافذة سياق 262k، متاح عبر Roo Code Cloud.",
+			"note": "(ملاحظة: يتم تسجيل المحادثات والاستجابات من قِبل منشئ النموذج لتحسينه)",
+			"connectButton": "اتصل بـ Roo Code Cloud",
+			"selectModel": "اختر <code>roo/sonic</code> من موفر Roo Code Cloud في<br/><settingsLink>الإعدادات</settingsLink> لتبدأ"
+		},
 		"description": "Kilo Code {{version}} يجلب ميزات وتحسينات كبيرة بناءً على ملاحظاتكم.",
 		"whatsNew": "الجديد",
 		"feature1": "<bold>إطلاق سوق Kilo Code</bold>: السوق صار متاح! اكتشف وثبّت الأنماط و MCPs بسهولة.",
@@ -347,6 +356,11 @@
 			"title": "تم بلوغ حد الطلبات الموافق عليها تلقائياً",
 			"description": "Kilo Code وصل لحد {{count}} طلب API موافَق عليه تلقائيًا. تبي تعيد العداد وتكمل المهمة؟",
 			"button": "إعادة الضبط والمتابعة"
+		},
+		"autoApprovedCostLimitReached": {
+			"title": "تم الوصول لحد التكلفة المعتمدة تلقائياً",
+			"description": "Kilo Code وصل لحد التكلفة المعتمدة تلقائياً ${{count}}. تبي تعيد التكلفة وتكمل المهمة؟",
+			"button": "أعد التعيين وكمّل"
 		}
 	},
 	"indexingStatus": {
@@ -388,5 +402,6 @@
 	"queuedMessages": {
 		"title": "الرسائل في الطابور:",
 		"clickToEdit": "انقر لتعديل الرسالة"
-	}
+	},
+	"generateCommitMessage": "إنشاء رسالة الالتزام"
 }

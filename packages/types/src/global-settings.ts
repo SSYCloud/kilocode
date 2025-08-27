@@ -69,6 +69,7 @@ export const globalSettingsSchema = z.object({
 	commandTimeoutAllowlist: z.array(z.string()).optional(),
 	preventCompletionWithOpenTodos: z.boolean().optional(),
 	allowedMaxRequests: z.number().nullish(),
+	allowedMaxCost: z.number().nullish(),
 	autoCondenseContext: z.boolean().optional(),
 	autoCondenseContextPercent: z.number().optional(),
 	maxConcurrentFileReads: z.number().optional(),
@@ -132,6 +133,8 @@ export const globalSettingsSchema = z.object({
 	fuzzyMatchThreshold: z.number().optional(),
 	experiments: experimentsSchema.optional(),
 
+	morphApiKey: z.string().optional(), // kilocode_change: Morph fast apply
+
 	codebaseIndexModels: codebaseIndexModelsSchema.optional(),
 	codebaseIndexConfig: codebaseIndexConfigSchema.optional(),
 
@@ -142,6 +145,8 @@ export const globalSettingsSchema = z.object({
 	mcpEnabled: z.boolean().optional(),
 	enableMcpServerCreation: z.boolean().optional(),
 	mcpMarketplaceCatalog: z.any().optional(), // kilocode_change: MCP marketplace catalog
+
+	remoteControlEnabled: z.boolean().optional(),
 
 	mode: z.string().optional(),
 	modeApiConfigs: z.record(z.string(), z.string()).optional(),
@@ -187,7 +192,9 @@ export const SECRET_STATE_KEYS = [
 	"openAiApiKey",
 	"geminiApiKey",
 	"openAiNativeApiKey",
+	"cerebrasApiKey",
 	"deepSeekApiKey",
+	"doubaoApiKey",
 	"moonshotApiKey",
 	"mistralApiKey",
 	"unboundApiKey",
@@ -198,13 +205,18 @@ export const SECRET_STATE_KEYS = [
 	"litellmApiKey",
 	"codeIndexOpenAiKey",
 	"codeIndexQdrantApiKey",
-	"kilocodeToken", // kilocode_change
+	// kilocode_change start
+	"kilocodeToken",
+	// kilocode_change end
 	"codebaseIndexOpenAiCompatibleApiKey",
 	"shengSuanYunApiKey",
 	"codebaseIndexGeminiApiKey",
 	"codebaseIndexMistralApiKey",
 	"huggingFaceApiKey",
 	"sambaNovaApiKey",
+	"zaiApiKey",
+	"fireworksApiKey",
+	"ioIntelligenceApiKey",
 ] as const satisfies readonly (keyof ProviderSettings)[]
 export type SecretState = Pick<ProviderSettings, (typeof SECRET_STATE_KEYS)[number]>
 
@@ -304,6 +316,8 @@ export const EVALS_SETTINGS: RooCodeSettings = {
 	telemetrySetting: "enabled",
 
 	mcpEnabled: false,
+
+	remoteControlEnabled: false,
 
 	mode: "code", // "architect",
 

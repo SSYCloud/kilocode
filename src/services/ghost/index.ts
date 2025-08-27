@@ -6,13 +6,6 @@ import { ClineProvider } from "../../core/webview/ClineProvider"
 export const registerGhostProvider = (context: vscode.ExtensionContext, cline: ClineProvider) => {
 	const ghost = GhostProvider.initialize(context, cline)
 
-	// Register Windows Events
-	context.subscriptions.push(
-		vscode.window.onDidChangeActiveTextEditor((editor) => {
-			ghost.onDidChangeActiveTextEditor(editor)
-		}),
-	)
-
 	// Register GhostProvider Commands
 	context.subscriptions.push(
 		vscode.commands.registerCommand("kilo-code.ghost.reload", async () => {
@@ -62,6 +55,11 @@ export const registerGhostProvider = (context: vscode.ExtensionContext, cline: C
 	context.subscriptions.push(
 		vscode.commands.registerCommand("kilo-code.ghost.showIncompatibilityExtensionPopup", async () => {
 			await ghost.showIncompatibilityExtensionPopup()
+		}),
+	)
+	context.subscriptions.push(
+		vscode.commands.registerCommand("kilo-code.ghost.cancelRequest", async () => {
+			await ghost.cancelRequest()
 		}),
 	)
 	context.subscriptions.push(

@@ -6,10 +6,11 @@ import {
 	type CustomModePrompts,
 	type ModeConfig,
 	type ExperimentId,
-	type OrganizationAllowList,
-	ORGANIZATION_ALLOW_ALL,
 	GhostServiceSettings, // kilocode_change
+	openRouterDefaultModelId, // kilocode_change
 } from "@roo-code/types"
+
+import { type OrganizationAllowList, ORGANIZATION_ALLOW_ALL } from "@roo/cloud"
 
 import { ExtensionMessage, ExtensionState, MarketplaceInstalledMetadata, Command } from "@roo/ExtensionMessage"
 import { findLastIndex } from "@roo/array"
@@ -90,6 +91,7 @@ export interface ExtensionStateContextType extends ExtensionState {
 	setAllowedCommands: (value: string[]) => void
 	setDeniedCommands: (value: string[]) => void
 	setAllowedMaxRequests: (value: number | undefined) => void
+	setAllowedMaxCost: (value: number | undefined) => void
 	setSoundEnabled: (value: boolean) => void
 	setSoundVolume: (value: number) => void
 	terminalShellIntegrationTimeout?: number
@@ -115,6 +117,8 @@ export interface ExtensionStateContextType extends ExtensionState {
 	setMcpEnabled: (value: boolean) => void
 	enableMcpServerCreation: boolean
 	setEnableMcpServerCreation: (value: boolean) => void
+	remoteControlEnabled: boolean
+	setRemoteControlEnabled: (value: boolean) => void
 	alwaysApproveResubmit?: boolean
 	setAlwaysApproveResubmit: (value: boolean) => void
 	requestDelaySeconds: number
@@ -218,6 +222,7 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		terminalShellIntegrationTimeout: 4000,
 		mcpEnabled: true,
 		enableMcpServerCreation: false,
+		remoteControlEnabled: false,
 		alwaysApproveResubmit: false,
 		alwaysAllowWrite: true, // kilocode_change
 		alwaysAllowReadOnly: true, // kilocode_change
@@ -257,6 +262,7 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		terminalCompressProgressBar: true, // Default to compress progress bar output
 		historyPreviewCollapsed: false, // Initialize the new state (default to expanded)
 		showTaskTimeline: true, // kilocode_change
+		kilocodeDefaultModel: openRouterDefaultModelId,
 		cloudUserInfo: null,
 		cloudIsAuthenticated: false,
 		sharingEnabled: false,
@@ -303,7 +309,7 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		project: {},
 		global: {},
 	})
-	const [includeTaskHistoryInEnhance, setIncludeTaskHistoryInEnhance] = useState(false)
+	const [includeTaskHistoryInEnhance, setIncludeTaskHistoryInEnhance] = useState(true)
 
 	const setListApiConfigMeta = useCallback(
 		(value: ProviderSettingsEntry[]) => setState((prevState) => ({ ...prevState, listApiConfigMeta: value })),
@@ -468,6 +474,7 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		profileThresholds: state.profileThresholds ?? {},
 		alwaysAllowFollowupQuestions,
 		followupAutoApproveTimeoutMs,
+		remoteControlEnabled: state.remoteControlEnabled ?? false,
 		setExperimentEnabled: (id, enabled) =>
 			setState((prevState) => ({ ...prevState, experiments: { ...prevState.experiments, [id]: enabled } })),
 		setApiConfiguration,
@@ -490,6 +497,7 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		setAllowedCommands: (value) => setState((prevState) => ({ ...prevState, allowedCommands: value })),
 		setDeniedCommands: (value) => setState((prevState) => ({ ...prevState, deniedCommands: value })),
 		setAllowedMaxRequests: (value) => setState((prevState) => ({ ...prevState, allowedMaxRequests: value })),
+		setAllowedMaxCost: (value) => setState((prevState) => ({ ...prevState, allowedMaxCost: value })),
 		setSoundEnabled: (value) => setState((prevState) => ({ ...prevState, soundEnabled: value })),
 		setSoundVolume: (value) => setState((prevState) => ({ ...prevState, soundVolume: value })),
 		setTtsEnabled: (value) => setState((prevState) => ({ ...prevState, ttsEnabled: value })),
@@ -513,6 +521,7 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		setMcpEnabled: (value) => setState((prevState) => ({ ...prevState, mcpEnabled: value })),
 		setEnableMcpServerCreation: (value) =>
 			setState((prevState) => ({ ...prevState, enableMcpServerCreation: value })),
+		setRemoteControlEnabled: (value) => setState((prevState) => ({ ...prevState, remoteControlEnabled: value })),
 		setAlwaysApproveResubmit: (value) => setState((prevState) => ({ ...prevState, alwaysApproveResubmit: value })),
 		setRequestDelaySeconds: (value) => setState((prevState) => ({ ...prevState, requestDelaySeconds: value })),
 		setCurrentApiConfigName: (value) => setState((prevState) => ({ ...prevState, currentApiConfigName: value })),

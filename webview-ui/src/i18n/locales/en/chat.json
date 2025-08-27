@@ -2,13 +2,16 @@
 	"greeting": "What can Kilo Code do for you?",
 	"task": {
 		"title": "Task",
+		"expand": "Expand task",
+		"collapse": "Collapse task",
 		"seeMore": "See more",
 		"seeLess": "See less",
-		"tokens": "Tokens:",
-		"cache": "Cache:",
-		"apiCost": "API Cost:",
+		"tokens": "Tokens",
+		"cache": "Cache",
+		"apiCost": "API Cost",
+		"size": "Size",
 		"condenseContext": "Intelligently condense context",
-		"contextWindow": "Context Length:",
+		"contextWindow": "Context Length",
 		"closeAndStart": "Close task and start a new one",
 		"export": "Export task history",
 		"share": "Share task",
@@ -152,7 +155,6 @@
 		"streamingFailed": "API Streaming Failed"
 	},
 	"checkpoint": {
-		"initial": "Initial Checkpoint",
 		"regular": "Checkpoint",
 		"initializingWarning": "Still initializing checkpoint... If this takes too long, you can disable checkpoints in <settingsLink>settings</settingsLink> and restart your task.",
 		"menu": {
@@ -278,14 +280,13 @@
 		"disabledAriaLabel": "Auto-approval disabled - select options first"
 	},
 	"announcement": {
-		"title": "🎉 Kilo Code {{version}} Released",
-		"description": "Kilo Code {{version}} brings powerful new features and significant improvements to enhance your development workflow.",
-		"whatsNew": "What's New",
-		"feature1": "<bold>Message Queueing</bold>: Queue multiple messages while Roo is working, allowing you to continue planning your workflow without interruption.",
-		"feature2": "<bold>Custom Slash Commands</bold>: Create personalized slash commands for quick access to frequently used prompts and workflows, with full UI management.",
-		"feature3": "<bold>Enhanced Gemini Tools</bold>: New URL context and Google Search grounding capabilities provide Gemini models with real-time web information and enhanced research abilities.",
-		"hideButton": "Hide announcement",
-		"detailsDiscussLinks": "Get more details and discuss in <discordLink>Discord</discordLink> and <redditLink>Reddit</redditLink> 🚀"
+		"title": "🎉 Roo Code {{version}} Released",
+		"stealthModel": {
+			"feature": "<bold>Limited-time FREE stealth model</bold> - A blazing fast reasoning model that excels at agentic coding with a 262k context window, available through Roo Code Cloud.",
+			"note": "(Note: prompts and completions are logged by the model creator to improve the model)",
+			"connectButton": "Connect to Roo Code Cloud",
+			"selectModel": "Select <code>roo/sonic</code> from the Roo Code Cloud provider in<br/><settingsLink>Settings</settingsLink> to get started"
+		}
 	},
 	"reasoning": {
 		"thinking": "Thinking",
@@ -339,6 +340,11 @@
 			"title": "Auto-Approved Request Limit Reached",
 			"description": "Kilo Code has reached the auto-approved limit of {{count}} API request(s). Would you like to reset the count and proceed with the task?",
 			"button": "Reset and Continue"
+		},
+		"autoApprovedCostLimitReached": {
+			"title": "Auto-Approved Cost Limit Reached",
+			"description": "Kilo has reached the auto-approved cost limit of ${{count}}. Would you like to reset the cost and proceed with the task?",
+			"button": "Reset and Continue"
 		}
 	},
 	"indexingStatus": {
@@ -352,9 +358,9 @@
 		"ariaLabel": "Version {{version}} - Click to view release notes"
 	},
 	"rooCloudCTA": {
-		"title": "Roo Code Cloud is coming soon!",
+		"title": "Roo Code Cloud is evolving!",
 		"description": "Run Roomote agents in the cloud, access your tasks from anywhere, collaborate with others, and more.",
-		"joinWaitlist": "Join the waitlist to get early access."
+		"joinWaitlist": "Sign up to get the latest updates."
 	},
 	"command": {
 		"triggerDescription": "Trigger the {{name}} command"

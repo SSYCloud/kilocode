@@ -2,12 +2,15 @@
 	"greeting": "Was kann Kilo Code für dich tun?",
 	"task": {
 		"title": "Aufgabe",
+		"expand": "Aufgabe erweitern",
+		"collapse": "Aufgabe einklappen",
 		"seeMore": "Mehr anzeigen",
 		"seeLess": "Weniger anzeigen",
-		"tokens": "Tokens:",
-		"cache": "Cache:",
-		"apiCost": "API-Kosten:",
-		"contextWindow": "Kontextfenster:",
+		"tokens": "Tokens",
+		"cache": "Cache",
+		"apiCost": "API-Kosten",
+		"size": "Größe",
+		"contextWindow": "Kontextfenster",
 		"closeAndStart": "Aufgabe schließen und neue starten",
 		"export": "Aufgabenverlauf exportieren",
 		"delete": "Aufgabe löschen (Shift + Klick zum Überspringen der Bestätigung)",
@@ -146,7 +149,6 @@
 		"streamingFailed": "API-Streaming fehlgeschlagen"
 	},
 	"checkpoint": {
-		"initial": "Initialer Checkpoint",
 		"regular": "Checkpoint",
 		"initializingWarning": "Checkpoint wird noch initialisiert... Falls dies zu lange dauert, kannst du Checkpoints in den <settingsLink>Einstellungen</settingsLink> deaktivieren und deine Aufgabe neu starten.",
 		"menu": {
@@ -269,8 +271,14 @@
 		"countdownDisplay": "{{count}}s"
 	},
 	"announcement": {
-		"title": "🎉 Kilo Code {{version}} veröffentlicht",
-		"description": "Kilo Code {{version}} bringt mächtige neue Funktionen und bedeutende Verbesserungen, um deinen Entwicklungsworkflow zu verbessern.",
+		"title": "🎉 Roo Code {{version}} veröffentlicht",
+		"stealthModel": {
+			"feature": "<bold>Zeitlich begrenztes KOSTENLOSES Stealth-Modell</bold> - Ein blitzschnelles Reasoning-Modell, das sich bei agentic coding mit einem 262k Kontextfenster auszeichnet, verfügbar über Roo Code Cloud.",
+			"note": "(Hinweis: Prompts und Vervollständigungen werden vom Modellersteller protokolliert und zur Verbesserung des Modells verwendet)",
+			"connectButton": "Mit Roo Code Cloud verbinden",
+			"selectModel": "Wähle <code>roo/sonic</code> vom Roo Code Cloud Provider in<br/><settingsLink>Einstellungen</settingsLink> um zu beginnen"
+		},
+		"description": "Roo Code {{version}} bringt mächtige neue Funktionen und bedeutende Verbesserungen, um deinen Entwicklungsworkflow zu verbessern.",
 		"whatsNew": "Was ist neu",
 		"feature1": "<bold>Nachrichten-Warteschlange</bold>: Stelle mehrere Nachrichten in die Warteschlange, während Roo arbeitet, damit du deinen Workflow ohne Unterbrechung weiter planen kannst.",
 		"feature2": "<bold>Benutzerdefinierte Slash-Befehle</bold>: Erstelle personalisierte Slash-Befehle für schnellen Zugriff auf häufig verwendete Prompts und Workflows mit vollständiger UI-Verwaltung.",
@@ -321,6 +329,11 @@
 			"title": "Limit für automatisch genehmigte Anfragen erreicht",
 			"description": "Kilo Code hat das automatisch genehmigte Limit von {{count}} API-Anfrage(n) erreicht. Möchtest du den Zähler zurücksetzen und mit der Aufgabe fortfahren?",
 			"button": "Zurücksetzen und fortfahren"
+		},
+		"autoApprovedCostLimitReached": {
+			"description": "Kilo Code hat das automatisch genehmigte Kostenlimit von ${{count}} erreicht. Möchtest du die Kosten zurücksetzen und mit der Aufgabe fortfahren?",
+			"title": "Kostengrenze für automatische Genehmigung erreicht",
+			"button": "Zurücksetzen und Fortfahren"
 		}
 	},
 	"codebaseSearch": {
@@ -346,12 +359,12 @@
 		"status": "Index-Status"
 	},
 	"versionIndicator": {
-		"ariaLabel": "Version {{version}} - Klicken Sie, um die Versionshinweise anzuzeigen"
+		"ariaLabel": "Version {{version}} - Klicke, um die Versionshinweise anzuzeigen"
 	},
 	"rooCloudCTA": {
-		"title": "Roo Code Cloud kommt bald!",
+		"title": "Roo Code Cloud entwickelt sich weiter!",
 		"description": "Führe Remote-Agenten in der Cloud aus, greife von überall auf deine Aufgaben zu, arbeite mit anderen zusammen und vieles mehr.",
-		"joinWaitlist": "Tritt der Warteliste bei, um frühen Zugang zu erhalten."
+		"joinWaitlist": "Melde dich an, um die neuesten Updates zu erhalten."
 	},
 	"command": {
 		"triggerDescription": "Starte den {{name}} Befehl"

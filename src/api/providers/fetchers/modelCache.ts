@@ -17,10 +17,10 @@ import { getLiteLLMModels } from "./litellm"
 import { getShengSuanYunModels } from "./shengsuanyun"
 
 import { GetModelsOptions } from "../../../shared/api"
-import { getKiloBaseUriFromToken } from "../../../utils/kilocode-token"
+import { getKiloBaseUriFromToken } from "../../../shared/kilocode/token"
 import { getOllamaModels } from "./ollama"
 import { getLMStudioModels } from "./lmstudio"
-
+import { getIOIntelligenceModels } from "./io-intelligence"
 const memoryCache = new NodeCache({ stdTTL: 5 * 60, checkperiod: 5 * 60 })
 
 export /*kilocode_change*/ async function writeModels(router: RouterName, data: ModelRecord) {
@@ -50,12 +50,7 @@ export /*kilocode_change*/ async function readModels(router: RouterName): Promis
  */
 export const getModels = async (options: GetModelsOptions): Promise<ModelRecord> => {
 	const { provider } = options
-
-	// kilocode_change start: cacheKey
-	const cacheKey = JSON.stringify(options)
-	let models = memoryCache.get<ModelRecord>(cacheKey)
-	// kilocode_cache end
-
+	let models = getModelsFromCache(provider)
 	if (models) {
 		return models
 	}
@@ -89,7 +84,9 @@ export const getModels = async (options: GetModelsOptions): Promise<ModelRecord>
 			case "kilocode-openrouter":
 				models = await getOpenRouterModels({
 					openRouterBaseUrl: getKiloBaseUriFromToken(options.kilocodeToken ?? "") + "/api/openrouter",
-					headers: { Authorization: `Bearer ${options.kilocodeToken}` },
+					headers: options.kilocodeOrganizationId
+						? { "X-KiloCode-OrganizationId": options.kilocodeOrganizationId }
+						: undefined,
 				})
 				break
 			case "cerebras":
@@ -105,6 +102,9 @@ export const getModels = async (options: GetModelsOptions): Promise<ModelRecord>
 			case "lmstudio":
 				models = await getLMStudioModels(options.baseUrl)
 				break
+			case "io-intelligence":
+				models = await getIOIntelligenceModels(options.apiKey)
+				break
 			default: {
 				// Ensures router is exhaustively checked if RouterName is a strict union
 				const exhaustiveCheck: never = provider
@@ -113,7 +113,7 @@ export const getModels = async (options: GetModelsOptions): Promise<ModelRecord>
 		}
 
 		// Cache the fetched models (even if empty, to signify a successful fetch with no models)
-		memoryCache.set(cacheKey, models) // kilocode_change: cacheKey
+		memoryCache.set(provider, models)
 
 		/* kilocode_change: skip useless file IO
 		await writeModels(provider, models).catch((err) =>
@@ -142,4 +142,8 @@ export const getModels = async (options: GetModelsOptions): Promise<ModelRecord>
  */
 export const flushModels = async (router: RouterName) => {
 	memoryCache.del(router)
+}
+
+export function getModelsFromCache(provider: string) {
+	return memoryCache.get<ModelRecord>(provider)
 }

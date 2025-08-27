@@ -11,7 +11,7 @@ import { getShengSuanYunAuthUrl } from "../helpers"
 import { ButtonSecondary } from "../common/ButtonSecondary"
 
 const WelcomeView = () => {
-	const { apiConfiguration, currentApiConfigName, setApiConfiguration, uriScheme, uiKind } = useExtensionState()
+	const { apiConfiguration, currentApiConfigName, setApiConfiguration, uriScheme } = useExtensionState()
 	const [errorMessage, setErrorMessage] = useState<string | undefined>()
 	const [manualConfig, setManualConfig] = useState(false)
 	const { t } = useAppTranslation()
@@ -37,7 +37,6 @@ const WelcomeView = () => {
 							fromWelcomeView
 							apiConfiguration={apiConfiguration || {}}
 							uriScheme={uriScheme}
-							uiKind={uiKind}
 							setApiConfigurationField={(field, value) => setApiConfiguration({ [field]: value })}
 							errorMessage={errorMessage}
 							setErrorMessage={setErrorMessage}

@@ -2,14 +2,14 @@
 import { HTMLAttributes } from "react"
 import { useAppTranslation } from "@/i18n/TranslationContext"
 import { Trans } from "react-i18next"
-import { Bot, Webhook, Keyboard } from "lucide-react"
+import { Bot, Webhook, Keyboard, SquareFunction } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useExtensionState } from "../../../context/ExtensionStateContext"
 import { SectionHeader } from "../../settings/SectionHeader"
 import { Section } from "../../settings/Section"
 import { GhostServiceSettings } from "@roo-code/types"
 import { SetCachedStateField } from "../../settings/types"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@src/components/ui"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Slider } from "@src/components/ui"
 import { vscode } from "@/utils/vscode"
 import { ControlledCheckbox } from "../common/ControlledCheckbox"
 
@@ -25,8 +25,28 @@ export const GhostServiceSettingsView = ({
 	...props
 }: GhostServiceSettingsViewProps) => {
 	const { t } = useAppTranslation()
-	const { apiConfigId, enableQuickInlineTaskKeybinding, enableAutoInlineTaskKeybinding } = ghostServiceSettings || {}
+	const {
+		enableAutoTrigger,
+		autoTriggerDelay,
+		apiConfigId,
+		enableQuickInlineTaskKeybinding,
+		enableSmartInlineTaskKeybinding,
+	} = ghostServiceSettings || {}
 	const { listApiConfigMeta } = useExtensionState()
+
+	const onEnableAutoTriggerChange = (newValue: boolean) => {
+		setCachedStateField("ghostServiceSettings", {
+			...ghostServiceSettings,
+			enableAutoTrigger: newValue,
+		})
+	}
+
+	const onAutoTriggerDelayChange = (newValue: number[]) => {
+		setCachedStateField("ghostServiceSettings", {
+			...ghostServiceSettings,
+			autoTriggerDelay: newValue[0],
+		})
+	}
 
 	const onEnableQuickInlineTaskKeybindingChange = (newValue: boolean) => {
 		setCachedStateField("ghostServiceSettings", {
@@ -35,10 +55,10 @@ export const GhostServiceSettingsView = ({
 		})
 	}
 
-	const onEnableAutoInlineTaskKeybindingChange = (newValue: boolean) => {
+	const onEnableSmartInlineTaskKeybindingChange = (newValue: boolean) => {
 		setCachedStateField("ghostServiceSettings", {
 			...ghostServiceSettings,
-			enableAutoInlineTaskKeybinding: newValue,
+			enableSmartInlineTaskKeybinding: newValue,
 		})
 	}
 
@@ -63,6 +83,51 @@ export const GhostServiceSettingsView = ({
 			</SectionHeader>
 
 			<Section className="flex flex-col gap-5">
+				{/* Auto Trigger Settings */}
+				<div className="flex flex-col gap-3">
+					<div className="flex flex-col gap-1">
+						<div className="flex items-center gap-2 font-bold">
+							<SquareFunction className="w-4" />
+							<div>{t("kilocode:ghost.settings.autoTrigger")}</div>
+						</div>
+					</div>
+
+					<div className="flex flex-col gap-1">
+						<ControlledCheckbox checked={enableAutoTrigger || false} onChange={onEnableAutoTriggerChange}>
+							<span className="font-medium">{t("kilocode:ghost.settings.enableAutoTrigger.label")}</span>
+						</ControlledCheckbox>
+						<div className="text-vscode-descriptionForeground text-sm mt-1">
+							<Trans i18nKey="kilocode:ghost.settings.enableAutoTrigger.description" />
+						</div>
+					</div>
+
+					{enableAutoTrigger && (
+						<div className="flex flex-col gap-1">
+							<label className="block font-medium text-sm">
+								{t("kilocode:ghost.settings.autoTriggerDelay.label")}
+							</label>
+							<div className="flex items-center gap-3">
+								<Slider
+									value={[autoTriggerDelay || 3]}
+									onValueChange={onAutoTriggerDelayChange}
+									min={1}
+									max={30}
+									step={1}
+									className="flex-1"
+									disabled={!enableAutoTrigger}
+								/>
+								<span className="text-sm text-vscode-descriptionForeground w-8 text-right">
+									{autoTriggerDelay || 3}s
+								</span>
+							</div>
+							<div className="text-vscode-descriptionForeground text-xs mt-1">
+								<Trans i18nKey="kilocode:ghost.settings.autoTriggerDelay.description" />
+							</div>
+						</div>
+					)}
+				</div>
+
+				{/* Keyboard Settings */}
 				<div className="flex flex-col gap-3">
 					<div className="flex flex-col gap-1">
 						<div className="flex items-center gap-2 font-bold">
@@ -111,15 +176,15 @@ export const GhostServiceSettingsView = ({
 					</div>
 					<div className="flex flex-col gap-1">
 						<ControlledCheckbox
-							checked={enableAutoInlineTaskKeybinding || false}
-							onChange={onEnableAutoInlineTaskKeybindingChange}>
+							checked={enableSmartInlineTaskKeybinding || false}
+							onChange={onEnableSmartInlineTaskKeybindingChange}>
 							<span className="font-medium">
-								{t("kilocode:ghost.settings.enableAutoInlineTaskKeybinding.label")}
+								{t("kilocode:ghost.settings.enableSmartInlineTaskKeybinding.label")}
 							</span>
 						</ControlledCheckbox>
 						<div className="text-vscode-descriptionForeground text-sm mt-1">
 							<Trans
-								i18nKey="kilocode:ghost.settings.enableAutoInlineTaskKeybinding.description"
+								i18nKey="kilocode:ghost.settings.enableSmartInlineTaskKeybinding.description"
 								components={{
 									DocsLink: (
 										<a

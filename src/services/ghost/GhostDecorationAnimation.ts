@@ -6,7 +6,6 @@ export const UI_SHOW_LOADING_DELAY_MS = 150
  * Manages the animated decoration for ghost suggestions loading indicator
  */
 export class GhostDecorationAnimation {
-	private static instance: GhostDecorationAnimation
 	private animationInitialWaitTimer: NodeJS.Timeout | null = null
 	private animationInterval: NodeJS.Timeout | null = null
 	private decorationType: vscode.TextEditorDecorationType
@@ -17,7 +16,7 @@ export class GhostDecorationAnimation {
 	private editor: vscode.TextEditor | null = null
 	private range: vscode.Range | null = null
 
-	private constructor() {
+	public constructor() {
 		this.decorationType = vscode.window.createTextEditorDecorationType({
 			after: {
 				color: new vscode.ThemeColor("editorGhostText.foreground"),
@@ -26,13 +25,6 @@ export class GhostDecorationAnimation {
 			},
 			rangeBehavior: vscode.DecorationRangeBehavior.ClosedOpen,
 		})
-	}
-
-	public static getInstance(): GhostDecorationAnimation {
-		if (!GhostDecorationAnimation.instance) {
-			GhostDecorationAnimation.instance = new GhostDecorationAnimation()
-		}
-		return GhostDecorationAnimation.instance
 	}
 
 	/**

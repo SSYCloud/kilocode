@@ -1,9 +1,9 @@
 {
-	"extension.displayName": "Kilo SSY وكيل ذكاء اصطناعي (ميزات Cline و Roo مجتمعين)",
+	"extension.displayName": "Kilo SSY وكيل ذكاء اصطناعي (نسخة مطورة من Roo / Cline)",
 	"extension.description": "مساعد برمجة ذكاء اصطناعي مفتوح المصدر يساعدك تخطط وتبني وتعدل الكود.",
 	"views.contextMenu.label": "Kilo SSY",
 	"views.terminalMenu.label": "Kilo SSY",
-	"views.activitybar.title": "Kilo SSY (⇧⌘A)",
+	"views.activitybar.title": "Kilo SSY",
 	"views.sidebar.name": "Kilo SSY",
 	"command.newTask.title": "مهمة جديدة",
 	"command.mcpServers.title": "خوادم MCP",

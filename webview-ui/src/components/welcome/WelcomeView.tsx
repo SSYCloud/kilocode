@@ -16,8 +16,7 @@ import { Tab, TabContent } from "../common/Tab"
 import { getShengSuanYunAuthUrl } from "../kilocode/helpers"
 
 const WelcomeView = () => {
-	const { apiConfiguration, currentApiConfigName, setApiConfiguration, uriScheme, uiKind /* kilocode_change */ } =
-		useExtensionState()
+	const { apiConfiguration, currentApiConfigName, setApiConfiguration, uriScheme } = useExtensionState()
 	const { t } = useAppTranslation()
 	const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined)
 
@@ -111,7 +110,6 @@ const WelcomeView = () => {
 						fromWelcomeView
 						apiConfiguration={apiConfiguration || {}}
 						uriScheme={uriScheme}
-						uiKind={uiKind /* kilocode_change */}
 						setApiConfigurationField={setApiConfigurationFieldForApiOptions}
 						errorMessage={errorMessage}
 						setErrorMessage={setErrorMessage}

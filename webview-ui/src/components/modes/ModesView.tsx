@@ -578,7 +578,6 @@ const ModesView = ({ onDone }: ModesViewProps) => {
 									</div>
 								)}
 							</div>
-							{/* kilocode_change
 							<StandardTooltip content={t("chat:modeSelector.marketplace")}>
 								<Button
 									variant="ghost"
@@ -596,7 +595,6 @@ const ModesView = ({ onDone }: ModesViewProps) => {
 									<span className="codicon codicon-extensions"></span>
 								</Button>
 							</StandardTooltip>
-							*/}
 						</div>
 					</div>
 
@@ -618,9 +616,11 @@ const ModesView = ({ onDone }: ModesViewProps) => {
 									variant="combobox"
 									role="combobox"
 									aria-expanded={open}
-									className="justify-between w-60"
+									className="justify-between w-full"
 									data-testid="mode-select-trigger">
-									<div>{getCurrentMode()?.name || t("prompts:modes.selectMode")}</div>
+									<div className="truncate">
+										{getCurrentMode()?.name || t("prompts:modes.selectMode")}
+									</div>
 									<ChevronDown className="opacity-50" />
 								</Button>
 							</PopoverTrigger>
@@ -719,7 +719,7 @@ const ModesView = ({ onDone }: ModesViewProps) => {
 										text: value,
 									})
 								}}>
-								<SelectTrigger className="w-60">
+								<SelectTrigger className="w-full">
 									<SelectValue placeholder={t("settings:common.select")} />
 								</SelectTrigger>
 								<SelectContent>
@@ -758,17 +758,25 @@ const ModesView = ({ onDone }: ModesViewProps) => {
 											}
 										}}
 										onChange={(e) => {
-											setLocalModeName(e.target.value)
+											const newName = e.target.value
+											// Allow users to type freely, including emptying the field
+											setLocalModeName(newName)
 										}}
 										onBlur={() => {
 											const customMode = findModeBySlug(visualMode, customModes)
-											if (customMode && localModeName.trim()) {
+											if (customMode) {
+												const trimmedName = localModeName.trim()
 												// Only update if the name is not empty
-												updateCustomMode(visualMode, {
-													...customMode,
-													name: localModeName,
-													source: customMode.source || "global",
-												})
+												if (trimmedName) {
+													updateCustomMode(visualMode, {
+														...customMode,
+														name: trimmedName,
+														source: customMode.source || "global",
+													})
+												} else {
+													// Revert to the original name if empty
+													setLocalModeName(customMode.name)
+												}
 											}
 											// Clear the editing state
 											setCurrentEditingModeSlug(null)

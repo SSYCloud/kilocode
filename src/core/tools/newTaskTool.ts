@@ -1,5 +1,7 @@
 import delay from "delay"
 
+import { RooCodeEventName } from "@roo-code/types"
+
 import { ToolUse, AskApproval, HandleError, PushToolResult, RemoveClosingTag } from "../../shared/tools"
 import { Task } from "../task/Task"
 import { defaultModeSlug, getModeBySlug } from "../../shared/modes"
@@ -80,27 +82,37 @@ export async function newTaskTool(
 			// Preserve the current mode so we can resume with it later.
 			cline.pausedModeSlug = (await provider.getState()).mode ?? defaultModeSlug
 
-			// Create new task instance first (this preserves parent's current mode in its history)
-			const newCline = await provider.initClineWithTask(unescapedMessage, undefined, cline)
+			// kilocode_change start: Switch to the desired mode BEFORE creating the task
+			await provider.handleModeSwitch(mode)
+			// Small delay to ensure mode switch has propagated
+			await delay(100)
+			// kilocode_change end
+
+			// Now create the task with the correct mode already set
+			const newCline = await provider.createTask(unescapedMessage, undefined, cline)
+
 			if (!newCline) {
+				await provider.handleModeSwitch(cline.pausedModeSlug) // kilocode_change: if task creation failed, switch back to the parent's mode
 				pushToolResult(t("tools:newTask.errors.policy_restriction"))
 				return
 			}
 
-			// Now switch the newly created task to the desired mode
-			await provider.handleModeSwitch(mode)
+			// kilocode_change start: Switch to the desired mode BEFORE creating the task above
+			// // Now switch the newly created task to the desired mode
+			// await provider.handleModeSwitch(mode)
 
-			// Delay to allow mode change to take effect
-			await delay(500)
+			// // Delay to allow mode change to take effect
+			// await delay(500)
+			// kilocode_change end
 
-			cline.emit("taskSpawned", newCline.taskId)
+			cline.emit(RooCodeEventName.TaskSpawned, newCline.taskId)
 
 			pushToolResult(`Successfully created new task in ${targetMode.name} mode with message: ${unescapedMessage}`)
 
 			// Set the isPaused flag to true so the parent
 			// task can wait for the sub-task to finish.
 			cline.isPaused = true
-			cline.emit("taskPaused")
+			cline.emit(RooCodeEventName.TaskPaused)
 
 			return
 		}

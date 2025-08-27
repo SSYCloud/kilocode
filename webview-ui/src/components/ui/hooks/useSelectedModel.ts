@@ -6,14 +6,20 @@ import {
 	anthropicModels,
 	bedrockDefaultModelId,
 	bedrockModels,
+	cerebrasDefaultModelId,
+	cerebrasModels,
 	deepSeekDefaultModelId,
 	deepSeekModels,
 	moonshotDefaultModelId,
 	moonshotModels,
 	geminiDefaultModelId,
 	geminiModels,
+	// kilocode_change start
 	geminiCliDefaultModelId,
 	geminiCliModels,
+	qwenCodeModels,
+	qwenCodeDefaultModelId,
+	// kilocode_change end
 	mistralDefaultModelId,
 	mistralModels,
 	openAiModelInfoSaneDefaults,
@@ -37,37 +43,60 @@ import {
 	shengSuanYunDefaultModelId,
 	claudeCodeDefaultModelId,
 	claudeCodeModels,
-	kilocodeDefaultModelId,
 	sambaNovaModels,
 	sambaNovaDefaultModelId,
 	doubaoModels,
 	doubaoDefaultModelId,
+	internationalZAiDefaultModelId,
+	mainlandZAiDefaultModelId,
+	internationalZAiModels,
+	mainlandZAiModels,
+	fireworksModels,
+	fireworksDefaultModelId,
+	ioIntelligenceDefaultModelId,
+	ioIntelligenceModels,
+	rooDefaultModelId,
+	rooModels,
+	BEDROCK_CLAUDE_SONNET_4_MODEL_ID,
 } from "@roo-code/types"
 
-import { cerebrasModels, cerebrasDefaultModelId, fireworksDefaultModelId, fireworksModels } from "@roo/api" // kilocode_change
-
-import type { RouterModels } from "@roo/api"
+import type { ModelRecord, RouterModels } from "@roo/api"
 
 import { useRouterModels } from "./useRouterModels"
 import { useOpenRouterModelProviders } from "./useOpenRouterModelProviders"
+import { useLmStudioModels } from "./useLmStudioModels"
+import { useExtensionState } from "@/context/ExtensionStateContext" // kilocode_change
+
+// kilocode_change start
+export const useModelProviders = (kilocodeDefaultModel: string, apiConfiguration?: ProviderSettings) => {
+	const provider = apiConfiguration?.apiProvider
+	return useOpenRouterModelProviders(
+		provider === "kilocode"
+			? (apiConfiguration?.kilocodeModel ?? kilocodeDefaultModel)
+			: provider === "openrouter"
+				? (apiConfiguration?.openRouterModelId ?? openRouterDefaultModelId)
+				: undefined,
+		provider === "openrouter" ? apiConfiguration?.openRouterBaseUrl : undefined,
+	)
+}
+// kilocode_change end
 
 export const useSelectedModel = (apiConfiguration?: ProviderSettings) => {
 	const provider = apiConfiguration?.apiProvider || "shengsuanyun"
-	const openRouterModelId = provider === "openrouter" ? apiConfiguration?.openRouterModelId : undefined
-
+	// kilocode_change start
+	const { kilocodeDefaultModel } = useExtensionState()
 	const routerModels = useRouterModels({
 		openRouterBaseUrl: apiConfiguration?.openRouterBaseUrl,
 		openRouterApiKey: apiConfiguration?.apiKey,
 	})
-	const openRouterModelProviders = useOpenRouterModelProviders(
-		openRouterModelId,
-		apiConfiguration?.openRouterBaseUrl,
-		apiConfiguration?.apiKey,
-	)
+	const openRouterModelProviders = useModelProviders(kilocodeDefaultModel, apiConfiguration)
 	// kilocode_change end
+	const lmStudioModelId = provider === "lmstudio" ? apiConfiguration?.lmStudioModelId : undefined
+	const lmStudioModels = useLmStudioModels(lmStudioModelId)
 
 	const { id, info } =
 		apiConfiguration &&
+		(typeof lmStudioModelId === "undefined" || typeof lmStudioModels.data !== "undefined") &&
 		typeof routerModels.data !== "undefined" &&
 		typeof openRouterModelProviders.data !== "undefined"
 			? getSelectedModel({
@@ -75,6 +104,8 @@ export const useSelectedModel = (apiConfiguration?: ProviderSettings) => {
 					apiConfiguration,
 					routerModels: routerModels.data,
 					openRouterModelProviders: openRouterModelProviders.data,
+					lmStudioModels: lmStudioModels.data,
+					kilocodeDefaultModel,
 				})
 			: { id: anthropicDefaultModelId, info: undefined }
 
@@ -82,8 +113,14 @@ export const useSelectedModel = (apiConfiguration?: ProviderSettings) => {
 		provider,
 		id,
 		info,
-		isLoading: routerModels.isLoading || openRouterModelProviders.isLoading,
-		isError: routerModels.isError || openRouterModelProviders.isError,
+		isLoading:
+			routerModels.isLoading ||
+			openRouterModelProviders.isLoading ||
+			(apiConfiguration?.lmStudioModelId && lmStudioModels!.isLoading),
+		isError:
+			routerModels.isError ||
+			openRouterModelProviders.isError ||
+			(apiConfiguration?.lmStudioModelId && lmStudioModels!.isError),
 	}
 }
 
@@ -92,11 +129,15 @@ function getSelectedModel({
 	apiConfiguration,
 	routerModels,
 	openRouterModelProviders,
+	lmStudioModels,
+	kilocodeDefaultModel,
 }: {
 	provider: ProviderName
 	apiConfiguration: ProviderSettings
 	routerModels: RouterModels
 	openRouterModelProviders: Record<string, ModelInfo>
+	lmStudioModels: ModelRecord | undefined
+	kilocodeDefaultModel: string
 }): { id: string; info: ModelInfo | undefined } {
 	// the `undefined` case are used to show the invalid selection to prevent
 	// users from seeing the default model if their selection is invalid
@@ -163,15 +204,9 @@ function getSelectedModel({
 			const info = chutesModels[id as keyof typeof chutesModels]
 			return { id, info }
 		}
-		// kilocode_change start
-		case "cerebras": {
-			const id = apiConfiguration.apiModelId ?? cerebrasDefaultModelId
-			const info = cerebrasModels[id as keyof typeof cerebrasModels]
-			return info ? { id, info } : { id: cerebrasDefaultModelId, info: cerebrasModels[cerebrasDefaultModelId] }
-		} // kilocode_change end
 		case "bedrock": {
 			const id = apiConfiguration.apiModelId ?? bedrockDefaultModelId
-			const info = bedrockModels[id as keyof typeof bedrockModels]
+			const baseInfo = bedrockModels[id as keyof typeof bedrockModels]
 
 			// Special case for custom ARN.
 			if (id === "custom-arn") {
@@ -181,7 +216,17 @@ function getSelectedModel({
 				}
 			}
 
-			return { id, info }
+			// Apply 1M context for Claude Sonnet 4 when enabled
+			if (id === BEDROCK_CLAUDE_SONNET_4_MODEL_ID && apiConfiguration.awsBedrock1MContext && baseInfo) {
+				// Create a new ModelInfo object with updated context window
+				const info: ModelInfo = {
+					...baseInfo,
+					contextWindow: 1_000_000,
+				}
+				return { id, info }
+			}
+
+			return { id, info: baseInfo }
 		}
 		case "vertex": {
 			const id = apiConfiguration.apiModelId ?? vertexDefaultModelId
@@ -191,11 +236,6 @@ function getSelectedModel({
 		case "gemini": {
 			const id = apiConfiguration.apiModelId ?? geminiDefaultModelId
 			const info = geminiModels[id as keyof typeof geminiModels]
-			return { id, info }
-		}
-		case "gemini-cli": {
-			const id = apiConfiguration.apiModelId ?? geminiCliDefaultModelId
-			const info = geminiCliModels[id as keyof typeof geminiCliModels]
 			return { id, info }
 		}
 		case "deepseek": {
@@ -211,6 +251,14 @@ function getSelectedModel({
 		case "moonshot": {
 			const id = apiConfiguration.apiModelId ?? moonshotDefaultModelId
 			const info = moonshotModels[id as keyof typeof moonshotModels]
+			return { id, info }
+		}
+		case "zai": {
+			const isChina = apiConfiguration.zaiApiLine === "china"
+			const models = isChina ? mainlandZAiModels : internationalZAiModels
+			const defaultModelId = isChina ? mainlandZAiDefaultModelId : internationalZAiDefaultModelId
+			const id = apiConfiguration.apiModelId ?? defaultModelId
+			const info = models[id as keyof typeof models]
 			return { id, info }
 		}
 		case "openai-native": {
@@ -238,7 +286,7 @@ function getSelectedModel({
 		}
 		case "lmstudio": {
 			const id = apiConfiguration.lmStudioModelId ?? ""
-			const info = routerModels.lmstudio && routerModels.lmstudio[id]
+			const info = lmStudioModels && lmStudioModels[apiConfiguration.lmStudioModelId!]
 			return {
 				id,
 				info: info || undefined,
@@ -282,17 +330,14 @@ function getSelectedModel({
 
 			// Fallback to anthropic model if no match found
 			return {
-				id: kilocodeDefaultModelId,
-				info: routerModels["kilocode-openrouter"][kilocodeDefaultModelId],
+				id: kilocodeDefaultModel,
+				info: routerModels["kilocode-openrouter"][kilocodeDefaultModel],
 			}
 		}
-		case "fireworks": {
-			return {
-				id: apiConfiguration.fireworksModelId ?? fireworksDefaultModelId,
-				info: fireworksModels[
-					(apiConfiguration.fireworksModelId ?? fireworksDefaultModelId) as keyof typeof fireworksModels
-				],
-			}
+		case "gemini-cli": {
+			const id = apiConfiguration.apiModelId ?? geminiCliDefaultModelId
+			const info = geminiCliModels[id as keyof typeof geminiCliModels]
+			return { id, info }
 		}
 		case "virtual-quota-fallback": {
 			return {
@@ -309,6 +354,11 @@ function getSelectedModel({
 				? { id, info }
 				: { id: shengSuanYunDefaultModelId, info: routerModels.shengsuanyun[shengSuanYunDefaultModelId] }
 		}
+		case "qwen-code": {
+			const id = apiConfiguration.apiModelId ?? qwenCodeDefaultModelId
+			const info = qwenCodeModels[id as keyof typeof qwenCodeModels]
+			return { id, info }
+		}
 		// kilocode_change end
 
 		case "claude-code": {
@@ -317,9 +367,30 @@ function getSelectedModel({
 			const info = claudeCodeModels[id as keyof typeof claudeCodeModels]
 			return { id, info: { ...openAiModelInfoSaneDefaults, ...info } }
 		}
+		case "cerebras": {
+			const id = apiConfiguration.apiModelId ?? cerebrasDefaultModelId
+			const info = cerebrasModels[id as keyof typeof cerebrasModels]
+			return { id, info }
+		}
 		case "sambanova": {
 			const id = apiConfiguration.apiModelId ?? sambaNovaDefaultModelId
 			const info = sambaNovaModels[id as keyof typeof sambaNovaModels]
+			return { id, info }
+		}
+		case "fireworks": {
+			const id = apiConfiguration.apiModelId ?? fireworksDefaultModelId
+			const info = fireworksModels[id as keyof typeof fireworksModels]
+			return { id, info }
+		}
+		case "io-intelligence": {
+			const id = apiConfiguration.ioIntelligenceModelId ?? ioIntelligenceDefaultModelId
+			const info =
+				routerModels["io-intelligence"]?.[id] ?? ioIntelligenceModels[id as keyof typeof ioIntelligenceModels]
+			return { id, info }
+		}
+		case "roo": {
+			const id = apiConfiguration.apiModelId ?? rooDefaultModelId
+			const info = rooModels[id as keyof typeof rooModels]
 			return { id, info }
 		}
 		// case "anthropic":
@@ -328,8 +399,41 @@ function getSelectedModel({
 		default: {
 			provider satisfies "anthropic" | "human-relay" | "fake-ai"
 			const id = apiConfiguration.apiModelId ?? anthropicDefaultModelId
-			const info = anthropicModels[id as keyof typeof anthropicModels]
-			return { id, info }
+			const baseInfo = anthropicModels[id as keyof typeof anthropicModels]
+
+			// Apply 1M context beta tier pricing for Claude Sonnet 4
+			if (
+				provider === "anthropic" &&
+				id === "claude-sonnet-4-20250514" &&
+				apiConfiguration.anthropicBeta1MContext &&
+				baseInfo
+			) {
+				// Type assertion since we know claude-sonnet-4-20250514 has tiers
+				const modelWithTiers = baseInfo as typeof baseInfo & {
+					tiers?: Array<{
+						contextWindow: number
+						inputPrice?: number
+						outputPrice?: number
+						cacheWritesPrice?: number
+						cacheReadsPrice?: number
+					}>
+				}
+				const tier = modelWithTiers.tiers?.[0]
+				if (tier) {
+					// Create a new ModelInfo object with updated values
+					const info: ModelInfo = {
+						...baseInfo,
+						contextWindow: tier.contextWindow,
+						inputPrice: tier.inputPrice ?? baseInfo.inputPrice,
+						outputPrice: tier.outputPrice ?? baseInfo.outputPrice,
+						cacheWritesPrice: tier.cacheWritesPrice ?? baseInfo.cacheWritesPrice,
+						cacheReadsPrice: tier.cacheReadsPrice ?? baseInfo.cacheReadsPrice,
+					}
+					return { id, info }
+				}
+			}
+
+			return { id, info: baseInfo }
 		}
 	}
 }

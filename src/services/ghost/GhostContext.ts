@@ -92,7 +92,7 @@ export class GhostContext {
 		context = this.addEditor(context)
 		context = this.addOpenFiles(context)
 		context = this.addRange(context)
-		context = await this.addAST(context)
+		//context = await this.addAST(context)
 		context = this.addRangeASTNode(context)
 		context = this.addRecentOperations(context)
 		context = this.addDiagnostics(context)

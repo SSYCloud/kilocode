@@ -128,6 +128,7 @@
 	},
 	"autoApprove": {
 		"description": "Permetti a Kilo Code di eseguire automaticamente operazioni senza richiedere approvazione. Abilita queste impostazioni solo se ti fidi completamente dell'IA e comprendi i rischi di sicurezza associati.",
+		"enabled": "Auto-approvazione abilitata",
 		"toggleAriaLabel": "Attiva/disattiva approvazione automatica",
 		"disabledAriaLabel": "Approvazione automatica disabilitata - seleziona prima le opzioni",
 		"readOnly": {
@@ -202,7 +203,14 @@
 			"description": "Esegui automaticamente questo numero di richieste API prima di chiedere l'approvazione per continuare con l'attività.",
 			"unlimited": "Illimitato"
 		},
-		"selectOptionsFirst": "Seleziona almeno un'opzione qui sotto per abilitare l'approvazione automatica"
+		"selectOptionsFirst": "Seleziona almeno un'opzione qui sotto per abilitare l'approvazione automatica",
+		"apiCostLimit": {
+			"unlimited": "Illimitato",
+			"title": "Costo massimo"
+		},
+		"maxLimits": {
+			"description": "Esegui automaticamente richieste fino a questi limiti prima di chiedere l'approvazione per continuare."
+		}
 	},
 	"providers": {
 		"providerDocumentation": "Documentazione {{provider}}",
@@ -250,12 +258,25 @@
 			"error": "Impossibile aggiornare l'elenco dei modelli. Riprova."
 		},
 		"getRequestyApiKey": "Ottieni chiave API Requesty",
+		"getRequestyBaseUrl": "URL base",
+		"requestyUseCustomBaseUrl": "Utilizza URL di base personalizzato",
 		"openRouterTransformsText": "Comprimi prompt e catene di messaggi alla dimensione del contesto (<a>Trasformazioni OpenRouter</a>)",
 		"anthropicApiKey": "Chiave API Anthropic",
 		"getAnthropicApiKey": "Ottieni chiave API Anthropic",
 		"anthropicUseAuthToken": "Passa la chiave API Anthropic come header di autorizzazione invece di X-Api-Key",
+		"anthropic1MContextBetaLabel": "Abilita finestra di contesto da 1M (Beta)",
+		"anthropic1MContextBetaDescription": "Estende la finestra di contesto a 1 milione di token per Claude Sonnet 4",
+		"awsBedrock1MContextBetaLabel": "Abilita finestra di contesto da 1M (Beta)",
+		"awsBedrock1MContextBetaDescription": "Estende la finestra di contesto a 1 milione di token per Claude Sonnet 4",
+		"cerebrasApiKey": "Chiave API Cerebras",
+		"getCerebrasApiKey": "Ottieni chiave API Cerebras",
 		"chutesApiKey": "Chiave API Chutes",
 		"getChutesApiKey": "Ottieni chiave API Chutes",
+		"fireworksApiKey": "Chiave API Fireworks",
+		"getFireworksApiKey": "Ottieni chiave API Fireworks",
+		"ioIntelligenceApiKey": "Chiave API IO Intelligence",
+		"ioIntelligenceApiKeyPlaceholder": "Inserisci la tua chiave API IO Intelligence",
+		"getIoIntelligenceApiKey": "Ottieni chiave API IO Intelligence",
 		"deepSeekApiKey": "Chiave API DeepSeek",
 		"getDeepSeekApiKey": "Ottieni chiave API DeepSeek",
 		"doubaoApiKey": "Chiave API Doubao",
@@ -263,6 +284,10 @@
 		"moonshotApiKey": "Chiave API Moonshot",
 		"getMoonshotApiKey": "Ottieni chiave API Moonshot",
 		"moonshotBaseUrl": "Punto di ingresso Moonshot",
+		"zaiApiKey": "Chiave API Z AI",
+		"getZaiApiKey": "Ottieni chiave API Z AI",
+		"zaiEntrypoint": "Punto di ingresso Z AI",
+		"zaiEntrypointDescription": "Si prega di selezionare il punto di ingresso API appropriato in base alla propria posizione. Se ti trovi in Cina, scegli open.bigmodel.cn. Altrimenti, scegli api.z.ai.",
 		"geminiApiKey": "Chiave API Gemini",
 		"getGroqApiKey": "Ottieni chiave API Groq",
 		"groqApiKey": "Chiave API Groq",
@@ -323,7 +348,6 @@
 				"description": "Consente a Gemini di cercare informazioni aggiornate su Google e basare le risposte su dati in tempo reale. Utile per query che richiedono informazioni aggiornate."
 			}
 		},
-
 		"googleCloudSetup": {
 			"title": "Per utilizzare Google Cloud Vertex AI, è necessario:",
 			"step1": "1. Creare un account Google Cloud, abilitare l'API Vertex AI e abilitare i modelli Claude desiderati.",
@@ -347,6 +371,9 @@
 		"ollama": {
 			"baseUrl": "URL base (opzionale)",
 			"modelId": "ID modello",
+			"apiKey": "Chiave API",
+			"apiKeyPlaceholder": "Inserisci la tua chiave API",
+			"apiKeyInfo": "La chiave API verrà inviata come intestazione Authorization",
 			"description": "Ollama ti permette di eseguire modelli localmente sul tuo computer. Per iniziare, consulta la guida rapida.",
 			"warning": "Nota: Kilo Code utilizza prompt complessi e funziona meglio con i modelli Claude. I modelli con capacità inferiori potrebbero non funzionare come previsto."
 		},
@@ -358,16 +385,16 @@
 			"description": "Non è richiesta alcuna chiave API, ma l'utente dovrà aiutare a copiare e incollare le informazioni nella chat web AI.",
 			"instructions": "Durante l'uso, apparirà una finestra di dialogo e il messaggio corrente verrà automaticamente copiato negli appunti. Dovrai incollarlo nelle versioni web dell'AI (come ChatGPT o Claude), quindi copiare la risposta dell'AI nella finestra di dialogo e fare clic sul pulsante di conferma."
 		},
+		"roo": {
+			"authenticatedMessage": "Autenticato in modo sicuro tramite il tuo account Roo Code Cloud.",
+			"connectButton": "Connetti a Roo Code Cloud"
+		},
 		"openRouter": {
 			"providerRouting": {
 				"title": "Routing dei fornitori OpenRouter",
 				"description": "OpenRouter indirizza le richieste ai migliori fornitori disponibili per il tuo modello. Per impostazione predefinita, le richieste sono bilanciate tra i principali fornitori per massimizzare il tempo di attività. Tuttavia, puoi scegliere un fornitore specifico da utilizzare per questo modello.",
 				"learnMore": "Scopri di più sul routing dei fornitori"
 			}
-		},
-		"cerebras": {
-			"apiKey": "Chiave API Cerebras",
-			"getApiKey": "Ottieni chiave API Cerebras"
 		},
 		"customModel": {
 			"capabilities": "Configura le capacità e i prezzi del tuo modello personalizzato compatibile con OpenAI. Fai attenzione quando specifichi le capacità del modello, poiché possono influenzare le prestazioni di Kilo Code.",
@@ -423,9 +450,17 @@
 		},
 		"reasoningEffort": {
 			"label": "Sforzo di ragionamento del modello",
+			"minimal": "Minimo (più veloce)",
 			"high": "Alto",
 			"medium": "Medio",
 			"low": "Basso"
+		},
+		"verbosity": {
+			"label": "Verbosity dell'output",
+			"high": "Alta",
+			"medium": "Media",
+			"low": "Bassa",
+			"description": "Controlla il livello di dettaglio delle risposte del modello. Una verbosity bassa produce risposte concise, mentre una verbosity alta fornisce spiegazioni approfondite."
 		},
 		"setReasoningLevel": "Abilita sforzo di ragionamento",
 		"claudeCode": {
@@ -449,6 +484,13 @@
 			"requirement4": "Non utilizza chiavi API - l'autenticazione è gestita tramite OAuth",
 			"requirement5": "Richiede che lo strumento Gemini CLI sia installato e autenticato prima",
 			"freeAccess": "Accesso gratuito tramite autenticazione OAuth"
+		},
+		"qwenCode": {
+			"oauthPath": "Percorso credenziali OAuth (opzionale)",
+			"oauthPathDescription": "Percorso al file delle credenziali OAuth. Lascia vuoto per utilizzare la posizione predefinita (~/.qwen/oauth_creds.json).",
+			"description": "Questo provider utilizza l'autenticazione OAuth dal servizio Qwen e non richiede chiavi API.",
+			"instructions": "Segui la documentazione ufficiale per ottenere il file di autorizzazione e posizionarlo nel percorso specificato.",
+			"setupLink": "Documentazione ufficiale Qwen"
 		}
 	},
 	"browser": {
@@ -701,10 +743,9 @@
 		},
 		"MORPH_FAST_APPLY": {
 			"name": "Abilita Morph Fast Apply",
-			"description": "Quando abilitato, Kilo Code può modificare i file utilizzando Morph Fast Apply.",
+			"description": "Quando abilitato, Kilo Code può modificare i file utilizzando Morph Fast Apply. Richiede il Fornitore API Kilo Code, OpenRouter o una chiave API Morph.",
 			"apiKey": "Chiave API Morph (opzionale)",
-			"placeholder": "Inserisci la tua chiave API Morph (opzionale)",
-			"warning": "Se non configuri una chiave API Morph, puoi comunque utilizzare Fast Apply con Kilo Code o OpenRouter. Il tuo account verrà addebitato per l'utilizzo del modello, questo attualmente non viene mostrato nell'interfaccia dell'estensione."
+			"placeholder": "Inserisci la tua chiave API Morph (opzionale)"
 		},
 		"INLINE_ASSIST": {
 			"name": "Assistenza Inline",
@@ -713,6 +754,10 @@
 		"PREVENT_FOCUS_DISRUPTION": {
 			"name": "Modifica in background",
 			"description": "Previene l'interruzione del focus dell'editor quando abilitato. Le modifiche ai file avvengono in background senza aprire viste di differenze o rubare il focus. Puoi continuare a lavorare senza interruzioni mentre Kilo Code effettua modifiche. I file possono essere aperti senza focus per catturare diagnostiche o rimanere completamente chiusi."
+		},
+		"ASSISTANT_MESSAGE_PARSER": {
+			"name": "Usa il nuovo parser dei messaggi",
+			"description": "Abilita il parser di messaggi in streaming sperimentale che migliora nettamente le risposte lunghe elaborando i messaggi in modo più efficiente."
 		}
 	},
 	"promptCaching": {
@@ -731,6 +776,7 @@
 		"noComputerUse": "Non supporta uso del computer",
 		"supportsPromptCache": "Supporta cache dei prompt",
 		"noPromptCache": "Non supporta cache dei prompt",
+		"contextWindow": "Finestra di contesto:",
 		"maxOutput": "Output massimo",
 		"inputPrice": "Prezzo input",
 		"outputPrice": "Prezzo output",

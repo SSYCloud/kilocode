@@ -1,7 +1,8 @@
 import i18next from "i18next"
 
-import type { ProviderSettings, OrganizationAllowList } from "@roo-code/types"
+import type { ProviderSettings } from "@roo-code/types"
 
+import type { OrganizationAllowList } from "@roo/cloud"
 import { isRouterName, RouterModels } from "@roo/api"
 
 export function validateApiConfiguration(
@@ -76,6 +77,9 @@ function validateModelsAndKeysProvided(apiConfiguration: ProviderSettings): stri
 		case "gemini-cli":
 			// OAuth-based provider, no API key validation needed
 			break
+		case "qwen-code":
+			// OAuth-based provider, no API key validation needed
+			break
 		// kilocode_change end
 		case "openai-native":
 			if (!apiConfiguration.openAiNativeApiKey) {
@@ -107,11 +111,6 @@ function validateModelsAndKeysProvided(apiConfiguration: ProviderSettings): stri
 				return i18next.t("settings:validation.modelSelector")
 			}
 			break
-		case "fireworks":
-			if (!apiConfiguration.fireworksApiKey) {
-				return "You must provide a valid API key or choose a different provider."
-			}
-			break
 		// kilocode_change start
 		case "kilocode":
 			if (!apiConfiguration.kilocodeToken) {
@@ -130,6 +129,21 @@ function validateModelsAndKeysProvided(apiConfiguration: ProviderSettings): stri
 			}
 			if (!apiConfiguration.huggingFaceModelId) {
 				return i18next.t("settings:validation.modelId")
+			}
+			break
+		case "cerebras":
+			if (!apiConfiguration.cerebrasApiKey) {
+				return i18next.t("settings:validation.apiKey")
+			}
+			break
+		case "fireworks":
+			if (!apiConfiguration.fireworksApiKey) {
+				return i18next.t("settings:validation.apiKey")
+			}
+			break
+		case "io-intelligence":
+			if (!apiConfiguration.ioIntelligenceApiKey) {
+				return i18next.t("settings:validation.apiKey")
 			}
 			break
 	}
@@ -200,6 +214,8 @@ function getModelIdForProvider(apiConfiguration: ProviderSettings, provider: str
 			return apiConfiguration.shengSuanYunModelId
 		case "huggingface":
 			return apiConfiguration.huggingFaceModelId
+		case "io-intelligence":
+			return apiConfiguration.ioIntelligenceModelId
 		default:
 			return apiConfiguration.apiModelId
 	}
@@ -272,6 +288,9 @@ export function validateModelId(apiConfiguration: ProviderSettings, routerModels
 			break
 		case "shengsuanyun":
 			modelId = apiConfiguration.shengSuanYunModelId
+			break
+		case "io-intelligence":
+			modelId = apiConfiguration.ioIntelligenceModelId
 			break
 	}
 

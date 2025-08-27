@@ -35,13 +35,6 @@ jobs:
               with:
                   node-version: ${{ env.NODE_VERSION }}
                   cache: "pnpm"
-            - name: Turbo cache setup
-              uses: actions/cache@v4
-              with:
-                  path: .turbo
-                  key: ${{ runner.os }}-turbo-${{ github.sha }}
-                  restore-keys: |
-                      ${{ runner.os }}-turbo-
             - name: Install dependencies
               run: pnpm install
             - name: Configure Git
@@ -53,7 +46,7 @@ jobs:
             - name: Package Extension
               run: |
                   current_package_version=$(node -p "require('./src/package.json').version")
-                  pnpm build
+                  pnpm vsix:production
 
                   # Save VSIX contents to a temporary file to avoid broken pipe issues.
                   unzip -l bin/kilo-ssy-${current_package_version}.vsix > /tmp/kilo-ssy-vsix-contents.txt

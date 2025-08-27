@@ -128,6 +128,7 @@
 	},
 	"autoApprove": {
 		"description": "Cho phép Kilo Code tự động thực hiện các hoạt động mà không cần phê duyệt. Chỉ bật những cài đặt này nếu bạn hoàn toàn tin tưởng AI và hiểu rõ các rủi ro bảo mật liên quan.",
+		"enabled": "Phê duyệt tự động đã bật",
 		"toggleAriaLabel": "Chuyển đổi tự động phê duyệt",
 		"disabledAriaLabel": "Tự động phê duyệt bị vô hiệu hóa - hãy chọn các tùy chọn trước",
 		"readOnly": {
@@ -202,7 +203,14 @@
 			"description": "Tự động thực hiện số lượng API request này trước khi yêu cầu phê duyệt để tiếp tục với nhiệm vụ.",
 			"unlimited": "Không giới hạn"
 		},
-		"selectOptionsFirst": "Chọn ít nhất một tùy chọn bên dưới để bật tự động phê duyệt"
+		"selectOptionsFirst": "Chọn ít nhất một tùy chọn bên dưới để bật tự động phê duyệt",
+		"apiCostLimit": {
+			"title": "Chi phí tối đa",
+			"unlimited": "Không giới hạn"
+		},
+		"maxLimits": {
+			"description": "Tự động thực hiện các yêu cầu lên đến các giới hạn này trước khi xin phê duyệt để tiếp tục."
+		}
 	},
 	"providers": {
 		"providerDocumentation": "Tài liệu {{provider}}",
@@ -231,10 +239,6 @@
 		"openRouterApiKey": "Khóa API OpenRouter",
 		"getOpenRouterApiKey": "Lấy khóa API OpenRouter",
 		"apiKeyStorageNotice": "Khóa API được lưu trữ an toàn trong Bộ lưu trữ bí mật của VSCode",
-		"cerebras": {
-			"apiKey": "Khóa API Cerebras",
-			"getApiKey": "Lấy khóa API Cerebras"
-		},
 		"glamaApiKey": "Khóa API Glama",
 		"getGlamaApiKey": "Lấy khóa API Glama",
 		"useCustomBaseUrl": "Sử dụng URL cơ sở tùy chỉnh",
@@ -254,12 +258,25 @@
 			"error": "Không thể làm mới danh sách mô hình. Vui lòng thử lại."
 		},
 		"getRequestyApiKey": "Lấy khóa API Requesty",
+		"getRequestyBaseUrl": "URL cơ sở",
+		"requestyUseCustomBaseUrl": "Sử dụng URL cơ sở tùy chỉnh",
 		"openRouterTransformsText": "Nén lời nhắc và chuỗi tin nhắn theo kích thước ngữ cảnh (<a>OpenRouter Transforms</a>)",
 		"anthropicApiKey": "Khóa API Anthropic",
 		"getAnthropicApiKey": "Lấy khóa API Anthropic",
 		"anthropicUseAuthToken": "Truyền khóa API Anthropic dưới dạng tiêu đề Authorization thay vì X-Api-Key",
+		"anthropic1MContextBetaLabel": "Bật cửa sổ ngữ cảnh 1M (Beta)",
+		"anthropic1MContextBetaDescription": "Mở rộng cửa sổ ngữ cảnh lên 1 triệu token cho Claude Sonnet 4",
+		"awsBedrock1MContextBetaLabel": "Bật cửa sổ ngữ cảnh 1M (Beta)",
+		"awsBedrock1MContextBetaDescription": "Mở rộng cửa sổ ngữ cảnh lên 1 triệu token cho Claude Sonnet 4",
+		"cerebrasApiKey": "Khóa API Cerebras",
+		"getCerebrasApiKey": "Lấy khóa API Cerebras",
 		"chutesApiKey": "Khóa API Chutes",
 		"getChutesApiKey": "Lấy khóa API Chutes",
+		"fireworksApiKey": "Khóa API Fireworks",
+		"getFireworksApiKey": "Lấy khóa API Fireworks",
+		"ioIntelligenceApiKey": "Khóa API IO Intelligence",
+		"ioIntelligenceApiKeyPlaceholder": "Nhập khóa API IO Intelligence của bạn",
+		"getIoIntelligenceApiKey": "Lấy khóa API IO Intelligence",
 		"deepSeekApiKey": "Khóa API DeepSeek",
 		"getDeepSeekApiKey": "Lấy khóa API DeepSeek",
 		"doubaoApiKey": "Khóa API Doubao",
@@ -267,6 +284,10 @@
 		"moonshotApiKey": "Khóa API Moonshot",
 		"getMoonshotApiKey": "Lấy khóa API Moonshot",
 		"moonshotBaseUrl": "Điểm vào Moonshot",
+		"zaiApiKey": "Khóa API Z AI",
+		"getZaiApiKey": "Lấy khóa API Z AI",
+		"zaiEntrypoint": "Điểm vào Z AI",
+		"zaiEntrypointDescription": "Vui lòng chọn điểm vào API phù hợp dựa trên vị trí của bạn. Nếu bạn ở Trung Quốc, hãy chọn open.bigmodel.cn. Ngược lại, hãy chọn api.z.ai.",
 		"geminiApiKey": "Khóa API Gemini",
 		"getGroqApiKey": "Lấy khóa API Groq",
 		"groqApiKey": "Khóa API Groq",
@@ -327,7 +348,6 @@
 				"description": "Cho phép Gemini tìm kiếm trên Google để lấy thông tin mới nhất và căn cứ phản hồi dựa trên dữ liệu thời gian thực. Hữu ích cho các truy vấn yêu cầu thông tin cập nhật."
 			}
 		},
-
 		"googleCloudSetup": {
 			"title": "Để sử dụng Google Cloud Vertex AI, bạn cần:",
 			"step1": "1. Tạo tài khoản Google Cloud, kích hoạt Vertex AI API và kích hoạt các mô hình Claude mong muốn.",
@@ -351,6 +371,9 @@
 		"ollama": {
 			"baseUrl": "URL cơ sở (tùy chọn)",
 			"modelId": "ID mô hình",
+			"apiKey": "Khóa API",
+			"apiKeyPlaceholder": "Nhập khóa API của bạn",
+			"apiKeyInfo": "Khóa API sẽ được gửi dưới dạng tiêu đề Authorization",
 			"description": "Ollama cho phép bạn chạy các mô hình cục bộ trên máy tính của bạn. Để biết hướng dẫn về cách bắt đầu, xem hướng dẫn nhanh của họ.",
 			"warning": "Lưu ý: Kilo Code sử dụng các lời nhắc phức tạp và hoạt động tốt nhất với các mô hình Claude. Các mô hình kém mạnh hơn có thể không hoạt động như mong đợi."
 		},
@@ -361,6 +384,10 @@
 		"humanRelay": {
 			"description": "Không cần khóa API, nhưng người dùng cần giúp sao chép và dán thông tin vào AI trò chuyện web.",
 			"instructions": "Trong quá trình sử dụng, một hộp thoại sẽ xuất hiện và tin nhắn hiện tại sẽ được tự động sao chép vào clipboard. Bạn cần dán chúng vào các phiên bản web của AI (như ChatGPT hoặc Claude), sau đó sao chép phản hồi của AI trở lại hộp thoại và nhấp vào nút xác nhận."
+		},
+		"roo": {
+			"authenticatedMessage": "Đã xác thực an toàn thông qua tài khoản Roo Code Cloud của bạn.",
+			"connectButton": "Kết nối với Roo Code Cloud"
 		},
 		"openRouter": {
 			"providerRouting": {
@@ -423,9 +450,17 @@
 		},
 		"reasoningEffort": {
 			"label": "Nỗ lực suy luận của mô hình",
+			"minimal": "Tối thiểu (nhanh nhất)",
 			"high": "Cao",
 			"medium": "Trung bình",
 			"low": "Thấp"
+		},
+		"verbosity": {
+			"label": "Mức độ chi tiết đầu ra",
+			"high": "Cao",
+			"medium": "Trung bình",
+			"low": "Thấp",
+			"description": "Kiểm soát mức độ chi tiết của các câu trả lời của mô hình. Mức độ chi tiết thấp tạo ra các câu trả lời ngắn gọn, trong khi mức độ chi tiết cao cung cấp giải thích kỹ lưỡng."
 		},
 		"setReasoningLevel": "Kích hoạt nỗ lực suy luận",
 		"claudeCode": {
@@ -449,6 +484,13 @@
 			"requirement4": "Không sử dụng khóa API - xác thực được xử lý qua OAuth",
 			"requirement5": "Yêu cầu công cụ Gemini CLI được cài đặt và xác thực trước",
 			"freeAccess": "Truy cập miễn phí qua xác thực OAuth"
+		},
+		"qwenCode": {
+			"oauthPath": "Đường dẫn Thông tin xác thực OAuth (tùy chọn)",
+			"oauthPathDescription": "Đường dẫn đến tệp thông tin xác thực OAuth. Để trống để sử dụng vị trí mặc định (~/.qwen/oauth_creds.json).",
+			"description": "Nhà cung cấp này sử dụng xác thực OAuth từ dịch vụ Qwen và không yêu cầu khóa API.",
+			"instructions": "Vui lòng làm theo tài liệu chính thức để lấy tệp ủy quyền và đặt nó trong đường dẫn được chỉ định.",
+			"setupLink": "Tài liệu chính thức Qwen"
 		}
 	},
 	"browser": {
@@ -701,10 +743,9 @@
 		},
 		"MORPH_FAST_APPLY": {
 			"name": "Bật Morph Fast Apply",
-			"description": "Khi được bật, Kilo Code có thể chỉnh sửa tệp bằng Morph Fast Apply.",
+			"description": "Khi được bật, Kilo Code có thể chỉnh sửa tệp bằng Morph Fast Apply. Yêu cầu Nhà cung cấp API Kilo Code, OpenRouter hoặc khóa API Morph.",
 			"apiKey": "Khóa API Morph (tùy chọn)",
-			"placeholder": "Nhập khóa API Morph của bạn (tùy chọn)",
-			"warning": "Nếu bạn không cấu hình khóa API Morph, bạn vẫn có thể sử dụng Fast Apply với Kilo Code hoặc OpenRouter. Tài khoản của bạn sẽ bị tính phí cho việc sử dụng mô hình, điều này hiện không được hiển thị trong giao diện tiện ích mở rộng."
+			"placeholder": "Nhập khóa API Morph của bạn (tùy chọn)"
 		},
 		"INLINE_ASSIST": {
 			"name": "Trợ lý Nội dòng",
@@ -713,6 +754,10 @@
 		"PREVENT_FOCUS_DISRUPTION": {
 			"name": "Chỉnh sửa nền",
 			"description": "Khi được bật, ngăn chặn gián đoạn tiêu điểm trình soạn thảo. Việc chỉnh sửa tệp diễn ra ở nền mà không mở chế độ xem diff hoặc chiếm tiêu điểm. Bạn có thể tiếp tục làm việc không bị gián đoạn trong khi Kilo Code thực hiện thay đổi. Các tệp có thể được mở mà không có tiêu điểm để thu thập chẩn đoán hoặc giữ hoàn toàn đóng."
+		},
+		"ASSISTANT_MESSAGE_PARSER": {
+			"name": "Dùng bộ phân tích tin nhắn mới",
+			"description": "Bật bộ phân tích tin nhắn streaming thử nghiệm. Tính năng này tăng tốc phản hồi dài bằng cách xử lý tin nhắn hiệu quả hơn."
 		}
 	},
 	"promptCaching": {
@@ -731,6 +776,7 @@
 		"noComputerUse": "Không hỗ trợ sử dụng máy tính",
 		"supportsPromptCache": "Hỗ trợ bộ nhớ đệm lời nhắc",
 		"noPromptCache": "Không hỗ trợ bộ nhớ đệm lời nhắc",
+		"contextWindow": "Cửa sổ ngữ cảnh:",
 		"maxOutput": "Đầu ra tối đa",
 		"inputPrice": "Giá đầu vào",
 		"outputPrice": "Giá đầu ra",

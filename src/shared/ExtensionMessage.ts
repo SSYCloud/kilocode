@@ -7,20 +7,18 @@ import type {
 	TelemetrySetting,
 	Experiments,
 	ClineMessage,
-	OrganizationAllowList,
-	CloudUserInfo,
-	ShareVisibility,
+	MarketplaceItem,
 } from "@roo-code/types"
+import type { CloudUserInfo, OrganizationAllowList, ShareVisibility } from "@roo-code/cloud"
 
 import { GitCommit } from "../utils/git"
 
 import { McpServer } from "./mcp"
 import { McpMarketplaceCatalog, McpDownloadResponse } from "./kilocode/mcp"
 import { Mode } from "./modes"
-import { RouterModels } from "./api"
+import { ModelRecord, RouterModels } from "./api"
 import { ProfileDataResponsePayload, BalanceDataResponsePayload } from "./WebviewMessage" // kilocode_change
 import { ClineRulesToggles } from "./cline-rules" // kilocode_change
-import type { MarketplaceItem } from "@roo-code/types"
 
 // Command interface for frontend/backend communication
 export interface Command {
@@ -44,6 +42,7 @@ export interface IndexingStatus {
 	processedItems: number
 	totalItems: number
 	currentItemUnit?: string
+	workspacePath?: string
 }
 
 export interface IndexingStatusUpdateMessage {
@@ -133,6 +132,7 @@ export interface ExtensionMessage {
 		| "showDeleteMessageDialog"
 		| "showEditMessageDialog"
 		| "kilocodeNotificationsResponse" // kilocode_change
+		| "usageDataResponse" // kilocode_change
 		| "commands"
 		| "insertTextIntoTextarea"
 	text?: string
@@ -163,7 +163,7 @@ export interface ExtensionMessage {
 	routerModels?: RouterModels
 	openAiModels?: string[]
 	ollamaModels?: string[]
-	lmStudioModels?: string[]
+	lmStudioModels?: ModelRecord
 	vsCodeLmModels?: { vendor?: string; family?: string; version?: string; id?: string }[]
 	huggingFaceModels?: Array<{
 		id: string
@@ -264,6 +264,7 @@ export type ExtensionState = Pick<
 	| "allowedCommands"
 	| "deniedCommands"
 	| "allowedMaxRequests"
+	| "allowedMaxCost"
 	| "browserToolEnabled"
 	| "browserViewportSize"
 	| "showAutoApproveMenu" // kilocode_change
@@ -295,6 +296,7 @@ export type ExtensionState = Pick<
 	| "diagnosticsEnabled"
 	| "diffEnabled"
 	| "fuzzyMatchThreshold"
+	| "morphApiKey" // kilocode_change: Morph fast apply - global setting
 	// | "experiments" // Optional in GlobalSettings, required here.
 	| "language"
 	// | "telemetrySetting" // Optional in GlobalSettings, required here.
@@ -322,6 +324,7 @@ export type ExtensionState = Pick<
 	| "systemNotificationsEnabled" // kilocode_change
 	| "includeDiagnosticMessages"
 	| "maxDiagnosticMessages"
+	| "remoteControlEnabled"
 > & {
 	version: string
 	clineMessages: ClineMessage[]
@@ -329,6 +332,7 @@ export type ExtensionState = Pick<
 	apiConfiguration?: ProviderSettings
 	uriScheme?: string
 	uiKind?: string // kilocode_change
+	kilocodeDefaultModel: string
 	shouldShowAnnouncement: boolean
 
 	taskHistory: HistoryItem[]
@@ -432,6 +436,14 @@ export interface ClineSayTool {
 		}>
 	}>
 	question?: string
+	// kilocode_change start
+	fastApplyResult?: {
+		description?: string
+		tokensIn?: number
+		tokensOut?: number
+		cost?: number
+	}
+	// kilocode_change end
 }
 
 // Must keep in sync with system prompt.

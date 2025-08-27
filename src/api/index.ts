@@ -8,6 +8,7 @@ import {
 	GlamaHandler,
 	AnthropicHandler,
 	AwsBedrockHandler,
+	CerebrasHandler,
 	OpenRouterHandler,
 	VertexHandler,
 	AnthropicVertexHandler,
@@ -15,7 +16,6 @@ import {
 	// OllamaHandler, // kilocode_change
 	LmStudioHandler,
 	GeminiHandler,
-	GeminiCliHandler, // kilocode_change
 	OpenAiNativeHandler,
 	DeepSeekHandler,
 	MoonshotHandler,
@@ -31,17 +31,23 @@ import {
 	ChutesHandler,
 	LiteLLMHandler,
 	ShengSuanYunHandler,
-	CerebrasHandler, // kilocode_change
-	VirtualQuotaFallbackHandler, // kilocode_change
+	// kilocode_change start
+	VirtualQuotaFallbackHandler,
+	GeminiCliHandler,
+	QwenCodeHandler,
+	// kilocode_change end
 	ClaudeCodeHandler,
 	SambaNovaHandler,
+	IOIntelligenceHandler,
 	DoubaoHandler,
+	ZAiHandler,
+	FireworksHandler,
+	RooHandler,
 } from "./providers"
 // kilocode_change start
-import { FireworksHandler } from "./providers/fireworks"
 import { KilocodeOpenrouterHandler } from "./providers/kilocode-openrouter"
-import { KilocodeOllamaHandler } from "./providers/kilocode-ollama"
 // kilocode_change end
+import { NativeOllamaHandler } from "./providers/native-ollama"
 
 export interface SingleCompletionHandler {
 	completePrompt(prompt: string): Promise<string>
@@ -50,6 +56,13 @@ export interface SingleCompletionHandler {
 export interface ApiHandlerCreateMessageMetadata {
 	mode?: string
 	taskId: string
+	previousResponseId?: string
+	/**
+	 * When true, the provider must NOT fall back to internal continuity state
+	 * (e.g., lastResponseId) if previousResponseId is absent.
+	 * Used to enforce "skip once" after a condense operation.
+	 */
+	suppressPreviousResponseId?: boolean
 }
 
 export interface ApiHandler {
@@ -76,8 +89,16 @@ export function buildApiHandler(configuration: ProviderSettings): ApiHandler {
 	const { apiProvider, ...options } = configuration
 
 	switch (apiProvider) {
+		// kilocode_change start
 		case "kilocode":
 			return new KilocodeOpenrouterHandler(options)
+		case "gemini-cli":
+			return new GeminiCliHandler(options)
+		case "virtual-quota-fallback":
+			return new VirtualQuotaFallbackHandler(options)
+		case "qwen-code":
+			return new QwenCodeHandler(options)
+		// kilocode_change end
 		case "anthropic":
 			return new AnthropicHandler(options)
 		case "claude-code":
@@ -95,15 +116,11 @@ export function buildApiHandler(configuration: ProviderSettings): ApiHandler {
 		case "openai":
 			return new OpenAiHandler(options)
 		case "ollama":
-			return new KilocodeOllamaHandler(options)
+			return new NativeOllamaHandler(options)
 		case "lmstudio":
 			return new LmStudioHandler(options)
 		case "gemini":
 			return new GeminiHandler(options)
-		// kilocode_change start
-		case "gemini-cli":
-			return new GeminiCliHandler(options)
-		// kilocode_change end
 		case "openai-native":
 			return new OpenAiNativeHandler(options)
 		case "deepseek":
@@ -122,12 +139,6 @@ export function buildApiHandler(configuration: ProviderSettings): ApiHandler {
 			return new RequestyHandler(options)
 		case "human-relay":
 			return new HumanRelayHandler()
-		// kilocode_change start
-		case "fireworks":
-			return new FireworksHandler(options)
-		case "virtual-quota-fallback":
-			return new VirtualQuotaFallbackHandler(options)
-		// kilocode_change end
 		case "fake-ai":
 			return new FakeAIHandler(options)
 		case "xai":
@@ -145,9 +156,16 @@ export function buildApiHandler(configuration: ProviderSettings): ApiHandler {
 		// kilocode_change start
 		case "cerebras":
 			return new CerebrasHandler(options)
-		// kilocode_change end
 		case "sambanova":
 			return new SambaNovaHandler(options)
+		case "zai":
+			return new ZAiHandler(options)
+		case "fireworks":
+			return new FireworksHandler(options)
+		case "io-intelligence":
+			return new IOIntelligenceHandler(options)
+		case "roo":
+			return new RooHandler(options)
 		default:
 			apiProvider satisfies "gemini-cli" | undefined
 			return new AnthropicHandler(options)

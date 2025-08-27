@@ -7,6 +7,7 @@
 		"tokens": "โทเค็น:",
 		"cache": "แคช:",
 		"apiCost": "ค่าใช้จ่าย API:",
+		"size": "ขนาด",
 		"condenseContext": "ย่อบริบทอย่างชาญฉลาด",
 		"contextWindow": "ความยาวบริบท:",
 		"closeAndStart": "ปิดงานและเริ่มใหม่",
@@ -21,7 +22,9 @@
 		"connectToCloudDescription": "เข้าสู่ระบบ Kilo Code Cloud เพื่อแชร์งาน",
 		"sharingDisabledByOrganization": "การแชร์ถูกปิดใช้งานโดยองค์กร",
 		"shareSuccessOrganization": "คัดลอกลิงก์องค์กรไปยังคลิปบอร์ดแล้ว",
-		"shareSuccessPublic": "คัดลอกลิงก์สาธารณะไปยังคลิปบอร์ดแล้ว"
+		"shareSuccessPublic": "คัดลอกลิงก์สาธารณะไปยังคลิปบอร์ดแล้ว",
+		"expand": "ขยายงาน",
+		"collapse": "ย่องาน"
 	},
 	"history": {
 		"title": "ประวัติ"
@@ -285,7 +288,13 @@
 		"feature2": "<bold>โมเดล Gemini 2.5</bold>: เพิ่มการรองรับโมเดล Gemini 2.5 Pro, Flash และ Flash Lite ใหม่",
 		"feature3": "<bold>รองรับไฟล์ Excel และอื่นๆ</bold>: เพิ่มการรองรับไฟล์ Excel (.xlsx) และการแก้ไขข้อผิดพลาดและการปรับปรุงมากมาย!",
 		"hideButton": "ซ่อนประกาศ",
-		"detailsDiscussLinks": "ดูรายละเอียดเพิ่มเติมและพูดคุยใน <discordLink>Discord</discordLink> และ <redditLink>Reddit</redditLink> 🚀"
+		"detailsDiscussLinks": "ดูรายละเอียดเพิ่มเติมและพูดคุยใน <discordLink>Discord</discordLink> และ <redditLink>Reddit</redditLink> 🚀",
+		"stealthModel": {
+			"feature": "<bold>โมเดลแฝงฟรีในเวลาจำกัด</bold> - โมเดลการให้เหตุผลที่รวดเร็วซึ่งเชี่ยวชาญในการเขียนโค้ดแบบ agentic ด้วย context window 262k พร้อมใช้งานผ่าน Roo Code Cloud",
+			"note": "(หมายเหตุ: พรอมต์และผลลัพธ์จะถูกบันทึกโดยผู้สร้างโมเดลเพื่อปรับปรุงโมเดล)",
+			"connectButton": "เชื่อมต่อกับ Roo Code Cloud",
+			"selectModel": "เลือก <code>roo/sonic</code> จากผู้ให้บริการ Roo Code Cloud ใน<br/><settingsLink>การตั้งค่า</settingsLink> เพื่อเริ่มต้น"
+		}
 	},
 	"reasoning": {
 		"thinking": "กำลังคิด",
@@ -339,6 +348,11 @@
 			"title": "ถึงขีดจำกัดคำขอที่อนุมัติอัตโนมัติ",
 			"description": "Kilo Code ถึงขีดจำกัดการอนุมัติอัตโนมัติของ {{count}} คำขอ API คุณต้องการรีเซ็ตจำนวนและดำเนินการต่อกับงานหรือไม่?",
 			"button": "รีเซ็ตและดำเนินการต่อ"
+		},
+		"autoApprovedCostLimitReached": {
+			"title": "ถึงขีดจำกัดค่าใช้จ่ายที่อนุมัติอัตโนมัติแล้ว",
+			"description": "Kilo Code ถึงขีดจำกัดค่าใช้จ่ายที่อนุมัติอัตโนมัติ ${{count}} แล้ว คุณต้องการรีเซ็ตค่าใช้จ่ายและดำเนินงานต่อหรือไม่?",
+			"button": "รีเซ็ตและดำเนินการต่อ"
 		}
 	},
 	"indexingStatus": {
@@ -380,5 +394,6 @@
 	"queuedMessages": {
 		"title": "ข้อความในคิว:",
 		"clickToEdit": "คลิกเพื่อแก้ไขข้อความ"
-	}
+	},
+	"generateCommitMessage": "สร้างข้อความ Commit"
 }

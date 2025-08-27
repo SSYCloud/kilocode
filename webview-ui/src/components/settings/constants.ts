@@ -3,11 +3,15 @@ import {
 	type ModelInfo,
 	anthropicModels,
 	bedrockModels,
+	cerebrasModels,
 	claudeCodeModels,
 	deepSeekModels,
 	moonshotModels,
 	geminiModels,
+	// kilocode_change start
 	geminiCliModels,
+	qwenCodeModels,
+	// kilocode_change end
 	mistralModels,
 	openAiNativeModels,
 	vertexModels,
@@ -16,28 +20,34 @@ import {
 	chutesModels,
 	sambaNovaModels,
 	doubaoModels,
+	internationalZAiModels,
+	fireworksModels,
+	rooModels,
 } from "@roo-code/types"
-
-import { fireworksModels, cerebrasModels } from "@roo/api" // kilocode_change
 
 export const MODELS_BY_PROVIDER: Partial<Record<ProviderName, Record<string, ModelInfo>>> = {
 	anthropic: anthropicModels,
 	"claude-code": claudeCodeModels,
 	bedrock: bedrockModels,
+	cerebras: cerebrasModels,
 	deepseek: deepSeekModels,
 	doubao: doubaoModels,
 	moonshot: moonshotModels,
 	gemini: geminiModels,
-	"gemini-cli": geminiCliModels, // kilocode_change
-	fireworks: fireworksModels, // kilocode_change
+	// kilocode_change start
+	"gemini-cli": geminiCliModels,
+	"qwen-code": qwenCodeModels,
+	// kilocode_change end
 	mistral: mistralModels,
 	"openai-native": openAiNativeModels,
 	vertex: vertexModels,
 	xai: xaiModels,
 	groq: groqModels,
 	chutes: chutesModels,
-	cerebras: cerebrasModels, // kilocode_change
 	sambanova: sambaNovaModels,
+	zai: internationalZAiModels,
+	fireworks: fireworksModels,
+	roo: rooModels,
 }
 
 export const PROVIDERS = [
@@ -45,11 +55,15 @@ export const PROVIDERS = [
 	// { value: "kilocode", label: "Kilo Code" },
 	{ value: "openrouter", label: "OpenRouter" },
 	{ value: "anthropic", label: "Anthropic" },
-	{ value: "fireworks", label: "Fireworks" }, // kilocode_change
 	{ value: "claude-code", label: "Claude Code" },
+	{ value: "cerebras", label: "Cerebras" },
 	{ value: "gemini", label: "Google Gemini" },
-	{ value: "gemini-cli", label: "Gemini CLI" },
 	{ value: "doubao", label: "Doubao" },
+	// kilocode_change start
+	{ value: "gemini-cli", label: "Gemini CLI" },
+	{ value: "virtual-quota-fallback", label: "Virtual Quota Fallback" },
+	{ value: "qwen-code", label: "Qwen Code" },
+	// kilocode_change end
 	{ value: "deepseek", label: "DeepSeek" },
 	{ value: "moonshot", label: "Moonshot" },
 	{ value: "openai-native", label: "OpenAI" },
@@ -68,8 +82,10 @@ export const PROVIDERS = [
 	{ value: "groq", label: "Groq" },
 	{ value: "huggingface", label: "Hugging Face" },
 	{ value: "chutes", label: "Chutes AI" },
-	{ value: "cerebras", label: "Cerebras" }, // kilocode_change
-	{ value: "virtual-quota-fallback", label: "Virtual Quota Fallback" }, // kilocode_change
 	{ value: "litellm", label: "LiteLLM" },
 	{ value: "sambanova", label: "SambaNova" },
-] // .sort((a, b) => a.label.localeCompare(b.label)) // kilocode_change: Sort providers with kilocode first
+	{ value: "zai", label: "Z AI" },
+	{ value: "fireworks", label: "Fireworks AI" },
+	{ value: "io-intelligence", label: "IO Intelligence" },
+	{ value: "roo", label: "Roo Code Cloud" }, // kilocode_change
+] //.sort((a, b) => a.label.localeCompare(b.label))

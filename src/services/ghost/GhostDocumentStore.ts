@@ -13,6 +13,7 @@ export class GhostDocumentStore {
 	private historyLimit: number = 3 // Limit the number of snapshots to keep
 	private documentStore: Map<string, GhostDocumentStoreItem> = new Map()
 	private parserInitialized: boolean = false
+	private astEnabled: boolean = false
 
 	/**
 	 * Store a document in the document store and optionally parse its AST
@@ -84,6 +85,9 @@ export class GhostDocumentStore {
 	 * @param document The document to parse
 	 */
 	public async parseDocumentAST(document: vscode.TextDocument): Promise<void> {
+		if (!this.astEnabled) {
+			return
+		}
 		try {
 			const uri = document.uri.toString()
 			const item = this.documentStore.get(uri)

@@ -2,12 +2,15 @@
 	"greeting": "Kilo Code sizin için ne yapabilir?",
 	"task": {
 		"title": "Görev",
+		"expand": "Görevi genişlet",
+		"collapse": "Görevi daralt",
 		"seeMore": "Daha fazla gör",
 		"seeLess": "Daha az gör",
-		"tokens": "Tokenlar:",
-		"cache": "Önbellek:",
-		"apiCost": "API Maliyeti:",
-		"contextWindow": "Bağlam Uzunluğu:",
+		"tokens": "Tokenlar",
+		"cache": "Önbellek",
+		"apiCost": "API Maliyeti",
+		"size": "Boyut",
+		"contextWindow": "Bağlam Uzunluğu",
 		"closeAndStart": "Görevi kapat ve yeni bir görev başlat",
 		"export": "Görev geçmişini dışa aktar",
 		"delete": "Görevi sil (Onayı atlamak için Shift + Tıkla)",
@@ -146,7 +149,6 @@
 		"streamingFailed": "API Akışı Başarısız"
 	},
 	"checkpoint": {
-		"initial": "İlk Kontrol Noktası",
 		"regular": "Kontrol Noktası",
 		"initializingWarning": "Kontrol noktası hala başlatılıyor... Bu çok uzun sürerse, <settingsLink>ayarlar</settingsLink> bölümünden kontrol noktalarını devre dışı bırakabilir ve görevinizi yeniden başlatabilirsiniz.",
 		"menu": {
@@ -269,8 +271,14 @@
 		"countdownDisplay": "{{count}}sn"
 	},
 	"announcement": {
-		"title": "🎉 Kilo Code {{version}} Yayınlandı",
-		"description": "Kilo Code {{version}}, geliştirme iş akışınızı geliştirmek için güçlü yeni özellikler ve önemli iyileştirmeler getiriyor.",
+		"title": "🎉 Roo Code {{version}} Yayınlandı",
+		"stealthModel": {
+			"feature": "<bold>Sınırlı süre ÜCRETSİZ gizli model</bold> - 262k bağlam penceresi ile ajantik kodlamada mükemmel olan çok hızlı akıl yürütme modeli, Roo Code Cloud üzerinden kullanılabilir.",
+			"note": "(Not: istemler ve tamamlamalar model yaratıcısı tarafından kaydedilir ve modeli geliştirmek için kullanılır)",
+			"connectButton": "Roo Code Cloud'a bağlan",
+			"selectModel": "<br/><settingsLink>Ayarlar</settingsLink>'da Roo Code Cloud sağlayıcısından <code>roo/sonic</code>'i seç ve başla"
+		},
+		"description": "Roo Code {{version}}, geliştirme iş akışınızı geliştirmek için güçlü yeni özellikler ve önemli iyileştirmeler getiriyor.",
 		"whatsNew": "Yenilikler",
 		"feature1": "<bold>Mesaj Kuyruğu</bold>: Roo çalışırken birden fazla mesajı kuyruğa alın, iş akışınızı kesintisiz olarak planlamaya devam etmenizi sağlar.",
 		"feature2": "<bold>Özel Slash Komutları</bold>: Sık kullanılan promptlara ve iş akışlarına hızlı erişim için kişiselleştirilmiş slash komutları oluşturun, tam UI yönetimi ile.",
@@ -321,6 +329,11 @@
 			"title": "Otomatik Onaylanan İstek Limiti Aşıldı",
 			"description": "Kilo Code, {{count}} API isteği/istekleri için otomatik onaylanan limite ulaştı. Sayacı sıfırlamak ve göreve devam etmek istiyor musunuz?",
 			"button": "Sıfırla ve Devam Et"
+		},
+		"autoApprovedCostLimitReached": {
+			"title": "Otomatik Onaylanan Maliyet Sınırına Ulaşıldı",
+			"description": "Kilo Code otomatik olarak onaylanmış ${{count}} maliyet sınırına ulaştı. Maliyeti sıfırlamak ve göreve devam etmek ister misiniz?",
+			"button": "Sıfırla ve Devam Et"
 		}
 	},
 	"codebaseSearch": {
@@ -349,9 +362,9 @@
 		"ariaLabel": "Sürüm {{version}} - Sürüm notlarını görüntülemek için tıklayın"
 	},
 	"rooCloudCTA": {
-		"title": "Roo Code Cloud yakında geliyor!",
+		"title": "Roo Code Cloud gelişiyor!",
 		"description": "Bulutta uzak ajanlar çalıştırın, görevlerinize her yerden erişin, başkalarıyla işbirliği yapın ve daha fazlası.",
-		"joinWaitlist": "Erken erişim için bekleme listesine katılın."
+		"joinWaitlist": "En son güncellemeleri almak için kaydolun."
 	},
 	"editMessage": {
 		"placeholder": "Mesajını düzenle..."

@@ -2,12 +2,15 @@
 	"greeting": "Kilo Code có thể giúp gì cho bạn?",
 	"task": {
 		"title": "Nhiệm vụ",
+		"expand": "Mở rộng nhiệm vụ",
+		"collapse": "Thu gọn nhiệm vụ",
 		"seeMore": "Xem thêm",
 		"seeLess": "Thu gọn",
-		"tokens": "Tokens:",
-		"cache": "Bộ nhớ đệm:",
-		"apiCost": "Chi phí API:",
-		"contextWindow": "Chiều dài bối cảnh:",
+		"tokens": "Tokens",
+		"cache": "Bộ nhớ đệm",
+		"apiCost": "Chi phí API",
+		"size": "Kích thước",
+		"contextWindow": "Chiều dài bối cảnh",
 		"closeAndStart": "Đóng nhiệm vụ và bắt đầu nhiệm vụ mới",
 		"export": "Xuất lịch sử nhiệm vụ",
 		"delete": "Xóa nhiệm vụ (Shift + Click để bỏ qua xác nhận)",
@@ -123,7 +126,7 @@
 		"title": "Chế độ",
 		"marketplace": "Chợ Chế độ",
 		"settings": "Cài đặt Chế độ",
-		"description": "Các nhân cách chuyên biệt điều chỉnh hành vi của Roo.",
+		"description": "Các nhân cách chuyên biệt điều chỉnh hành vi của Kilo Code.",
 		"searchPlaceholder": "Tìm kiếm chế độ...",
 		"noResults": "Không tìm thấy kết quả nào"
 	},
@@ -146,7 +149,6 @@
 		"streamingFailed": "Streaming API thất bại"
 	},
 	"checkpoint": {
-		"initial": "Điểm kiểm tra ban đầu",
 		"regular": "Điểm kiểm tra",
 		"initializingWarning": "Đang khởi tạo điểm kiểm tra... Nếu quá trình này mất quá nhiều thời gian, bạn có thể vô hiệu hóa điểm kiểm tra trong <settingsLink>cài đặt</settingsLink> và khởi động lại tác vụ của bạn.",
 		"menu": {
@@ -269,8 +271,14 @@
 		"countdownDisplay": "{{count}}s"
 	},
 	"announcement": {
-		"title": "🎉 Kilo Code {{version}} Đã phát hành",
-		"description": "Kilo Code {{version}} mang đến các tính năng mạnh mẽ mới và cải tiến đáng kể để nâng cao quy trình phát triển của bạn.",
+		"title": "🎉 Roo Code {{version}} Đã phát hành",
+		"stealthModel": {
+			"feature": "<bold>Mô hình stealth MIỄN PHÍ có thời hạn</bold> - Một mô hình lý luận cực nhanh xuất sắc trong lập trình agentic với cửa sổ ngữ cảnh 262k, có sẵn qua Roo Code Cloud.",
+			"note": "(Lưu ý: các prompt và completion được ghi lại bởi người tạo mô hình và được sử dụng để cải thiện mô hình)",
+			"connectButton": "Kết nối với Roo Code Cloud",
+			"selectModel": "Chọn <code>roo/sonic</code> từ nhà cung cấp Roo Code Cloud trong<br/><settingsLink>Cài đặt</settingsLink> để bắt đầu"
+		},
+		"description": "Roo Code {{version}} mang đến các tính năng mạnh mẽ mới và cải tiến đáng kể để nâng cao quy trình phát triển của bạn.",
 		"whatsNew": "Có gì mới",
 		"feature1": "<bold>Hàng đợi Tin nhắn</bold>: Xếp hàng nhiều tin nhắn trong khi Roo đang làm việc, cho phép bạn tiếp tục lập kế hoạch quy trình làm việc mà không bị gián đoạn.",
 		"feature2": "<bold>Lệnh Slash Tùy chỉnh</bold>: Tạo các lệnh slash được cá nhân hóa để truy cập nhanh vào các prompt và quy trình làm việc thường dùng, với quản lý UI đầy đủ.",
@@ -321,6 +329,11 @@
 			"title": "Đã Đạt Giới Hạn Yêu Cầu Tự Động Phê Duyệt",
 			"description": "Kilo Code đã đạt đến giới hạn tự động phê duyệt là {{count}} yêu cầu API. Bạn có muốn đặt lại bộ đếm và tiếp tục nhiệm vụ không?",
 			"button": "Đặt lại và Tiếp tục"
+		},
+		"autoApprovedCostLimitReached": {
+			"button": "Đặt lại và Tiếp tục",
+			"title": "Đã Đạt Giới Hạn Chi Phí Tự Động Phê Duyệt",
+			"description": "Kilo Code đã đạt đến giới hạn chi phí tự động phê duyệt là ${{count}}. Bạn có muốn đặt lại chi phí và tiếp tục với nhiệm vụ không?"
 		}
 	},
 	"codebaseSearch": {
@@ -349,9 +362,9 @@
 		"ariaLabel": "Phiên bản {{version}} - Nhấp để xem ghi chú phát hành"
 	},
 	"rooCloudCTA": {
-		"title": "Roo Code Cloud sắp ra mắt!",
+		"title": "Roo Code Cloud đang phát triển!",
 		"description": "Chạy các agent từ xa trên cloud, truy cập các tác vụ của bạn từ mọi nơi, cộng tác với người khác và nhiều hơn nữa.",
-		"joinWaitlist": "Tham gia danh sách chờ để được truy cập sớm."
+		"joinWaitlist": "Đăng ký để nhận các cập nhật mới nhất."
 	},
 	"editMessage": {
 		"placeholder": "Chỉnh sửa tin nhắn của bạn..."

@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState, useMemo } from "react"
 import { useEvent } from "react-use"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 import { ExtensionMessage } from "@roo/ExtensionMessage"
 import TranslationProvider from "./i18n/TranslationContext"
-// import { MarketplaceViewStateManager } from "./components/marketplace/MarketplaceViewStateManager" // kilocode_change: we have our own marketplace
+import { MarketplaceViewStateManager } from "./components/marketplace/MarketplaceViewStateManager"
 
 import { vscode } from "./utils/vscode"
 import { telemetryClient } from "./utils/TelemetryClient"
@@ -14,8 +14,8 @@ import { ExtensionStateContextProvider, useExtensionState } from "./context/Exte
 import ChatView, { ChatViewRef } from "./components/chat/ChatView"
 import HistoryView from "./components/history/HistoryView"
 import SettingsView, { SettingsViewRef } from "./components/settings/SettingsView"
-import WelcomeView from "./components/welcome/WelcomeView" // kilocode_change
-
+import McpView from "./components/mcp/McpView"
+import { MarketplaceView } from "./components/marketplace/MarketplaceView"
 import ModesView from "./components/modes/ModesView"
 import { HumanRelayDialog } from "./components/human-relay/HumanRelayDialog"
 import BottomControls from "./components/kilocode/BottomControls" // kilocode_change
@@ -28,8 +28,8 @@ import ErrorBoundary from "./components/ErrorBoundary"
 import { useAddNonInteractiveClickListener } from "./components/ui/hooks/useNonInteractiveClick"
 import { TooltipProvider } from "./components/ui/tooltip"
 import { STANDARD_TOOLTIP_DELAY } from "./components/ui/standard-tooltip"
-import McpView from "./components/mcp/McpView"
 import { useKiloIdentity } from "./utils/kilocode/useKiloIdentity"
+import WelcomeView from "./components/welcome/WelcomeView"
 
 type Tab = "settings" | "history" | "mcp" | "modes" | "chat" | "marketplace" | "account" | "profile" // kilocode_change: add "profile"
 
@@ -83,7 +83,7 @@ const App = () => {
 	} = useExtensionState()
 
 	// Create a persistent state manager
-	// const marketplaceStateManager = useMemo(() => new MarketplaceViewStateManager(), []) // kilocode_change: we have or own marketplace
+	const marketplaceStateManager = useMemo(() => new MarketplaceViewStateManager(), [])
 
 	const [showAnnouncement, setShowAnnouncement] = useState(false)
 	const [tab, setTab] = useState<Tab>("chat")
@@ -259,9 +259,20 @@ const App = () => {
 			{tab === "settings" && (
 				<SettingsView ref={settingsRef} onDone={() => switchTab("chat")} targetSection={currentSection} /> // kilocode_change
 			)}
+			{/* kilocode_change: add profileview */}
 			{tab === "profile" && <Profile onDone={() => switchTab("chat")} />}
-			{/*  kilocode_change: isAuthenticated = false because no roo cloud */}
-
+			{tab === "marketplace" && (
+				<MarketplaceView
+					stateManager={marketplaceStateManager}
+					onDone={() => switchTab("chat")}
+					// kilocode_change: targetTab="mode"
+					targetTab="mode"
+				/>
+			)}
+			{/* kilocode_change: we have our own profile view */}
+			{/* {tab === "account" && (
+				<AccountView userInfo={cloudUserInfo} isAuthenticated={false} onDone={() => switchTab("chat")} />
+			)} */}
 			<ChatView
 				ref={chatViewRef}
 				isHidden={tab !== "chat"}
