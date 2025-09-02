@@ -38,7 +38,7 @@ export const About = ({ telemetrySetting, setTelemetrySetting, className, ...pro
 				<div className="w-full flex flex-col justify-center items-center">
 					<img
 						className="w-20 h-20"
-						src="https://www.shengsuanyun.com/webp/relation-BMfLRnIZ.webp"
+						src="https://www.shengsuanyun.com/relation.webp"
 						alt="customer service"
 					/>
 				</div>
