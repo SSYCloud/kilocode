@@ -6,6 +6,7 @@ export function convertToOpenAiMessages(
 ): OpenAI.Chat.ChatCompletionMessageParam[] {
 	const openAiMessages: OpenAI.Chat.ChatCompletionMessageParam[] = []
 
+	console.log("anthropicMessages.length", anthropicMessages.length)
 	for (const anthropicMessage of anthropicMessages) {
 		if (typeof anthropicMessage.content === "string") {
 			openAiMessages.push({ role: anthropicMessage.role, content: anthropicMessage.content })

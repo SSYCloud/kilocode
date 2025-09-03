@@ -150,6 +150,7 @@ const routerNames = [
 	"ollama",
 	"lmstudio",
 	"io-intelligence",
+	"deepinfra", // kilocode_change
 ] as const
 
 export type RouterName = (typeof routerNames)[number]
@@ -268,7 +269,7 @@ export const getModelMaxOutputTokens = ({
 export type GetModelsOptions =
 	| { provider: "openrouter"; apiKey?: string; baseUrl?: string } // kilocode_change: add apiKey, baseUrl
 	| { provider: "glama" }
-	| { provider: "requesty"; apiKey?: string }
+	| { provider: "requesty"; apiKey?: string; baseUrl?: string }
 	| { provider: "unbound"; apiKey?: string }
 	| { provider: "litellm"; apiKey: string; baseUrl: string }
 	| { provider: "shengsuanyun" }
@@ -276,4 +277,5 @@ export type GetModelsOptions =
 	| { provider: "cerebras"; cerebrasApiKey?: string } // kilocode_change
 	| { provider: "ollama"; baseUrl?: string }
 	| { provider: "lmstudio"; baseUrl?: string }
+	| { provider: "deepinfra"; apiKey?: string; baseUrl?: string }
 	| { provider: "io-intelligence"; apiKey: string }

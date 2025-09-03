@@ -7,7 +7,7 @@ import * as vscode from "vscode"
 import axios from "axios" // kilocode_change
 import * as yaml from "yaml"
 import { getKiloBaseUriFromToken } from "../../shared/kilocode/token" // kilocode_change
-import { ProfileData } from "../../shared/WebviewMessage" // kilocode_change
+import { ProfileData, SeeNewChangesPayload } from "../../shared/WebviewMessage" // kilocode_change
 
 import {
 	type Language,
@@ -66,6 +66,7 @@ import { MarketplaceManager, MarketplaceItemType } from "../../services/marketpl
 import { fetchUserDataRPC } from "./getShengSuanYunProfile"
 import { setPendingTodoList } from "../tools/updateTodoListTool"
 import { UsageTracker } from "../../utils/usage-tracker"
+import { seeNewChanges } from "../checkpoints/kilocode/seeNewChanges" // kilocode_change
 
 export const webviewMessageHandler = async (
 	provider: ClineProvider,
@@ -305,7 +306,24 @@ export const webviewMessageHandler = async (
 			// Initializing new instance of Cline will make sure that any
 			// agentically running promises in old instance don't affect our new
 			// task. This essentially creates a fresh slate for the new task.
-			await provider.createTask(message.text, message.images)
+			try {
+				await provider.createTask(message.text, message.images)
+				// Task created successfully - notify the UI to reset
+				await provider.postMessageToWebview({
+					type: "invoke",
+					invoke: "newChat",
+				})
+			} catch (error) {
+				// For all errors, reset the UI and show error
+				await provider.postMessageToWebview({
+					type: "invoke",
+					invoke: "newChat",
+				})
+				// Show error to user
+				vscode.window.showErrorMessage(
+					`Failed to create task: ${error instanceof Error ? error.message : String(error)}`,
+				)
+			}
 			break
 		// kilocode_change start
 		case "condense":
@@ -556,6 +574,7 @@ export const webviewMessageHandler = async (
 				"kilocode-openrouter": {}, // kilocode_change
 				ollama: {},
 				lmstudio: {},
+				deepinfra: {}, // kilocode_change
 			}
 
 			const safeGetModels = async (options: GetModelsOptions): Promise<ModelRecord> => {
@@ -579,7 +598,14 @@ export const webviewMessageHandler = async (
 					key: "openrouter",
 					options: { provider: "openrouter", apiKey: openRouterApiKey, baseUrl: openRouterBaseUrl },
 				},
-				{ key: "requesty", options: { provider: "requesty", apiKey: apiConfiguration.requestyApiKey } },
+				{
+					key: "requesty",
+					options: {
+						provider: "requesty",
+						apiKey: apiConfiguration.requestyApiKey,
+						baseUrl: apiConfiguration.requestyBaseUrl,
+					},
+				},
 				{ key: "glama", options: { provider: "glama" } },
 				{ key: "unbound", options: { provider: "unbound", apiKey: apiConfiguration.unboundApiKey } },
 				{ key: "shengsuanyun", options: { provider: "shengsuanyun" } },
@@ -592,6 +618,7 @@ export const webviewMessageHandler = async (
 					},
 				},
 				{ key: "ollama", options: { provider: "ollama", baseUrl: apiConfiguration.ollamaBaseUrl } },
+				{ key: "deepinfra", options: { provider: "deepinfra", apiKey: apiConfiguration.deepInfraApiKey } },
 			]
 			// kilocode_change end
 
@@ -776,6 +803,14 @@ export const webviewMessageHandler = async (
 			}
 
 			break
+		// kilocode_change start
+		case "seeNewChanges":
+			const task = provider.getCurrentTask()
+			if (task && message.payload && message.payload) {
+				await seeNewChanges(task, (message.payload as SeeNewChangesPayload).commitRange)
+			}
+			break
+		// kilocode_change end
 		case "checkpointRestore": {
 			const result = checkoutRestorePayloadSchema.safeParse(message.payload)
 
@@ -1662,6 +1697,18 @@ export const webviewMessageHandler = async (
 					})
 					if (currentConfig.kilocodeToken !== message.apiConfiguration.kilocodeToken) {
 						configToSave = { ...message.apiConfiguration, kilocodeOrganizationId: undefined }
+					}
+					if (currentConfig.kilocodeOrganizationId !== message.apiConfiguration.kilocodeOrganizationId) {
+						await flushModels("kilocode-openrouter")
+						const models = await getModels({
+							provider: "kilocode-openrouter",
+							kilocodeOrganizationId: message.apiConfiguration.kilocodeOrganizationId,
+							kilocodeToken: message.apiConfiguration.kilocodeToken,
+						})
+						provider.postMessageToWebview({
+							type: "routerModels",
+							routerModels: { "kilocode-openrouter": models } as Record<RouterName, ModelRecord>,
+						})
 					}
 				} catch (error) {
 					// Config might not exist yet, that's fine
@@ -3049,6 +3096,11 @@ export const webviewMessageHandler = async (
 					text: text,
 				})
 			}
+			break
+		}
+		case "showMdmAuthRequiredNotification": {
+			// Show notification that organization requires authentication
+			vscode.window.showWarningMessage(t("common:mdm.info.organization_requires_auth"))
 			break
 		}
 	}

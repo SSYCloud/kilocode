@@ -71,6 +71,7 @@ export class ProfileValidator {
 			case "sambanova":
 			case "chutes":
 			case "fireworks":
+			case "featherless":
 				return profile.apiModelId
 			case "litellm":
 				return profile.litellmModelId
@@ -93,6 +94,10 @@ export class ProfileValidator {
 				return profile.shengSuanYunModelId
 			case "io-intelligence":
 				return profile.ioIntelligenceModelId
+			// kilocode_change start
+			case "deepinfra":
+				return profile.deepInfraModelId
+			// kilocode_change end
 			case "human-relay":
 			case "fake-ai":
 			default:

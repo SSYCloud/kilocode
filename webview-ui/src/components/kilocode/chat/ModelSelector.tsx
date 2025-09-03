@@ -39,6 +39,7 @@ export const ModelSelector = ({ currentApiConfigName, apiConfiguration, fallback
 	const disabled = isLoading || isError
 
 	const onChange = (value: string) => {
+		console.log(value)
 		if (!currentApiConfigName) {
 			return
 		}

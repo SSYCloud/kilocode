@@ -33,9 +33,11 @@ import {
 	internationalZAiDefaultModelId,
 	mainlandZAiDefaultModelId,
 	fireworksDefaultModelId,
+	featherlessDefaultModelId,
 	ioIntelligenceDefaultModelId,
 	qwenCodeDefaultModelId,
 	rooDefaultModelId,
+	deepInfraDefaultModelId, // kilocode_change
 } from "@roo-code/types"
 
 import { vscode } from "@src/utils/vscode"
@@ -94,9 +96,11 @@ import {
 	GeminiCli,
 	VirtualQuotaFallbackProvider,
 	QwenCode,
+	DeepInfra,
 	// kilocode_change end
 	ZAi,
 	Fireworks,
+	Featherless,
 } from "./providers"
 
 import { MODELS_BY_PROVIDER, PROVIDERS } from "./constants"
@@ -114,6 +118,7 @@ import { ConsecutiveMistakeLimitControl } from "./ConsecutiveMistakeLimitControl
 import { BedrockCustomArn } from "./providers/BedrockCustomArn"
 import { KiloCode } from "../kilocode/settings/providers/KiloCode" // kilocode_change
 import { KiloProviderRouting } from "./providers/KiloProviderRouting"
+import { OpenRouterMarkupInfoView } from "../kilocode/FreeModelsLink"
 
 export interface ApiOptionsProps {
 	uriScheme: string | undefined
@@ -203,6 +208,8 @@ const ApiOptions = ({
 	const { data: routerModels, refetch: refetchRouterModels } = useRouterModels({
 		openRouterBaseUrl: apiConfiguration?.openRouterBaseUrl,
 		openRouterApiKey: apiConfiguration?.openRouterApiKey,
+		kilocodeOrganizationId: apiConfiguration?.kilocodeOrganizationId ?? "personal",
+		deepInfraApiKey: apiConfiguration?.deepInfraApiKey,
 	})
 
 	//const { data: openRouterModelProviders } = useOpenRouterModelProviders(
@@ -358,6 +365,7 @@ const ApiOptions = ({
 							: internationalZAiDefaultModelId,
 				},
 				fireworks: { field: "apiModelId", default: fireworksDefaultModelId },
+				featherless: { field: "apiModelId", default: featherlessDefaultModelId },
 				"io-intelligence": { field: "ioIntelligenceModelId", default: ioIntelligenceDefaultModelId },
 				roo: { field: "apiModelId", default: rooDefaultModelId },
 				openai: { field: "openAiModelId" },
@@ -368,6 +376,8 @@ const ApiOptions = ({
 				"gemini-cli": { field: "apiModelId", default: geminiCliDefaultModelId },
 				"qwen-code": { field: "apiModelId", default: qwenCodeDefaultModelId },
 				shengsuanyun: { field: "shengSuanYunModelId", default: shengSuanYunDefaultModelId },
+				deepinfra: { field: "deepInfraModelId", default: deepInfraDefaultModelId },
+				// kilocode_change end
 			}
 
 			const config = PROVIDER_MODEL_CONFIG[value]
@@ -411,6 +421,14 @@ const ApiOptions = ({
 				/>
 			</div>
 
+			{
+				// kilocode_change start
+				selectedProvider === "openrouter" && (
+					<OpenRouterMarkupInfoView setApiConfigurationField={setApiConfigurationField} />
+				)
+				// kilocode_change end
+			}
+
 			{errorMessage && <ApiErrorMessage errorMessage={errorMessage} />}
 
 			{/* kilocode_change start */}
@@ -444,6 +462,7 @@ const ApiOptions = ({
 
 			{selectedProvider === "requesty" && (
 				<Requesty
+					uriScheme={uriScheme}
 					apiConfiguration={apiConfiguration}
 					setApiConfigurationField={setApiConfigurationField}
 					routerModels={routerModels}
@@ -499,7 +518,11 @@ const ApiOptions = ({
 			)}
 
 			{selectedProvider === "vertex" && (
-				<Vertex apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
+				<Vertex
+					apiConfiguration={apiConfiguration}
+					setApiConfigurationField={setApiConfigurationField}
+					fromWelcomeView={fromWelcomeView}
+				/>
 			)}
 
 			{selectedProvider === "gemini" && (
@@ -607,6 +630,21 @@ const ApiOptions = ({
 				/>
 			)}
 
+			{
+				// kilocode_change start
+				selectedProvider === "deepinfra" && (
+					<DeepInfra
+						apiConfiguration={apiConfiguration}
+						setApiConfigurationField={setApiConfigurationField}
+						routerModels={routerModels}
+						refetchRouterModels={() => refetchRouterModels()}
+						organizationAllowList={organizationAllowList}
+						modelValidationError={modelValidationError}
+					/>
+				)
+				// kilocode_change end
+			}
+
 			{selectedProvider === "human-relay" && (
 				<>
 					<div className="text-sm text-vscode-descriptionForeground">
@@ -648,6 +686,10 @@ const ApiOptions = ({
 						</div>
 					)}
 				</div>
+			)}
+
+			{selectedProvider === "featherless" && (
+				<Featherless apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
 			)}
 
 			{selectedProviderModels.length > 0 && (

@@ -17,6 +17,7 @@ export const getModelIdKey = ({
 	| "lmStudioModelId"
 	| "vsCodeLmModelSelector"
 	| "apiModelId"
+	| "shengSuanYunModelId"
 > => {
 	switch (provider) {
 		case "openrouter": {
@@ -46,8 +47,8 @@ export const getModelIdKey = ({
 		case "vscode-lm": {
 			return "vsCodeLmModelSelector"
 		}
-		case "kilocode": {
-			return "kilocodeModel"
+		case "shengsuanyun": {
+			return "shengSuanYunModelId"
 		}
 		default: {
 			return "apiModelId"

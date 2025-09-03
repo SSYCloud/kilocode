@@ -64,13 +64,11 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 	): AsyncGenerator<ApiStreamChunk> {
 		this.models = await getModels({ provider: "shengsuanyun" })
 		let { id: modelId, info } = this.getModel()
-
 		// Convert Anthropic messages to OpenAI format.
 		let openAiMessages: OpenAI.Chat.ChatCompletionMessageParam[] = [
 			{ role: "system", content: systemPrompt },
 			...convertToOpenAiMessages(messages),
 		]
-
 		if (info.supportsPromptCache) {
 			openAiMessages[0] = {
 				role: "system",
@@ -102,29 +100,6 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 					lastTextPart["cache_control"] = { type: "ephemeral" }
 				}
 			})
-		}
-
-		let maxTokens: number | undefined
-		switch (modelId) {
-			case "anthropic/claude-sonnet-4:thinking":
-			case "anthropic/claude-sonnet-4":
-			case "anthropic/claude-opus-4":
-			case "anthropic/claude-opus-4.1":
-			case "anthropic/claude-3.7-sonnet":
-			case "anthropic/claude-3.7-sonnet:beta":
-			case "anthropic/claude-3.7-sonnet:thinking":
-			case "anthropic/claude-3-7-sonnet":
-			case "anthropic/claude-3-7-sonnet:beta":
-			case "anthropic/claude-3.5-sonnet":
-			case "anthropic/claude-3.5-sonnet:beta":
-			case "anthropic/claude-3.5-sonnet-20240620":
-			case "anthropic/claude-3.5-sonnet-20240620:beta":
-			case "anthropic/claude-3-5-haiku":
-			case "anthropic/claude-3-5-haiku:beta":
-			case "anthropic/claude-3-5-haiku-20241022":
-			case "anthropic/claude-3-5-haiku-20241022:beta":
-				maxTokens = 8_192
-				break
 		}
 
 		let temperature: number | undefined = 0
@@ -172,7 +147,6 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 		}
 		const completionParams: ShengSuanYunChatCompletionParams = {
 			model: modelId,
-			...(maxTokens && maxTokens > 0 && { max_tokens: maxTokens }),
 			temperature,
 			top_p: topP,
 			messages: openAiMessages,
@@ -182,10 +156,15 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 			// This way, the transforms field will only be included in the parameters when shengSuanYunUseMiddleOutTransform is true.
 			...((shouldApplyMiddleOutTransform ?? true) && { transforms: ["middle-out"] }),
 		}
-		let stream = await this.client.chat.completions.create(completionParams)
+		// const l = JSON.stringify(openAiMessages)
+		// console.log(modelId,temperature, topP,"openAiMessages-------------------------------------")
+		// for(const it of  openAiMessages){
+		// 	const wd = JSON.stringify(it)
+		// 	console.log(wd.substring(0,300), wd.length)
+		// }
 		let lastUsage: CompletionUsage | undefined = undefined
-
 		try {
+			let stream = await this.client.chat.completions.create(completionParams)
 			for await (const chunk of stream) {
 				// shengSuanYun returns an error object instead of the OpenAI SDK throwing an error.
 				if ("error" in chunk) {
@@ -209,20 +188,27 @@ export class ShengSuanYunHandler extends BaseProvider implements SingleCompletio
 				}
 			}
 		} catch (error) {
+			console.log(error, "eeeeeeeeeeeeeee")
 			let errorMessage = makeshengSuanYunErrorReadable(error)
 			throw new Error(errorMessage)
 		}
 
 		if (lastUsage) {
+			const input = (lastUsage.prompt_tokens || 0) - (lastUsage.prompt_tokens_details?.cached_tokens || 0)
+			const output = lastUsage.completion_tokens || 0
+			// @ts-ignore-next-line
+			const cost = (lastUsage.cost || 0) + (lastUsage.cost_details?.upstream_inference_cost || 0)
+			const inputPrice = info.inputPrice || 0
+			const outputPrice = info.outputPrice || 0
 			yield {
 				type: "usage",
-				inputTokens: lastUsage.prompt_tokens || 0,
-				outputTokens: lastUsage.completion_tokens || 0,
+				inputTokens: input,
+				outputTokens: output,
 				// Waiting on shengSuanYun to figure out what this represents in the Gemini case
 				// and how to best support it.
 				// cacheReadTokens: lastUsage.prompt_tokens_details?.cached_tokens,
 				reasoningTokens: lastUsage.completion_tokens_details?.reasoning_tokens,
-				totalCost: lastUsage.cost || 0,
+				totalCost: cost ? cost : (input / 1000000) * inputPrice + (output / 1000000) * outputPrice,
 			}
 		}
 	}

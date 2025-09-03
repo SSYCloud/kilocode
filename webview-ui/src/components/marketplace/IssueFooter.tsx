@@ -7,7 +7,7 @@ export const IssueFooter: React.FC = () => {
 		<div className="text-xs text-vscode-descriptionForeground p-3">
 			<Trans i18nKey="marketplace:footer.issueText">
 				<VSCodeLink
-					href="https://github.com/Kilo-Org/kilocode/issues/new?template=marketplace.yml"
+					href="https://github.com/SSYCloud/cline-chinese-ssy/issues"
 					style={{ display: "inline", fontSize: "inherit" }}>
 					Open a GitHub issue
 				</VSCodeLink>
