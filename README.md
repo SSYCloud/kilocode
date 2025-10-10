@@ -1,3 +1,6 @@
+# Kilo Code 中文版（Vibe Coding、Claude 4.5、GPT-5、JetBrains、Qwen通义千问、OpenRouter、通义灵码IDE、Lingma、ChatGPT、Copilot、Cursor AI  Agent智能体、Java、Python、代码聊天、助手、补全、生成器、Mode、上下文、编码编程助手）
+
+
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=shengsuan-cloud.kilo-ssy" target="_blank" rel="noopener noreferrer">
     <img width="120" src="https://github.com/user-attachments/assets/7b24b0d2-a35b-4814-9b5f-a0df22e467cc" alt="Kilo SSY logo">
