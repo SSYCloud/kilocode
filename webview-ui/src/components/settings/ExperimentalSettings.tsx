@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react"
+import React, { HTMLAttributes } from "react"
 import { FlaskConical } from "lucide-react"
 
 import type { Experiments } from "@roo-code/types"
@@ -15,24 +15,45 @@ import {
 import { SectionHeader } from "./SectionHeader"
 import { Section } from "./Section"
 import { ExperimentalFeature } from "./ExperimentalFeature"
-import { MorphSettings } from "./MorphSettings" // kilocode_change: Use global version
+import { FastApplySettings } from "./FastApplySettings" // kilocode_change: Use Fast Apply version
+import { ImageGenerationSettings } from "./ImageGenerationSettings"
 
 type ExperimentalSettingsProps = HTMLAttributes<HTMLDivElement> & {
 	experiments: Experiments
 	setExperimentEnabled: SetExperimentEnabled
 	// kilocode_change start
 	morphApiKey?: string
-	setCachedStateField: SetCachedStateField<"morphApiKey">
+	fastApplyModel?: string
+	setCachedStateField: SetCachedStateField<"morphApiKey" | "fastApplyModel">
+	kiloCodeImageApiKey?: string
+	setKiloCodeImageApiKey?: (apiKey: string) => void
+	currentProfileKilocodeToken?: string
 	// kilocode_change end
+	apiConfiguration?: any
+	setApiConfigurationField?: any
+	openRouterImageApiKey?: string
+	openRouterImageGenerationSelectedModel?: string
+	setOpenRouterImageApiKey?: (apiKey: string) => void
+	setImageGenerationSelectedModel?: (model: string) => void
 }
 
 export const ExperimentalSettings = ({
 	experiments,
 	setExperimentEnabled,
+	apiConfiguration,
+	setApiConfigurationField,
+	openRouterImageApiKey,
+	openRouterImageGenerationSelectedModel,
+	setOpenRouterImageApiKey,
+	setImageGenerationSelectedModel,
 	className,
 	// kilocode_change start
 	morphApiKey,
+	fastApplyModel, // kilocode_change: Fast Apply model selection
 	setCachedStateField,
+	setKiloCodeImageApiKey,
+	kiloCodeImageApiKey,
+	currentProfileKilocodeToken,
 	// kilocode_change end
 	...props
 }: ExperimentalSettingsProps) => {
@@ -69,7 +90,7 @@ export const ExperimentalSettings = ({
 							const enabled =
 								experiments[EXPERIMENT_IDS[config[0] as keyof typeof EXPERIMENT_IDS]] ?? false
 							return (
-								<>
+								<React.Fragment key={config[0]}>
 									<ExperimentalFeature
 										key={config[0]}
 										experimentKey={config[0]}
@@ -82,15 +103,39 @@ export const ExperimentalSettings = ({
 										}
 									/>
 									{enabled && (
-										<MorphSettings
+										<FastApplySettings
 											setCachedStateField={setCachedStateField}
 											morphApiKey={morphApiKey}
+											fastApplyModel={fastApplyModel}
 										/>
 									)}
-								</>
+								</React.Fragment>
 							)
 						}
 						// kilocode_change end
+						if (
+							config[0] === "IMAGE_GENERATION" &&
+							setOpenRouterImageApiKey &&
+							setKiloCodeImageApiKey &&
+							setImageGenerationSelectedModel
+						) {
+							return (
+								<ImageGenerationSettings
+									key={config[0]}
+									enabled={experiments[EXPERIMENT_IDS.IMAGE_GENERATION] ?? false}
+									onChange={(enabled) =>
+										setExperimentEnabled(EXPERIMENT_IDS.IMAGE_GENERATION, enabled)
+									}
+									openRouterImageApiKey={openRouterImageApiKey}
+									kiloCodeImageApiKey={kiloCodeImageApiKey}
+									openRouterImageGenerationSelectedModel={openRouterImageGenerationSelectedModel}
+									setOpenRouterImageApiKey={setOpenRouterImageApiKey}
+									setKiloCodeImageApiKey={setKiloCodeImageApiKey}
+									setImageGenerationSelectedModel={setImageGenerationSelectedModel}
+									currentProfileKilocodeToken={currentProfileKilocodeToken}
+								/>
+							)
+						}
 						return (
 							<ExperimentalFeature
 								key={config[0]}

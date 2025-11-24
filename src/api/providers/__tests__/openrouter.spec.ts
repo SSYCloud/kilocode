@@ -27,7 +27,6 @@ vitest.mock("../fetchers/modelCache", () => ({
 				cacheReadsPrice: 0.3,
 				description: "Claude 3.7 Sonnet",
 				thinking: false,
-				supportsComputerUse: true,
 			},
 			"anthropic/claude-3.7-sonnet:thinking": {
 				maxTokens: 128000,
@@ -39,7 +38,6 @@ vitest.mock("../fetchers/modelCache", () => ({
 				cacheWritesPrice: 3.75,
 				cacheReadsPrice: 0.3,
 				description: "Claude 3.7 Sonnet with thinking",
-				supportsComputerUse: true,
 			},
 		})
 	}),
@@ -289,14 +287,17 @@ describe("OpenRouterHandler", () => {
 
 			expect(result).toBe("test completion")
 
-			expect(mockCreate).toHaveBeenCalledWith({
-				model: mockOptions.openRouterModelId,
-				max_tokens: 8192,
-				thinking: undefined,
-				temperature: 0,
-				messages: [{ role: "user", content: "test prompt" }],
-				stream: false,
-			})
+			expect(mockCreate).toHaveBeenCalledWith(
+				{
+					model: mockOptions.openRouterModelId,
+					max_tokens: 8192,
+					thinking: undefined,
+					temperature: 0,
+					messages: [{ role: "user", content: "test prompt" }],
+					stream: false,
+				},
+				undefined, // kilocode_change options
+			)
 		})
 
 		it("handles API errors", async () => {

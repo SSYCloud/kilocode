@@ -7,6 +7,7 @@ import { formatResponse } from "../prompts/responses"
 import { VectorStoreSearchResult } from "../../services/code-index/interfaces"
 import { AskApproval, HandleError, PushToolResult, RemoveClosingTag, ToolUse } from "../../shared/tools"
 import path from "path"
+import { ManagedIndexer } from "../../services/code-index/managed/ManagedIndexer"
 
 export async function codebaseSearchTool(
 	cline: Task,
@@ -62,6 +63,12 @@ export async function codebaseSearchTool(
 
 	cline.consecutiveMistakeCount = 0
 
+	// kilode_change start - First try mnaaged indexing
+	if (await tryManagedSearch(cline, pushToolResult, query, directoryPrefix)) {
+		return
+	}
+	// kilode_change end - First try mnaaged indexing
+
 	// --- Core Logic ---
 	try {
 		const context = cline.providerRef.deref()?.context
@@ -81,6 +88,59 @@ export async function codebaseSearchTool(
 		if (!manager.isFeatureConfigured) {
 			throw new Error("Code Indexing is not configured (Missing OpenAI Key or Qdrant URL).")
 		}
+
+		// kilocode_change start
+		const status = manager.getCurrentStatus()
+		if (status.systemStatus !== "Indexed") {
+			const defaultStatusMessage = (() => {
+				switch (status.systemStatus) {
+					case "Indexing":
+						return "Code indexing is still running"
+					case "Standby":
+						return "Code indexing has not started"
+					case "Error":
+						return "Code indexing is in an error state"
+					default:
+						return "Code indexing is not ready"
+				}
+			})()
+
+			const normalizedMessage =
+				status.message && status.message.trim() !== "" ? status.message.trim() : defaultStatusMessage
+			const unit =
+				status.currentItemUnit && status.currentItemUnit.trim() !== "" ? status.currentItemUnit : "items"
+			const progress = status.totalItems > 0 ? `${status.processedItems}/${status.totalItems} ${unit}` : undefined
+			const messageWithoutTrailingPeriod = normalizedMessage.endsWith(".")
+				? normalizedMessage.slice(0, -1)
+				: normalizedMessage
+			const friendlyMessage = progress
+				? `${messageWithoutTrailingPeriod} (Progress: ${progress}).`
+				: `${messageWithoutTrailingPeriod}.`
+
+			const payload = {
+				tool: "codebaseSearch",
+				content: {
+					query,
+					results: [] as VectorStoreSearchResult[],
+					status: {
+						systemStatus: status.systemStatus,
+						message: normalizedMessage,
+						processedItems: status.processedItems,
+						totalItems: status.totalItems,
+						currentItemUnit: status.currentItemUnit,
+					},
+				},
+			}
+
+			await cline.say("codebase_search_result", JSON.stringify(payload))
+			pushToolResult(
+				formatResponse.toolError(
+					`${friendlyMessage} Semantic search is unavailable until indexing completes. Please try again later.`,
+				),
+			)
+			return
+		}
+		// kilocode_change end
 
 		const searchResults: VectorStoreSearchResult[] = await manager.searchIndex(query, directoryPrefix)
 
@@ -132,8 +192,7 @@ ${jsonResult.results
 		(result) => `File path: ${result.filePath}
 Score: ${result.score}
 Lines: ${result.startLine}-${result.endLine}
-Code Chunk: ${result.codeChunk}
-`,
+${result.codeChunk ? `Code Chunk: ${result.codeChunk}\n` : ""}`, // kilocode_change - don't include code chunk managed indexing
 	)
 	.join("\n")}`
 
@@ -142,3 +201,77 @@ Code Chunk: ${result.codeChunk}
 		await handleError(toolName, error) // Use the standard error handler
 	}
 }
+
+// kilocode_change start - Add managed search block
+async function tryManagedSearch(
+	cline: Task,
+	pushToolResult: PushToolResult,
+	query: string,
+	directoryPrefix?: string,
+): Promise<boolean> {
+	try {
+		const managed = ManagedIndexer.getInstance()
+		if (!(await managed.isEnabled())) {
+			return false
+		}
+		const searchResults = await managed.search(query, directoryPrefix)
+		// 3. Format and push results
+		if (!searchResults || searchResults.length === 0) {
+			pushToolResult(`No relevant code snippets found for the query: "${query}"`) // Use simple string for no results
+			return true
+		}
+
+		const jsonResult = {
+			query,
+			results: [],
+		} as {
+			query: string
+			results: Array<{
+				filePath: string
+				score: number
+				startLine: number
+				endLine: number
+				codeChunk: string
+			}>
+		}
+
+		searchResults.forEach((result) => {
+			if (!result.payload) return
+			if (!("filePath" in result.payload)) return
+
+			const relativePath = vscode.workspace.asRelativePath(result.payload.filePath, false)
+
+			jsonResult.results.push({
+				filePath: relativePath,
+				score: result.score,
+				startLine: result.payload.startLine,
+				endLine: result.payload.endLine,
+				codeChunk: result.payload.codeChunk.trim(),
+			})
+		})
+
+		// Send results to UI
+		const payload = { tool: "codebaseSearch", content: jsonResult }
+		await cline.say("codebase_search_result", JSON.stringify(payload))
+
+		// Push results to AI
+		const output = `Query: ${query}
+Results:
+
+${jsonResult.results
+	.map(
+		(result) => `File path: ${result.filePath}
+Score: ${result.score}
+Lines: ${result.startLine}-${result.endLine}
+${result.codeChunk ? `Code Chunk: ${result.codeChunk}\n` : ""}`, // kilocode_change - don't include code chunk managed indexing
+	)
+	.join("\n")}`
+
+		pushToolResult(output)
+		return true
+	} catch (e) {
+		console.log(`[codebaseSearchTool]: Managed search failed with error: ${e}`)
+		return false
+	}
+}
+// kilocode_change end - Add managed search block

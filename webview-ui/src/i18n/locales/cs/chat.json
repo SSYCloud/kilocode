@@ -24,7 +24,9 @@
 		"shareSuccessOrganization": "Odkaz organizace zkopírován do schránky",
 		"shareSuccessPublic": "Veřejný odkaz zkopírován do schránky",
 		"expand": "Rozbalit úkol",
-		"collapse": "Sbalit úkol"
+		"collapse": "Sbalit úkol",
+		"openInCloud": "Otevřít v cloudu",
+		"openInCloudIntro": "Monitoruj a spravuj tento úkol vzdáleně"
 	},
 	"history": {
 		"title": "Historie"
@@ -156,6 +158,8 @@
 		"initializingWarning": "Stále se inicializuje kontrolní bod... Pokud to trvá příliš dlouho, můžeš vypnout kontrolní body v <settingsLink>nastavení</settingsLink> a restartovat svůj úkol.",
 		"menu": {
 			"viewDiff": "Zobrazit rozdíly",
+			"viewDiffFromInit": "Zobrazit všechny změny",
+			"viewDiffWithCurrent": "Zobrazit změny od tohoto kontrolního bodu",
 			"restore": "Obnovit kontrolní bod",
 			"restoreFiles": "Obnovit soubory",
 			"restoreFilesDescription": "Obnoví soubory tvého projektu zpět na snímek pořízený v tomto bodě.",
@@ -163,7 +167,8 @@
 			"confirm": "Potvrdit",
 			"cancel": "Zrušit",
 			"cannotUndo": "Tuto akci nelze vrátit zpět.",
-			"restoreFilesAndTaskDescription": "Obnoví soubory tvého projektu zpět na snímek pořízený v tomto bodě a smaže všechny zprávy po tomto bodě."
+			"restoreFilesAndTaskDescription": "Obnoví soubory tvého projektu zpět na snímek pořízený v tomto bodě a smaže všechny zprávy po tomto bodě.",
+			"more": "Více možností"
 		},
 		"current": "Aktuální"
 	},
@@ -186,6 +191,10 @@
 		"wantsToEditOutsideWorkspace": "Kilo Code chce upravit tento soubor mimo pracovní prostor:",
 		"wantsToEditProtected": "Kilo Code chce upravit chráněný konfigurační soubor:",
 		"wantsToApplyBatchChanges": "Kilo Code chce aplikovat změny na více souborů:",
+		"wantsToGenerateImage": "Kilo Code chce vygenerovat obrázek:",
+		"wantsToGenerateImageOutsideWorkspace": "Kilo Code chce vygenerovat obrázek mimo pracovní prostor:",
+		"wantsToGenerateImageProtected": "Kilo Code chce vygenerovat obrázek v chráněném umístění:",
+		"didGenerateImage": "Kilo Code vygeneroval obrázek:",
 		"wantsToCreate": "Kilo Code chce vytvořit nový soubor:",
 		"wantsToSearchReplace": "Kilo Code chce hledat a nahradit v tomto souboru:",
 		"didSearchReplace": "Kilo Code provedl hledání a nahrazení v tomto souboru:",
@@ -220,7 +229,9 @@
 	},
 	"commandOutput": "Výstup příkazu",
 	"commandExecution": {
+		"abort": "Přerušit",
 		"running": "Běží",
+		"exitStatus": "Ukončen se stavem {{exitCode}}",
 		"pid": "PID: {{pid}}",
 		"exited": "Ukončeno ({{exitCode}})",
 		"manageCommands": "Spravovat oprávnění příkazů",
@@ -237,6 +248,12 @@
 	},
 	"response": "Odpověď",
 	"arguments": "Argumenty",
+	"text": {
+		"rooSaid": "Kilo řekl"
+	},
+	"feedback": {
+		"youSaid": "Řekl jsi"
+	},
 	"mcp": {
 		"wantsToUseTool": "Kilo Code chce použít nástroj na MCP serveru {{serverName}}:",
 		"wantsToAccessResource": "Kilo Code chce přistupovat k prostředku na MCP serveru {{serverName}}:"
@@ -274,7 +291,17 @@
 		"description": "Automatické schvalování umožňuje Kilo Code provádět akce bez žádání o povolení. Zapni pouze pro akce, kterým plně důvěřuješ. Podrobnější konfigurace je dostupná v <settingsLink>Nastavení</settingsLink>.",
 		"selectOptionsFirst": "Nejprve vyber alespoň jednu možnost níže pro povolení automatického schvalování",
 		"toggleAriaLabel": "Přepnout automatické schvalování",
-		"disabledAriaLabel": "Automatické schvalování zakázáno - nejprve vyber možnosti"
+		"disabledAriaLabel": "Automatické schvalování zakázáno - nejprve vyber možnosti",
+		"tooltip": "Automaticky schválit požadavky na použití nástrojů",
+		"tooltipManage": "Spravovat nastavení automatického schvalování",
+		"tooltipStatus": "Automatické schvalování povoleno pro: {{toggles}}",
+		"all": "Vše",
+		"triggerLabel_zero": "Automatické schválení: vypnuto",
+		"triggerLabel_one": "Automatické schválení: 1",
+		"triggerLabel_other": "Automatické schválení: {{count}}",
+		"triggerLabelAll": "Automatické schválení: YOLO",
+		"triggerLabelOff": "Automatické schvalování vypnuto",
+		"triggerLabelOffShort": "Vypnuto"
 	},
 	"modeSelector": {
 		"title": "Režimy",
@@ -282,23 +309,32 @@
 		"settings": "Nastavení režimů",
 		"description": "Specializované persony které přizpůsobují chování Kilo Code.",
 		"searchPlaceholder": "Hledat režimy...",
-		"noResults": "Nebyly nalezeny žádné výsledky"
+		"noResults": "Nebyly nalezeny žádné výsledky",
+		"organizationModes": "Režimy organizace"
 	},
 	"announcement": {
-		"title": "🎉 Vydán Kilo Code {{version}}",
-		"description": "Kilo Code {{version}} přináší hlavní nové funkce a vylepšení na základě tvé zpětné vazby.",
-		"whatsNew": "Co je nového",
-		"feature1": "<bold>Spuštění Kilo Code Marketplace</bold>: Tržiště je nyní živé! Objevuj a instaluj režimy a MCP snadněji než kdy dříve.",
-		"feature2": "<bold>Modely Gemini 2.5</bold>: Přidána podpora pro nové modely Gemini 2.5 Pro, Flash a Flash Lite.",
-		"feature3": "<bold>Podpora souborů Excel a další</bold>: Přidána podpora souborů Excel (.xlsx) a mnoho oprav chyb a vylepšení!",
-		"hideButton": "Skrýt oznámení",
-		"detailsDiscussLinks": "Získej více podrobností a diskutuj na <discordLink>Discord</discordLink> a <redditLink>Reddit</redditLink> 🚀",
+		"title": "🎉 Vydán Roo Code {{version}}",
 		"stealthModel": {
-			"feature": "<bold>Časově omezený ZDARMA stealth model</bold> - Bleskurychle rychlý rozumový model, který vyniká v agentním kódování s kontextovým oknem 262k, dostupný prostřednictvím Roo Code Cloud.",
-			"note": "(Poznámka: prompty a dokončení jsou zaznamenávány tvůrcem modelu za účelem vylepšení modelu)",
+			"feature": "<bold>Časově omezený ZDARMA stealth model</bold> - Code Supernova: Nyní vylepšen s <bold>kontextovým oknem 1M tokenů</bold>! Všestranný agentní model pro kódování, který podporuje obrazové vstupy, dostupný prostřednictvím Roo Code Cloud.",
+			"note": "(Poznámka: prompty a dokončení jsou zaznamenávány tvůrcem modelu a používány k vylepšení modelu)",
 			"connectButton": "Připojit se k Roo Code Cloud",
-			"selectModel": "Vyber <code>roo/sonic</code> z poskytovatele Roo Code Cloud v<br/><settingsLink>Nastaveních</settingsLink> pro začátek"
-		}
+			"selectModel": "Vyber <code>roo/code-supernova</code> z poskytovatele Roo Code Cloud v Nastavení pro začátek.",
+			"goToSettingsButton": "Jít do Nastavení"
+		},
+		"release": {
+			"heading": "Nové v rozšíření:",
+			"openRouterEmbeddings": "Podpora pro embedding modely OpenRouter",
+			"chutesDynamic": "Chutes nyní dynamicky načítá nejnovější modely",
+			"queuedMessagesFix": "Opravy pro ztracené zprávy ve frontě"
+		},
+		"cloudAgents": {
+			"heading": "Nové v cloudu:",
+			"prFixer": "Představujeme cloudového agenta <bold>PR Fixer</bold> jako doplněk k PR Reviewer.",
+			"prFixerDescription": "PR Fixer aplikuje vysoce kvalitní změny na tvé PR přímo z GitHubu. Vyvolej ho pomocí komentáře k PR a přečte si celou historii komentářů, aby pochopil kontext, dohody a kompromisy - a pak implementuje správnou opravu.",
+			"tryPrFixerButton": "Vyzkoušet PR Fixer"
+		},
+		"careers": "Také <careersLink>nabíráme!</careersLink>",
+		"socialLinks": "Připoj se k nám na <xLink>X</xLink>, <discordLink>Discord</discordLink> nebo <redditLink>r/RooCode</redditLink> 🚀"
 	},
 	"reasoning": {
 		"thinking": "Přemýšlím",
@@ -379,8 +415,10 @@
 	},
 	"slashCommands": {
 		"tooltip": "Spravovat slash příkazy",
+		"manageCommands": "Spravovat slash příkazy v nastavení",
 		"title": "Slash příkazy",
 		"description": "Vytvoř vlastní slash příkazy pro rychlý přístup k často používaným promptům a pracovním postupům. <DocsLink>Dokumentace</DocsLink>",
+		"builtInCommands": "Vestavěné příkazy",
 		"globalCommands": "Globální příkazy",
 		"workspaceCommands": "Příkazy pracovního prostoru",
 		"globalCommand": "Globální příkaz",
@@ -402,5 +440,15 @@
 	"editMessage": {
 		"placeholder": "Upravit tvou zprávu..."
 	},
-	"generateCommitMessage": "Vygenerovat commit zprávu"
+	"generateCommitMessage": "Vygenerovat commit zprávu",
+	"slashCommand": {
+		"wantsToRun": "Kilo Code chce spustit slash příkaz:",
+		"didRun": "Kilo Code spustil slash příkaz:"
+	},
+	"contextMenu": {
+		"noResults": "Žádné výsledky",
+		"problems": "Problémy",
+		"terminal": "Terminál",
+		"url": "Vložit URL pro získání obsahu"
+	}
 }

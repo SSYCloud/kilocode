@@ -1,7 +1,8 @@
-import React, { Fragment, memo, useCallback, useEffect, useMemo, useState } from "react" // kilocode_change Fragment
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react"
 import { convertHeadersToObject } from "./utils/headers"
 import { useDebounce } from "react-use"
 import { VSCodeButton } from "@vscode/webview-ui-toolkit/react"
+import { VSCodeLink } from "@vscode/webview-ui-toolkit/react"
 // import { ExternalLinkIcon } from "@radix-ui/react-icons" // kilocode_change
 
 import {
@@ -18,10 +19,17 @@ import {
 	anthropicDefaultModelId,
 	doubaoDefaultModelId,
 	claudeCodeDefaultModelId,
+	qwenCodeDefaultModelId,
 	geminiDefaultModelId,
 	geminiCliDefaultModelId,
 	deepSeekDefaultModelId,
 	moonshotDefaultModelId,
+	// kilocode_change start
+	syntheticDefaultModelId,
+	ovhCloudAiEndpointsDefaultModelId,
+	inceptionDefaultModelId,
+	nativeFunctionCallingProviders,
+	// kilocode_change end
 	mistralDefaultModelId,
 	xaiDefaultModelId,
 	groqDefaultModelId,
@@ -35,9 +43,10 @@ import {
 	fireworksDefaultModelId,
 	featherlessDefaultModelId,
 	ioIntelligenceDefaultModelId,
-	qwenCodeDefaultModelId,
 	rooDefaultModelId,
-	deepInfraDefaultModelId, // kilocode_change
+	vercelAiGatewayDefaultModelId,
+	deepInfraDefaultModelId,
+	minimaxDefaultModelId,
 } from "@roo-code/types"
 
 import { vscode } from "@src/utils/vscode"
@@ -86,7 +95,9 @@ import {
 	OpenAI,
 	OpenAICompatible,
 	OpenRouter,
+	QwenCode,
 	Requesty,
+	Roo,
 	SambaNova,
 	Unbound,
 	Vertex,
@@ -95,12 +106,16 @@ import {
 	ShengSuanYun,
 	GeminiCli,
 	VirtualQuotaFallbackProvider,
-	QwenCode,
-	DeepInfra,
+	Synthetic,
+	OvhCloudAiEndpoints,
+	Inception,
 	// kilocode_change end
 	ZAi,
 	Fireworks,
 	Featherless,
+	VercelAiGateway,
+	DeepInfra,
+	MiniMax,
 } from "./providers"
 
 import { MODELS_BY_PROVIDER, PROVIDERS } from "./constants"
@@ -109,16 +124,19 @@ import { inputEventTransform, noTransform } from "./transforms"
 import { ModelInfoView } from "./ModelInfoView"
 import { ApiErrorMessage } from "./ApiErrorMessage"
 import { ThinkingBudget } from "./ThinkingBudget"
+import { SimpleThinkingBudget } from "./SimpleThinkingBudget"
 import { Verbosity } from "./Verbosity"
 import { DiffSettingsControl } from "./DiffSettingsControl"
 import { TodoListSettingsControl } from "./TodoListSettingsControl"
 import { TemperatureControl } from "./TemperatureControl"
 import { RateLimitSecondsControl } from "./RateLimitSecondsControl"
 import { ConsecutiveMistakeLimitControl } from "./ConsecutiveMistakeLimitControl"
+import { ToolUseControl } from "./kilocode/ToolUseControl" // kilocode_change
 import { BedrockCustomArn } from "./providers/BedrockCustomArn"
 import { KiloCode } from "../kilocode/settings/providers/KiloCode" // kilocode_change
-import { KiloProviderRouting } from "./providers/KiloProviderRouting"
-import { OpenRouterMarkupInfoView } from "../kilocode/FreeModelsLink"
+import { buildDocLink } from "@src/utils/docLinks"
+import { KiloProviderRouting, KiloProviderRoutingManagedByOrganization } from "./providers/KiloProviderRouting"
+import { RateLimitAfterControl } from "./RateLimitAfterSettings" // kilocode_change
 
 export interface ApiOptionsProps {
 	uriScheme: string | undefined
@@ -149,6 +167,7 @@ const ApiOptions = ({
 	const {
 		organizationAllowList,
 		uiKind, // kilocode_change
+		kiloCodeWrapperProperties, // kilocode_change
 		kilocodeDefaultModel,
 		cloudIsAuthenticated,
 	} = useExtensionState()
@@ -204,12 +223,15 @@ const ApiOptions = ({
 		info: selectedModelInfo,
 	} = useSelectedModel(apiConfiguration)
 
-	// kilocode_change start: queryKey
+	// kilocode_change start: queryKey, chutesApiKey, gemini
 	const { data: routerModels, refetch: refetchRouterModels } = useRouterModels({
 		openRouterBaseUrl: apiConfiguration?.openRouterBaseUrl,
 		openRouterApiKey: apiConfiguration?.openRouterApiKey,
 		kilocodeOrganizationId: apiConfiguration?.kilocodeOrganizationId ?? "personal",
 		deepInfraApiKey: apiConfiguration?.deepInfraApiKey,
+		geminiApiKey: apiConfiguration?.geminiApiKey,
+		googleGeminiBaseUrl: apiConfiguration?.googleGeminiBaseUrl,
+		chutesApiKey: apiConfiguration?.chutesApiKey,
 	})
 
 	//const { data: openRouterModelProviders } = useOpenRouterModelProviders(
@@ -229,7 +251,9 @@ const ApiOptions = ({
 	// Update `apiModelId` whenever `selectedModelId` changes.
 	useEffect(() => {
 		if (selectedModelId && apiConfiguration.apiModelId !== selectedModelId) {
-			setApiConfigurationField("apiModelId", selectedModelId)
+			// Pass false as third parameter to indicate this is not a user action
+			// This is an internal sync, not a user-initiated change
+			setApiConfigurationField("apiModelId", selectedModelId, false)
 		}
 	}, [selectedModelId, setApiConfigurationField, apiConfiguration.apiModelId])
 
@@ -246,7 +270,7 @@ const ApiOptions = ({
 					values: {
 						baseUrl: apiConfiguration?.openAiBaseUrl,
 						apiKey: apiConfiguration?.openAiApiKey,
-						customHeaders: {}, // Reserved for any additional headers
+						customHeaders: {}, // Reserved for any additional headers.
 						openAiHeaders: headerObject,
 					},
 				})
@@ -256,7 +280,12 @@ const ApiOptions = ({
 				vscode.postMessage({ type: "requestLmStudioModels" })
 			} else if (selectedProvider === "vscode-lm") {
 				vscode.postMessage({ type: "requestVsCodeLmModels" })
-			} else if (selectedProvider === "litellm") {
+			} else if (
+				selectedProvider === "litellm" ||
+				selectedProvider === "deepinfra" ||
+				selectedProvider === "chutes" || // kilocode_change
+				selectedProvider === "roo"
+			) {
 				vscode.postMessage({ type: "requestRouterModels" })
 			}
 		},
@@ -270,6 +299,10 @@ const ApiOptions = ({
 			apiConfiguration?.lmStudioBaseUrl,
 			apiConfiguration?.litellmBaseUrl,
 			apiConfiguration?.litellmApiKey,
+			apiConfiguration?.deepInfraApiKey,
+			apiConfiguration?.deepInfraBaseUrl,
+			apiConfiguration?.chutesApiKey, // kilocode_change
+			apiConfiguration?.ovhCloudAiEndpointsBaseUrl, // kilocode_change
 			customHeaders,
 		],
 	)
@@ -289,15 +322,24 @@ const ApiOptions = ({
 
 		const filteredModels = filterModels(models, selectedProvider, organizationAllowList)
 
-		const modelOptions = filteredModels
-			? Object.keys(filteredModels).map((modelId) => ({
-					value: modelId,
-					label: modelId,
-				}))
+		// Include the currently selected model even if deprecated (so users can see what they have selected)
+		// But filter out other deprecated models from being newly selectable
+		const availableModels = filteredModels
+			? Object.entries(filteredModels)
+					.filter(([modelId, modelInfo]) => {
+						// Always include the currently selected model
+						if (modelId === selectedModelId) return true
+						// Filter out deprecated models that aren't currently selected
+						return !modelInfo.deprecated
+					})
+					.map(([modelId]) => ({
+						value: modelId,
+						label: modelId,
+					}))
 			: []
 
-		return modelOptions
-	}, [selectedProvider, organizationAllowList])
+		return availableModels
+	}, [selectedProvider, organizationAllowList, selectedModelId])
 
 	const onProviderChange = useCallback(
 		(value: ProviderName) => {
@@ -337,6 +379,7 @@ const ApiOptions = ({
 					}
 				>
 			> = {
+				deepinfra: { field: "deepInfraModelId", default: deepInfraDefaultModelId },
 				openrouter: { field: "openRouterModelId", default: openRouterDefaultModelId },
 				glama: { field: "glamaModelId", default: glamaDefaultModelId },
 				unbound: { field: "unboundModelId", default: unboundDefaultModelId },
@@ -345,11 +388,13 @@ const ApiOptions = ({
 				anthropic: { field: "apiModelId", default: anthropicDefaultModelId },
 				cerebras: { field: "apiModelId", default: cerebrasDefaultModelId },
 				"claude-code": { field: "apiModelId", default: claudeCodeDefaultModelId },
+				"qwen-code": { field: "apiModelId", default: qwenCodeDefaultModelId },
 				"openai-native": { field: "apiModelId", default: openAiNativeDefaultModelId },
 				gemini: { field: "apiModelId", default: geminiDefaultModelId },
 				deepseek: { field: "apiModelId", default: deepSeekDefaultModelId },
 				doubao: { field: "apiModelId", default: doubaoDefaultModelId },
 				moonshot: { field: "apiModelId", default: moonshotDefaultModelId },
+				minimax: { field: "apiModelId", default: minimaxDefaultModelId },
 				mistral: { field: "apiModelId", default: mistralDefaultModelId },
 				xai: { field: "apiModelId", default: xaiDefaultModelId },
 				groq: { field: "apiModelId", default: groqDefaultModelId },
@@ -360,7 +405,7 @@ const ApiOptions = ({
 				zai: {
 					field: "apiModelId",
 					default:
-						apiConfiguration.zaiApiLine === "china"
+						apiConfiguration.zaiApiLine === "china_coding"
 							? mainlandZAiDefaultModelId
 							: internationalZAiDefaultModelId,
 				},
@@ -368,15 +413,17 @@ const ApiOptions = ({
 				featherless: { field: "apiModelId", default: featherlessDefaultModelId },
 				"io-intelligence": { field: "ioIntelligenceModelId", default: ioIntelligenceDefaultModelId },
 				roo: { field: "apiModelId", default: rooDefaultModelId },
+				"vercel-ai-gateway": { field: "vercelAiGatewayModelId", default: vercelAiGatewayDefaultModelId },
 				openai: { field: "openAiModelId" },
 				ollama: { field: "ollamaModelId" },
 				lmstudio: { field: "lmStudioModelId" },
 				// kilocode_change start
 				kilocode: { field: "kilocodeModel", default: kilocodeDefaultModel },
 				"gemini-cli": { field: "apiModelId", default: geminiCliDefaultModelId },
-				"qwen-code": { field: "apiModelId", default: qwenCodeDefaultModelId },
 				shengsuanyun: { field: "shengSuanYunModelId", default: shengSuanYunDefaultModelId },
-				deepinfra: { field: "deepInfraModelId", default: deepInfraDefaultModelId },
+				synthetic: { field: "apiModelId", default: syntheticDefaultModelId },
+				ovhcloud: { field: "ovhCloudAiEndpointsModelId", default: ovhCloudAiEndpointsDefaultModelId },
+				inception: { field: "inceptionLabsModelId", default: inceptionDefaultModelId },
 				// kilocode_change end
 			}
 
@@ -396,6 +443,48 @@ const ApiOptions = ({
 		return getModelValidationError(apiConfiguration, routerModels, organizationAllowList)
 	}, [apiConfiguration, routerModels, organizationAllowList])
 
+	const docs = useMemo(() => {
+		const provider = PROVIDERS.find(({ value }) => value === selectedProvider)
+		const name = provider?.label
+
+		if (!name) {
+			return undefined
+		}
+
+		// kilocode_change start
+		// Providers that don't have documentation pages yet
+		const excludedProviders = [
+			"gemini-cli",
+			"moonshot",
+			"chutes",
+			"cerebras",
+			"litellm",
+			"zai",
+			"qwen-code",
+			"minimax",
+		]
+
+		// Skip documentation link when the provider is excluded because documentation is not available
+		if (excludedProviders.includes(selectedProvider)) {
+			return undefined
+		}
+		// kilocode_change end
+
+		// Get the URL slug - use custom mapping if available, otherwise use the provider key.
+		const slugs: Record<string, string> = {
+			"openai-native": "openai",
+			openai: "openai-compatible",
+		}
+
+		const slug = slugs[selectedProvider] || selectedProvider
+		return {
+			url: buildDocLink(`providers/${slug}`, "provider_docs"),
+			name,
+		}
+	}, [selectedProvider])
+
+	// Convert providers to SearchableSelect options
+	// kilocode_change start: no organizationAllowList
 	const providerOptions = useMemo(
 		() =>
 			PROVIDERS.map(({ value, label }) => {
@@ -421,14 +510,6 @@ const ApiOptions = ({
 				/>
 			</div>
 
-			{
-				// kilocode_change start
-				selectedProvider === "openrouter" && (
-					<OpenRouterMarkupInfoView setApiConfigurationField={setApiConfigurationField} />
-				)
-				// kilocode_change end
-			}
-
 			{errorMessage && <ApiErrorMessage errorMessage={errorMessage} />}
 
 			{/* kilocode_change start */}
@@ -442,6 +523,7 @@ const ApiOptions = ({
 					organizationAllowList={organizationAllowList}
 					uriScheme={uriScheme}
 					uiKind={uiKind}
+					kiloCodeWrapperProperties={kiloCodeWrapperProperties}
 					kilocodeDefaultModel={kilocodeDefaultModel}
 				/>
 			)}
@@ -493,6 +575,30 @@ const ApiOptions = ({
 				/>
 			)}
 
+			{selectedProvider === "deepinfra" && (
+				<DeepInfra
+					apiConfiguration={apiConfiguration}
+					setApiConfigurationField={setApiConfigurationField}
+					routerModels={routerModels}
+					refetchRouterModels={refetchRouterModels}
+					organizationAllowList={organizationAllowList}
+					modelValidationError={modelValidationError}
+				/>
+			)}
+
+			{/* kilocode_change start */}
+			{selectedProvider === "inception" && (
+				<Inception
+					apiConfiguration={apiConfiguration}
+					setApiConfigurationField={setApiConfigurationField}
+					routerModels={routerModels}
+					refetchRouterModels={refetchRouterModels}
+					organizationAllowList={organizationAllowList}
+					modelValidationError={modelValidationError}
+				/>
+			)}
+			{/* kilocode_change end */}
+
 			{selectedProvider === "anthropic" && (
 				<Anthropic apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
 			)}
@@ -502,8 +608,24 @@ const ApiOptions = ({
 			)}
 
 			{selectedProvider === "openai-native" && (
-				<OpenAI apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
+				<OpenAI
+					apiConfiguration={apiConfiguration}
+					setApiConfigurationField={setApiConfigurationField}
+					selectedModelInfo={selectedModelInfo}
+				/>
 			)}
+
+			{/* kilocode_change start */}
+			{selectedProvider === "ovhcloud" && (
+				<OvhCloudAiEndpoints
+					apiConfiguration={apiConfiguration}
+					setApiConfigurationField={setApiConfigurationField}
+					routerModels={routerModels}
+					organizationAllowList={organizationAllowList}
+					modelValidationError={modelValidationError}
+				/>
+			)}
+			{/* kilocode_change end */}
 
 			{selectedProvider === "mistral" && (
 				<Mistral apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
@@ -526,10 +648,14 @@ const ApiOptions = ({
 			)}
 
 			{selectedProvider === "gemini" && (
+				// kilocode_change: added props
 				<Gemini
 					apiConfiguration={apiConfiguration}
 					setApiConfigurationField={setApiConfigurationField}
 					fromWelcomeView={fromWelcomeView}
+					routerModels={routerModels}
+					organizationAllowList={organizationAllowList}
+					modelValidationError={modelValidationError}
 				/>
 			)}
 
@@ -554,8 +680,16 @@ const ApiOptions = ({
 				<Doubao apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
 			)}
 
+			{selectedProvider === "qwen-code" && (
+				<QwenCode apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
+			)}
+
 			{selectedProvider === "moonshot" && (
 				<Moonshot apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
+			)}
+
+			{selectedProvider === "minimax" && (
+				<MiniMax apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
 			)}
 
 			{selectedProvider === "vscode-lm" && (
@@ -583,11 +717,16 @@ const ApiOptions = ({
 			)}
 
 			{selectedProvider === "chutes" && (
-				<Chutes apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
+				<Chutes
+					apiConfiguration={apiConfiguration}
+					setApiConfigurationField={setApiConfigurationField}
+					routerModels={routerModels}
+					organizationAllowList={organizationAllowList}
+					modelValidationError={modelValidationError}
+				/>
 			)}
 
 			{/* kilocode_change start */}
-
 			{selectedProvider === "gemini-cli" && (
 				<GeminiCli apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
 			)}
@@ -597,10 +736,6 @@ const ApiOptions = ({
 					apiConfiguration={apiConfiguration}
 					setApiConfigurationField={setApiConfigurationField}
 				/>
-			)}
-
-			{selectedProvider === "qwen-code" && (
-				<QwenCode apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
 			)}
 			{/* kilocode_change end */}
 
@@ -630,20 +765,15 @@ const ApiOptions = ({
 				/>
 			)}
 
-			{
-				// kilocode_change start
-				selectedProvider === "deepinfra" && (
-					<DeepInfra
-						apiConfiguration={apiConfiguration}
-						setApiConfigurationField={setApiConfigurationField}
-						routerModels={routerModels}
-						refetchRouterModels={() => refetchRouterModels()}
-						organizationAllowList={organizationAllowList}
-						modelValidationError={modelValidationError}
-					/>
-				)
-				// kilocode_change end
-			}
+			{selectedProvider === "vercel-ai-gateway" && (
+				<VercelAiGateway
+					apiConfiguration={apiConfiguration}
+					setApiConfigurationField={setApiConfigurationField}
+					routerModels={routerModels}
+					organizationAllowList={organizationAllowList}
+					modelValidationError={modelValidationError}
+				/>
+			)}
 
 			{selectedProvider === "human-relay" && (
 				<>
@@ -668,24 +798,26 @@ const ApiOptions = ({
 			{selectedProvider === "fireworks" && (
 				<Fireworks apiConfiguration={apiConfiguration} setApiConfigurationField={setApiConfigurationField} />
 			)}
+			{
+				// kilocode_change start
+				selectedProvider === "synthetic" && (
+					<Synthetic
+						apiConfiguration={apiConfiguration}
+						setApiConfigurationField={setApiConfigurationField}
+					/>
+				)
+				// kilocode_change end
+			}
 
 			{selectedProvider === "roo" && (
-				<div className="flex flex-col gap-3">
-					{cloudIsAuthenticated ? (
-						<div className="text-sm text-vscode-descriptionForeground">
-							{t("settings:providers.roo.authenticatedMessage")}
-						</div>
-					) : (
-						<div className="flex flex-col gap-2">
-							<VSCodeButton
-								appearance="primary"
-								onClick={() => vscode.postMessage({ type: "rooCloudSignIn" })}
-								className="w-fit">
-								{t("settings:providers.roo.connectButton")}
-							</VSCodeButton>
-						</div>
-					)}
-				</div>
+				<Roo
+					apiConfiguration={apiConfiguration}
+					setApiConfigurationField={setApiConfigurationField}
+					routerModels={routerModels}
+					cloudIsAuthenticated={cloudIsAuthenticated}
+					organizationAllowList={organizationAllowList}
+					modelValidationError={modelValidationError}
+				/>
 			)}
 
 			{selectedProvider === "featherless" && (
@@ -728,6 +860,11 @@ const ApiOptions = ({
 						</Select>
 					</div>
 
+					{/* Show error if a deprecated model is selected */}
+					{selectedModelInfo?.deprecated && (
+						<ApiErrorMessage errorMessage={t("settings:validation.modelDeprecated")} />
+					)}
+
 					{selectedProvider === "bedrock" && selectedModelId === "custom-arn" && (
 						<BedrockCustomArn
 							apiConfiguration={apiConfiguration}
@@ -735,22 +872,34 @@ const ApiOptions = ({
 						/>
 					)}
 
-					<ModelInfoView
-						apiProvider={selectedProvider}
-						selectedModelId={selectedModelId}
-						modelInfo={selectedModelInfo}
-						isDescriptionExpanded={isDescriptionExpanded}
-						setIsDescriptionExpanded={setIsDescriptionExpanded}
-					/>
+					{/* Only show model info if not deprecated */}
+					{!selectedModelInfo?.deprecated && (
+						<ModelInfoView
+							apiProvider={selectedProvider}
+							selectedModelId={selectedModelId}
+							modelInfo={selectedModelInfo}
+							isDescriptionExpanded={isDescriptionExpanded}
+							setIsDescriptionExpanded={setIsDescriptionExpanded}
+						/>
+					)}
 				</>
 			)}
 
-			<ThinkingBudget
-				key={`${selectedProvider}-${selectedModelId}`}
-				apiConfiguration={apiConfiguration}
-				setApiConfigurationField={setApiConfigurationField}
-				modelInfo={selectedModelInfo}
-			/>
+			{selectedProvider === "roo" ? (
+				<SimpleThinkingBudget
+					key={`${selectedProvider}-${selectedModelId}`}
+					apiConfiguration={apiConfiguration}
+					setApiConfigurationField={setApiConfigurationField}
+					modelInfo={selectedModelInfo}
+				/>
+			) : (
+				<ThinkingBudget
+					key={`${selectedProvider}-${selectedModelId}`}
+					apiConfiguration={apiConfiguration}
+					setApiConfigurationField={setApiConfigurationField}
+					modelInfo={selectedModelInfo}
+				/>
+			)}
 
 			{/* Gate Verbosity UI by capability flag */}
 			{selectedModelInfo?.supportsVerbosity && (
@@ -763,17 +912,22 @@ const ApiOptions = ({
 
 			{
 				// kilocode_change start
-				(selectedProvider === "kilocode" || selectedProvider === "openrouter") && (
-					<KiloProviderRouting
-						apiConfiguration={apiConfiguration}
-						setApiConfigurationField={setApiConfigurationField}
-						kilocodeDefaultModel={kilocodeDefaultModel}
-					/>
-				)
+				(selectedProvider === "kilocode" || selectedProvider === "openrouter") &&
+					(apiConfiguration.kilocodeOrganizationId ? (
+						<KiloProviderRoutingManagedByOrganization
+							organizationId={apiConfiguration.kilocodeOrganizationId}
+						/>
+					) : (
+						<KiloProviderRouting
+							apiConfiguration={apiConfiguration}
+							setApiConfigurationField={setApiConfigurationField}
+							kilocodeDefaultModel={kilocodeDefaultModel}
+						/>
+					))
 				// kilocode_change end
 			}
 
-			{!fromWelcomeView && (
+			{!fromWelcomeView && selectedProvider !== "virtual-quota-fallback" /*kilocode_change*/ && (
 				<Collapsible open={isAdvancedSettingsOpen} onOpenChange={setIsAdvancedSettingsOpen}>
 					<CollapsibleTrigger className="flex items-center gap-1 w-full cursor-pointer hover:opacity-80 mb-2">
 						<span className={`codicon codicon-chevron-${isAdvancedSettingsOpen ? "down" : "right"}`}></span>
@@ -784,16 +938,36 @@ const ApiOptions = ({
 							todoListEnabled={apiConfiguration.todoListEnabled}
 							onChange={(field, value) => setApiConfigurationField(field, value)}
 						/>
+						{
+							// kilocode_change start
+							nativeFunctionCallingProviders.includes(selectedProvider) && (
+								<ToolUseControl
+									toolStyle={apiConfiguration.toolStyle}
+									onChange={(field, value) => setApiConfigurationField(field, value)}
+								/>
+							)
+							// kilocode_change end
+						}
 						<DiffSettingsControl
 							diffEnabled={apiConfiguration.diffEnabled}
 							fuzzyMatchThreshold={apiConfiguration.fuzzyMatchThreshold}
 							onChange={(field, value) => setApiConfigurationField(field, value)}
 						/>
-						<TemperatureControl
-							value={apiConfiguration.modelTemperature}
-							onChange={handleInputChange("modelTemperature", noTransform)}
-							maxValue={2}
-						/>
+						{selectedModelInfo?.supportsTemperature !== false && (
+							<TemperatureControl
+								value={apiConfiguration.modelTemperature}
+								onChange={handleInputChange("modelTemperature", noTransform)}
+								maxValue={2}
+							/>
+						)}
+						{
+							// kilocode_change start
+							<RateLimitAfterControl
+								rateLimitAfterEnabled={apiConfiguration.rateLimitAfter}
+								onChange={(field, value) => setApiConfigurationField(field, value)}
+							/>
+							// kilocode_change end
+						}
 						<RateLimitSecondsControl
 							value={apiConfiguration.rateLimitSeconds || 0}
 							onChange={(value) => setApiConfigurationField("rateLimitSeconds", value)}

@@ -25,14 +25,20 @@
 		"autoApprove": "Auto-aprovació",
 		"browser": "Accés a l'ordinador",
 		"checkpoints": "Punts de control",
+		"display": "Mostrar",
 		"notifications": "Notificacions",
 		"contextManagement": "Context",
 		"terminal": "Terminal",
+		"slashCommands": "Comandes de barra",
 		"prompts": "Indicacions",
+		"ui": "UI",
 		"experimental": "Experimental",
 		"language": "Idioma",
-		"about": "Sobre Kilo Code Chinese",
-		"display": "Mostrar"
+		"about": "Sobre Kilo SSY",
+		"autoPurge": "Auto-neteja"
+	},
+	"slashCommands": {
+		"description": "Gestiona les teves comandes de barra per executar ràpidament fluxos de treball i accions personalitzades. <DocsLink>Aprèn-ne més</DocsLink>"
 	},
 	"prompts": {
 		"description": "Configura les indicacions de suport utilitzades per a accions ràpides com millorar indicacions, explicar codi i solucionar problemes. Aquestes indicacions ajuden Kilo Code a proporcionar millor assistència per a tasques comunes de desenvolupament."
@@ -51,6 +57,12 @@
 		"mistralProvider": "Mistral",
 		"mistralApiKeyLabel": "Clau de l'API:",
 		"mistralApiKeyPlaceholder": "Introduïu la vostra clau de l'API de Mistral",
+		"vercelAiGatewayProvider": "Vercel AI Gateway",
+		"vercelAiGatewayApiKeyLabel": "Clau API",
+		"vercelAiGatewayApiKeyPlaceholder": "Introduïu la vostra clau API de Vercel AI Gateway",
+		"openRouterProvider": "OpenRouter",
+		"openRouterApiKeyLabel": "Clau de l'API d'OpenRouter",
+		"openRouterApiKeyPlaceholder": "Introduïu la vostra clau de l'API d'OpenRouter",
 		"openaiCompatibleProvider": "Compatible amb OpenAI",
 		"openAiKeyLabel": "Clau API OpenAI",
 		"openAiKeyPlaceholder": "Introduïu la vostra clau API OpenAI",
@@ -114,9 +126,11 @@
 			"modelDimensionRequired": "Cal una dimensió de model",
 			"geminiApiKeyRequired": "Cal una clau d'API de Gemini",
 			"mistralApiKeyRequired": "La clau de l'API de Mistral és requerida",
+			"vercelAiGatewayApiKeyRequired": "Es requereix la clau API de Vercel AI Gateway",
 			"ollamaBaseUrlRequired": "Cal una URL base d'Ollama",
 			"baseUrlRequired": "Cal una URL base",
-			"modelDimensionMinValue": "La dimensió del model ha de ser superior a 0"
+			"modelDimensionMinValue": "La dimensió del model ha de ser superior a 0",
+			"openRouterApiKeyRequired": "Clau API d'OpenRouter és requerida"
 		},
 		"advancedConfigLabel": "Configuració avançada",
 		"searchMinScoreLabel": "Llindar de puntuació de cerca",
@@ -124,9 +138,12 @@
 		"searchMinScoreResetTooltip": "Restablir al valor per defecte (0.4)",
 		"searchMaxResultsLabel": "Màxim de resultats de cerca",
 		"searchMaxResultsDescription": "Nombre màxim de resultats de cerca a retornar quan es consulta l'índex de la base de codi. Els valors més alts proporcionen més context però poden incloure resultats menys rellevants.",
-		"resetToDefault": "Restablir al valor per defecte"
+		"resetToDefault": "Restablir al valor per defecte",
+		"cancelling": "S'està cancel·lant...",
+		"cancelIndexingButton": "Cancel·la la indexació"
 	},
 	"autoApprove": {
+		"toggleShortcut": "Pots configurar una drecera global per a aquesta configuració <SettingsLink>a les preferències del teu IDE</SettingsLink>.",
 		"description": "Permet que Kilo Code realitzi operacions automàticament sense requerir aprovació. Activeu aquesta configuració només si confieu plenament en la IA i enteneu els riscos de seguretat associats.",
 		"enabled": "Auto-aprovació activada",
 		"toggleAriaLabel": "Commuta l'aprovació automàtica",
@@ -216,6 +233,8 @@
 		"providerDocumentation": "Documentació de {{provider}}",
 		"configProfile": "Perfil de configuració",
 		"description": "Deseu diferents configuracions d'API per canviar ràpidament entre proveïdors i configuracions.",
+		"makeActiveProfile": "Fer perfil actiu",
+		"makeActiveTooltip": "Activa aquest perfil per utilitzar-lo per a sol·licituds d'API",
 		"apiProvider": "Proveïdor d'API",
 		"model": "Model",
 		"nameEmpty": "El nom no pot estar buit",
@@ -233,11 +252,15 @@
 		"searchProviderPlaceholder": "Cerca proveïdors",
 		"noProviderMatchFound": "No s'han trobat proveïdors",
 		"noMatchFound": "No s'han trobat perfils coincidents",
-		"vscodeLmDescription": "L'API del model de llenguatge de VS SSY us permet executar models proporcionats per altres extensions de VS SSY (incloent-hi, però no limitat a, GitHub Copilot). La manera més senzilla de començar és instal·lar les extensions Copilot i Copilot Chat des del VS SSY Marketplace.",
+		"vscodeLmDescription": "L'API del model de llenguatge de VS Code us permet executar models proporcionats per altres extensions de VS Code (incloent-hi però limitat a, GitHub Copilot). La manera més senzilla de començar és instal·lar les extensions Copilot i Copilot Chat des del VS Code Marketplace.",
+		"vscodeLmUnavailable": "El suport de models de llenguatge de VS Code només està disponible a Visual Studio Code. Els forks com VSCodium i altres poden no funcionar. A més, aquesta capacitat no està disponible a les eines JetBrains.",
+		"vscodeLmUnavailableInstructions": "Assegureu-vos que utilitzeu una eina compatible i que VS Code Chat estigui instal·lat i habilitat",
 		"awsCustomArnUse": "Introduïu un ARN vàlid d'Amazon Bedrock per al model que voleu utilitzar. Exemples de format:",
 		"awsCustomArnDesc": "Assegureu-vos que la regió a l'ARN coincideix amb la regió d'AWS seleccionada anteriorment.",
 		"openRouterApiKey": "Clau API d'OpenRouter",
 		"getOpenRouterApiKey": "Obtenir clau API d'OpenRouter",
+		"vercelAiGatewayApiKey": "Clau API de Vercel AI Gateway",
+		"getVercelAiGatewayApiKey": "Obtenir clau API de Vercel AI Gateway",
 		"apiKeyStorageNotice": "Les claus API s'emmagatzemen de forma segura a l'Emmagatzematge Secret de VSCode",
 		"glamaApiKey": "Clau API de Glama",
 		"getGlamaApiKey": "Obtenir clau API de Glama",
@@ -274,6 +297,8 @@
 		"getChutesApiKey": "Obtenir clau API de Chutes",
 		"fireworksApiKey": "Clau API de Fireworks",
 		"getFireworksApiKey": "Obtenir clau API de Fireworks",
+		"syntheticApiKey": "Clau API de Synthetic",
+		"getSyntheticApiKey": "Obtenir clau API de Synthetic",
 		"featherlessApiKey": "Clau API de Featherless",
 		"getFeatherlessApiKey": "Obtenir clau API de Featherless",
 		"ioIntelligenceApiKey": "Clau API d'IO Intelligence",
@@ -292,6 +317,9 @@
 		"getZaiApiKey": "Obtenir clau API de Z AI",
 		"zaiEntrypoint": "Punt d'entrada de Z AI",
 		"zaiEntrypointDescription": "Si us plau, seleccioneu el punt d'entrada de l'API apropiat segons la vostra ubicació. Si sou a la Xina, trieu open.bigmodel.cn. Altrament, trieu api.z.ai.",
+		"minimaxApiKey": "Clau API de MiniMax",
+		"getMiniMaxApiKey": "Obtenir clau API de MiniMax",
+		"minimaxBaseUrl": "Punt d'entrada de MiniMax",
 		"geminiApiKey": "Clau API de Gemini",
 		"getGroqApiKey": "Obtenir clau API de Groq",
 		"groqApiKey": "Clau API de Groq",
@@ -299,6 +327,10 @@
 		"sambaNovaApiKey": "Clau API de SambaNova",
 		"getHuggingFaceApiKey": "Obtenir clau API de Hugging Face",
 		"huggingFaceApiKey": "Clau API de Hugging Face",
+		"getOvhCloudAiEndpointsApiKey": "Obtenir clau API de OVHcloud AI Endpoints",
+		"ovhCloudAiEndpointsApiKey": "Clau API de OVHcloud AI Endpoints",
+		"ovhCloudAiEndpointsBaseUrl": "URL base",
+		"getOvhCloudAiEndpointsBaseUrl": "Utilitzar una URL base personalitzada",
 		"huggingFaceModelId": "ID del model",
 		"huggingFaceLoading": "Carregant...",
 		"huggingFaceModelsCount": "({{count}} models)",
@@ -341,7 +373,7 @@
 		"enablePromptCachingTitle": "Habilitar l'emmagatzematge en caché de prompts per millorar el rendiment i reduir els costos per als models compatibles.",
 		"cacheUsageNote": "Nota: Si no veieu l'ús de la caché, proveu de seleccionar un model diferent i després tornar a seleccionar el model desitjat.",
 		"vscodeLmModel": "Model de llenguatge",
-		"vscodeLmWarning": "Nota: Aquesta és una integració molt experimental i el suport del proveïdor variarà. Si rebeu un error sobre un model no compatible, és un problema del proveïdor.",
+		"vscodeLmWarning": "Nota: Els models accessibles a través de l’API VS Code Language Model poden estar encapsulats o ajustats pel proveïdor; per tant, el comportament pot diferir de l’ús directe del mateix model des d’un proveïdor o enrutador típic. Per utilitzar un model del desplegable «Language Model», primer canvia a aquest model i després fes clic a «Acceptar» a l’avís de Copilot Chat; en cas contrari pots veure un error com 400 «The requested model is not supported».",
 		"geminiParameters": {
 			"urlContext": {
 				"title": "Activa el context d'URL",
@@ -375,9 +407,11 @@
 		"ollama": {
 			"baseUrl": "URL base (opcional)",
 			"modelId": "ID del model",
-			"apiKey": "Clau API",
-			"apiKeyPlaceholder": "Introduïu la vostra clau API",
-			"apiKeyInfo": "La clau API s'enviarà com a capçalera d'autorització",
+			"apiKey": "Clau API d'Ollama",
+			"apiKeyPlaceholder": "Introdueix la teva clau API",
+			"apiKeyHelp": "Clau API opcional per a instàncies d'Ollama autenticades o serveis al núvol. Deixa-ho buit per a instal·lacions locals.",
+			"numCtx": "Mida de la finestra de context (num_ctx)",
+			"numCtxHelp": "Sobreescriu la mida de la finestra de context per defecte del model. Deixeu-ho en blanc per utilitzar la configuració del Modelfile del model. El valor mínim és 128.",
 			"description": "Ollama permet executar models localment al vostre ordinador. Per a instruccions sobre com començar, consulteu la Guia d'inici ràpid.",
 			"warning": "Nota: Kilo Code utilitza prompts complexos i funciona millor amb models Claude. Els models menys capaços poden no funcionar com s'espera."
 		},
@@ -416,7 +450,7 @@
 			},
 			"computerUse": {
 				"label": "Ús de l'ordinador",
-				"description": "Aquest model és capaç d'interactuar amb un navegador? (com Claude 3.7 Sonnet)"
+				"description": "Aquest model és capaç d'interactuar amb un navegador?"
 			},
 			"promptCache": {
 				"label": "Emmagatzematge en caché de prompts",
@@ -442,6 +476,10 @@
 			},
 			"resetDefaults": "Restablir als valors per defecte"
 		},
+		"rateLimitAfter": {
+			"label": "Límit de taxa al final",
+			"description": "Comenceu a limitar la taxa un cop acaba el flux de l’API."
+		},
 		"rateLimitSeconds": {
 			"label": "Límit de freqüència",
 			"description": "Temps mínim entre sol·licituds d'API."
@@ -454,6 +492,7 @@
 		},
 		"reasoningEffort": {
 			"label": "Esforç de raonament del model",
+			"none": "Cap",
 			"minimal": "Mínim (el més ràpid)",
 			"high": "Alt",
 			"medium": "Mitjà",
@@ -526,9 +565,45 @@
 		}
 	},
 	"checkpoints": {
+		"timeout": {
+			"label": "Temps d'espera per inicialitzar el punt de control (segons)",
+			"description": "Temps màxim d'espera per inicialitzar el servei de punts de control. El valor per defecte és 15 segons. Rang: 10-60 segons."
+		},
 		"enable": {
 			"label": "Habilitar punts de control automàtics",
 			"description": "Quan està habilitat, Kilo Code crearà automàticament punts de control durant l'execució de tasques, facilitant la revisió de canvis o la reversió a estats anteriors. <0>Més informació</0>"
+		}
+	},
+	"autoPurge": {
+		"enable": {
+			"label": "Activar neteja automàtica de tasques",
+			"description": "Eliminar automàticament tasques antigues per alliberar espai de disc i millorar el rendiment. Les tasques es classifiquen per tipus i edat per determinar quan s'han d'eliminar."
+		},
+		"defaultRetention": {
+			"label": "Període de retenció per defecte (dies)",
+			"description": "Nombre de dies per mantenir les tasques abans que siguin elegibles per a la neteja"
+		},
+		"neverPurgeFavorited": {
+			"label": "Mai eliminar tasques favorites",
+			"description": "Quan està activat, les tasques favorites mai s'eliminaran automàticament independentment de l'edat"
+		},
+		"favoritedRetention": {
+			"label": "Retenció de tasques favorites (dies)",
+			"description": "Nombre de dies per mantenir tasques favorites (només s'aplica quan 'Mai eliminar tasques favorites' està desactivat)"
+		},
+		"completedRetention": {
+			"label": "Retenció de tasques completades (dies)",
+			"description": "Nombre de dies per mantenir tasques que s'han completat amb èxit"
+		},
+		"incompleteRetention": {
+			"label": "Retenció de tasques incompletes (dies)",
+			"description": "Nombre de dies per mantenir tasques que no es van completar (normalment més curt que les tasques completades)"
+		},
+		"lastRun": {
+			"label": "Última neteja"
+		},
+		"manualPurge": {
+			"button": "Executar neteja ara"
 		}
 	},
 	"notifications": {
@@ -621,6 +696,14 @@
 			"label": "Mida total màxima d'imatges",
 			"mb": "MB",
 			"description": "Límit de mida acumulativa màxima (en MB) per a totes les imatges processades en una sola operació read_file. Quan es llegeixen múltiples imatges, la mida de cada imatge s'afegeix al total. Si incloure una altra imatge excediria aquest límit, serà omesa."
+		},
+		"includeCurrentTime": {
+			"label": "Inclou l'hora actual en el context",
+			"description": "Quan està activat, l'hora actual i la informació del fus horari s'inclouran a la indicació del sistema. Desactiveu-ho si els models deixen de funcionar per problemes amb l'hora."
+		},
+		"includeCurrentCost": {
+			"label": "Inclou el cost actual en el context",
+			"description": "Quan està activat, el cost d'ús actual de l'API s'inclourà a la indicació del sistema. Desactiveu-ho si els models deixen de funcionar per problemes amb el cost."
 		}
 	},
 	"terminal": {
@@ -629,56 +712,56 @@
 			"description": "Configuració bàsica del terminal"
 		},
 		"advanced": {
-			"label": "Configuració del terminal: Avançada",
-			"description": "Les següents opcions poden requerir reiniciar el terminal per aplicar la configuració."
+			"label": "Configuració del terminal: Avançat",
+			"description": "Aquests paràmetres només s'apliquen quan 'Utilitza terminal en línia' està desactivat. Només afecten el terminal de VS Code i poden requerir reiniciar l'IDE."
 		},
 		"outputLineLimit": {
-			"label": "Límit de sortida de terminal",
-			"description": "Nombre màxim de línies a incloure a la sortida del terminal en executar comandes. Quan s'excedeix, s'eliminaran línies del mig, estalviant token. <0>Més informació</0>"
+			"label": "Límit de sortida del terminal",
+			"description": "Conserva les primeres i últimes línies i descarta les del mig per mantenir-se sota el límit. Redueix per estalviar tokens; augmenta per donar a Kilo més detalls del mig. Kilo veu un marcador on s'ha omès el contingut.<0>Aprèn-ne més</0>"
 		},
 		"outputCharacterLimit": {
 			"label": "Límit de caràcters del terminal",
-			"description": "Nombre màxim de caràcters a incloure en la sortida del terminal en executar ordres. Aquest límit té precedència sobre el límit de línies per evitar problemes de memòria amb línies extremadament llargues. Quan se superi, la sortida es truncarà. <0>Més informació</0>"
+			"description": "Anul·la el límit de línies per evitar problemes de memòria imposant un límit dur a la mida de sortida. Si se supera, manté l'inici i el final i mostra un marcador a Kilo on s'ha omès el contingut. <0>Aprèn-ne més</0>"
 		},
 		"shellIntegrationTimeout": {
-			"label": "Temps d'espera d'integració de shell del terminal",
-			"description": "Temps màxim d'espera per a la inicialització de la integració de shell abans d'executar comandes. Per a usuaris amb temps d'inici de shell llargs, aquest valor pot necessitar ser augmentat si veieu errors \"Shell Integration Unavailable\" al terminal. <0>Més informació</0>"
+			"label": "Temps d'espera d'integració del shell del terminal",
+			"description": "Quant de temps esperar la integració del shell de VS Code abans d'executar comandes. Augmenta si el teu shell s'inicia lentament o veus errors 'Integració del Shell No Disponible'. <0>Aprèn-ne més</0>"
 		},
 		"shellIntegrationDisabled": {
-			"label": "Desactiva la integració de l'intèrpret d'ordres del terminal",
-			"description": "Activa això si les ordres del terminal no funcionen correctament o si veus errors de 'Shell Integration Unavailable'. Això utilitza un mètode més senzill per executar ordres, evitant algunes funcions avançades del terminal. <0>Més informació</0>"
+			"label": "Utilitza terminal en línia (recomanat)",
+			"description": "Executa comandes al terminal en línia (xat) per evitar perfils/integració del shell per a execucions més ràpides i fiables. Quan està desactivat, Kilo usa el terminal de VS Code amb el teu perfil de shell, prompts i connectors. <0>Aprèn-ne més</0>"
 		},
 		"commandDelay": {
 			"label": "Retard de comanda del terminal",
-			"description": "Retard en mil·lisegons a afegir després de l'execució de la comanda. La configuració predeterminada de 0 desactiva completament el retard. Això pot ajudar a assegurar que la sortida de la comanda es capturi completament en terminals amb problemes de temporització. En la majoria de terminals s'implementa establint `PROMPT_COMMAND='sleep N'` i Powershell afegeix `start-sleep` al final de cada comanda. Originalment era una solució per al error VSCode#237208 i pot no ser necessari. <0>Més informació</0>"
+			"description": "Afegeix una pausa breu després de cada comanda perquè el terminal de VS Code pugui buidar tota la sortida (bash/zsh: PROMPT_COMMAND sleep; PowerShell: start-sleep). Usa només si veus que falta sortida final; altrament deixa a 0. <0>Aprèn-ne més</0>"
 		},
 		"compressProgressBar": {
-			"label": "Comprimir sortida de barra de progrés",
-			"description": "Quan està habilitat, processa la sortida del terminal amb retorns de carro (\\r) per simular com un terminal real mostraria el contingut. Això elimina els estats intermedis de les barres de progrés, mantenint només l'estat final, la qual cosa conserva espai de context per a informació més rellevant. <0>Més informació</0>"
+			"label": "Comprimeix sortida de barra de progrés",
+			"description": "Col·lapsa barres de progrés/spinners perquè només es mantingui l'estat final (estalvia tokens). <0>Aprèn-ne més</0>"
 		},
 		"powershellCounter": {
-			"label": "Habilita la solució temporal del comptador PowerShell",
-			"description": "Quan està habilitat, afegeix un comptador a les comandes PowerShell per assegurar l'execució correcta de les comandes. Això ajuda amb els terminals PowerShell que poden tenir problemes amb la captura de sortida. <0>Més informació</0>"
+			"label": "Activa solució de comptador de PowerShell",
+			"description": "Activa quan falta o es duplica la sortida de PowerShell; afegeix un petit comptador a cada comanda per estabilitzar la sortida. Mantén desactivat si la sortida ja es veu correcta. <0>Aprèn-ne més</0>"
 		},
 		"zshClearEolMark": {
-			"label": "Neteja la marca EOL de ZSH",
-			"description": "Quan està habilitat, neteja la marca de final de línia de ZSH establint PROMPT_EOL_MARK=''. Això evita problemes amb la interpretació de la sortida de comandes quan acaba amb caràcters especials com '%'. <0>Més informació</0>"
+			"label": "Neteja marca EOL de ZSH",
+			"description": "Activa quan vegis % extraviats al final de línies o l'anàlisi sembli incorrecta; omet la marca de final de línia (%) de Zsh. <0>Aprèn-ne més</0>"
 		},
 		"zshOhMy": {
-			"label": "Habilita la integració Oh My Zsh",
-			"description": "Quan està habilitat, estableix ITERM_SHELL_INTEGRATION_INSTALLED=Yes per habilitar les característiques d'integració del shell Oh My Zsh. Aplicar aquesta configuració pot requerir reiniciar l'IDE. <0>Més informació</0>"
+			"label": "Activa integració amb Oh My Zsh",
+			"description": "Activa quan el teu tema/connectors d'Oh My Zsh esperin integració del shell; estableix ITERM_SHELL_INTEGRATION_INSTALLED=Yes. Desactiva per evitar establir aquesta variable. <0>Aprèn-ne més</0>"
 		},
 		"zshP10k": {
-			"label": "Habilita la integració Powerlevel10k",
-			"description": "Quan està habilitat, estableix POWERLEVEL9K_TERM_SHELL_INTEGRATION=true per habilitar les característiques d'integració del shell Powerlevel10k. <0>Més informació</0>"
+			"label": "Activa integració amb Powerlevel10k",
+			"description": "Activa quan usis integració del shell de Powerlevel10k. <0>Aprèn-ne més</0>"
 		},
 		"zdotdir": {
-			"label": "Habilitar gestió de ZDOTDIR",
-			"description": "Quan està habilitat, crea un directori temporal per a ZDOTDIR per gestionar correctament la integració del shell zsh. Això assegura que la integració del shell de VSCode funcioni correctament amb zsh mentre es preserva la teva configuració de zsh. <0>Més informació</0>"
+			"label": "Activa gestió de ZDOTDIR",
+			"description": "Activa quan la integració del shell de zsh falli o entri en conflicte amb els teus dotfiles. <0>Aprèn-ne més</0>"
 		},
 		"inheritEnv": {
 			"label": "Hereta variables d'entorn",
-			"description": "Quan està habilitat, el terminal hereta les variables d'entorn del procés pare de VSCode, com ara la configuració d'integració del shell definida al perfil d'usuari. Això commuta directament la configuració global de VSCode `terminal.integrated.inheritEnv`. <0>Més informació</0>"
+			"description": "Activa per heretar variables d'entorn del procés pare de VS Code. <0>Aprèn-ne més</0>"
 		}
 	},
 	"advancedSettings": {
@@ -687,7 +770,7 @@
 	"advanced": {
 		"diff": {
 			"label": "Habilitar edició mitjançant diffs",
-			"description": "Quan està habilitat, Kilo Code podrà editar fitxers més ràpidament i rebutjarà automàticament escriptures completes de fitxers truncats. Funciona millor amb l'últim model Claude 3.7 Sonnet.",
+			"description": "Quan està habilitat, Kilo SSY podrà editar fitxers més ràpidament i rebutjarà automàticament escriptures completes de fitxers truncats",
 			"strategy": {
 				"label": "Estratègia de diff",
 				"options": {
@@ -716,10 +799,6 @@
 			"name": "Utilitzar estratègia diff unificada experimental",
 			"description": "Activar l'estratègia diff unificada experimental. Aquesta estratègia podria reduir el nombre de reintents causats per errors del model, però pot causar comportaments inesperats o edicions incorrectes. Activeu-la només si enteneu els riscos i esteu disposats a revisar acuradament tots els canvis."
 		},
-		"SEARCH_AND_REPLACE": {
-			"name": "Utilitzar eina de cerca i reemplaçament experimental",
-			"description": "Activar l'eina de cerca i reemplaçament experimental, permetent a Kilo Code reemplaçar múltiples instàncies d'un terme de cerca en una sola petició."
-		},
 		"INSERT_BLOCK": {
 			"name": "Utilitzar eina d'inserció de contingut experimental",
 			"description": "Activar l'eina d'inserció de contingut experimental, permetent a Kilo Code inserir contingut a números de línia específics sense necessitat de crear un diff."
@@ -744,16 +823,6 @@
 			"name": "Habilita edicions de fitxers concurrents",
 			"description": "Quan està activat, Kilo Code pot editar múltiples fitxers en una sola petició. Quan està desactivat, Kilo Code ha d'editar fitxers d'un en un. Desactivar això pot ajudar quan es treballa amb models menys capaços o quan vols més control sobre les modificacions de fitxers."
 		},
-		"MORPH_FAST_APPLY": {
-			"name": "Habilitar Morph Fast Apply",
-			"description": "Quan està habilitat, Kilo Code pot editar fitxers utilitzant Morph Fast Apply. Requereix el Proveïdor d'API de Kilo Code, OpenRouter o una clau d'API de Morph.",
-			"apiKey": "Clau d'API de Morph (opcional)",
-			"placeholder": "Introduïu la vostra clau d'API de Morph (opcional)"
-		},
-		"INLINE_ASSIST": {
-			"name": "Assistència en línia",
-			"description": "Activa les funcions d'assistència en línia per obtenir suggeriments i millores de codi ràpides directament al teu editor. Inclou la Tasca ràpida en línia (Cmd+I) per a canvis específics i la Tasca automàtica en línia per a millores contextuals."
-		},
 		"PREVENT_FOCUS_DISRUPTION": {
 			"name": "Edició en segon pla",
 			"description": "Quan s'activa, evita la interrupció del focus de l'editor. Les edicions de fitxers es produeixen en segon pla sense obrir la vista diff o robar el focus. Pots continuar treballant sense interrupcions mentre Kilo Code fa canvis. Els fitxers poden obrir-se sense focus per capturar diagnòstics o romandre completament tancats."
@@ -765,6 +834,43 @@
 		"NEW_TASK_REQUIRE_TODOS": {
 			"name": "Requerir la llista 'todos' per a noves tasques",
 			"description": "Quan estigui activat, l'eina new_task requerirà que es proporcioni un paràmetre 'todos'. Això garanteix que totes les noves tasques comencin amb una llista clara d'objectius. Quan estigui desactivat (per defecte), el paràmetre 'todos' continua sent opcional per a la compatibilitat amb versions anteriors."
+		},
+		"IMAGE_GENERATION": {
+			"name": "Habilitar generació d'imatges amb IA",
+			"description": "Quan estigui habilitat, Kilo Code pot generar imatges a partir de prompts de text. Requereix que es configuri una clau d'API de Kilo Code o OpenRouter.",
+			"apiProvider": "Proveïdor d'API",
+			"openRouterApiKeyLabel": "Clau API d'OpenRouter",
+			"openRouterApiKeyPlaceholder": "Introdueix la teva clau API d'OpenRouter",
+			"kiloCodeApiKeyLabel": "Clau API de Kilo Code",
+			"kiloCodeApiKeyPlaceholder": "Introdueix la teva clau API de Kilo Code",
+			"kiloCodeApiKeyPaste": "Enganxa la clau API actual de Kilo Code",
+			"getApiKeyText": "Obté la teva clau API de",
+			"modelSelectionLabel": "Model de generació d'imatges",
+			"modelSelectionDescription": "Selecciona el model per a la generació d'imatges",
+			"warningMissingKey": "⚠️ Es requereix una clau API per a la generació d'imatges, si us plau configura-la a dalt.",
+			"successConfigured": "✓ La generació d'imatges està configurada i llesta per utilitzar"
+		},
+		"INLINE_ASSIST": {
+			"name": "Autocomplete",
+			"description": "Habilita les funcionalitats d'Autocomplete per a suggeriments de codi ràpids i millores directament al teu editor. Inclou Tasca Ràpida (Cmd+I) per a canvis específics i Autocomplete per a millores contextuals."
+		},
+		"MORPH_FAST_APPLY": {
+			"name": "Habilitar Fast Apply",
+			"description": "Quan està habilitat, Kilo Code pot editar fitxers utilitzant Fast Apply amb models especialitzats optimitzats per a modificacions de codi. Requereix Kilo Gateway Provider, OpenRouter o una clau API de Morph.",
+			"apiKey": "Clau API de Morph (opcional)",
+			"placeholder": "Introduïu la vostra clau d'API de Morph (opcional)",
+			"modelLabel": "Selecció de model",
+			"modelDescription": "Trieu quin model de Fast Apply utilitzar per a edicions de fitxers",
+			"models": {
+				"auto": "Automàtic (Per defecte - tria el millor disponible)",
+				"morphFast": "Morph v3 Fast (Més ràpid, cost més baix)",
+				"morphLarge": "Morph v3 Large (Més capaç)",
+				"relace": "Relace Apply v3"
+			}
+		},
+		"RUN_SLASH_COMMAND": {
+			"name": "Habilitar comandes de barra diagonal iniciades pel model",
+			"description": "Quan està habilitat, Kilo Code pot executar les vostres comandes de barra diagonal per executar fluxos de treball."
 		}
 	},
 	"promptCaching": {
@@ -779,8 +885,6 @@
 	"modelInfo": {
 		"supportsImages": "Suporta imatges",
 		"noImages": "No suporta imatges",
-		"supportsComputerUse": "Suporta ús de l'ordinador",
-		"noComputerUse": "No suporta ús de l'ordinador",
 		"supportsPromptCache": "Suporta emmagatzematge en caché de prompts",
 		"noPromptCache": "No suporta emmagatzematge en caché de prompts",
 		"contextWindow": "Finestra de context:",
@@ -836,9 +940,11 @@
 			"regionMismatch": "Avís: La regió del vostre ARN ({{arnRegion}}) no coincideix amb la regió seleccionada ({{region}}). Això pot causar problemes d'accés. El proveïdor utilitzarà la regió de l'ARN."
 		},
 		"modelAvailability": "L'ID de model ({{modelId}}) que heu proporcionat no està disponible. Si us plau, trieu un altre model.",
+		"modelDeprecated": "Aquest model ja no està disponible. Si us plau, seleccioneu un model diferent.",
 		"providerNotAllowed": "El proveïdor '{{provider}}' no està permès per la vostra organització",
 		"modelNotAllowed": "El model '{{model}}' no està permès per al proveïdor '{{provider}}' per la vostra organització",
-		"profileInvalid": "Aquest perfil conté un proveïdor o model que no està permès per la vostra organització"
+		"profileInvalid": "Aquest perfil conté un proveïdor o model que no està permès per la vostra organització",
+		"qwenCodeOauthPath": "Has de proporcionar una ruta vàlida de credencials OAuth"
 	},
 	"placeholders": {
 		"apiKey": "Introduïu la clau API...",
@@ -877,11 +983,51 @@
 		"taskTimeline": {
 			"label": "Mostra la línia temporal de la tasca",
 			"description": "Mostra una línia de temps visual dels missatges de tasques, acolorida per tipus, que et permet veure ràpidament el progrés de la tasca i desplaçar-te cap enrere a punts específics de l'historial de la tasca."
+		},
+		"sendMessageOnEnter": {
+			"label": "Envia missatge amb Enter",
+			"description": "Quan estigui activat, prem Enter per enviar i Shift+Enter per a una nova línia. Desactiva-ho per utilitzar Shift+Enter per enviar en el seu lloc."
+		},
+		"costThreshold": {
+			"label": "Amaga el cost per sota del llindar",
+			"description": "Mostra només els costos de sol·licituds superiors a aquesta quantitat. Els costos sempre són visibles quan el panell de detalls està obert.",
+			"currentValue": "Llindar actual: ${{value}}"
+		},
+		"showTimestamps": {
+			"label": "Mostrar marca de temps",
+			"description": "Mostrar la marca de temps per a cada missatge a la vista del xat"
+		}
+	},
+	"ghost": {
+		"showGutterAnimation": {
+			"label": "Mostra l'animació al marge quan s'autocompleta",
+			"description": "Mostra un indicador animat al marge de l'editor quan l'autocompletament s'està executant",
+			"preview": "Previsualització de l'animació"
 		}
 	},
 	"includeMaxOutputTokens": "Incloure tokens màxims de sortida",
 	"includeMaxOutputTokensDescription": "Enviar el paràmetre de tokens màxims de sortida a les sol·licituds API. Alguns proveïdors poden no admetre això.",
 	"limitMaxTokensDescription": "Limitar el nombre màxim de tokens en la resposta",
 	"maxOutputTokensLabel": "Tokens màxims de sortida",
-	"maxTokensGenerateDescription": "Tokens màxims a generar en la resposta"
+	"maxTokensGenerateDescription": "Tokens màxims a generar en la resposta",
+	"serviceTier": {
+		"label": "Nivell de servei",
+		"tooltip": "Per a un processament més ràpid de les sol·licituds de l'API, proveu el nivell de servei de processament prioritari. Per a preus més baixos amb una latència més alta, proveu el nivell de processament flexible.",
+		"standard": "Estàndard",
+		"flex": "Flex",
+		"priority": "Prioritat",
+		"pricingTableTitle": "Preus per nivell de servei (preu per 1M de fitxes)",
+		"columns": {
+			"tier": "Nivell",
+			"input": "Entrada",
+			"output": "Sortida",
+			"cacheReads": "Lectures de memòria cau"
+		}
+	},
+	"ui": {
+		"collapseThinking": {
+			"label": "Replega els missatges de pensament per defecte",
+			"description": "Quan estigui activat, els blocs de pensament es replegaran per defecte fins que interactuïs amb ells"
+		}
+	}
 }

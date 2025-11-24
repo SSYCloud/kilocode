@@ -67,6 +67,12 @@
 			"copyError": "Error copiando la imagen"
 		}
 	},
+	"image": {
+		"tabs": {
+			"view": "Imagen"
+		},
+		"noData": "Sin datos de imagen"
+	},
 	"file": {
 		"errors": {
 			"invalidDataUri": "Formato de URI de datos inválido",
@@ -85,7 +91,13 @@
 		"deleteWarning": "Eliminar este mensaje eliminará todos los mensajes posteriores en la conversación. ¿Deseas continuar?",
 		"editMessage": "Editar mensaje",
 		"editWarning": "Editar este mensaje eliminará todos los mensajes posteriores en la conversación. ¿Deseas continuar?",
-		"proceed": "Continuar"
+		"editQuestionWithCheckpoint": "Editar este mensaje eliminará todos los mensajes posteriores en la conversación. ¿También deseas deshacer todos los cambios hasta este punto de control?",
+		"deleteQuestionWithCheckpoint": "Eliminar este mensaje eliminará todos los mensajes posteriores en la conversación. ¿También deseas deshacer todos los cambios hasta este punto de control?",
+		"editOnly": "No, solo editar el mensaje",
+		"deleteOnly": "No, solo eliminar el mensaje",
+		"restoreToCheckpoint": "Sí, restaurar el punto de control",
+		"proceed": "Continuar",
+		"dontShowAgain": "No mostrar esto de nuevo"
 	},
 	"time_ago": {
 		"just_now": "ahora mismo",
@@ -102,5 +114,9 @@
 		"months_ago": "hace {{count}} meses",
 		"year_ago": "hace un año",
 		"years_ago": "hace {{count}} años"
+	},
+	"errors": {
+		"wait_checkpoint_long_time": "Has esperado {{timeout}} segundos para la inicialización del punto de control. Si no necesitas esta función, desactívala en <settingsLink>la configuración del punto de control</settingsLink>.",
+		"init_checkpoint_fail_long_time": "La inicialización del punto de control ha tardado más de {{timeout}} segundos, por lo que los puntos de control están desactivados para esta tarea. Puedes desactivar los puntos de control o aumentar el tiempo de espera en <settingsLink>la configuración del punto de control</settingsLink>."
 	}
 }

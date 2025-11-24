@@ -10,6 +10,12 @@ export type OpenRouterReasoningParams = {
 	effort?: ReasoningEffortWithMinimal
 	max_tokens?: number
 	exclude?: boolean
+	enabled?: boolean // kilocode_change
+}
+
+export type RooReasoningParams = {
+	enabled?: boolean
+	effort?: ReasoningEffortWithMinimal
 }
 
 export type AnthropicReasoningParams = BetaThinkingConfigParam
@@ -38,6 +44,36 @@ export const getOpenRouterReasoning = ({
 				? { effort: reasoningEffort }
 				: undefined
 			: undefined
+
+export const getRooReasoning = ({
+	model,
+	reasoningEffort,
+	settings,
+}: GetModelReasoningOptions): RooReasoningParams | undefined => {
+	// Check if model supports reasoning effort
+	if (!model.supportsReasoningEffort) {
+		return undefined
+	}
+
+	// If enableReasoningEffort is explicitly false, return enabled: false
+	if (settings.enableReasoningEffort === false) {
+		return { enabled: false }
+	}
+
+	// If reasoning effort is provided, return it with enabled: true
+	if (reasoningEffort && reasoningEffort !== "minimal") {
+		return { enabled: true, effort: reasoningEffort }
+	}
+
+	// If reasoningEffort is explicitly undefined (None selected), disable reasoning
+	// This ensures we explicitly tell the backend not to use reasoning
+	if (reasoningEffort === undefined) {
+		return { enabled: false }
+	}
+
+	// Default: no reasoning parameter (reasoning not enabled)
+	return undefined
+}
 
 export const getAnthropicReasoning = ({
 	model,

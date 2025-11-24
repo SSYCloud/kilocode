@@ -1,6 +1,5 @@
-import type { ProviderSettings } from "@roo-code/types"
+import type { ProviderSettings, OrganizationAllowList } from "@roo-code/types"
 
-import type { OrganizationAllowList } from "@roo/cloud"
 import { RouterModels } from "@roo/api"
 
 import { getModelValidationError, validateApiConfigurationExcludingModelErrors } from "../validate"
@@ -25,7 +24,7 @@ describe("Model Validation Functions", () => {
 				outputPrice: 5.0,
 			},
 		},
-		"kilocode-openrouter": {
+		kilocode: {
 			"valid-model": {
 				maxTokens: 8192,
 				contextWindow: 200000,
@@ -59,8 +58,17 @@ describe("Model Validation Functions", () => {
 		ollama: {},
 		lmstudio: {},
 		shengsuanyun: {},
+		deepinfra: {},
 		"io-intelligence": {},
-		deepinfra: {}, // kilocode_change
+		"vercel-ai-gateway": {},
+		huggingface: {},
+		// kilocode_change start
+		ovhcloud: {},
+		gemini: {},
+		inception: {},
+		// kilocode_change end
+		roo: {},
+		chutes: {},
 	}
 
 	const allowAllOrganization: OrganizationAllowList = {

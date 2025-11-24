@@ -1,3 +1,4 @@
+import { X_KILOCODE_VERSION } from "../../shared/kilocode/headers"
 import { Package } from "../../shared/package"
 
 export const DEFAULT_HEADERS = {

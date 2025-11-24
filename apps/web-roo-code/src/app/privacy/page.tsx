@@ -1,11 +1,12 @@
 import type { Metadata } from "next"
 import { SEO } from "@/lib/seo"
+import { ogImageUrl } from "@/lib/og"
 
-const TITLE = "Privacy Policy"
+const TITLE = "Our Privacy Policy"
 const DESCRIPTION =
 	"Privacy policy for Roo Code Cloud and marketing website. Learn how we handle your data and protect your privacy."
+const OG_DESCRIPTION = ""
 const PATH = "/privacy"
-const OG_IMAGE = SEO.ogImage
 
 export const metadata: Metadata = {
 	title: TITLE,
@@ -20,10 +21,10 @@ export const metadata: Metadata = {
 		siteName: SEO.name,
 		images: [
 			{
-				url: OG_IMAGE.url,
-				width: OG_IMAGE.width,
-				height: OG_IMAGE.height,
-				alt: OG_IMAGE.alt,
+				url: ogImageUrl(TITLE, OG_DESCRIPTION),
+				width: 1200,
+				height: 630,
+				alt: TITLE,
 			},
 		],
 		locale: SEO.locale,
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
 		card: SEO.twitterCard,
 		title: TITLE,
 		description: DESCRIPTION,
-		images: [OG_IMAGE.url],
+		images: [ogImageUrl(TITLE, OG_DESCRIPTION)],
 	},
 	keywords: [...SEO.keywords, "privacy", "data protection", "GDPR", "security"],
 }
@@ -46,7 +47,7 @@ export default function Privacy() {
 					<h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
 						Roo Code Cloud Privacy Policy
 					</h1>
-					<p className="text-muted-foreground">Last Updated: June 19, 2025</p>
+					<p className="text-muted-foreground">Last Updated: September 19, 2025</p>
 
 					<p className="lead">
 						This Privacy Policy explains how Roo Code, Inc. (&quot;Roo Code,&quot; &quot;we,&quot;
@@ -82,9 +83,14 @@ export default function Privacy() {
 					<h2 className="mt-12 text-2xl font-bold">Quick Summary</h2>
 					<ul>
 						<li>
-							<strong>Your source code never transits Roo Code servers.</strong> It stays on your device
-							and is sent <strong>directly</strong>—via a client‑to‑provider TLS connection—to the
-							third‑party AI model you select. Roo Code never stores, inspects, or trains on your code.
+							<strong>
+								Your source code does not transit Roo Code servers unless you explicitly choose Roo Code
+								as a model provider (proxy mode).
+							</strong>{" "}
+							When Roo Code Cloud is your model provider, your code briefly transits Roo Code servers only
+							to forward it to the upstream model, is not stored, and is deleted immediately after
+							forwarding. Otherwise, your code is sent <strong>directly</strong>—via client‑to‑provider
+							TLS—to the model you select. Roo Code never stores, inspects, or trains on your code.
 						</li>
 						<li>
 							<strong>Prompts and chat snippets are collected by default</strong> in Roo Code Cloud so you
@@ -179,6 +185,13 @@ export default function Privacy() {
 						<li>
 							<strong>Send product updates and roadmap communications</strong> (opt‑out available)
 						</li>
+						<li>
+							<strong>Send onboarding, educational, and promotional communications</strong>. We may use
+							your account information (such as your name and email address) to send you onboarding
+							messages, product tutorials, feature announcements, newsletters, and other marketing
+							communications. You can opt out of non‑transactional emails at any time (see “Your Choices”
+							below).
+						</li>
 					</ul>
 
 					<h2 className="mt-12 text-2xl font-bold">3. Where Your Data Goes (And Doesn&apos;t)</h2>
@@ -200,10 +213,12 @@ export default function Privacy() {
 										Code & files you work on
 									</td>
 									<td className="border border-border px-4 py-2">
-										Your chosen model provider (direct client → provider TLS)
+										Your chosen model provider (direct client → provider TLS), or Roo Code (proxy
+										mode; transit‑only) when you select Roo Code as the provider
 									</td>
 									<td className="border border-border px-4 py-2">
-										Roo Code servers; ad networks; model‑training pipelines
+										Roo Code servers (except proxy mode; transit‑only, no storage); ad networks;
+										model‑training pipelines
 									</td>
 								</tr>
 								<tr className="bg-muted/25">
@@ -269,6 +284,12 @@ export default function Privacy() {
 						<li>
 							<strong>Delete your Cloud account</strong> at any time from{" "}
 							<strong>Security Settings</strong> inside Roo Code Cloud.
+						</li>
+						<li>
+							<strong>Marketing communications:</strong> You can unsubscribe from marketing and
+							promotional emails by clicking the unsubscribe link in those emails. Transactional or
+							service‑related emails (such as password resets, billing notices, or security alerts) will
+							continue even if you opt out.
 						</li>
 					</ul>
 

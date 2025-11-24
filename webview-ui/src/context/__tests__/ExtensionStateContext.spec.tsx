@@ -4,6 +4,7 @@ import {
 	ProviderSettings,
 	ExperimentId,
 	openRouterDefaultModelId, // kilocode_change
+	DEFAULT_CHECKPOINT_TIMEOUT_SECONDS,
 } from "@roo-code/types"
 
 import { ExtensionState } from "@roo/ExtensionMessage"
@@ -230,7 +231,8 @@ describe("mergeExtensionState", () => {
 			mcpEnabled: false,
 			enableMcpServerCreation: false,
 			clineMessages: [],
-			taskHistory: [],
+			taskHistoryFullLength: 0, // kilocode_change
+			taskHistoryVersion: 0, // kilocode_change
 			shouldShowAnnouncement: false,
 			enableCheckpoints: true,
 			writeDelayMs: 1000,
@@ -257,12 +259,17 @@ describe("mergeExtensionState", () => {
 			maxImageFileSize: 5,
 			maxTotalImageSize: 20,
 			kilocodeDefaultModel: openRouterDefaultModelId,
+			remoteControlEnabled: false,
+			taskSyncEnabled: false,
+			featureRoomoteControlEnabled: false,
+			checkpointTimeout: DEFAULT_CHECKPOINT_TIMEOUT_SECONDS, // Add the checkpoint timeout property
 		}
 
 		const prevState: ExtensionState = {
 			...baseState,
 			apiConfiguration: { modelMaxTokens: 1234, modelMaxThinkingTokens: 123 },
 			experiments: {} as Record<ExperimentId, boolean>,
+			checkpointTimeout: DEFAULT_CHECKPOINT_TIMEOUT_SECONDS - 5,
 		}
 
 		const newState: ExtensionState = {
@@ -271,11 +278,13 @@ describe("mergeExtensionState", () => {
 			experiments: {
 				powerSteering: true,
 				multiFileApplyDiff: true,
-				inlineAssist: false, // kilocode_change
 				preventFocusDisruption: false,
 				morphFastApply: false, // kilocode_change
 				newTaskRequireTodos: false,
+				imageGeneration: false,
+				runSlashCommand: false,
 			} as Record<ExperimentId, boolean>,
+			checkpointTimeout: DEFAULT_CHECKPOINT_TIMEOUT_SECONDS + 5,
 		}
 
 		const result = mergeExtensionState(prevState, newState)
@@ -288,10 +297,11 @@ describe("mergeExtensionState", () => {
 		expect(result.experiments).toEqual({
 			powerSteering: true,
 			multiFileApplyDiff: true,
-			inlineAssist: false, // kilocode_change
 			preventFocusDisruption: false,
 			morphFastApply: false, // kilocode_change
 			newTaskRequireTodos: false,
+			imageGeneration: false,
+			runSlashCommand: false,
 		})
 	})
 })

@@ -1,5 +1,4 @@
-import type { ProviderSettings } from "@roo-code/types"
-import type { OrganizationAllowList } from "@roo-code/cloud"
+import type { ProviderSettings, OrganizationAllowList } from "@roo-code/types"
 
 export class ProfileValidator {
 	public static isProfileAllowed(profile: ProviderSettings, allowList: OrganizationAllowList): boolean {
@@ -67,10 +66,12 @@ export class ProfileValidator {
 			case "deepseek":
 			case "xai":
 			case "zai":
+			case "minimax": // kilocode_change
 			case "groq":
 			case "sambanova":
 			case "chutes":
 			case "fireworks":
+			case "synthetic": // kilocode_change
 			case "featherless":
 				return profile.apiModelId
 			case "litellm":
@@ -94,9 +95,13 @@ export class ProfileValidator {
 				return profile.shengSuanYunModelId
 			case "io-intelligence":
 				return profile.ioIntelligenceModelId
-			// kilocode_change start
 			case "deepinfra":
 				return profile.deepInfraModelId
+			// kilocode_change start
+			case "ovhcloud":
+				return profile.ovhCloudAiEndpointsModelId
+			case "inception":
+				return profile.inceptionLabsModelId
 			// kilocode_change end
 			case "human-relay":
 			case "fake-ai":

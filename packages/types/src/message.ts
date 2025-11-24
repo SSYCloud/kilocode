@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { kiloCodeMetaDataSchema } from "./kilocode.js"
+import { kiloCodeMetaDataSchema } from "./kilocode/kilocode.js"
 
 /**
  * ClineAsk
@@ -39,9 +39,13 @@ export const clineAsks = [
 	"browser_action_launch",
 	"use_mcp_server",
 	"auto_approval_max_req_reached",
-	"payment_required_prompt", // kilocode_change: Added for the low credits dialog
-	"report_bug", // kilocode_change
-	"condense", // kilocode_change
+	// kilocode_change start
+	"payment_required_prompt", // Added for the low credits dialog
+	"invalid_model",
+	"report_bug",
+	"condense",
+	"checkpoint_restore", // Added for checkpoint restore approval
+	// kilocode_change end
 ] as const
 
 export const clineAskSchema = z.enum(clineAsks)
@@ -93,6 +97,7 @@ export function isResumableAsk(ask: ClineAsk): ask is ResumableAsk {
  */
 
 export const interactiveAsks = [
+	"followup",
 	"command",
 	"tool",
 	"browser_action_launch",
@@ -150,6 +155,7 @@ export const clineSays = [
 	"api_req_retry_delayed",
 	"api_req_deleted",
 	"text",
+	"image",
 	"reasoning",
 	"completion_result",
 	"user_feedback",
@@ -217,13 +223,12 @@ export const clineMessageSchema = z.object({
 	contextCondense: contextCondenseSchema.optional(),
 	isProtected: z.boolean().optional(),
 	apiProtocol: z.union([z.literal("openai"), z.literal("anthropic")]).optional(),
+	isAnswered: z.boolean().optional(),
 	metadata: z
 		.object({
 			gpt5: z
 				.object({
 					previous_response_id: z.string().optional(),
-					instructions: z.string().optional(),
-					reasoning_summary: z.string().optional(),
 				})
 				.optional(),
 			kiloCode: kiloCodeMetaDataSchema.optional(),
@@ -252,14 +257,11 @@ export type TokenUsage = z.infer<typeof tokenUsageSchema>
  * QueuedMessage
  */
 
-/**
- * Represents a message that is queued to be sent when sending is enabled
- */
-export interface QueuedMessage {
-	/** Unique identifier for the queued message */
-	id: string
-	/** The text content of the message */
-	text: string
-	/** Array of image data URLs attached to the message */
-	images: string[]
-}
+export const queuedMessageSchema = z.object({
+	timestamp: z.number(),
+	id: z.string(),
+	text: z.string(),
+	images: z.array(z.string()).optional(),
+})
+
+export type QueuedMessage = z.infer<typeof queuedMessageSchema>

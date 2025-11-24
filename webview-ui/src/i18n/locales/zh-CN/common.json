@@ -67,6 +67,12 @@
 			"copyError": "复制图片时出错"
 		}
 	},
+	"image": {
+		"tabs": {
+			"view": "图像"
+		},
+		"noData": "无图片数据"
+	},
 	"file": {
 		"errors": {
 			"invalidDataUri": "无效的数据 URI 格式",
@@ -85,7 +91,13 @@
 		"deleteWarning": "删除此消息将删除对话中的所有后续消息。是否继续？",
 		"editMessage": "编辑消息",
 		"editWarning": "编辑此消息将删除对话中的所有后续消息。是否继续？",
-		"proceed": "继续"
+		"editQuestionWithCheckpoint": "编辑此消息将删除对话中的所有后续消息。是否同时将所有变更撤销到此存档点？",
+		"deleteQuestionWithCheckpoint": "删除此消息将删除对话中的所有后续消息。是否同时将所有变更撤销到此存档点？",
+		"editOnly": "否，仅编辑消息",
+		"deleteOnly": "否，仅删除消息",
+		"restoreToCheckpoint": "是，恢复存档点",
+		"proceed": "继续",
+		"dontShowAgain": "不再显示"
 	},
 	"time_ago": {
 		"just_now": "刚刚",
@@ -102,5 +114,9 @@
 		"months_ago": "{{count}}个月前",
 		"year_ago": "1年前",
 		"years_ago": "{{count}}年前"
+	},
+	"errors": {
+		"wait_checkpoint_long_time": "初始化存档点已等待 {{timeout}} 秒。如果你不需要存档点功能，请在<settingsLink>存档点设置</settingsLink>中关闭。",
+		"init_checkpoint_fail_long_time": "存档点初始化已超过 {{timeout}} 秒，因此本任务已禁用存档点。你可以关闭存档点或在<settingsLink>存档点设置</settingsLink>中延长等待时间。"
 	}
 }

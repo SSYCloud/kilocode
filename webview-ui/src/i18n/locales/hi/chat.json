@@ -24,7 +24,9 @@
 		"connectToCloudDescription": "कार्य साझा करने के लिए Kilo Code Cloud में साइन इन करें",
 		"sharingDisabledByOrganization": "संगठन द्वारा साझाकरण अक्षम किया गया",
 		"shareSuccessOrganization": "संगठन लिंक क्लिपबोर्ड में कॉपी किया गया",
-		"shareSuccessPublic": "सार्वजनिक लिंक क्लिपबोर्ड में कॉपी किया गया"
+		"shareSuccessPublic": "सार्वजनिक लिंक क्लिपबोर्ड में कॉपी किया गया",
+		"openInCloud": "Roo Code Cloud में कार्य खोलें",
+		"openInCloudIntro": "कहीं से भी Roo की निगरानी या इंटरैक्ट करना जारी रखें। खोलने के लिए स्कैन करें, क्लिक करें या कॉपी करें।"
 	},
 	"history": {
 		"title": "इतिहास"
@@ -65,7 +67,7 @@
 		"tooltip": "इस क्रिया को स्वीकृत करें"
 	},
 	"runCommand": {
-		"title": "कमांड चलाएँ",
+		"title": "कमांड",
 		"tooltip": "इस कमांड को निष्पादित करें"
 	},
 	"proceedWhileRunning": {
@@ -128,9 +130,10 @@
 		"settings": "मोड सेटिंग्स",
 		"description": "विशेष व्यक्तित्व जो Kilo Code के व्यवहार को अनुकूलित करते हैं।",
 		"searchPlaceholder": "मोड खोजें...",
-		"noResults": "कोई परिणाम नहीं मिला"
+		"noResults": "कोई परिणाम नहीं मिला",
+		"organizationModes": "संगठन मोड"
 	},
-	"errorReadingFile": "फ़ाइल पढ़ने में त्रुटि:",
+	"errorReadingFile": "फ़ाइल पढ़ने में त्रुटि",
 	"noValidImages": "कोई मान्य चित्र प्रोसेस नहीं किया गया",
 	"separator": "विभाजक",
 	"edit": "संपादित करें...",
@@ -153,6 +156,9 @@
 		"initializingWarning": "चेकपॉइंट अभी भी आरंभ हो रहा है... अगर यह बहुत समय ले रहा है, तो आप <settingsLink>सेटिंग्स</settingsLink> में चेकपॉइंट को अक्षम कर सकते हैं और अपने कार्य को पुनः आरंभ कर सकते हैं।",
 		"menu": {
 			"viewDiff": "अंतर देखें",
+			"more": "अधिक विकल्प",
+			"viewDiffFromInit": "सभी परिवर्तन देखें",
+			"viewDiffWithCurrent": "इस चेकपॉइंट के बाद से परिवर्तन देखें",
 			"restore": "चेकपॉइंट पुनर्स्थापित करें",
 			"restoreFiles": "फ़ाइलें पुनर्स्थापित करें",
 			"restoreFilesDescription": "आपके प्रोजेक्ट की फ़ाइलों को इस बिंदु पर लिए गए स्नैपशॉट पर पुनर्स्थापित करता है।",
@@ -168,51 +174,55 @@
 		"wantsToFetch": "Kilo Code को वर्तमान कार्य में सहायता के लिए विस्तृत निर्देश प्राप्त करना है"
 	},
 	"fileOperations": {
-		"wantsToRead": "Kilo Code इस फ़ाइल को पढ़ना चाहता है:",
-		"wantsToReadOutsideWorkspace": "Kilo Code कार्यक्षेत्र के बाहर इस फ़ाइल को पढ़ना चाहता है:",
-		"didRead": "Kilo Code ने इस फ़ाइल को पढ़ा:",
-		"wantsToEdit": "Kilo Code इस फ़ाइल को संपादित करना चाहता है:",
-		"wantsToEditOutsideWorkspace": "Kilo Code कार्यक्षेत्र के बाहर इस फ़ाइल को संपादित करना चाहता है:",
-		"wantsToEditProtected": "Kilo Code एक सुरक्षित कॉन्फ़िगरेशन फ़ाइल को संपादित करना चाहता है:",
-		"wantsToCreate": "Kilo Code एक नई फ़ाइल बनाना चाहता है:",
-		"wantsToSearchReplace": "Kilo Code इस फ़ाइल में खोज और प्रतिस्थापन करना चाहता है:",
-		"didSearchReplace": "Kilo Code ने इस फ़ाइल में खोज और प्रतिस्थापन किया:",
-		"wantsToInsert": "Kilo Code इस फ़ाइल में सामग्री डालना चाहता है:",
-		"wantsToInsertWithLineNumber": "Kilo Code इस फ़ाइल की {{lineNumber}} लाइन पर सामग्री डालना चाहता है:",
-		"wantsToInsertAtEnd": "Kilo Code इस फ़ाइल के अंत में सामग्री जोड़ना चाहता है:",
-		"wantsToReadAndXMore": "रू इस फ़ाइल को और {{count}} अन्य को पढ़ना चाहता है:",
-		"wantsToReadMultiple": "Kilo Code कई फ़ाइलें पढ़ना चाहता है:",
-		"wantsToApplyBatchChanges": "Kilo Code कई फ़ाइलों में परिवर्तन लागू करना चाहता है:"
+		"wantsToRead": "Kilo Code इस फ़ाइल को पढ़ना चाहता है",
+		"wantsToReadOutsideWorkspace": "Kilo Code कार्यक्षेत्र के बाहर इस फ़ाइल को पढ़ना चाहता है",
+		"didRead": "Kilo Code ने इस फ़ाइल को पढ़ा",
+		"wantsToEdit": "Kilo Code इस फ़ाइल को संपादित करना चाहता है",
+		"wantsToEditOutsideWorkspace": "Kilo Code कार्यक्षेत्र के बाहर इस फ़ाइल को संपादित करना चाहता है",
+		"wantsToEditProtected": "Kilo Code एक सुरक्षित कॉन्फ़िगरेशन फ़ाइल को संपादित करना चाहता है",
+		"wantsToCreate": "Kilo Code एक नई फ़ाइल बनाना चाहता है",
+		"wantsToSearchReplace": "Kilo Code इस फ़ाइल में खोज और प्रतिस्थापन करना चाहता है",
+		"didSearchReplace": "Kilo Code ने इस फ़ाइल में खोज और प्रतिस्थापन किया",
+		"wantsToInsert": "Kilo Code इस फ़ाइल में सामग्री डालना चाहता है",
+		"wantsToInsertWithLineNumber": "Kilo Code इस फ़ाइल की {{lineNumber}} लाइन पर सामग्री डालना चाहता है",
+		"wantsToInsertAtEnd": "Kilo Code इस फ़ाइल के अंत में सामग्री जोड़ना चाहता है",
+		"wantsToReadAndXMore": "रू इस फ़ाइल को और {{count}} अन्य को पढ़ना चाहता है",
+		"wantsToReadMultiple": "Kilo Code कई फ़ाइलें पढ़ना चाहता है",
+		"wantsToApplyBatchChanges": "Kilo Code कई फ़ाइलों में परिवर्तन लागू करना चाहता है",
+		"wantsToGenerateImage": "Kilo Code एक छवि बनाना चाहता है",
+		"wantsToGenerateImageOutsideWorkspace": "Kilo Code कार्यक्षेत्र के बाहर एक छवि बनाना चाहता है",
+		"wantsToGenerateImageProtected": "Kilo Code एक संरक्षित स्थान पर छवि बनाना चाहता है",
+		"didGenerateImage": "Kilo Code ने एक छवि बनाई"
 	},
 	"directoryOperations": {
-		"wantsToViewTopLevel": "Kilo Code इस निर्देशिका में शीर्ष स्तर की फ़ाइलें देखना चाहता है:",
-		"didViewTopLevel": "Kilo Code ने इस निर्देशिका में शीर्ष स्तर की फ़ाइलें देखीं:",
-		"wantsToViewRecursive": "Kilo Code इस निर्देशिका में सभी फ़ाइलों को पुनरावर्ती रूप से देखना चाहता है:",
-		"didViewRecursive": "Kilo Code ने इस निर्देशिका में सभी फ़ाइलों को पुनरावर्ती रूप से देखा:",
-		"wantsToViewDefinitions": "Kilo Code इस निर्देशिका में उपयोग किए गए सोर्स कोड परिभाषा नामों को देखना चाहता है:",
-		"didViewDefinitions": "Kilo Code ने इस निर्देशिका में उपयोग किए गए सोर्स कोड परिभाषा नामों को देखा:",
-		"wantsToSearch": "Kilo Code इस निर्देशिका में <code>{{regex}}</code> के लिए खोज करना चाहता है:",
-		"didSearch": "Kilo Code ने इस निर्देशिका में <code>{{regex}}</code> के लिए खोज की:",
-		"wantsToSearchOutsideWorkspace": "Kilo Code इस निर्देशिका (कार्यक्षेत्र के बाहर) में <code>{{regex}}</code> के लिए खोज करना चाहता है:",
-		"didSearchOutsideWorkspace": "Kilo Code ने इस निर्देशिका (कार्यक्षेत्र के बाहर) में <code>{{regex}}</code> के लिए खोज की:",
-		"wantsToViewTopLevelOutsideWorkspace": "Kilo Code इस निर्देशिका (कार्यक्षेत्र के बाहर) में शीर्ष स्तर की फ़ाइलें देखना चाहता है:",
-		"didViewTopLevelOutsideWorkspace": "Kilo Code ने इस निर्देशिका (कार्यक्षेत्र के बाहर) में शीर्ष स्तर की फ़ाइलें देखीं:",
-		"wantsToViewRecursiveOutsideWorkspace": "Kilo Code इस निर्देशिका (कार्यक्षेत्र के बाहर) में सभी फ़ाइलों को पुनरावर्ती रूप से देखना चाहता है:",
-		"didViewRecursiveOutsideWorkspace": "Kilo Code ने इस निर्देशिका (कार्यक्षेत्र के बाहर) में सभी फ़ाइलों को पुनरावर्ती रूप से देखा:",
-		"wantsToViewDefinitionsOutsideWorkspace": "Kilo Code इस निर्देशिका (कार्यक्षेत्र के बाहर) में उपयोग किए गए सोर्स कोड परिभाषा नामों को देखना चाहता है:",
-		"didViewDefinitionsOutsideWorkspace": "Kilo Code ने इस निर्देशिका (कार्यक्षेत्र के बाहर) में उपयोग किए गए सोर्स कोड परिभाषा नामों को देखा:"
+		"wantsToViewTopLevel": "Kilo Code इस निर्देशिका में शीर्ष स्तर की फ़ाइलें देखना चाहता है",
+		"didViewTopLevel": "Kilo Code ने इस निर्देशिका में शीर्ष स्तर की फ़ाइलें देखीं",
+		"wantsToViewRecursive": "Kilo Code इस निर्देशिका में सभी फ़ाइलों को पुनरावर्ती रूप से देखना चाहता है",
+		"didViewRecursive": "Kilo Code ने इस निर्देशिका में सभी फ़ाइलों को पुनरावर्ती रूप से देखा",
+		"wantsToViewDefinitions": "Kilo Code इस निर्देशिका में उपयोग किए गए सोर्स कोड परिभाषा नामों को देखना चाहता है",
+		"didViewDefinitions": "Kilo Code ने इस निर्देशिका में उपयोग किए गए सोर्स कोड परिभाषा नामों को देखा",
+		"wantsToSearch": "Kilo Code इस निर्देशिका में <code>{{regex}}</code> के लिए खोज करना चाहता है",
+		"didSearch": "Kilo Code ने इस निर्देशिका में <code>{{regex}}</code> के लिए खोज की",
+		"wantsToSearchOutsideWorkspace": "Kilo Code इस निर्देशिका (कार्यक्षेत्र के बाहर) में <code>{{regex}}</code> के लिए खोज करना चाहता है",
+		"didSearchOutsideWorkspace": "Kilo Code ने इस निर्देशिका (कार्यक्षेत्र के बाहर) में <code>{{regex}}</code> के लिए खोज की",
+		"wantsToViewTopLevelOutsideWorkspace": "Kilo Code इस निर्देशिका (कार्यक्षेत्र के बाहर) में शीर्ष स्तर की फ़ाइलें देखना चाहता है",
+		"didViewTopLevelOutsideWorkspace": "Kilo Code ने इस निर्देशिका (कार्यक्षेत्र के बाहर) में शीर्ष स्तर की फ़ाइलें देखीं",
+		"wantsToViewRecursiveOutsideWorkspace": "Kilo Code इस निर्देशिका (कार्यक्षेत्र के बाहर) में सभी फ़ाइलों को पुनरावर्ती रूप से देखना चाहता है",
+		"didViewRecursiveOutsideWorkspace": "Kilo Code ने इस निर्देशिका (कार्यक्षेत्र के बाहर) में सभी फ़ाइलों को पुनरावर्ती रूप से देखा",
+		"wantsToViewDefinitionsOutsideWorkspace": "Kilo Code इस निर्देशिका (कार्यक्षेत्र के बाहर) में उपयोग किए गए सोर्स कोड परिभाषा नामों को देखना चाहता है",
+		"didViewDefinitionsOutsideWorkspace": "Kilo Code ने इस निर्देशिका (कार्यक्षेत्र के बाहर) में उपयोग किए गए सोर्स कोड परिभाषा नामों को देखा"
 	},
 	"commandOutput": "कमांड आउटपुट",
 	"commandExecution": {
-		"running": "चलाया जा रहा है",
+		"abort": "रद्द करें",
+		"running": "चल रहा है",
 		"pid": "पीआईडी: {{pid}}",
-		"exited": "बाहर निकल गया ({{exitCode}})",
-		"manageCommands": "कमांड अनुमतियाँ प्रबंधित करें",
-		"commandManagementDescription": "कमांड अनुमतियों का प्रबंधन करें: स्वतः-निष्पादन की अनुमति देने के लिए ✓ पर क्लिक करें, निष्पादन से इनकार करने के लिए ✗ पर क्लिक करें। पैटर्न को चालू/बंद किया जा सकता है या सूचियों से हटाया जा सकता है। <settingsLink>सभी सेटिंग्स देखें</settingsLink>",
+		"exitStatus": "{{exitCode}} स्थिति के साथ बाहर निकल गया",
+		"manageCommands": "स्वतः-अनुमोदित कमांड",
 		"addToAllowed": "अनुमत सूची में जोड़ें",
-		"removeFromAllowed": "अनुमत सूची से हटाएं",
+		"removeFromAllowed": "अनुमत सूची से हटाएँ",
 		"addToDenied": "अस्वीकृत सूची में जोड़ें",
-		"removeFromDenied": "अस्वीकृत सूची से हटाएं",
+		"removeFromDenied": "अस्वीकृत सूची से हटाएँ",
 		"abortCommand": "कमांड निष्पादन रद्द करें",
 		"expandOutput": "आउटपुट का विस्तार करें",
 		"collapseOutput": "आउटपुट संक्षिप्त करें",
@@ -221,9 +231,15 @@
 	},
 	"response": "प्रतिक्रिया",
 	"arguments": "आर्ग्युमेंट्स",
+	"text": {
+		"rooSaid": "किलो ने कहा"
+	},
+	"feedback": {
+		"youSaid": "आपने कहा"
+	},
 	"mcp": {
-		"wantsToUseTool": "Kilo Code {{serverName}} MCP सर्वर पर एक टूल का उपयोग करना चाहता है:",
-		"wantsToAccessResource": "Kilo Code {{serverName}} MCP सर्वर पर एक संसाधन का उपयोग करना चाहता है:"
+		"wantsToUseTool": "Kilo Code {{serverName}} MCP सर्वर पर एक टूल का उपयोग करना चाहता है",
+		"wantsToAccessResource": "Kilo Code {{serverName}} MCP सर्वर पर एक संसाधन का उपयोग करना चाहता है"
 	},
 	"modes": {
 		"wantsToSwitch": "Kilo Code <code>{{mode}}</code> मोड में स्विच करना चाहता है",
@@ -232,7 +248,7 @@
 		"didSwitchWithReason": "Kilo Code <code>{{mode}}</code> मोड में स्विच कर गया क्योंकि: {{reason}}"
 	},
 	"subtasks": {
-		"wantsToCreate": "Kilo Code <code>{{mode}}</code> मोड में एक नया उपकार्य बनाना चाहता है:",
+		"wantsToCreate": "Kilo Code <code>{{mode}}</code> मोड में एक नया उपकार्य बनाना चाहता है",
 		"wantsToFinish": "Kilo Code इस उपकार्य को समाप्त करना चाहता है",
 		"newTaskContent": "उपकार्य निर्देश",
 		"completionContent": "उपकार्य पूर्ण",
@@ -241,19 +257,29 @@
 		"completionInstructions": "उपकार्य पूर्ण! आप परिणामों की समीक्षा कर सकते हैं और सुधार या अगले चरण सुझा सकते हैं। यदि सब कुछ ठीक लगता है, तो मुख्य कार्य को परिणाम वापस करने के लिए पुष्टि करें।"
 	},
 	"questions": {
-		"hasQuestion": "Kilo Code का एक प्रश्न है:"
+		"hasQuestion": "Kilo Code का एक प्रश्न है"
 	},
 	"taskCompleted": "कार्य पूरा हुआ",
 	"powershell": {
 		"issues": "ऐसा लगता है कि आपको Windows PowerShell के साथ समस्याएँ हो रही हैं, कृपया इसे देखें"
 	},
 	"autoApprove": {
-		"title": "स्वत:-स्वीकृति:",
+		"tooltipManage": "स्वतः-अनुमोदन सेटिंग्स प्रबंधित करें",
+		"tooltipStatus": "स्वतः-अनुमोदन इनके लिए सक्षम है: {{toggles}}",
+		"title": "स्वतः-अनुमोदन",
+		"toggle": "स्वतः-अनुमोदन टॉगल करें",
+		"all": "सभी",
 		"none": "कोई नहीं",
-		"description": "स्वत:-स्वीकृति Kilo Code को अनुमति मांगे बिना क्रियाएँ करने की अनुमति देती है। केवल उन क्रियाओं के लिए सक्षम करें जिन पर आप पूरी तरह से विश्वास करते हैं। अधिक विस्तृत कॉन्फ़िगरेशन <settingsLink>सेटिंग्स</settingsLink> में उपलब्ध है।",
-		"selectOptionsFirst": "स्वतः-अनुमोदन सक्षम करने के लिए नीचे दिए گئے विकल्पों में से कम से कम एक का चयन करें",
+		"description": "अनुमति मांगे बिना इन क्रियाओं को चलाएं। इसे केवल उन क्रियाओं के लिए सक्षम करें जिन पर आपको पूरा भरोसा है।",
+		"selectOptionsFirst": "स्वतः-अनुमोदन सक्षम करने के लिए नीचे से कम से कम एक विकल्प चुनें",
 		"toggleAriaLabel": "स्वतः-अनुमोदन टॉगल करें",
-		"disabledAriaLabel": "स्वतः-अनुमोदन अक्षम - पहले विकल्प चुनें"
+		"disabledAriaLabel": "स्वतः-अनुमोदन अक्षम है - पहले विकल्प चुनें",
+		"triggerLabelOff": "स्वतः-अनुमोदन बंद",
+		"triggerLabelOffShort": "बंद",
+		"triggerLabel_zero": "0 स्वतः-अनुमोदन",
+		"triggerLabel_one": "1 स्वतः-अनुमोदित",
+		"triggerLabel_other": "{{count}} स्वतः-अनुमोदित",
+		"triggerLabelAll": "YOLO"
 	},
 	"reasoning": {
 		"thinking": "विचार कर रहा है",
@@ -273,21 +299,29 @@
 	"announcement": {
 		"title": "🎉 Roo Code {{version}} रिलीज़ हुआ",
 		"stealthModel": {
-			"feature": "<bold>सीमित समय के लिए मुफ़्त स्टेल्थ मॉडल</bold> - एक अत्यंत तेज़ रीज़निंग मॉडल जो 262k कॉन्टेक्स्ट विंडो के साथ एजेंटिक कोडिंग में उत्कृष्ट है, Roo Code Cloud के माध्यम से उपलब्ध।",
+			"feature": "<bold>सीमित समय के लिए मुफ़्त स्टेल्थ मॉडल</bold> - Code Supernova: अब <bold>1M Token संदर्भ विंडो</bold> के साथ अपग्रेड हुआ! एक बहुमुखी एजेंटिक कोडिंग मॉडल जो छवि इनपुट का समर्थन करता है, Roo Code Cloud के माध्यम से उपलब्ध।",
 			"note": "(नोट: प्रॉम्प्ट्स और कम्प्लीशन्स मॉडल निर्माता द्वारा लॉग किए जाते हैं और मॉडल को बेहतर बनाने के लिए उपयोग किए जाते हैं)",
 			"connectButton": "Roo Code Cloud से कनेक्ट करें",
-			"selectModel": "<br/><settingsLink>सेटिंग्स</settingsLink> में Roo Code Cloud प्रोवाइडर से <code>roo/sonic</code> चुनें और शुरू करें"
+			"selectModel": "आरंभ करने के लिए सेटिंग्स में Roo Code Cloud प्रोवाइडर से <code>roo/code-supernova</code> चुनें।",
+			"goToSettingsButton": "सेटिंग्स पर जाएं"
 		},
-		"description": "Roo Code {{version}} आपके विकास वर्कफ़्लो को बेहतर बनाने के लिए शक्तिशाली नई सुविधाएं और महत्वपूर्ण सुधार लेकर आया है।",
-		"whatsNew": "नया क्या है",
-		"feature1": "<bold>संदेश कतार</bold>: Roo के काम करते समय कई संदेशों को कतार में रखें, जिससे आप बिना रुकावट के अपने वर्कफ़्लो की योजना बना सकते हैं।",
-		"feature2": "<bold>कस्टम स्लैश कमांड</bold>: अक्सर उपयोग किए जाने वाले प्रॉम्प्ट और वर्कफ़्लो तक त्वरित पहुंच के लिए व्यक्तिगत स्लैश कमांड बनाएं, पूर्ण UI प्रबंधन के साथ।",
-		"feature3": "<bold>उन्नत Gemini उपकरण</bold>: नए URL संदर्भ और Google खोज आधार क्षमताएं Gemini मॉडल को वास्तविक समय वेब जानकारी और बेहतर अनुसंधान क्षमताएं प्रदान करती हैं।",
-		"hideButton": "घोषणा छुपाएं",
-		"detailsDiscussLinks": "<discordLink>Discord</discordLink> और <redditLink>Reddit</redditLink> पर अधिक विवरण प्राप्त करें और चर्चाओं में शामिल हों 🚀"
+		"release": {
+			"heading": "एक्सटेंशन में नया:",
+			"openRouterEmbeddings": "OpenRouter एम्बेडिंग मॉडल के लिए समर्थन",
+			"chutesDynamic": "Chutes अब नवीनतम मॉडल को गतिशील रूप से लोड करता है",
+			"queuedMessagesFix": "कतारबद्ध संदेशों के खो जाने के लिए फिक्स"
+		},
+		"cloudAgents": {
+			"heading": "क्लाउड में नया:",
+			"prFixer": "PR Reviewer को पूरक बनाने के लिए <bold>PR Fixer</bold> क्लाउड एजेंट पेश है।",
+			"prFixerDescription": "Roo Code का PR Fixer सीधे GitHub से आपके PR में उच्च-गुणवत्ता वाले परिवर्तन लागू करता है। PR टिप्पणी के माध्यम से आह्वान करें और यह संदर्भ, समझौतों और ट्रेड-ऑफ को समझने के लिए पूरे टिप्पणी इतिहास को पढ़ेगा - फिर सही फिक्स लागू करेगा।",
+			"tryPrFixerButton": "PR Fixer आज़माएं"
+		},
+		"careers": "साथ ही, <careersLink>हम भर्ती कर रहे हैं!</careersLink>",
+		"socialLinks": "<xLink>X</xLink>, <discordLink>Discord</discordLink>, या <redditLink>r/RooCode</redditLink> पर हमसे जुड़ें 🚀"
 	},
 	"browser": {
-		"rooWantsToUse": "Kilo Code ब्राउज़र का उपयोग करना चाहता है:",
+		"rooWantsToUse": "Kilo Code ब्राउज़र का उपयोग करना चाहता है",
 		"consoleLogs": "कंसोल लॉग",
 		"noNewLogs": "(कोई नया लॉग नहीं)",
 		"screenshot": "ब्राउज़र स्क्रीनशॉट",
@@ -312,8 +346,8 @@
 		"tooltips": {
 			"expand": "कोड ब्लॉक का विस्तार करें",
 			"collapse": "कोड ब्लॉक को संकुचित करें",
-			"enable_wrap": "वर्ड रैप सक्षम करें",
-			"disable_wrap": "वर्ड रैप अक्षम करें",
+			"enable_wrap": "रैपिंग सक्षम करें",
+			"disable_wrap": "रैपिंग अक्षम करें",
 			"copy_code": "कोड कॉपी करें"
 		}
 	},
@@ -337,8 +371,8 @@
 		}
 	},
 	"codebaseSearch": {
-		"wantsToSearch": "Kilo Code कोडबेस में <code>{{query}}</code> खोजना चाहता है:",
-		"wantsToSearchWithPath": "Kilo Code <code>{{path}}</code> में कोडबेस में <code>{{query}}</code> खोजना चाहता है:",
+		"wantsToSearch": "Kilo Code कोडबेस में <code>{{query}}</code> खोजना चाहता है",
+		"wantsToSearchWithPath": "Kilo Code <code>{{path}}</code> में कोडबेस में <code>{{query}}</code> खोजना चाहता है",
 		"didSearch_one": "1 परिणाम मिला",
 		"didSearch_other": "{{count}} परिणाम मिले",
 		"resultTooltip": "समानता स्कोर: {{score}} (फ़ाइल खोलने के लिए क्लिक करें)"
@@ -375,7 +409,9 @@
 	"slashCommands": {
 		"tooltip": "स्लैश कमांड प्रबंधित करें",
 		"title": "स्लैश कमांड",
-		"description": "बार-बार उपयोग किए जाने वाले प्रॉम्प्ट और वर्कफ़्लो तक त्वरित पहुंच के लिए कस्टम स्लैश कमांड बनाएं। <DocsLink>दस्तावेज़</DocsLink>",
+		"description": "बिल्ट-इन स्लैश कमांड का उपयोग करें या बार-बार उपयोग किए जाने वाले प्रॉम्प्ट और वर्कफ़्लो तक त्वरित पहुंच के लिए कस्टम स्लैश कमांड बनाएं। <DocsLink>दस्तावेज़</DocsLink>",
+		"manageCommands": "सेटिंग्स में स्लैश कमांड प्रबंधित करें",
+		"builtInCommands": "बिल्ट-इन कमांड",
 		"globalCommands": "वैश्विक कमांड",
 		"workspaceCommands": "कार्यक्षेत्र कमांड",
 		"globalCommand": "वैश्विक कमांड",
@@ -390,8 +426,18 @@
 			"confirm": "हटाएं"
 		}
 	},
+	"contextMenu": {
+		"noResults": "कोई परिणाम नहीं",
+		"problems": "समस्याएँ",
+		"terminal": "टर्मिनल",
+		"url": "सामग्री लाने के लिए URL पेस्ट करें"
+	},
 	"queuedMessages": {
-		"title": "कतार में संदेश:",
+		"title": "कतार में संदेश",
 		"clickToEdit": "संदेश संपादित करने के लिए क्लिक करें"
+	},
+	"slashCommand": {
+		"wantsToRun": "Kilo Code एक स्लैश कमांड चलाना चाहता है",
+		"didRun": "Kilo Code ने एक स्लैश कमांड चलाया"
 	}
 }

@@ -12,15 +12,21 @@ import { ScrollButton } from "@/components/ui"
 
 export function Footer() {
 	const [privacyDropdownOpen, setPrivacyDropdownOpen] = useState(false)
+	const [cloudDropdownOpen, setCloudDropdownOpen] = useState(false)
 	const dropdownRef = useRef<HTMLDivElement>(null)
+	const cloudDropdownRef = useRef<HTMLDivElement>(null)
 	const logoSrc = useLogoSrc()
 	const { resolvedTheme } = useTheme()
 
 	// Close dropdown when clicking outside
 	useEffect(() => {
 		function handleClickOutside(event: MouseEvent) {
-			if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+			const target = event.target as Node
+			if (dropdownRef.current && !dropdownRef.current.contains(target)) {
 				setPrivacyDropdownOpen(false)
+			}
+			if (cloudDropdownRef.current && !cloudDropdownRef.current.contains(target)) {
+				setCloudDropdownOpen(false)
 			}
 		}
 
@@ -64,43 +70,57 @@ export function Footer() {
 								<ul className="mt-6 space-y-4">
 									<li>
 										<ScrollButton
-											targetId="features"
+											targetId="product"
 											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
 											Features
 										</ScrollButton>
 									</li>
 									<li>
-										<Link
-											href="/enterprise"
-											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
-											Enterprise
-										</Link>
+										<div className="relative z-10" ref={cloudDropdownRef}>
+											<button
+												onClick={() => setCloudDropdownOpen(!cloudDropdownOpen)}
+												className="flex items-center text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground"
+												aria-expanded={cloudDropdownOpen}
+												aria-haspopup="true">
+												<span>Cloud Agents</span>
+												<ChevronDown
+													className={`ml-1 h-4 w-4 transition-transform ${cloudDropdownOpen ? "rotate-180" : ""}`}
+												/>
+											</button>
+
+											{cloudDropdownOpen && (
+												<div className="absolute z-50 mt-2 w-44 origin-top-left scale-95 rounded-md border border-border bg-background shadow-lg ring-1 ring-black ring-opacity-5 transition-all duration-100 ease-out data-[state=open]:scale-100 max-xs:right-0 max-xs:origin-top-right xs:left-0">
+													<div className="flex flex-col gap-1 p-2 text-sm text-muted-foreground">
+														<Link
+															href="/cloud"
+															onClick={() => setCloudDropdownOpen(false)}
+															className="rounded-md px-3 py-2 transition-colors hover:bg-accent/50 hover:text-foreground">
+															Cloud
+														</Link>
+														<Link
+															href="/reviewer"
+															onClick={() => setCloudDropdownOpen(false)}
+															className="rounded-md px-3 py-2 transition-colors hover:bg-accent/50 hover:text-foreground">
+															PR Reviewer
+														</Link>
+														<Link
+															href="/pr-fixer"
+															onClick={() => setCloudDropdownOpen(false)}
+															className="rounded-md px-3 py-2 transition-colors hover:bg-accent/50 hover:text-foreground">
+															PR Fixer
+														</Link>
+													</div>
+												</div>
+											)}
+										</div>
 									</li>
 									<li>
 										<a
-											href={EXTERNAL_LINKS.EVALS}
+											href={EXTERNAL_LINKS.DOCUMENTATION}
 											target="_blank"
 											rel="noopener noreferrer"
 											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
-											Evals
-										</a>
-									</li>
-									<li>
-										<a
-											href={EXTERNAL_LINKS.SECURITY}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
-											Security
-										</a>
-									</li>
-									<li>
-										<a
-											href={EXTERNAL_LINKS.INTEGRATIONS}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
-											Integrations
+											Docs
 										</a>
 									</li>
 									<li>
@@ -112,6 +132,31 @@ export function Footer() {
 											Changelog
 										</a>
 									</li>
+									<li>
+										<a
+											href={EXTERNAL_LINKS.TESTIMONIALS}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
+											Testimonials
+										</a>
+									</li>
+									<li>
+										<Link
+											href="/enterprise"
+											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
+											Enterprise
+										</Link>
+									</li>
+									<li>
+										<a
+											href={EXTERNAL_LINKS.SECURITY}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
+											Security Center
+										</a>
+									</li>
 								</ul>
 							</div>
 							<div className="mt-10 md:mt-0">
@@ -119,20 +164,20 @@ export function Footer() {
 								<ul className="mt-6 space-y-4">
 									<li>
 										<a
+											href={EXTERNAL_LINKS.EVALS}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
+											Evals
+										</a>
+									</li>
+									<li>
+										<a
 											href={EXTERNAL_LINKS.FAQ}
 											target="_blank"
 											rel="noopener noreferrer"
 											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
 											FAQ
-										</a>
-									</li>
-									<li>
-										<a
-											href={EXTERNAL_LINKS.DOCUMENTATION}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
-											Docs
 										</a>
 									</li>
 									<li>
@@ -195,24 +240,6 @@ export function Footer() {
 										</a>
 									</li>
 									<li>
-										<a
-											href={EXTERNAL_LINKS.BLOG}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
-											Blog
-										</a>
-									</li>
-									<li>
-										<a
-											href={EXTERNAL_LINKS.TESTIMONIALS}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
-											Testimonials
-										</a>
-									</li>
-									<li>
 										<Link
 											href="/terms"
 											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
@@ -255,6 +282,20 @@ export function Footer() {
 												</div>
 											)}
 										</div>
+									</li>
+									<li>
+										<Link
+											href="/legal/cookies"
+											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
+											Cookie Policy
+										</Link>
+									</li>
+									<li>
+										<Link
+											href="/legal/subprocessors"
+											className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground">
+											Subprocessors
+										</Link>
 									</li>
 								</ul>
 							</div>

@@ -67,6 +67,12 @@
 			"copyError": "Erro ao copiar imagem"
 		}
 	},
+	"image": {
+		"tabs": {
+			"view": "Imagem"
+		},
+		"noData": "Nenhum dado de imagem"
+	},
 	"file": {
 		"errors": {
 			"invalidDataUri": "Formato de URI de dados inválido",
@@ -85,7 +91,13 @@
 		"deleteWarning": "Excluir esta mensagem irá excluir todas as mensagens subsequentes na conversa. Deseja prosseguir?",
 		"editMessage": "Editar Mensagem",
 		"editWarning": "Editar esta mensagem irá excluir todas as mensagens subsequentes na conversa. Deseja prosseguir?",
-		"proceed": "Prosseguir"
+		"editQuestionWithCheckpoint": "Editar esta mensagem irá excluir todas as mensagens posteriores na conversa. Você também deseja desfazer todas as alterações até este checkpoint?",
+		"deleteQuestionWithCheckpoint": "Excluir esta mensagem irá excluir todas as mensagens posteriores na conversa. Você também deseja desfazer todas as alterações até este checkpoint?",
+		"editOnly": "Não, apenas editar a mensagem",
+		"deleteOnly": "Não, apenas excluir a mensagem",
+		"restoreToCheckpoint": "Sim, restaurar o checkpoint",
+		"proceed": "Prosseguir",
+		"dontShowAgain": "Não mostrar novamente"
 	},
 	"time_ago": {
 		"just_now": "agora mesmo",
@@ -102,5 +114,9 @@
 		"months_ago": "há {{count}} meses",
 		"year_ago": "há um ano",
 		"years_ago": "há {{count}} anos"
+	},
+	"errors": {
+		"wait_checkpoint_long_time": "Você esperou {{timeout}} segundos para inicializar o checkpoint. Se não precisa dessa função, desative nas <settingsLink>configurações do checkpoint</settingsLink>.",
+		"init_checkpoint_fail_long_time": "A inicialização do checkpoint levou mais de {{timeout}} segundos, então os checkpoints foram desativados para esta tarefa. Você pode desativar os checkpoints ou aumentar o tempo de espera nas <settingsLink>configurações do checkpoint</settingsLink>."
 	}
 }

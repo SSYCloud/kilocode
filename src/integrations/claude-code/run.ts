@@ -173,6 +173,9 @@ const claudeCodeTools = [
 	"TodoRead",
 	"TodoWrite",
 	"WebSearch",
+	"ExitPlanMode",
+	"BashOutput",
+	"KillBash",
 ].join(",")
 
 const CLAUDE_CODE_TIMEOUT = 600000 // 10 minutes
@@ -289,7 +292,7 @@ function attemptParseChunk(data: string): ClaudeCodeMessage | null {
  * Creates a user-friendly error message for Claude Code ENOENT errors
  */
 function createClaudeCodeNotFoundError(claudePath: string, originalError: Error): Error {
-	const errorMessage = t("errors.claudeCode.notFound", {
+	const errorMessage = t("common:errors.claudeCode.notFound", {
 		claudePath,
 		installationUrl: CLAUDE_CODE_INSTALLATION_URL,
 		originalError: originalError.message,

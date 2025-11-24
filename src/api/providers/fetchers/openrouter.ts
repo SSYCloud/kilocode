@@ -1,10 +1,9 @@
-import axios, { type RawAxiosRequestHeaders /*kilocode_change*/ } from "axios"
+import axios from "axios"
 import { z } from "zod"
 
 import {
 	type ModelInfo,
 	isModelParameter,
-	OPEN_ROUTER_COMPUTER_USE_MODELS,
 	OPEN_ROUTER_REASONING_BUDGET_MODELS,
 	OPEN_ROUTER_REQUIRED_REASONING_BUDGET_MODELS,
 	anthropicModels,
@@ -19,7 +18,8 @@ import { DEFAULT_HEADERS } from "../constants" // kilocode_change
  */
 
 const openRouterArchitectureSchema = z.object({
-	modality: z.string().nullish(),
+	input_modalities: z.array(z.string()).nullish(),
+	output_modalities: z.array(z.string()).nullish(),
 	tokenizer: z.string().nullish(),
 })
 
@@ -59,8 +59,9 @@ export type OpenRouterModel = z.infer<typeof openRouterModelSchema>
  */
 
 export const openRouterModelEndpointSchema = modelRouterBaseModelSchema.extend({
+	model_name: z.string(), // kilocode_change
 	provider_name: z.string(),
-	tag: z.string().optional(), // kilocode_change
+	tag: z.string().optional(),
 })
 
 export type OpenRouterModelEndpoint = z.infer<typeof openRouterModelEndpointSchema>
@@ -97,29 +98,43 @@ type OpenRouterModelEndpointsResponse = z.infer<typeof openRouterModelEndpointsR
  */
 
 export async function getOpenRouterModels(
-	options?: ApiHandlerOptions & { headers?: RawAxiosRequestHeaders }, // kilocode_change: added headers
+	options?: ApiHandlerOptions & { headers?: Record<string, string> }, // kilocode_change: added headers
 ): Promise<Record<string, ModelInfo>> {
 	const models: Record<string, ModelInfo> = {}
 	const baseURL = options?.openRouterBaseUrl || "https://openrouter.ai/api/v1"
 
 	try {
-		const response = await axios.get<OpenRouterModelsResponse>(`${baseURL}/models`, {
-			headers: { ...DEFAULT_HEADERS, ...(options?.headers ?? {}) }, // kilocode_change: added headers
+		// kilocode_change: use fetch, added headers
+		const response = await fetch(`${baseURL}/models`, {
+			headers: { ...DEFAULT_HEADERS, ...(options?.headers ?? {}) },
 		})
-		const result = openRouterModelsResponseSchema.safeParse(response.data)
-		const data = result.success ? result.data.data : response.data.data
+		const json = await response.json()
+		const result = openRouterModelsResponseSchema.safeParse(json)
+		const data = result.success ? result.data.data : json.data
+		// kilocode_change end
 
 		if (!result.success) {
-			throw new Error("OpenRouter models response is invalid: " + result.error.format()) // kilocode_change
+			// kilocode_change start
+			throw new Error(
+				"OpenRouter models response is invalid: " + JSON.stringify(result.error.format(), undefined, 2),
+			)
+			// kilocode_change end
 		}
 
 		for (const model of data) {
 			const { id, architecture, top_provider, supported_parameters = [] } = model
 
+			// Skip image generation models (models that output images)
+			if (architecture?.output_modalities?.includes("image")) {
+				continue
+			}
+
 			models[id] = parseOpenRouterModel({
 				id,
 				model,
-				modality: architecture?.modality,
+				displayName: model.name, // kilocode_change
+				inputModality: architecture?.input_modalities,
+				outputModality: architecture?.output_modalities,
 				maxTokens: top_provider?.max_completion_tokens,
 				supportedParameters: supported_parameters,
 			})
@@ -156,11 +171,18 @@ export async function getOpenRouterModelEndpoints(
 
 		const { id, architecture, endpoints } = data
 
+		// Skip image generation models (models that output images)
+		if (architecture?.output_modalities?.includes("image")) {
+			return models
+		}
+
 		for (const endpoint of endpoints) {
-			models[endpoint.tag /*kilocode_change*/ ?? endpoint.provider_name] = parseOpenRouterModel({
+			models[endpoint.tag ?? endpoint.provider_name] = parseOpenRouterModel({
 				id,
 				model: endpoint,
-				modality: architecture?.modality,
+				displayName: endpoint.model_name, // kilocode_change
+				inputModality: architecture?.input_modalities,
+				outputModality: architecture?.output_modalities,
 				maxTokens: endpoint.max_completion_tokens,
 			})
 		}
@@ -180,13 +202,17 @@ export async function getOpenRouterModelEndpoints(
 export const parseOpenRouterModel = ({
 	id,
 	model,
-	modality,
+	displayName, // kilocode_change
+	inputModality,
+	outputModality,
 	maxTokens,
 	supportedParameters,
 }: {
 	id: string
 	model: OpenRouterBaseModel
-	modality: string | null | undefined
+	displayName?: string // kilocode_change
+	inputModality: string[] | null | undefined
+	outputModality: string[] | null | undefined
 	maxTokens: number | null | undefined
 	supportedParameters?: string[]
 }): ModelInfo => {
@@ -196,12 +222,12 @@ export const parseOpenRouterModel = ({
 
 	const cacheReadsPrice = model.pricing?.input_cache_read ? parseApiPrice(model.pricing?.input_cache_read) : undefined
 
-	const supportsPromptCache = typeof cacheReadsPrice !== "undefined" // kilocode_change: some caching models don't list a cacheWritesPrice
+	const supportsPromptCache = typeof cacheReadsPrice !== "undefined" // some models support caching but don't charge a cacheWritesPrice, e.g. GPT-5
 
 	const modelInfo: ModelInfo = {
 		maxTokens: maxTokens || Math.ceil(model.context_length * 0.2),
 		contextWindow: model.context_length,
-		supportsImages: modality?.includes("image") ?? false,
+		supportsImages: inputModality?.includes("image") ?? false,
 		supportsPromptCache,
 		inputPrice: parseApiPrice(model.pricing?.prompt),
 		outputPrice: parseApiPrice(model.pricing?.completion),
@@ -210,13 +236,10 @@ export const parseOpenRouterModel = ({
 		description: model.description,
 		supportsReasoningEffort: supportedParameters ? supportedParameters.includes("reasoning") : undefined,
 		supportedParameters: supportedParameters ? supportedParameters.filter(isModelParameter) : undefined,
-		preferredIndex: model.preferredIndex, // kilocode_change
-	}
-
-	// The OpenRouter model definition doesn't give us any hints about
-	// computer use, so we need to set that manually.
-	if (OPEN_ROUTER_COMPUTER_USE_MODELS.has(id)) {
-		modelInfo.supportsComputerUse = true
+		// kilocode_change start
+		displayName,
+		preferredIndex: model.preferredIndex,
+		// kilocode_change end
 	}
 
 	if (OPEN_ROUTER_REASONING_BUDGET_MODELS.has(id)) {
@@ -244,6 +267,13 @@ export const parseOpenRouterModel = ({
 	// Set claude-opus-4.1 model to use the correct configuration
 	if (id === "anthropic/claude-opus-4.1") {
 		modelInfo.maxTokens = anthropicModels["claude-opus-4-1-20250805"].maxTokens
+	}
+
+	// Ensure correct reasoning handling for Claude Haiku 4.5 on OpenRouter
+	// Use budget control and disable effort-based reasoning fallback
+	if (id === "anthropic/claude-haiku-4.5") {
+		modelInfo.supportsReasoningBudget = true
+		modelInfo.supportsReasoningEffort = false
 	}
 
 	// Set horizon-alpha model to 32k max tokens

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import { getIconForFilePath, getIconUrlByName, getIconForDirectoryPath } from "vscode-material-icons"
+import { Settings } from "lucide-react"
 
 import type { ModeConfig } from "@roo-code/types"
 import type { Command } from "@roo/ExtensionMessage"
@@ -11,6 +12,10 @@ import {
 	SearchResult,
 } from "@src/utils/context-mentions"
 import { removeLeadingNonAlphanumeric } from "@src/utils/removeLeadingNonAlphanumeric"
+import { vscode } from "@src/utils/vscode"
+import { buildDocLink } from "@/utils/docLinks"
+import { Trans } from "react-i18next"
+import { t } from "i18next"
 
 interface ContextMenuProps {
 	onSelect: (type: ContextMenuOptionType, value?: string) => void
@@ -27,6 +32,9 @@ interface ContextMenuProps {
 	commands?: Command[]
 }
 
+const EMPTY_COMMANDS: Command[] = [] // kilocode_change - maintain stable references for React props
+const EMPTY_SEARCH_RESULTS: SearchResult[] = [] // kilocode_change - maintain stable references for React props
+
 const ContextMenu: React.FC<ContextMenuProps> = ({
 	onSelect,
 	searchQuery,
@@ -36,8 +44,8 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 	selectedType,
 	queryItems,
 	modes,
-	dynamicSearchResults = [],
-	commands = [],
+	dynamicSearchResults = EMPTY_SEARCH_RESULTS, // kilocode_change
+	commands = EMPTY_COMMANDS, // kilocode_change
 }) => {
 	const [materialIconsBaseUri, setMaterialIconsBaseUri] = useState("")
 	const menuRef = useRef<HTMLDivElement>(null)
@@ -45,6 +53,22 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 	const filteredOptions = useMemo(() => {
 		return getContextMenuOptions(searchQuery, selectedType, queryItems, dynamicSearchResults, modes, commands)
 	}, [searchQuery, selectedType, queryItems, dynamicSearchResults, modes, commands])
+
+	// kilocode_change start - disable hover selection briefly when items change to prevent accidental selections
+	const [allowSelection, setAllowSelection] = useState(false)
+	const prevOptionsRef = useRef<ContextMenuQueryItem[] | null>(null)
+
+	useEffect(() => {
+		if (prevOptionsRef.current === null || filteredOptions !== prevOptionsRef.current) {
+			setAllowSelection(false)
+			const timer = setTimeout(() => {
+				setAllowSelection(true)
+			}, 100)
+			return () => clearTimeout(timer)
+		}
+		prevOptionsRef.current = filteredOptions
+	}, [filteredOptions])
+	// kilocode_change end - disable hover selection briefly when items change to prevent accidental selections
 
 	useEffect(() => {
 		if (menuRef.current) {
@@ -77,8 +101,6 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 							fontWeight: "bold",
 							fontSize: "0.85em",
 							opacity: 0.8,
-							textTransform: "uppercase",
-							letterSpacing: "0.5px",
 						}}>
 						{option.label}
 					</span>
@@ -136,13 +158,13 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 					</div>
 				)
 			case ContextMenuOptionType.Problems:
-				return <span>Problems</span>
+				return <span>{t("chat:contextMenu.problems")}</span>
 			case ContextMenuOptionType.Terminal:
-				return <span>Terminal</span>
+				return <span>{t("chat:contextMenu.terminal")}</span>
 			case ContextMenuOptionType.URL:
-				return <span>Paste URL to fetch contents</span>
+				return <span>{t("chat:contextMenu.url")}</span>
 			case ContextMenuOptionType.NoResults:
-				return <span>No results found</span>
+				return <span>{t("chat:contextMenu.noResults")}</span>
 			// kilocode_change start
 			case ContextMenuOptionType.Image:
 				return <span>Add Image</span>
@@ -259,6 +281,17 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 		)
 	}
 
+	const handleSettingsClick = (e: React.MouseEvent) => {
+		// Prevent any default behavior
+		e.preventDefault()
+		// Switch to settings tab and navigate to slash commands section
+		vscode.postMessage({
+			type: "switchTab",
+			tab: "settings",
+			values: { section: "slashCommands" },
+		})
+	}
+
 	return (
 		<div
 			style={{
@@ -283,6 +316,53 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 					overflowY: "auto",
 					overflowX: "hidden",
 				}}>
+				{/* Settings button for slash commands */}
+				{searchQuery === "/" && (
+					<div className="p-2 flex items-start gap-4 justify-between">
+						{searchQuery.length === 1 && (
+							<div className="text-sm">
+								<p className="font-bold text-base text-vscode-foreground mt-1 mb-0.5">Slash Commands</p>
+								<p className="text-xs mt-0.5 -mb-1">
+									<Trans
+										i18nKey="settings:slashCommands.description"
+										components={{
+											DocsLink: (
+												<a
+													href={buildDocLink(
+														"features/slash-commands",
+														"slash_commands_settings",
+													)}
+													target="_blank"
+													rel="noopener noreferrer"
+													className="text-vscode-textLink-foreground hover:underline">
+													{t("common:docsLink.label")}
+												</a>
+											),
+										}}
+									/>
+								</p>
+							</div>
+						)}
+						<button
+							className="mt-1 cursor-pointer"
+							onClick={handleSettingsClick}
+							onMouseDown={(e) => {
+								e.stopPropagation()
+								e.preventDefault()
+							}}
+							onMouseEnter={(e) => {
+								e.currentTarget.style.opacity = "1"
+								e.currentTarget.style.backgroundColor = "var(--vscode-list-hoverBackground)"
+							}}
+							onMouseLeave={(e) => {
+								e.currentTarget.style.opacity = "0.7"
+								e.currentTarget.style.backgroundColor = "transparent"
+							}}
+							title={t("chat:slashCommands.manageCommands")}>
+							<Settings size={16} />
+						</button>
+					</div>
+				)}
 				{filteredOptions && filteredOptions.length > 0 ? (
 					filteredOptions.map((option, index) => (
 						<div
@@ -290,7 +370,9 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 							onClick={() => isOptionSelectable(option) && onSelect(option.type, option.value)}
 							style={{
 								padding:
-									option.type === ContextMenuOptionType.SectionHeader ? "8px 6px 4px 6px" : "4px 6px",
+									option.type === ContextMenuOptionType.SectionHeader
+										? "16px 8px 4px 8px"
+										: "4px 8px",
 								cursor: isOptionSelectable(option) ? "pointer" : "default",
 								color: "var(--vscode-dropdown-foreground)",
 								display: "flex",
@@ -310,7 +392,13 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 										}
 									: {}),
 							}}
-							onMouseEnter={() => isOptionSelectable(option) && setSelectedIndex(index)}>
+							onMouseEnter={() => {
+								// kilocode_change start - add allowEvents check
+								if (allowSelection && isOptionSelectable(option)) {
+									setSelectedIndex(index)
+								}
+								// kilocode_change end - add allowEvents check
+							}}>
 							<div
 								style={{
 									display: "flex",
@@ -375,7 +463,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 							color: "var(--vscode-foreground)",
 							opacity: 0.7,
 						}}>
-						<span>No results found</span>
+						<span>{t("chat:contextMenu.noResults")}</span>
 					</div>
 				)}
 			</div>

@@ -25,14 +25,20 @@
 		"autoApprove": "Auto-approbation",
 		"browser": "Accès ordinateur",
 		"checkpoints": "Points de contrôle",
+		"display": "Afficher",
 		"notifications": "Notifications",
 		"contextManagement": "Contexte",
 		"terminal": "Terminal",
+		"slashCommands": "Commandes Slash",
 		"prompts": "Invites",
+		"ui": "UI",
 		"experimental": "Expérimental",
 		"language": "Langue",
-		"about": "À propos de Kilo Code Chinese",
-		"display": "Afficher"
+		"about": "À propos de Kilo Code",
+		"autoPurge": "Auto-nettoyage"
+	},
+	"slashCommands": {
+		"description": "Gérez vos commandes slash pour exécuter rapidement des flux de travail et des actions personnalisées. <DocsLink>En savoir plus</DocsLink>"
 	},
 	"prompts": {
 		"description": "Configurez les invites de support utilisées pour les actions rapides comme l'amélioration des invites, l'explication du code et la résolution des problèmes. Ces invites aident Kilo Code à fournir une meilleure assistance pour les tâches de développement courantes."
@@ -53,9 +59,15 @@
 		"geminiProvider": "Gemini",
 		"geminiApiKeyLabel": "Clé API :",
 		"geminiApiKeyPlaceholder": "Entrez votre clé API Gemini",
+		"vercelAiGatewayProvider": "Vercel AI Gateway",
+		"vercelAiGatewayApiKeyLabel": "Clé API",
+		"vercelAiGatewayApiKeyPlaceholder": "Entrez votre clé API Vercel AI Gateway",
+		"openRouterProvider": "OpenRouter",
+		"openRouterApiKeyLabel": "Clé d'API OpenRouter",
+		"openRouterApiKeyPlaceholder": "Entrez votre clé d'API OpenRouter",
 		"mistralProvider": "Mistral",
 		"mistralApiKeyLabel": "Clé d'API:",
-		"mistralApiKeyPlaceholder": "Entrez votre clé d'API Mistral",
+		"mistralApiKeyPlaceholder": "Entrez votre clé API Mistral",
 		"openaiCompatibleProvider": "Compatible OpenAI",
 		"openAiKeyLabel": "Clé API OpenAI",
 		"openAiKeyPlaceholder": "Entrez votre clé API OpenAI",
@@ -114,9 +126,11 @@
 			"modelDimensionRequired": "La dimension du modèle est requise",
 			"geminiApiKeyRequired": "La clé API Gemini est requise",
 			"mistralApiKeyRequired": "La clé API Mistral est requise",
+			"vercelAiGatewayApiKeyRequired": "La clé API Vercel AI Gateway est requise",
 			"ollamaBaseUrlRequired": "L'URL de base Ollama est requise",
 			"baseUrlRequired": "L'URL de base est requise",
-			"modelDimensionMinValue": "La dimension du modèle doit être supérieure à 0"
+			"modelDimensionMinValue": "La dimension du modèle doit être supérieure à 0",
+			"openRouterApiKeyRequired": "Clé API OpenRouter est requise"
 		},
 		"advancedConfigLabel": "Configuration avancée",
 		"searchMinScoreLabel": "Seuil de score de recherche",
@@ -124,9 +138,12 @@
 		"searchMinScoreResetTooltip": "Réinitialiser à la valeur par défaut (0.4)",
 		"searchMaxResultsLabel": "Résultats de recherche maximum",
 		"searchMaxResultsDescription": "Nombre maximum de résultats de recherche à retourner lors de l'interrogation de l'index de code. Des valeurs plus élevées fournissent plus de contexte mais peuvent inclure des résultats moins pertinents.",
-		"resetToDefault": "Réinitialiser par défaut"
+		"resetToDefault": "Réinitialiser par défaut",
+		"cancelling": "Annulation...",
+		"cancelIndexingButton": "Annuler l'indexation"
 	},
 	"autoApprove": {
+		"toggleShortcut": "Vous pouvez configurer un raccourci global pour ce paramètre <SettingsLink>dans les préférences de votre IDE</SettingsLink>.",
 		"description": "Permettre à Kilo Code d'effectuer automatiquement des opérations sans requérir d'approbation. Activez ces paramètres uniquement si vous faites entièrement confiance à l'IA et que vous comprenez les risques de sécurité associés.",
 		"enabled": "Auto-approbation activée",
 		"toggleAriaLabel": "Activer/désactiver l'approbation automatique",
@@ -216,6 +233,8 @@
 		"providerDocumentation": "Documentation {{provider}}",
 		"configProfile": "Profil de configuration",
 		"description": "Enregistrez différentes configurations d'API pour basculer rapidement entre les fournisseurs et les paramètres.",
+		"makeActiveProfile": "Définir comme profil actif",
+		"makeActiveTooltip": "Active ce profil pour l'utiliser dans les requêtes API",
 		"apiProvider": "Fournisseur d'API",
 		"model": "Modèle",
 		"nameEmpty": "Le nom ne peut pas être vide",
@@ -234,10 +253,14 @@
 		"noProviderMatchFound": "Aucun fournisseur trouvé",
 		"noMatchFound": "Aucun profil correspondant trouvé",
 		"vscodeLmDescription": "L'API du modèle de langage VS Code vous permet d'exécuter des modèles fournis par d'autres extensions VS Code (y compris, mais sans s'y limiter, GitHub Copilot). Le moyen le plus simple de commencer est d'installer les extensions Copilot et Copilot Chat depuis le VS Code Marketplace.",
+		"vscodeLmUnavailable": "La prise en charge des modèles linguistiques de VS Code est disponible uniquement dans Visual Studio Code. Des forks comme VSCodium et d'autres peuvent ne pas fonctionner. De plus, cette fonctionnalité n'est pas disponible dans les outils JetBrains.",
+		"vscodeLmUnavailableInstructions": "Assurez-vous d'utiliser un outil pris en charge et que VS Code Chat est installé et activé",
 		"awsCustomArnUse": "Entrez un ARN Amazon Bedrock valide pour le modèle que vous souhaitez utiliser. Exemples de format :",
 		"awsCustomArnDesc": "Assurez-vous que la région dans l'ARN correspond à la région AWS sélectionnée ci-dessus.",
 		"openRouterApiKey": "Clé API OpenRouter",
 		"getOpenRouterApiKey": "Obtenir la clé API OpenRouter",
+		"vercelAiGatewayApiKey": "Clé API Vercel AI Gateway",
+		"getVercelAiGatewayApiKey": "Obtenir la clé API Vercel AI Gateway",
 		"apiKeyStorageNotice": "Les clés API sont stockées en toute sécurité dans le stockage sécurisé de VSCode",
 		"glamaApiKey": "Clé API Glama",
 		"getGlamaApiKey": "Obtenir la clé API Glama",
@@ -274,6 +297,8 @@
 		"getChutesApiKey": "Obtenir la clé API Chutes",
 		"fireworksApiKey": "Clé API Fireworks",
 		"getFireworksApiKey": "Obtenir la clé API Fireworks",
+		"syntheticApiKey": "Clé API Synthetic",
+		"getSyntheticApiKey": "Obtenir la clé API Synthetic",
 		"featherlessApiKey": "Clé API Featherless",
 		"getFeatherlessApiKey": "Obtenir la clé API Featherless",
 		"ioIntelligenceApiKey": "Clé API IO Intelligence",
@@ -292,6 +317,9 @@
 		"getZaiApiKey": "Obtenir la clé API Z AI",
 		"zaiEntrypoint": "Point d'entrée Z AI",
 		"zaiEntrypointDescription": "Veuillez sélectionner le point d'entrée API approprié en fonction de votre emplacement. Si vous êtes en Chine, choisissez open.bigmodel.cn. Sinon, choisissez api.z.ai.",
+		"minimaxApiKey": "Clé API MiniMax",
+		"getMiniMaxApiKey": "Obtenir la clé API MiniMax",
+		"minimaxBaseUrl": "Point d'entrée MiniMax",
 		"geminiApiKey": "Clé API Gemini",
 		"getGroqApiKey": "Obtenir la clé API Groq",
 		"groqApiKey": "Clé API Groq",
@@ -299,6 +327,10 @@
 		"sambaNovaApiKey": "Clé API SambaNova",
 		"getHuggingFaceApiKey": "Obtenir la clé API Hugging Face",
 		"huggingFaceApiKey": "Clé API Hugging Face",
+		"getOvhCloudAiEndpointsApiKey": "Obtenir la clé API d'OVHcloud AI Endpoints",
+		"ovhCloudAiEndpointsApiKey": "Clé API d'OVHcloud AI Endpoints",
+		"ovhCloudAiEndpointsBaseUrl": "URL de base",
+		"getOvhCloudAiEndpointsBaseUrl": "Utiliser une URL de base personnalisée",
 		"huggingFaceModelId": "ID du modèle",
 		"huggingFaceLoading": "Chargement...",
 		"huggingFaceModelsCount": "({{count}} modèles)",
@@ -341,7 +373,7 @@
 		"enablePromptCachingTitle": "Activer la mise en cache des prompts pour améliorer les performances et réduire les coûts pour les modèles pris en charge.",
 		"cacheUsageNote": "Remarque : Si vous ne voyez pas l'utilisation du cache, essayez de sélectionner un modèle différent puis de sélectionner à nouveau votre modèle souhaité.",
 		"vscodeLmModel": "Modèle de langage",
-		"vscodeLmWarning": "Remarque : Il s'agit d'une intégration très expérimentale et le support des fournisseurs variera. Si vous recevez une erreur concernant un modèle non pris en charge, c'est un problème du côté du fournisseur.",
+		"vscodeLmWarning": "Remarque : Les modèles accessibles via l’API VS Code Language Model peuvent être encapsulés ou ajustés par le fournisseur ; leur comportement peut donc différer de l’utilisation directe du même modèle auprès d’un fournisseur ou routeur classique. Pour utiliser un modèle depuis la liste « Language Model », bascule d’abord sur ce modèle puis clique sur « Accepter » dans l’invite de Copilot Chat ; sinon, une erreur telle que 400 « The requested model is not supported » peut apparaître.",
 		"geminiParameters": {
 			"urlContext": {
 				"title": "Activer le contexte d'URL",
@@ -375,9 +407,11 @@
 		"ollama": {
 			"baseUrl": "URL de base (optionnel)",
 			"modelId": "ID du modèle",
-			"apiKey": "Clé API",
+			"apiKey": "Clé API Ollama",
 			"apiKeyPlaceholder": "Entrez votre clé API",
-			"apiKeyInfo": "La clé API sera envoyée comme en-tête d'autorisation",
+			"apiKeyHelp": "Clé API optionnelle pour les instances Ollama authentifiées ou les services cloud. Laissez vide pour les installations locales.",
+			"numCtx": "Taille de la fenêtre de contexte (num_ctx)",
+			"numCtxHelp": "Remplace la taille de la fenêtre de contexte par défaut du modèle. Laissez vide pour utiliser la configuration du Modelfile du modèle. La valeur minimale est 128.",
 			"description": "Ollama vous permet d'exécuter des modèles localement sur votre ordinateur. Pour obtenir des instructions sur la mise en route, consultez le guide de démarrage rapide.",
 			"warning": "Remarque : Kilo Code utilise des prompts complexes et fonctionne mieux avec les modèles Claude. Les modèles moins performants peuvent ne pas fonctionner comme prévu."
 		},
@@ -416,7 +450,7 @@
 			},
 			"computerUse": {
 				"label": "Utilisation de l'ordinateur",
-				"description": "Ce modèle est-il capable d'interagir avec un navigateur ? (ex. Claude 3.7 Sonnet)"
+				"description": "Ce modèle est-il capable d'interagir avec un navigateur ?"
 			},
 			"promptCache": {
 				"label": "Mise en cache des prompts",
@@ -442,6 +476,10 @@
 			},
 			"resetDefaults": "Réinitialiser les valeurs par défaut"
 		},
+		"rateLimitAfter": {
+			"label": "Limite de débit en fin",
+			"description": "Commencez à limiter le débit après la fin du flux API."
+		},
 		"rateLimitSeconds": {
 			"label": "Limite de débit",
 			"description": "Temps minimum entre les requêtes API."
@@ -454,6 +492,7 @@
 		},
 		"reasoningEffort": {
 			"label": "Effort de raisonnement du modèle",
+			"none": "Aucun",
 			"minimal": "Minimal (le plus rapide)",
 			"high": "Élevé",
 			"medium": "Moyen",
@@ -526,9 +565,45 @@
 		}
 	},
 	"checkpoints": {
+		"timeout": {
+			"label": "Délai d'initialisation du point de contrôle (secondes)",
+			"description": "Temps d'attente maximum pour l'initialisation du service de points de contrôle. Par défaut : 15 secondes. Plage : 10-60 secondes."
+		},
 		"enable": {
 			"label": "Activer les points de contrôle automatiques",
 			"description": "Lorsque cette option est activée, Kilo Code créera automatiquement des points de contrôle pendant l'exécution des tâches, facilitant la révision des modifications ou le retour à des états antérieurs."
+		}
+	},
+	"autoPurge": {
+		"enable": {
+			"label": "Activer le nettoyage automatique des tâches",
+			"description": "Supprimer automatiquement les anciennes tâches pour libérer de l'espace disque et améliorer les performances. Les tâches sont classées par type et âge pour déterminer quand elles doivent être supprimées."
+		},
+		"defaultRetention": {
+			"label": "Période de rétention par défaut (jours)",
+			"description": "Nombre de jours pour conserver les tâches avant qu'elles soient éligibles au nettoyage"
+		},
+		"neverPurgeFavorited": {
+			"label": "Ne jamais supprimer les tâches favorites",
+			"description": "Lorsque activé, les tâches favorites ne seront jamais supprimées automatiquement quel que soit leur âge"
+		},
+		"favoritedRetention": {
+			"label": "Rétention des tâches favorites (jours)",
+			"description": "Nombre de jours pour conserver les tâches favorites (s'applique uniquement lorsque 'Ne jamais supprimer les tâches favorites' est désactivé)"
+		},
+		"completedRetention": {
+			"label": "Rétention des tâches terminées (jours)",
+			"description": "Nombre de jours pour conserver les tâches qui ont été terminées avec succès"
+		},
+		"incompleteRetention": {
+			"label": "Rétention des tâches incomplètes (jours)",
+			"description": "Nombre de jours pour conserver les tâches qui n'ont pas été terminées (généralement plus court que les tâches terminées)"
+		},
+		"lastRun": {
+			"label": "Dernier nettoyage"
+		},
+		"manualPurge": {
+			"button": "Exécuter le nettoyage maintenant"
 		}
 	},
 	"notifications": {
@@ -621,6 +696,14 @@
 			"profileDescription": "Seuil personnalisé pour ce profil uniquement (remplace le défaut global)",
 			"inheritDescription": "Ce profil hérite du seuil par défaut global ({{threshold}}%)",
 			"usesGlobal": "(utilise global {{threshold}}%)"
+		},
+		"includeCurrentTime": {
+			"label": "Inclure l'heure actuelle dans le contexte",
+			"description": "Lorsque cette option est activée, l'heure actuelle et les informations de fuseau horaire seront incluses dans le prompt système. Désactivez cette option si les modèles cessent de fonctionner en raison de problèmes liés à l'heure."
+		},
+		"includeCurrentCost": {
+			"label": "Inclure le coût actuel dans le contexte",
+			"description": "Lorsque cette option est activée, le coût d'utilisation actuel de l'API sera inclus dans le prompt système. Désactivez cette option si les modèles cessent de fonctionner en raison de problèmes de coût."
 		}
 	},
 	"terminal": {
@@ -630,55 +713,55 @@
 		},
 		"advanced": {
 			"label": "Paramètres du terminal : Avancé",
-			"description": "Les options suivantes peuvent nécessiter un redémarrage du terminal pour appliquer le paramètre."
+			"description": "Ces paramètres s'appliquent uniquement lorsque 'Utiliser le terminal en ligne' est désactivé. Ils affectent uniquement le terminal VS Code et peuvent nécessiter un redémarrage de l'IDE."
 		},
 		"outputLineLimit": {
 			"label": "Limite de sortie du terminal",
-			"description": "Nombre maximum de lignes à inclure dans la sortie du terminal lors de l'exécution de commandes. Lorsque ce nombre est dépassé, les lignes seront supprimées du milieu, économisant des token. <0>En savoir plus</0>"
+			"description": "Conserve les premières et dernières lignes et supprime celles du milieu pour rester sous la limite. Réduire pour économiser des jetons ; augmenter pour donner à Kilo plus de détails intermédiaires. Kilo voit un espace réservé là où le contenu est ignoré.<0>En savoir plus</0>"
 		},
 		"outputCharacterLimit": {
 			"label": "Limite de caractères du terminal",
-			"description": "Nombre maximum de caractères à inclure dans la sortie du terminal lors de l'exécution de commandes. Cette limite prévaut sur la limite de lignes pour éviter les problèmes de mémoire avec des lignes extrêmement longues. Lorsque cette limite est dépassée, la sortie sera tronquée. <0>En savoir plus</0>"
+			"description": "Remplace la limite de lignes pour éviter les problèmes de mémoire en imposant un plafond strict sur la taille de sortie. Si dépassé, conserve le début et la fin et affiche un espace réservé à Kilo là où le contenu est ignoré. <0>En savoir plus</0>"
 		},
 		"shellIntegrationTimeout": {
-			"label": "Délai d'intégration du shell du terminal",
-			"description": "Temps maximum d'attente pour l'initialisation de l'intégration du shell avant d'exécuter des commandes. Pour les utilisateurs avec des temps de démarrage de shell longs, cette valeur peut nécessiter d'être augmentée si vous voyez des erreurs \"Shell Integration Unavailable\" dans le terminal. <0>En savoir plus</0>"
+			"label": "Délai d'attente d'intégration du shell du terminal",
+			"description": "Temps d'attente de l'intégration du shell de VS Code avant d'exécuter des commandes. Augmentez si votre shell démarre lentement ou si vous voyez des erreurs 'Intégration du Shell Indisponible'. <0>En savoir plus</0>"
 		},
 		"shellIntegrationDisabled": {
-			"label": "Désactiver l'intégration du shell du terminal",
-			"description": "Active ceci si les commandes du terminal ne fonctionnent pas correctement ou si tu vois des erreurs 'Shell Integration Unavailable'. Cela utilise une méthode plus simple pour exécuter les commandes, en contournant certaines fonctionnalités avancées du terminal. <0>En savoir plus</0>"
+			"label": "Utiliser le terminal en ligne (recommandé)",
+			"description": "Exécute des commandes dans le terminal en ligne (chat) pour contourner les profils/intégration du shell pour des exécutions plus rapides et fiables. Lorsque désactivé, Kilo utilise le terminal VS Code avec votre profil de shell, invites et plugins. <0>En savoir plus</0>"
 		},
 		"commandDelay": {
 			"label": "Délai de commande du terminal",
-			"description": "Délai en millisecondes à ajouter après l'exécution de la commande. Le paramètre par défaut de 0 désactive complètement le délai. Cela peut aider à garantir que la sortie de la commande est entièrement capturée dans les terminaux avec des problèmes de synchronisation. Dans la plupart des terminaux, cela est implémenté en définissant `PROMPT_COMMAND='sleep N'` et Powershell ajoute `start-sleep` à la fin de chaque commande. À l'origine, c'était une solution pour le bug VSCode#237208 et peut ne pas être nécessaire. <0>En savoir plus</0>"
+			"description": "Ajoute une courte pause après chaque commande pour que le terminal VS Code puisse vider toute la sortie (bash/zsh : PROMPT_COMMAND sleep ; PowerShell : start-sleep). Utilisez uniquement si vous voyez une sortie de fin manquante ; sinon laissez à 0. <0>En savoir plus</0>"
 		},
 		"compressProgressBar": {
-			"label": "Compresser la sortie des barres de progression",
-			"description": "Lorsque activé, traite la sortie du terminal avec des retours chariot (\\r) pour simuler l'affichage d'un terminal réel. Cela supprime les états intermédiaires des barres de progression, ne conservant que l'état final, ce qui économise de l'espace de contexte pour des informations plus pertinentes. <0>En savoir plus</0>"
+			"label": "Compresser la sortie de barre de progression",
+			"description": "Réduit les barres de progression/spinners pour ne conserver que l'état final (économise des jetons). <0>En savoir plus</0>"
 		},
 		"powershellCounter": {
-			"label": "Activer le contournement du compteur PowerShell",
-			"description": "Lorsqu'activé, ajoute un compteur aux commandes PowerShell pour assurer une exécution correcte des commandes. Cela aide avec les terminaux PowerShell qui peuvent avoir des problèmes de capture de sortie. <0>En savoir plus</0>"
+			"label": "Activer la solution de contournement du compteur PowerShell",
+			"description": "Activez lorsque la sortie PowerShell est manquante ou dupliquée ; ajoute un petit compteur à chaque commande pour stabiliser la sortie. Laissez désactivé si la sortie semble déjà correcte. <0>En savoir plus</0>"
 		},
 		"zshClearEolMark": {
-			"label": "Effacer la marque de fin de ligne ZSH",
-			"description": "Lorsqu'activé, efface la marque de fin de ligne ZSH en définissant PROMPT_EOL_MARK=''. Cela évite les problèmes d'interprétation de la sortie des commandes lorsqu'elle se termine par des caractères spéciaux comme '%'. <0>En savoir plus</0>"
+			"label": "Effacer la marque EOL ZSH",
+			"description": "Activez lorsque vous voyez des % égarés en fin de ligne ou que l'analyse semble incorrecte ; omet la marque de fin de ligne (%) de Zsh. <0>En savoir plus</0>"
 		},
 		"zshOhMy": {
 			"label": "Activer l'intégration Oh My Zsh",
-			"description": "Lorsqu'activé, définit ITERM_SHELL_INTEGRATION_INSTALLED=Yes pour activer les fonctionnalités d'intégration du shell Oh My Zsh. L'application de ce paramètre peut nécessiter le redémarrage de l'IDE. <0>En savoir plus</0>"
+			"description": "Activez lorsque votre thème/plugins Oh My Zsh attendent l'intégration du shell ; définit ITERM_SHELL_INTEGRATION_INSTALLED=Yes. Désactivez pour éviter de définir cette variable. <0>En savoir plus</0>"
 		},
 		"zshP10k": {
 			"label": "Activer l'intégration Powerlevel10k",
-			"description": "Lorsqu'activé, définit POWERLEVEL9K_TERM_SHELL_INTEGRATION=true pour activer les fonctionnalités d'intégration du shell Powerlevel10k. <0>En savoir plus</0>"
+			"description": "Activez lorsque vous utilisez l'intégration du shell Powerlevel10k. <0>En savoir plus</0>"
 		},
 		"zdotdir": {
 			"label": "Activer la gestion ZDOTDIR",
-			"description": "Lorsque activé, crée un répertoire temporaire pour ZDOTDIR afin de gérer correctement l'intégration du shell zsh. Cela garantit le bon fonctionnement de l'intégration du shell VSCode avec zsh tout en préservant votre configuration zsh. <0>En savoir plus</0>"
+			"description": "Activez lorsque l'intégration du shell zsh échoue ou entre en conflit avec vos dotfiles. <0>En savoir plus</0>"
 		},
 		"inheritEnv": {
 			"label": "Hériter des variables d'environnement",
-			"description": "Lorsqu'activé, le terminal hérite des variables d'environnement du processus parent VSCode, comme les paramètres d'intégration du shell définis dans le profil utilisateur. Cela bascule directement le paramètre global VSCode `terminal.integrated.inheritEnv`. <0>En savoir plus</0>"
+			"description": "Activez pour hériter des variables d'environnement du processus parent VS Code. <0>En savoir plus</0>"
 		}
 	},
 	"advancedSettings": {
@@ -687,7 +770,7 @@
 	"advanced": {
 		"diff": {
 			"label": "Activer l'édition via des diffs",
-			"description": "Lorsque cette option est activée, Kilo Code pourra éditer des fichiers plus rapidement et rejettera automatiquement les écritures de fichiers complets tronqués. Fonctionne mieux avec le dernier modèle Claude 3.7 Sonnet.",
+			"description": "Lorsque cette option est activée, Kilo Code pourra éditer des fichiers plus rapidement et rejettera automatiquement les écritures de fichiers complets tronqués",
 			"strategy": {
 				"label": "Stratégie de diff",
 				"options": {
@@ -703,7 +786,7 @@
 			},
 			"matchPrecision": {
 				"label": "Précision de correspondance",
-				"description": "Ce curseur contrôle la précision avec laquelle les sections de code doivent correspondre lors de l'application des diffs. Des valeurs plus basses permettent des correspondances plus flexibles mais augmentent le risque de remplacements incorrects. Utilisez des valeurs inférieures à 100 % avec une extrême prudence."
+				"description": "Ce curseur contrôle la précision avec laquelle les sections de code doivent correspondre lors de l'application des diffs. Des valeurs plus basses permettent des correspondances plus flexibles mais augmentent le risque de remplacement incorrects. Utilisez des valeurs inférieures à 100 % avec une extrême prudence."
 			}
 		},
 		"todoList": {
@@ -715,10 +798,6 @@
 		"DIFF_STRATEGY_UNIFIED": {
 			"name": "Utiliser la stratégie diff unifiée expérimentale",
 			"description": "Activer la stratégie diff unifiée expérimentale. Cette stratégie pourrait réduire le nombre de tentatives causées par des erreurs de modèle, mais peut provoquer des comportements inattendus ou des modifications incorrectes. Activez-la uniquement si vous comprenez les risques et êtes prêt à examiner attentivement tous les changements."
-		},
-		"SEARCH_AND_REPLACE": {
-			"name": "Utiliser l'outil de recherche et remplacement expérimental",
-			"description": "Activer l'outil de recherche et remplacement expérimental, permettant à Kilo Code de remplacer plusieurs occurrences d'un terme de recherche en une seule requête."
 		},
 		"INSERT_BLOCK": {
 			"name": "Utiliser l'outil d'insertion de contenu expérimental",
@@ -745,14 +824,18 @@
 			"description": "Lorsque cette option est activée, Kilo Code peut éditer plusieurs fichiers en une seule requête. Lorsqu'elle est désactivée, Kilo Code doit éditer les fichiers un par un. Désactiver cette option peut aider lorsque tu travailles avec des modèles moins capables ou lorsque tu veux plus de contrôle sur les modifications de fichiers."
 		},
 		"MORPH_FAST_APPLY": {
-			"name": "Activer Morph Fast Apply",
-			"description": "Lorsque cette option est activée, Kilo Code peut éditer des fichiers en utilisant Morph Fast Apply. Nécessite le fournisseur d'API Kilo Code, OpenRouter ou une clé API Morph.",
+			"name": "Activer Fast Apply",
+			"description": "Lorsque cette option est activée, Kilo Code peut éditer des fichiers en utilisant Fast Apply avec des modèles spécialisés optimisés pour les modifications de code. Nécessite Kilo Gateway Provider, OpenRouter ou une clé API Morph.",
 			"apiKey": "Clé API Morph (optionnel)",
-			"placeholder": "Entrez votre clé API Morph (optionnel)"
-		},
-		"INLINE_ASSIST": {
-			"name": "Assistance en ligne",
-			"description": "Activez les fonctionnalités d'assistance en ligne pour des suggestions et améliorations de code rapides directement dans votre éditeur. Inclut la Tâche rapide en ligne (Cmd+I) pour des modifications ciblées et la Tâche automatique en ligne pour des améliorations contextuelles."
+			"placeholder": "Entrez votre clé API Morph (optionnel)",
+			"modelLabel": "Sélection du modèle",
+			"modelDescription": "Choisissez quel modèle Fast Apply utiliser pour les éditions de fichiers",
+			"models": {
+				"auto": "Auto (Par défaut - choisit le meilleur disponible)",
+				"morphFast": "Morph v3 Fast (Plus rapide, coût réduit)",
+				"morphLarge": "Morph v3 Large (Plus performant)",
+				"relace": "Relace Apply v3"
+			}
 		},
 		"PREVENT_FOCUS_DISRUPTION": {
 			"name": "Édition en arrière-plan",
@@ -765,6 +848,29 @@
 		"NEW_TASK_REQUIRE_TODOS": {
 			"name": "Exiger la liste 'todos' pour les nouvelles tâches",
 			"description": "Lorsqu'il est activé, l'outil new_task exigera qu'un paramètre todos soit fourni. Cela garantit que toutes les nouvelles tâches commencent avec une liste claire d'objectifs. Lorsqu'il est désactivé (par défaut), le paramètre todos reste facultatif pour la compatibilité descendante."
+		},
+		"IMAGE_GENERATION": {
+			"name": "Activer la génération d'images IA",
+			"description": "Lorsqu'activé, Kilo Code peut générer des images à partir de prompts textuels. Nécessite qu'une clé API Kilo Code ou OpenRouter soit configurée.",
+			"apiProvider": "Fournisseur d'API",
+			"openRouterApiKeyLabel": "Clé API OpenRouter",
+			"openRouterApiKeyPlaceholder": "Entrez votre clé API OpenRouter",
+			"kiloCodeApiKeyLabel": "Clé API Kilo Code",
+			"kiloCodeApiKeyPlaceholder": "Entrez votre clé API Kilo Code",
+			"kiloCodeApiKeyPaste": "Coller la clé API Kilo Code actuelle",
+			"getApiKeyText": "Obtenez votre clé API depuis",
+			"modelSelectionLabel": "Modèle de génération d'images",
+			"modelSelectionDescription": "Sélectionnez le modèle pour la génération d'images",
+			"warningMissingKey": "⚠️ Une clé API est requise pour la génération d'images, veuillez la configurer ci-dessus.",
+			"successConfigured": "✓ La génération d'images est configurée et prête à utiliser"
+		},
+		"INLINE_ASSIST": {
+			"name": "Autocomplete",
+			"description": "Active les fonctionnalités Autocomplete pour des suggestions de code rapides et des améliorations directement dans ton éditeur. Inclut Tâche Rapide (Cmd+I) pour des changements ciblés et Autocomplete pour des améliorations contextuelles."
+		},
+		"RUN_SLASH_COMMAND": {
+			"name": "Activer les commandes slash initiées par le modèle",
+			"description": "Lorsque activé, Kilo Code peut exécuter tes commandes slash pour lancer des workflows."
 		}
 	},
 	"promptCaching": {
@@ -779,8 +885,6 @@
 	"modelInfo": {
 		"supportsImages": "Prend en charge les images",
 		"noImages": "Ne prend pas en charge les images",
-		"supportsComputerUse": "Prend en charge l'utilisation de l'ordinateur",
-		"noComputerUse": "Ne prend pas en charge l'utilisation de l'ordinateur",
 		"supportsPromptCache": "Prend en charge la mise en cache des prompts",
 		"noPromptCache": "Ne prend pas en charge la mise en cache des prompts",
 		"contextWindow": "Fenêtre de contexte :",
@@ -836,9 +940,11 @@
 			"regionMismatch": "Attention : La région dans votre ARN ({{arnRegion}}) ne correspond pas à votre région sélectionnée ({{region}}). Cela peut causer des problèmes d'accès. Le fournisseur utilisera la région de l'ARN."
 		},
 		"modelAvailability": "L'ID de modèle ({{modelId}}) que vous avez fourni n'est pas disponible. Veuillez choisir un modèle différent.",
+		"modelDeprecated": "Ce modèle n'est plus disponible. Veuillez sélectionner un modèle différent.",
 		"providerNotAllowed": "Le fournisseur '{{provider}}' n'est pas autorisé par votre organisation",
 		"modelNotAllowed": "Le modèle '{{model}}' n'est pas autorisé pour le fournisseur '{{provider}}' par votre organisation",
-		"profileInvalid": "Ce profil contient un fournisseur ou un modèle qui n'est pas autorisé par votre organisation"
+		"profileInvalid": "Ce profil contient un fournisseur ou un modèle qui n'est pas autorisé par votre organisation",
+		"qwenCodeOauthPath": "Tu dois fournir un chemin valide pour les identifiants OAuth"
 	},
 	"placeholders": {
 		"apiKey": "Saisissez la clé API...",
@@ -877,11 +983,51 @@
 		"taskTimeline": {
 			"label": "Afficher la chronologie des tâches",
 			"description": "Afficher une chronologie visuelle des messages de tâches, colorés selon leur type, permettant de voir rapidement la progression des tâches et de revenir à des points spécifiques dans l'historique de la tâche."
+		},
+		"sendMessageOnEnter": {
+			"label": "Envoyer le message avec Entrée",
+			"description": "Lorsque cette option est activée, appuyez sur Entrée pour envoyer et sur Maj+Entrée pour une nouvelle ligne. Désactivez-la pour utiliser Maj+Entrée pour envoyer à la place."
+		},
+		"costThreshold": {
+			"label": "Masquer le coût en dessous du seuil",
+			"currentValue": "Seuil actuel : ${{value}}",
+			"description": "N'afficher que les coûts de requête supérieurs à ce montant. Les coûts sont toujours visibles lorsque le volet de détails est ouvert."
+		},
+		"showTimestamps": {
+			"label": "Afficher les horodatages",
+			"description": "Afficher l'horodatage pour chaque message dans la vue de discussion"
+		}
+	},
+	"ghost": {
+		"showGutterAnimation": {
+			"label": "Afficher l'animation dans la gouttière lors de l'autocomplétion",
+			"description": "Affiche un indicateur animé dans la gouttière de l'éditeur lorsque l'autocomplétion est en cours",
+			"preview": "Aperçu de l'animation"
 		}
 	},
 	"includeMaxOutputTokens": "Inclure les tokens de sortie maximum",
 	"includeMaxOutputTokensDescription": "Envoyer le paramètre de tokens de sortie maximum dans les requêtes API. Certains fournisseurs peuvent ne pas supporter cela.",
 	"limitMaxTokensDescription": "Limiter le nombre maximum de tokens dans la réponse",
 	"maxOutputTokensLabel": "Tokens de sortie maximum",
-	"maxTokensGenerateDescription": "Tokens maximum à générer dans la réponse"
+	"maxTokensGenerateDescription": "Tokens maximum à générer dans la réponse",
+	"serviceTier": {
+		"label": "Niveau de service",
+		"tooltip": "Pour un traitement plus rapide des demandes d'API, essayez le niveau de service de traitement prioritaire. Pour des prix plus bas avec une latence plus élevée, essayez le niveau de traitement flexible.",
+		"standard": "Standard",
+		"flex": "Flexible",
+		"priority": "Priorité",
+		"pricingTableTitle": "Tarification par niveau de service (prix par 1M de tokens)",
+		"columns": {
+			"tier": "Niveau",
+			"input": "Entrée",
+			"output": "Sortie",
+			"cacheReads": "Lectures du cache"
+		}
+	},
+	"ui": {
+		"collapseThinking": {
+			"label": "Réduire les messages de réflexion par défaut",
+			"description": "Si activé, les blocs de réflexion seront réduits par défaut jusqu'à ce que vous interagissiez avec eux"
+		}
+	}
 }

@@ -2,8 +2,8 @@
 	"welcome": {
 		"greeting": "Bem-vindo ao Kilo Code!",
 		"introText1": "Kilo Code é um agente de codificação AI gratuito e de código aberto.",
-		"introText2": "Funciona com os mais recentes modelos de IA como Claude 4 Sonnet, Gemini 2.5 Pro, GPT-4.1, e mais de 450 outros.",
-		"introText3": "Crie uma conta gratuita e receba até $25 em tokens para usar em qualquer modelo de IA.",
+		"introText2": "Funciona com os mais recentes modelos de IA como Claude Sonnet 4.5, Gemini 2.5 Pro, GPT-5, e mais de 450 outros.",
+		"introText3": "Crie uma conta gratuita e receba $20 em créditos bônus ao recarregar pela primeira vez.",
 		"ctaButton": "Começar",
 		"manualModeButton": "Use sua própria chave de API",
 		"alreadySignedUp": "Já se cadastrou?",
@@ -11,15 +11,25 @@
 	},
 	"lowCreditWarning": {
 		"addCredit": "Adicionar crédito",
-		"lowBalance": "Seu saldo do Kilo Code está baixo"
+		"lowBalance": "Seu saldo do Kilo Code está baixo",
+		"newOrganization": "Usando o Kilo para trabalho?"
+	},
+	"pagination": {
+		"previous": "Anterior",
+		"next": "Próximo",
+		"page": "Página {{page}} / {{count}}"
+	},
+	"invalidModel": {
+		"alphaPeriodEnded": "🎉 O período alfa para {{model}} terminou! Mude para um modelo diferente para continuar.",
+		"notAllowedForTeam": "⚠️ Sua organização não permite o uso do modelo {{model}}. Mude para um modelo diferente para continuar.",
+		"modelUnavailable": "⚠️ O modelo {{model}} não está disponível. Mude para um modelo diferente para continuar.",
+		"continueWith": "Continuar com {{model}}",
+		"continue": "Continuar"
 	},
 	"pricing": {
 		"costUnknown": "custo desconhecido",
 		"costUnknownDescription": "O Provedor de API não forneceu dados de custo ou a solicitação foi cancelada.",
-		"freeModelsDescription": "Modelos gratuitos podem ter limites de taxa. Use o link abaixo para otimizar seu uso de modelos gratuitos!",
-		"freeModelsLink": "Descubra opções de modelos gratuitos e econômicos",
-		"openRouterMarkup": "O provedor Kilo Code ShengSuanYun inclui todos os modelos do OpenRouter, sem markup e com 0% de comissão!",
-		"switchToKiloCode": "Mudar para Kilo Code ShengSuanYun"
+		"freeModelsLink": "Descubra opções de modelos gratuitos e econômicos"
 	},
 	"notifications": {
 		"toolRequest": "Solicitação de ferramenta aguardando aprovação",
@@ -37,7 +47,9 @@
 			"logout": "Sair do Kilo Code",
 			"automaticFetch": "Os modelos mais recentes estão automaticamente disponíveis no Kilo Code. Se você não tem certeza de qual modelo escolher, o Kilo Code funciona melhor com os modelos recomendados listados no topo em <strong>negrito</strong>.",
 			"providerRouting": {
-				"title": "Kilo Code - Roteamento de Provedor OpenRouter",
+				"title": "Roteamento de Provedor",
+				"managedByOrganization": "Gerenciar roteamento de provedor em nível de organização",
+				"createOrganization": "Criar organização para gerenciar roteamento de provedor",
 				"description": "O Kilo Code roteia as solicitações para os melhores provedores disponíveis para o seu modelo. Por padrão, as solicitações são balanceadas em carga entre os principais provedores para maximizar o tempo de atividade. No entanto, você pode escolher um provedor específico para usar para este modelo.",
 				"sorting": {
 					"default": "Ordenação padrão do provedor",
@@ -47,8 +59,10 @@
 				},
 				"dataCollection": {
 					"default": "Nenhuma política de dados definida",
-					"allow": "Permitir coleta de dados do provedor",
-					"deny": "Negar coleta de dados do provedor"
+					"allowFree": "Permitir treinamento de prompts (apenas grátis)",
+					"allow": "Permitir treinamento de prompts",
+					"deny": "Negar treinamento de prompts",
+					"zdr": "Retenção zero de dados"
 				}
 			}
 		},
@@ -94,7 +108,10 @@
 			"wantsToCondense": "Kilo Code quer condensar sua conversa",
 			"condenseConversation": "Condensar Conversa"
 		},
-		"seeNewChanges": "Ver Novas Alterações"
+		"seeNewChanges": "Ver Novas Alterações",
+		"revertNewChanges": "Reverter Novas Alterações",
+		"confirmRevertChanges": "Confirmar Reverter Alterações",
+		"cancelRevertChanges": "Cancelar Reverter Alterações"
 	},
 	"newTaskPreview": {
 		"task": "Tarefa"
@@ -113,7 +130,9 @@
 			"credits": "créditos",
 			"action": "Comprar Agora",
 			"viewAll": "Ver todas as opções de preço"
-		}
+		},
+		"detailedUsage": "Uso detalhado",
+		"createOrganization": "Criar organização para rastrear uso detalhado"
 	},
 	"docs": "Documentação",
 	"rules": {
@@ -189,41 +208,30 @@
 		}
 	},
 	"ghost": {
-		"title": "Assistência em linha",
+		"title": "Autocomplete",
 		"settings": {
-			"autoTrigger": "Gatilho Automático",
-			"enableQuickInlineTaskKeybinding": {
-				"label": "Tarefa Rápida em Linha",
-				"description": "Precisa apenas de uma mudança rápida? Selecione algum código (ou não!) e pressione Cmd+I. Descreva seu objetivo em linguagem simples (\"criar um componente React com essas props\", \"adicionar tratamento de erro a esta função\") e receba múltiplas sugestões prontas para uso diretamente no seu editor. <DocsLink>Ver atalho</DocsLink>"
-			},
-			"enableAutoInlineTaskKeybinding": {
-				"label": "Tarefa Automática em Linha",
-				"description": "Precisa de uma correção rápida, preenchimento ou refatoração? Kilo usará o contexto ao redor para oferecer melhorias imediatas, mantendo seu fluxo de trabalho. <DocsLink>Ver atalho</DocsLink>"
-			},
+			"triggers": "Gatilhos",
+			"keybindingDescription": "As funcionalidades do Autocomplete podem ser ativadas por comandos. Você pode configurar os <DocsLink>Atalhos de Teclado aqui</DocsLink>.",
 			"enableAutoTrigger": {
-				"label": "Ativar Gatilho Automático",
-				"description": "Quando ativado, o Kilo Code acionará automaticamente a Assistência em Linha quando você parar de digitar. Isso pode ser útil para correções e sugestões rápidas."
+				"label": "Habilitar Autocomplete",
+				"description": "Quando habilitado, o Kilo Code ativará automaticamente o Autocomplete quando você parar de digitar. Isso pode ser útil para correções rápidas e sugestões."
 			},
 			"autoTriggerDelay": {
-				"label": "Atraso do Gatilho Automático",
-				"description": "O atraso em segundos antes do Kilo Code acionar a Assistência em Linha após você parar de digitar. Um atraso menor significa sugestões mais rápidas, mas pode ser mais intensivo em recursos."
+				"label": "Atraso da Ativação Automática",
+				"description": "O atraso em segundos antes do Kilo Code ativar o Autocomplete depois que você parar de digitar. Um atraso menor significa sugestões mais rápidas, mas pode ser mais intensivo em recursos."
+			},
+			"enableQuickInlineTaskKeybinding": {
+				"label": "Tarefa Rápida ({{keybinding}})",
+				"description": "Precisa apenas de uma mudança rápida? Selecione algum código (ou não!) e pressione Cmd+I. Descreva seu objetivo em português simples (\"criar um componente React com essas props\", \"adicionar tratamento de erro a esta função\"), e obtenha múltiplas sugestões prontas para uso diretamente no seu editor. <DocsLink>Ver atalho</DocsLink>"
 			},
 			"enableSmartInlineTaskKeybinding": {
-				"label": "Tarefa Inteligente em Linha",
-				"description": "Precisa de uma correção rápida, completar ou refatorar? O Kilo usará o contexto ao redor para oferecer melhorias imediatas, mantendo você no fluxo. <DocsLink>Ver atalho</DocsLink>"
+				"label": "Preenchimento Automático Manual ({{keybinding}})",
+				"description": "Precisa de uma correção rápida, completação ou refatoração? O Kilo usará o contexto ao redor para oferecer melhorias imediatas, mantendo você no fluxo. <DocsLink>Ver atalho</DocsLink>"
 			},
-			"enableCustomProvider": {
-				"label": "Usar provedor personalizado",
-				"description": "O Inline Assist usa suas credenciais do KiloCode / OpenRouter / Mistral para usar o modelo Codestral por padrão"
-			},
-			"provider": "Provedor",
-			"apiConfigId": {
-				"label": "Configuração de API",
-				"current": "Usar configuração de API atualmente selecionada",
-				"description": "Selecione uma configuração de API para usar nos prompts do Inline Assist ou apenas use o que estiver selecionado no momento"
-			},
-			"triggers": "Gatilhos",
-			"keybindingDescription": "Os recursos de Assistência em Linha são acionados por comandos. Você pode configurar os <DocsLink>atalhos de teclado aqui</DocsLink>."
+			"keybindingNotFound": "não encontrado",
+			"noModelConfigured": "Nenhum modelo de autocompletar adequado encontrado. Configure um provedor nas configurações da API.",
+			"model": "Modelo",
+			"provider": "Provedor"
 		}
 	},
 	"virtualProvider": {
@@ -236,7 +244,7 @@
 		"removeProfile": "Remover perfil",
 		"selectProfilePlaceholder": "Selecionar perfil...",
 		"addProfile": "Adicionar perfil",
-		"noProfilesAvailable": "Nenhum perfil de perfis disponível. Por favor, configure pelo menos um perfil de provedor não-virtual primeiro.",
+		"noProfilesAvailable": "Nenhum perfil disponível. Por favor, configure pelo menos um perfil de provedor não-virtual primeiro.",
 		"dangerZoneTitle": "Zona de Perigo",
 		"dangerZoneDescription": "Essas ações são destrutivas e não podem ser desfeitas.",
 		"clearUsageData": "Limpar Dados de Uso",
@@ -247,5 +255,31 @@
 		"requestsLabel": "Solicitações",
 		"perMinute": "Por Minuto",
 		"perHour": "Por Hora"
+	},
+	"toolCallStyle": {
+		"title": "Estilo de Chamada de Ferramenta",
+		"description": "Escolha como as chamadas de ferramentas são formatadas no prompt do sistema. JSON é atualmente experimental e destinado principalmente a usuários interessados em contribuir para seu desenvolvimento.",
+		"automatic": "Deixe o Kilo decidir",
+		"xml": "XML",
+		"json": "JSON"
+	},
+	"imageWarnings": {
+		"modelNoImageSupport": "Imagens não são suportadas pelo modelo atual.",
+		"maxImagesReached": "Máximo de 20 imagens por mensagem. Remova algumas imagens para adicionar mais.",
+		"imagesRemovedNoSupport": "Imagens removidas, não suportadas pelo modelo."
+	},
+	"memoryWarning": {
+		"message": "O uso de memória está em {{percentage}}%. Por favor, reinicie seu IDE para evitar travamentos."
+	},
+	"marketplace": {
+		"mcp": {
+			"description": "Estes servidores MCP são mantidos pela comunidade. Clique <1>aqui</1> para editar suas próprias configurações MCP."
+		},
+		"modes": {
+			"description": "Estes modos estão disponíveis na comunidade. Clique <1>aqui</1> para editar seus próprios modos personalizados."
+		}
+	},
+	"modes": {
+		"shareModesNewBanner": "Novo: Compartilhe modos criando uma organização"
 	}
 }

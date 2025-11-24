@@ -25,7 +25,7 @@
 	},
 	"link.item.label.Twitter": {
 		"message": "Twitter",
-		"description": "The label of footer link with label=Twitter linking to https://x.com/Kilo_Code"
+		"description": "The label of footer link with label=Twitter linking to https://x.com/kilocode"
 	},
 	"link.item.label.Issues": {
 		"message": "问题与反馈",

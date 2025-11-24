@@ -1,7 +1,7 @@
 import * as React from "react"
 import { CaretUpIcon } from "@radix-ui/react-icons"
 import { Check, X } from "lucide-react"
-import { Fzf } from "fzf"
+import { Fzf } from "@/lib/word-boundary-fzf" // kilocode_change: drop in fzf compatible lib, which respects word boundaries
 import { useTranslation } from "react-i18next"
 
 import { cn } from "@/lib/utils"
@@ -260,8 +260,8 @@ export const SelectDropdown = React.memo(
 							)}
 
 							{/* Dropdown items - Use windowing for large lists */}
-							{/* kilocode_change: different max height: max-h-60 */}
-							<div className="max-h-60 overflow-y-auto">
+							{/* kilocode_change: different max height: max-h-82 */}
+							<div className="max-h-82 overflow-y-auto">
 								{groupedOptions.length === 0 && searchValue ? (
 									<div className="py-2 px-3 text-sm text-vscode-foreground/70">No results found</div>
 								) : (

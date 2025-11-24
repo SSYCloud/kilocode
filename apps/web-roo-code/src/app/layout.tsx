@@ -1,8 +1,9 @@
 import React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import Script from "next/script"
 import { SEO } from "@/lib/seo"
+import { ogImageUrl } from "@/lib/og"
+import { CookieConsentWrapper } from "@/components/CookieConsentWrapper"
 
 import { Providers } from "@/components/providers"
 
@@ -11,6 +12,9 @@ import Shell from "./shell"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
+
+const OG_TITLE = "Meet Roo Code"
+const OG_DESCRIPTION = "The AI dev team that gets things done."
 
 export const metadata: Metadata = {
 	metadataBase: new URL(SEO.url),
@@ -51,10 +55,10 @@ export const metadata: Metadata = {
 		siteName: SEO.name,
 		images: [
 			{
-				url: SEO.ogImage.url,
-				width: SEO.ogImage.width,
-				height: SEO.ogImage.height,
-				alt: SEO.ogImage.alt,
+				url: ogImageUrl(OG_TITLE, OG_DESCRIPTION),
+				width: 1200,
+				height: 630,
+				alt: OG_TITLE,
 			},
 		],
 		locale: SEO.locale,
@@ -64,7 +68,7 @@ export const metadata: Metadata = {
 		card: SEO.twitterCard,
 		title: SEO.title,
 		description: SEO.description,
-		images: [SEO.ogImage.url],
+		images: [ogImageUrl(OG_TITLE, OG_DESCRIPTION)],
 	},
 	robots: {
 		index: true,
@@ -93,22 +97,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				/>
 			</head>
 			<body className={inter.className}>
-				{/* Google tag (gtag.js) */}
-				<Script src="https://www.googletagmanager.com/gtag/js?id=AW-17391954825" strategy="afterInteractive" />
-				<Script id="google-analytics" strategy="afterInteractive">
-					{`
-						window.dataLayer = window.dataLayer || [];
-						function gtag(){dataLayer.push(arguments);}
-						gtag('js', new Date());
-						gtag('config', 'AW-17391954825');
-					`}
-				</Script>
 				<div itemScope itemType="https://schema.org/WebSite">
 					<link itemProp="url" href={SEO.url} />
 					<meta itemProp="name" content={SEO.name} />
 				</div>
 				<Providers>
 					<Shell>{children}</Shell>
+					<CookieConsentWrapper />
 				</Providers>
 			</body>
 		</html>

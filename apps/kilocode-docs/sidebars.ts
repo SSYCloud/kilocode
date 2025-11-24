@@ -8,6 +8,7 @@ const sidebars: SidebarsConfig = {
 			label: "Getting Started",
 			items: [
 				"getting-started/installing",
+				"getting-started/concepts",
 				{
 					type: "doc",
 					id: "getting-started/setting-up",
@@ -21,7 +22,9 @@ const sidebars: SidebarsConfig = {
 			label: "Using Kilo Code",
 			items: [
 				"basic-usage/the-chat-interface",
+				"basic-usage/model-selection-guide",
 				"basic-usage/using-modes",
+				"basic-usage/autocomplete",
 				"basic-usage/context-mentions",
 				{
 					type: "category",
@@ -32,6 +35,7 @@ const sidebars: SidebarsConfig = {
 						"basic-usage/git-commit-generation",
 						"features/browser-use",
 						"features/code-actions",
+						"features/system-notifications",
 						"features/more-features",
 					],
 				},
@@ -53,27 +57,32 @@ const sidebars: SidebarsConfig = {
 								"providers/claude-code",
 								"providers/deepseek",
 								"providers/fireworks",
+								"providers/synthetic", // kilocode_change
 								"providers/vertex",
 								"providers/glama",
 								"providers/gemini",
 								"providers/groq",
 								"providers/human-relay",
 								"providers/lmstudio",
+								"providers/minimax",
 								"providers/mistral",
 								"providers/ollama",
 								"providers/openai",
 								"providers/openai-compatible",
 								"providers/openrouter",
+								"providers/ovhcloud", // kilocode_change
 								"providers/requesty",
 								"providers/unbound",
 								"providers/v0",
+								"providers/vercel-ai-gateway",
+								"providers/virtual-quota-fallback",
 								"providers/vscode-lm",
 								"providers/xai",
 							],
 						},
 					],
 				},
-				"basic-usage/adding-tokens",
+				"basic-usage/adding-credits",
 			],
 		},
 		{
@@ -90,6 +99,25 @@ const sidebars: SidebarsConfig = {
 		},
 		{
 			type: "category",
+			label: "Kilo Paid Plans",
+			items: [
+				"plans/about",
+				"plans/getting-started",
+				"plans/dashboard",
+				"plans/analytics",
+				"plans/team-management",
+				"plans/custom-modes",
+				"plans/billing",
+				{
+					type: "category",
+					label: "Enterprise-Only Features",
+					items: ["plans/enterprise/SSO", "plans/enterprise/model-access", "plans/enterprise/audit-logs"],
+				},
+				"plans/migration",
+			],
+		},
+		{
+			type: "category",
 			label: "Advanced Usage",
 			items: [
 				"advanced-usage/prompt-engineering",
@@ -99,6 +127,7 @@ const sidebars: SidebarsConfig = {
 					items: [
 						"advanced-usage/custom-rules",
 						"advanced-usage/custom-instructions",
+						"advanced-usage/migrating-from-cursor-windsurf",
 						"features/slash-commands/workflows",
 					],
 				},
@@ -122,6 +151,10 @@ const sidebars: SidebarsConfig = {
 						"features/footgun-prompting",
 					],
 				},
+				"features/auto-launch-configuration",
+				"advanced-usage/auto-cleanup",
+				"advanced-usage/cloud-agent",
+				"advanced-usage/deploy",
 				"features/experimental/experimental-features",
 			],
 		},
@@ -173,6 +206,7 @@ const sidebars: SidebarsConfig = {
 				"features/tools/write-to-file",
 			],
 		},
+		"cli",
 	],
 }
 

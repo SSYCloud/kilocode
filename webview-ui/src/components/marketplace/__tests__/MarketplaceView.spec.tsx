@@ -1,9 +1,11 @@
 import { render, waitFor } from "@testing-library/react"
-import { vi, describe, it, expect, beforeEach } from "vitest"
-import { MarketplaceView } from "../MarketplaceView"
-import { MarketplaceViewStateManager } from "../MarketplaceViewStateManager"
+
 import { ExtensionStateContext } from "@/context/ExtensionStateContext"
 import { vscode } from "@/utils/vscode"
+
+import { MarketplaceView } from "../MarketplaceView"
+import { MarketplaceViewStateManager } from "../MarketplaceViewStateManager"
+import { DEFAULT_CHECKPOINT_TIMEOUT_SECONDS } from "@roo-code/types"
 
 vi.mock("@/utils/vscode", () => ({
 	vscode: {
@@ -65,6 +67,7 @@ describe("MarketplaceView", () => {
 			setFollowupAutoApproveTimeoutMs: vi.fn(),
 			profileThresholds: {},
 			setProfileThresholds: vi.fn(),
+			checkpointTimeout: DEFAULT_CHECKPOINT_TIMEOUT_SECONDS,
 			// ... other required context properties
 		}
 	})
@@ -85,6 +88,7 @@ describe("MarketplaceView", () => {
 		mockExtensionState = {
 			...mockExtensionState,
 			organizationSettingsVersion: 2,
+			checkpointTimeout: DEFAULT_CHECKPOINT_TIMEOUT_SECONDS,
 		}
 
 		// Re-render with updated context

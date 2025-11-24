@@ -1,13 +1,14 @@
-import * as React from "react"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip"
+import { ReactNode } from "react"
+
+import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip"
 
 export const STANDARD_TOOLTIP_DELAY = 300
 
 interface StandardTooltipProps {
 	/** The element(s) that trigger the tooltip */
-	children: React.ReactNode
+	children: ReactNode
 	/** The content to display in the tooltip */
-	content: React.ReactNode
+	content: ReactNode
 	/** The preferred side of the trigger to render the tooltip */
 	side?: "top" | "right" | "bottom" | "left"
 	/** The preferred alignment against the trigger */
@@ -51,7 +52,7 @@ export function StandardTooltip({
 	asChild = true,
 	maxWidth,
 }: StandardTooltipProps) {
-	// Don't render tooltip if content is empty or only whitespace
+	// Don't render tooltip if content is empty or only whitespace.
 	if (!content || (typeof content === "string" && !content.trim())) {
 		return <>{children}</>
 	}
@@ -59,13 +60,11 @@ export function StandardTooltip({
 	const style = maxWidth ? { maxWidth: typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth } : undefined
 
 	return (
-		<TooltipProvider>
-			<Tooltip>
-				<TooltipTrigger asChild={asChild}>{children}</TooltipTrigger>
-				<TooltipContent side={side} align={align} sideOffset={sideOffset} className={className} style={style}>
-					{content}
-				</TooltipContent>
-			</Tooltip>
-		</TooltipProvider>
+		<Tooltip>
+			<TooltipTrigger asChild={asChild}>{children}</TooltipTrigger>
+			<TooltipContent side={side} align={align} sideOffset={sideOffset} className={className} style={style}>
+				{content}
+			</TooltipContent>
+		</Tooltip>
 	)
 }

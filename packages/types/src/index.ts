@@ -1,5 +1,8 @@
 export * from "./api.js"
+export * from "./auto-purge.js" // kilocode_change
+export * from "./cloud.js"
 export * from "./codebase-index.js"
+export * from "./cookie-consent.js"
 export * from "./events.js"
 export * from "./experiment.js"
 export * from "./followup.js"
@@ -20,7 +23,8 @@ export * from "./terminal.js"
 export * from "./tool.js"
 export * from "./type-fu.js"
 export * from "./vscode.js"
-export * from "./kilocode.js" // kilocode_change
+export * from "./kilocode/kilocode.js"
+export * from "./kilocode/native-function-calling.js"
 export * from "./usage-tracker.js" // kilocode_change
 
 export * from "./providers/index.js"

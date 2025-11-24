@@ -92,7 +92,6 @@ vi.mock("../../../api", () => ({
 	buildApiHandler: vi.fn().mockReturnValue({
 		getModel: vi.fn().mockReturnValue({
 			id: "claude-3-sonnet",
-			info: { supportsComputerUse: false },
 		}),
 	}),
 }))
@@ -121,11 +120,10 @@ vi.mock("@roo-code/cloud", () => ({
 			}
 		},
 	},
-	getRooCodeApiUrl: vi.fn().mockReturnValue("https://app.roocode.com"),
-	ORGANIZATION_ALLOW_ALL: {
-		allowAll: true,
-		providers: {},
+	BridgeOrchestrator: {
+		isEnabled: vi.fn().mockReturnValue(false),
 	},
+	getRooCodeApiUrl: vi.fn().mockReturnValue("https://app.roocode.com"),
 }))
 
 vi.mock("../../../shared/modes", () => ({

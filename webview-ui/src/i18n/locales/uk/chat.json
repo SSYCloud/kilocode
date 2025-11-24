@@ -24,7 +24,9 @@
 		"shareSuccessOrganization": "Посилання організації скопійовано до буфера обміну",
 		"shareSuccessPublic": "Публічне посилання скопійовано до буфера обміну",
 		"expand": "Розгорнути завдання",
-		"collapse": "Згорнути завдання"
+		"collapse": "Згорнути завдання",
+		"openInCloud": "Відкрити завдання в Roo Code Cloud",
+		"openInCloudIntro": "Продовжуй моніторинг або взаємодію з Roo звідусіль. Скануй, клікай або копіюй, щоб відкрити"
 	},
 	"history": {
 		"title": "Історія"
@@ -131,7 +133,8 @@
 		"settings": "Налаштування режимів",
 		"description": "Спеціалізовані персони, які налаштовують поведінку Kilo Code.",
 		"searchPlaceholder": "Пошук режимів...",
-		"noResults": "Результатів не знайдено"
+		"noResults": "Результатів не знайдено",
+		"organizationModes": "Режими організації"
 	},
 	"addImages": "Додати зображення до повідомлення",
 	"sendMessage": "Надіслати повідомлення",
@@ -160,6 +163,8 @@
 		"initializingWarning": "Все ще ініціалізується контрольна точка... Якщо це займає надто багато часу, ти можеш вимкнути контрольні точки в <settingsLink>налаштуваннях</settingsLink> і перезапустити своє завдання.",
 		"menu": {
 			"viewDiff": "Переглянути різницю",
+			"viewDiffFromInit": "Переглянути всі зміни",
+			"viewDiffWithCurrent": "Переглянути зміни з цієї контрольної точки",
 			"restore": "Відновити контрольну точку",
 			"restoreFiles": "Відновити файли",
 			"restoreFilesDescription": "Відновлює файли твого проекту до знімка, зробленого в цій точці.",
@@ -167,7 +172,8 @@
 			"confirm": "Підтвердити",
 			"cancel": "Скасувати",
 			"cannotUndo": "Цю дію не можна скасувати.",
-			"restoreFilesAndTaskDescription": "Відновлює файли твого проекту до знімка, зробленого в цій точці, і видаляє всі повідомлення після цієї точки."
+			"restoreFilesAndTaskDescription": "Відновлює файли твого проекту до знімка, зробленого в цій точці, і видаляє всі повідомлення після цієї точки.",
+			"more": "Більше опцій"
 		},
 		"current": "Поточна"
 	},
@@ -190,6 +196,10 @@
 		"wantsToEditOutsideWorkspace": "Kilo Code хоче редагувати цей файл за межами робочого простору:",
 		"wantsToEditProtected": "Kilo Code хоче редагувати захищений файл конфігурації:",
 		"wantsToApplyBatchChanges": "Kilo Code хоче застосувати зміни до кількох файлів:",
+		"wantsToGenerateImage": "Kilo Code хоче згенерувати зображення:",
+		"wantsToGenerateImageOutsideWorkspace": "Kilo Code хоче згенерувати зображення поза робочою областю:",
+		"wantsToGenerateImageProtected": "Kilo Code хоче згенерувати зображення у захищеному місці:",
+		"didGenerateImage": "Kilo Code згенерував зображення:",
 		"wantsToCreate": "Kilo Code хоче створити новий файл:",
 		"wantsToSearchReplace": "Kilo Code хоче шукати та замінити в цьому файлі:",
 		"didSearchReplace": "Kilo Code виконав пошук і заміну в цьому файлі:",
@@ -224,7 +234,9 @@
 	},
 	"commandOutput": "Вивід команди",
 	"commandExecution": {
+		"abort": "Перервати",
 		"running": "Виконується",
+		"exitStatus": "Вийшов зі статусом {{exitCode}}",
 		"pid": "PID: {{pid}}",
 		"exited": "Завершено ({{exitCode}})",
 		"manageCommands": "Керування дозволами команд",
@@ -241,6 +253,12 @@
 	},
 	"response": "Відповідь",
 	"arguments": "Аргументи",
+	"text": {
+		"rooSaid": "Kilo сказав"
+	},
+	"feedback": {
+		"youSaid": "Ти сказав"
+	},
 	"mcp": {
 		"wantsToUseTool": "Kilo Code хоче використати інструмент на сервері MCP {{serverName}}:",
 		"wantsToAccessResource": "Kilo Code хоче отримати доступ до ресурсу на сервері MCP {{serverName}}:"
@@ -278,24 +296,41 @@
 		"description": "Автосхвалення дозволяє Kilo Code виконувати дії без запиту дозволу. Увімкни лише для дій, яким ти повністю довіряєш. Більш детальна конфігурація доступна в <settingsLink>Налаштуваннях</settingsLink>.",
 		"selectOptionsFirst": "Спочатку вибери принаймні один варіант нижче, щоб увімкнути автосхвалення",
 		"toggleAriaLabel": "Перемкнути автосхвалення",
-		"disabledAriaLabel": "Автосхвалення вимкнено - спочатку вибери варіанти"
+		"disabledAriaLabel": "Автосхвалення вимкнено - спочатку вибери варіанти",
+		"tooltip": "Автоматично схвалювати запити на використання інструментів",
+		"tooltipManage": "Керувати налаштуваннями автосхвалення",
+		"tooltipStatus": "Автосхвалення увімкнено для: {{toggles}}",
+		"all": "Усі",
+		"triggerLabel_zero": "Автосхвалення: вимкнено",
+		"triggerLabel_one": "Автосхвалення: 1",
+		"triggerLabel_other": "Автосхвалення: {{count}}",
+		"triggerLabelAll": "Автосхвалення: YOLO",
+		"triggerLabelOff": "Автосхвалення вимкнено",
+		"triggerLabelOffShort": "Вимк"
 	},
 	"announcement": {
-		"title": "🎉 Випущено Kilo Code {{version}}",
+		"title": "🎉 Випущено Roo Code {{version}}",
 		"stealthModel": {
-			"feature": "<bold>Обмежена в часі БЕЗКОШТОВНА прихована модель</bold> - Блискавично швидка модель міркування, яка відмінно справляється з агентним кодуванням з контекстним вікном 262k, доступна через Roo Code Cloud.",
-			"note": "(Примітка: запити та завершення записуються створювачем моделі для покращення моделі)",
+			"feature": "<bold>Обмежена в часі БЕЗКОШТОВНА прихована модель</bold> - Code Supernova: Тепер оновлена з <bold>контекстним вікном 1M токенів</bold>! Універсальна агентна модель кодування, яка підтримує введення зображень, доступна через Roo Code Cloud.",
+			"note": "(Примітка: запити та завершення записуються створювачем моделі та використовуються для покращення моделі)",
 			"connectButton": "Підключитися до Roo Code Cloud",
-			"selectModel": "Виберіть <code>roo/sonic</code> від провайдера Roo Code Cloud в<br/><settingsLink>Налаштуваннях</settingsLink>, щоб почати"
+			"selectModel": "Вибери <code>roo/code-supernova</code> від провайдера Roo Code Cloud в Налаштуваннях, щоб почати.",
+			"goToSettingsButton": "Перейти до Налаштувань"
 		},
-		"description": "Kilo Code {{version}} приносить основні нові функції та покращення на основі твоїх відгуків.",
-		"whatsNew": "Що нового",
-		"feature1": "<bold>Запуск Kilo Code Marketplace</bold>: Маркетплейс тепер працює! Відкривай та встановлюй режими та MCP легше, ніж будь-коли.",
-		"feature2": "<bold>Моделі Gemini 2.5</bold>: Додано підтримку нових моделей Gemini 2.5 Pro, Flash та Flash Lite.",
-		"feature3": "<bold>Підтримка файлів Excel та інше</bold>: Додано підтримку файлів Excel (.xlsx) та численні виправлення помилок і покращення!",
-		"feature3": "<bold>Підтримка файлів Excel та інше</bold>: Додано підтримку файлів Excel (.xlsx) та численні виправлення помилок і покращення!",
-		"hideButton": "Приховати оголошення",
-		"detailsDiscussLinks": "Отримай більше деталей та обговори в <discordLink>Discord</discordLink> та <redditLink>Reddit</redditLink> 🚀"
+		"release": {
+			"heading": "Нове в розширенні:",
+			"openRouterEmbeddings": "Підтримка моделей вбудовування OpenRouter",
+			"chutesDynamic": "Chutes тепер динамічно завантажує найновіші моделі",
+			"queuedMessagesFix": "Виправлення для повідомлень у черзі, які втрачалися"
+		},
+		"cloudAgents": {
+			"heading": "Нове в Cloud:",
+			"prFixer": "Представляємо хмарного агента <bold>PR Fixer</bold> на доповнення до PR Reviewer.",
+			"prFixerDescription": "PR Fixer застосовує високоякісні зміни до твоїх PR прямо з GitHub. Викликай через коментар PR, і він прочитає всю історію коментарів, щоб зрозуміти контекст, домовленості та компроміси - потім впровадить правильне виправлення.",
+			"tryPrFixerButton": "Спробувати PR Fixer"
+		},
+		"careers": "Також, <careersLink>ми наймаємо!</careersLink>",
+		"socialLinks": "Приєднуйся до нас на <xLink>X</xLink>, <discordLink>Discord</discordLink>, або <redditLink>r/RooCode</redditLink> 🚀"
 	},
 	"reasoning": {
 		"thinking": "Думаю",
@@ -339,7 +374,6 @@
 	},
 	"systemPromptWarning": "ПОПЕРЕДЖЕННЯ: Активне користувацьке перевизначення системного запиту. Це може серйозно порушити функціональність і спричинити непередбачувану поведінку.",
 	"profileViolationWarning": "Поточний профіль несумісний з налаштуваннями твоєї організації",
-	"profileViolationWarning": "Поточний профіль порушує налаштування твоєї організації",
 	"shellIntegration": {
 		"title": "Попередження про виконання команди",
 		"description": "Твоя команда виконується без інтеграції оболонки терміналу VSCode. Щоб прибрати це попередження, ти можеш вимкнути інтеграцію оболонки в розділі <strong>Terminal</strong> <settingsLink>налаштувань Kilo Code</settingsLink> або усунути проблеми з інтеграцією терміналу VSCode, використовуючи посилання нижче.",
@@ -377,8 +411,10 @@
 	},
 	"slashCommands": {
 		"tooltip": "Керування slash командами",
+		"manageCommands": "Керувати slash командами в налаштуваннях",
 		"title": "Slash команди",
 		"description": "Створюй власні slash команди для швидкого доступу до часто використовуваних запитів та робочих процесів. <DocsLink>Документація</DocsLink>",
+		"builtInCommands": "Вбудовані команди",
 		"globalCommands": "Глобальні команди",
 		"workspaceCommands": "Команди робочого простору",
 		"globalCommand": "Глобальна команда",
@@ -397,5 +433,15 @@
 		"title": "Повідомлення в черзі:",
 		"clickToEdit": "Клікни для редагування повідомлення"
 	},
-	"generateCommitMessage": "Згенерувати повідомлення коміту"
+	"generateCommitMessage": "Згенерувати повідомлення коміту",
+	"slashCommand": {
+		"wantsToRun": "Kilo Code хоче виконати slash команду:",
+		"didRun": "Kilo Code виконав slash команду:"
+	},
+	"contextMenu": {
+		"noResults": "Результатів немає",
+		"problems": "Проблеми",
+		"terminal": "Термінал",
+		"url": "Вставити URL для отримання вмісту"
+	}
 }

@@ -2,7 +2,12 @@ import { Anthropic } from "@anthropic-ai/sdk"
 import OpenAI from "openai"
 import axios from "axios"
 
-import { type ModelInfo, openAiModelInfoSaneDefaults, LMSTUDIO_DEFAULT_TEMPERATURE } from "@roo-code/types"
+import {
+	type ModelInfo,
+	openAiModelInfoSaneDefaults,
+	LMSTUDIO_DEFAULT_TEMPERATURE,
+	getActiveToolUseStyle, // kilocode_change
+} from "@roo-code/types"
 
 import type { ApiHandlerOptions } from "../../shared/api"
 
@@ -13,23 +18,28 @@ import { ApiStream } from "../transform/stream"
 
 import { BaseProvider } from "./base-provider"
 import type { SingleCompletionHandler, ApiHandlerCreateMessageMetadata } from "../index"
-import { fetchWithTimeout } from "./kilocode/fetchWithTimeout"
-
-const LMSTUDIO_TIMEOUT_MS = 3_600_000 // kilocode_change
+import { fetchWithTimeout, HeadersTimeoutError } from "./kilocode/fetchWithTimeout"
+import { addNativeToolCallsToParams, processNativeToolCallsFromDelta } from "./kilocode/nativeToolCallHelpers"
 import { getModels, getModelsFromCache } from "./fetchers/modelCache"
+import { handleOpenAIError } from "./utils/openai-error-handler"
+import { getApiRequestTimeout } from "./utils/timeout-config" // kilocode_change
 
 export class LmStudioHandler extends BaseProvider implements SingleCompletionHandler {
 	protected options: ApiHandlerOptions
 	private client: OpenAI
+	private readonly providerName = "LM Studio"
 
 	constructor(options: ApiHandlerOptions) {
 		super()
 		this.options = options
+		const timeout = getApiRequestTimeout() // kilocode_change
 		this.client = new OpenAI({
 			baseURL: (this.options.lmStudioBaseUrl || "http://localhost:1234") + "/v1",
 			apiKey: "noop",
-			timeout: LMSTUDIO_TIMEOUT_MS, // kilocode_change
-			fetch: fetchWithTimeout(LMSTUDIO_TIMEOUT_MS), // kilocode_change
+			// kilocode_change start
+			timeout: timeout,
+			fetch: fetchWithTimeout(timeout),
+			// kilocode_change end
 		})
 	}
 
@@ -89,8 +99,16 @@ export class LmStudioHandler extends BaseProvider implements SingleCompletionHan
 			if (this.options.lmStudioSpeculativeDecodingEnabled && this.options.lmStudioDraftModelId) {
 				params.draft_model = this.options.lmStudioDraftModelId
 			}
+			// kilocode_change start: Add native tool call support when toolStyle is "json"
+			addNativeToolCallsToParams(params, this.options, metadata)
+			// kilocode_change end
 
-			const results = await this.client.chat.completions.create(params)
+			let results
+			try {
+				results = await this.client.chat.completions.create(params)
+			} catch (error) {
+				throw handleOpenAIError(error, this.providerName)
+			}
 
 			const matcher = new XmlMatcher(
 				"think",
@@ -103,6 +121,10 @@ export class LmStudioHandler extends BaseProvider implements SingleCompletionHan
 
 			for await (const chunk of results) {
 				const delta = chunk.choices[0]?.delta
+
+				// kilocode_change start: Handle native tool calls when toolStyle is "json"
+				yield* processNativeToolCallsFromDelta(delta, getActiveToolUseStyle(this.options))
+				// kilocode_change end
 
 				if (delta?.content) {
 					assistantText += delta.content
@@ -130,6 +152,11 @@ export class LmStudioHandler extends BaseProvider implements SingleCompletionHan
 				outputTokens,
 			} as const
 		} catch (error) {
+			// kilocode_change start
+			if (error.cause instanceof HeadersTimeoutError) {
+				throw new Error("Headers timeout", { cause: error })
+			}
+			// kilocode_change end
 			throw new Error(
 				"Please check the LM Studio developer logs to debug what went wrong. You may need to load the model with a larger context length to work with Kilo Code's prompts.",
 			)
@@ -166,7 +193,12 @@ export class LmStudioHandler extends BaseProvider implements SingleCompletionHan
 				params.draft_model = this.options.lmStudioDraftModelId
 			}
 
-			const response = await this.client.chat.completions.create(params)
+			let response
+			try {
+				response = await this.client.chat.completions.create(params)
+			} catch (error) {
+				throw handleOpenAIError(error, this.providerName)
+			}
 			return response.choices[0]?.message.content || ""
 		} catch (error) {
 			throw new Error(

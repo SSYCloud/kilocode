@@ -1,11 +1,13 @@
 import * as vscode from "vscode"
 import { ZodError } from "zod"
+import { EventEmitter } from "events"
 
 import {
 	PROVIDER_SETTINGS_KEYS,
 	GLOBAL_SETTINGS_KEYS,
 	SECRET_STATE_KEYS,
 	GLOBAL_STATE_KEYS,
+	GLOBAL_SECRET_KEYS,
 	type ProviderSettings,
 	type GlobalSettings,
 	type SecretState,
@@ -18,6 +20,14 @@ import {
 import { TelemetryService } from "@roo-code/telemetry"
 
 import { logger } from "../../utils/logging"
+
+// kilocode_change start: Configuration change event types
+export interface ManagedIndexerConfig {
+	kilocodeToken: string | null
+	kilocodeOrganizationId: string | null
+	kilocodeTesterWarningsDisabledUntil: number | null
+}
+// kilocode_change end
 
 type GlobalStateKey = keyof GlobalState
 type SecretStateKey = keyof SecretState
@@ -39,6 +49,9 @@ export class ContextProxy {
 	private stateCache: GlobalState
 	private secretCache: SecretState
 	private _isInitialized = false
+	// kilocode_change start: Event emitter for configuration changes
+	private readonly configEmitter = new EventEmitter()
+	// kilocode_change end
 
 	constructor(context: vscode.ExtensionContext) {
 		this.originalContext = context
@@ -65,17 +78,75 @@ export class ContextProxy {
 			}
 		}
 
-		const promises = SECRET_STATE_KEYS.map(async (key) => {
-			try {
-				this.secretCache[key] = await this.originalContext.secrets.get(key)
-			} catch (error) {
-				logger.error(`Error loading secret ${key}: ${error instanceof Error ? error.message : String(error)}`)
-			}
-		})
+		const promises = [
+			...SECRET_STATE_KEYS.map(async (key) => {
+				try {
+					this.secretCache[key] = await this.originalContext.secrets.get(key)
+				} catch (error) {
+					logger.error(
+						`Error loading secret ${key}: ${error instanceof Error ? error.message : String(error)}`,
+					)
+				}
+			}),
+			...GLOBAL_SECRET_KEYS.map(async (key) => {
+				try {
+					this.secretCache[key] = await this.originalContext.secrets.get(key)
+				} catch (error) {
+					logger.error(
+						`Error loading global secret ${key}: ${error instanceof Error ? error.message : String(error)}`,
+					)
+				}
+			}),
+		]
 
 		await Promise.all(promises)
 
+		// Migration: Check for old nested image generation settings and migrate them
+		await this.migrateImageGenerationSettings()
+
 		this._isInitialized = true
+	}
+
+	/**
+	 * Migrates old nested openRouterImageGenerationSettings to the new flattened structure
+	 */
+	private async migrateImageGenerationSettings() {
+		try {
+			// Check if there's an old nested structure
+			const oldNestedSettings = this.originalContext.globalState.get<any>("openRouterImageGenerationSettings")
+
+			if (oldNestedSettings && typeof oldNestedSettings === "object") {
+				logger.info("Migrating old nested image generation settings to flattened structure")
+
+				// Migrate the API key if it exists and we don't already have one
+				if (oldNestedSettings.openRouterApiKey && !this.secretCache.openRouterImageApiKey) {
+					await this.originalContext.secrets.store(
+						"openRouterImageApiKey",
+						oldNestedSettings.openRouterApiKey,
+					)
+					this.secretCache.openRouterImageApiKey = oldNestedSettings.openRouterApiKey
+					logger.info("Migrated openRouterImageApiKey to secrets")
+				}
+
+				// Migrate the selected model if it exists and we don't already have one
+				if (oldNestedSettings.selectedModel && !this.stateCache.openRouterImageGenerationSelectedModel) {
+					await this.originalContext.globalState.update(
+						"openRouterImageGenerationSelectedModel",
+						oldNestedSettings.selectedModel,
+					)
+					this.stateCache.openRouterImageGenerationSelectedModel = oldNestedSettings.selectedModel
+					logger.info("Migrated openRouterImageGenerationSelectedModel to global state")
+				}
+
+				// Clean up the old nested structure
+				await this.originalContext.globalState.update("openRouterImageGenerationSettings", undefined)
+				logger.info("Removed old nested openRouterImageGenerationSettings")
+			}
+		} catch (error) {
+			logger.error(
+				`Error during image generation settings migration: ${error instanceof Error ? error.message : String(error)}`,
+			)
+		}
 	}
 
 	public get extensionUri() {
@@ -156,20 +227,34 @@ export class ContextProxy {
 	 * This is useful when you need to ensure the cache has the latest values
 	 */
 	async refreshSecrets(): Promise<void> {
-		const promises = SECRET_STATE_KEYS.map(async (key) => {
-			try {
-				this.secretCache[key] = await this.originalContext.secrets.get(key)
-			} catch (error) {
-				logger.error(
-					`Error refreshing secret ${key}: ${error instanceof Error ? error.message : String(error)}`,
-				)
-			}
-		})
+		const promises = [
+			...SECRET_STATE_KEYS.map(async (key) => {
+				try {
+					this.secretCache[key] = await this.originalContext.secrets.get(key)
+				} catch (error) {
+					logger.error(
+						`Error refreshing secret ${key}: ${error instanceof Error ? error.message : String(error)}`,
+					)
+				}
+			}),
+			...GLOBAL_SECRET_KEYS.map(async (key) => {
+				try {
+					this.secretCache[key] = await this.originalContext.secrets.get(key)
+				} catch (error) {
+					logger.error(
+						`Error refreshing global secret ${key}: ${error instanceof Error ? error.message : String(error)}`,
+					)
+				}
+			}),
+		]
 		await Promise.all(promises)
 	}
 
 	private getAllSecretState(): SecretState {
-		return Object.fromEntries(SECRET_STATE_KEYS.map((key) => [key, this.getSecret(key)]))
+		return Object.fromEntries([
+			...SECRET_STATE_KEYS.map((key) => [key, this.getSecret(key as SecretStateKey)]),
+			...GLOBAL_SECRET_KEYS.map((key) => [key, this.getSecret(key as SecretStateKey)]),
+		])
 	}
 
 	// kilocode_change start
@@ -222,6 +307,12 @@ export class ContextProxy {
 	}
 
 	public async setProviderSettings(values: ProviderSettings) {
+		// kilocode_change start: Capture old values for change detection
+		const oldToken = this.secretCache.kilocodeToken
+		const oldOrgId = this.stateCache.kilocodeOrganizationId
+		const oldTesterWarnings = this.stateCache.kilocodeTesterWarningsDisabledUntil
+		// kilocode_change end
+
 		// Explicitly clear out any old API configuration values before that
 		// might not be present in the new configuration.
 		// If a value is not present in the new configuration, then it is assumed
@@ -243,24 +334,44 @@ export class ContextProxy {
 				.reduce((acc, key) => ({ ...acc, [key]: undefined }), {} as ProviderSettings),
 			...values,
 		})
+
+		// kilocode_change start: Emit event if managed indexer config changed
+		const newToken = this.secretCache.kilocodeToken
+		const newOrgId = this.stateCache.kilocodeOrganizationId
+		const newTesterWarnings = this.stateCache.kilocodeTesterWarningsDisabledUntil
+
+		if (oldToken !== newToken || oldOrgId !== newOrgId || oldTesterWarnings !== newTesterWarnings) {
+			this.configEmitter.emit("managed-indexer-config-changed", {
+				kilocodeToken: newToken ?? null,
+				kilocodeOrganizationId: newOrgId ?? null,
+				kilocodeTesterWarningsDisabledUntil: newTesterWarnings ?? null,
+			} as ManagedIndexerConfig)
+		}
+		// kilocode_change end
 	}
 
 	/**
 	 * RooCodeSettings
 	 */
 
-	public setValue<K extends RooCodeSettingsKey>(key: K, value: RooCodeSettings[K]) {
-		return isSecretStateKey(key) ? this.storeSecret(key, value as string) : this.updateGlobalState(key, value)
+	public async setValue<K extends RooCodeSettingsKey>(key: K, value: RooCodeSettings[K]) {
+		return isSecretStateKey(key)
+			? this.storeSecret(key as SecretStateKey, value as string)
+			: this.updateGlobalState(key as GlobalStateKey, value)
 	}
 
 	public getValue<K extends RooCodeSettingsKey>(key: K): RooCodeSettings[K] {
 		return isSecretStateKey(key)
-			? (this.getSecret(key) as RooCodeSettings[K])
-			: (this.getGlobalState(key) as RooCodeSettings[K])
+			? (this.getSecret(key as SecretStateKey) as RooCodeSettings[K])
+			: (this.getGlobalState(key as GlobalStateKey) as RooCodeSettings[K])
 	}
 
 	public getValues(): RooCodeSettings {
-		return { ...this.getAllGlobalState(), ...this.getAllSecretState() }
+		const globalState = this.getAllGlobalState()
+		const secretState = this.getAllSecretState()
+
+		// Simply merge all states - no nested secrets to handle
+		return { ...globalState, ...secretState }
 	}
 
 	public async setValues(values: RooCodeSettings) {
@@ -302,10 +413,25 @@ export class ContextProxy {
 		await Promise.all([
 			...GLOBAL_STATE_KEYS.map((key) => this.originalContext.globalState.update(key, undefined)),
 			...SECRET_STATE_KEYS.map((key) => this.originalContext.secrets.delete(key)),
+			...GLOBAL_SECRET_KEYS.map((key) => this.originalContext.secrets.delete(key)),
 		])
 
 		await this.initialize()
 	}
+
+	// kilocode_change start: Public API for managed indexer configuration changes
+	/**
+	 * Subscribe to managed indexer configuration changes
+	 * @param listener Callback function that receives the new configuration
+	 * @returns Disposable to unsubscribe from the event
+	 */
+	public onManagedIndexerConfigChange(listener: (config: ManagedIndexerConfig) => void): vscode.Disposable {
+		this.configEmitter.on("managed-indexer-config-changed", listener)
+		return {
+			dispose: () => this.configEmitter.off("managed-indexer-config-changed", listener),
+		}
+	}
+	// kilocode_change end
 
 	private static _instance: ContextProxy | null = null
 

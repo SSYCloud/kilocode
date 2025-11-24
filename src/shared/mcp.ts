@@ -79,18 +79,20 @@ export type McpToolCallResponse = {
 					mimeType?: string
 					text?: string
 					blob?: string
+					_meta?: Record<string, any> // kilocode_change
 				}
-				_meta?: Record<string, any>
+				_meta?: Record<string, any> // kilocode_change
 		  }
+		// kilocode_change start
 		| {
 				type: "resource_link"
-				name: string
-				title?: string
 				uri: string
+				name?: string
 				description?: string
 				mimeType?: string
 				_meta?: Record<string, any>
 		  }
+		// kilocode_change end
 	>
 	structuredContent?: Record<string, any>
 	isError?: boolean

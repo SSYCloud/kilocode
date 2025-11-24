@@ -24,7 +24,9 @@
 		"shareSuccessOrganization": "คัดลอกลิงก์องค์กรไปยังคลิปบอร์ดแล้ว",
 		"shareSuccessPublic": "คัดลอกลิงก์สาธารณะไปยังคลิปบอร์ดแล้ว",
 		"expand": "ขยายงาน",
-		"collapse": "ย่องาน"
+		"collapse": "ย่องาน",
+		"openInCloud": "เปิดงานใน Roo Code Cloud",
+		"openInCloudIntro": "ติดตามหรือโต้ตอบกับ Roo ได้จากทุกที่ สแกน คลิก หรือคัดลอกเพื่อเปิด"
 	},
 	"history": {
 		"title": "ประวัติ"
@@ -131,7 +133,8 @@
 		"settings": "การตั้งค่าโหมด",
 		"description": "บุคลิกพิเศษที่ปรับแต่งพฤติกรรมของ Kilo Code",
 		"searchPlaceholder": "ค้นหาโหมด...",
-		"noResults": "ไม่พบผลลัพธ์"
+		"noResults": "ไม่พบผลลัพธ์",
+		"organizationModes": "โหมดขององค์กร"
 	},
 	"addImages": "เพิ่มรูปภาพในข้อความ",
 	"sendMessage": "ส่งข้อความ",
@@ -160,6 +163,8 @@
 		"initializingWarning": "ยังคงเริ่มต้นจุดตรวจ... หากใช้เวลานานเกินไป คุณสามารถปิดจุดตรวจใน<settingsLink>การตั้งค่า</settingsLink>และรีสตาร์ทงานของคุณ",
 		"menu": {
 			"viewDiff": "ดูความแตกต่าง",
+			"viewDiffFromInit": "ดูการเปลี่ยนแปลงทั้งหมด",
+			"viewDiffWithCurrent": "ดูการเปลี่ยนแปลงตั้งแต่จุดตรวจนี้",
 			"restore": "คืนค่าจุดตรวจ",
 			"restoreFiles": "คืนค่าไฟล์",
 			"restoreFilesDescription": "คืนค่าไฟล์โปรเจ็กต์ของคุณกลับไปยังสแนปช็อตที่ถ่ายไว้ ณ จุดนี้",
@@ -167,7 +172,8 @@
 			"confirm": "ยืนยัน",
 			"cancel": "ยกเลิก",
 			"cannotUndo": "ไม่สามารถยกเลิกการดำเนินการนี้ได้",
-			"restoreFilesAndTaskDescription": "คืนค่าไฟล์โปรเจ็กต์ของคุณกลับไปยังสแนปช็อตที่ถ่ายไว้ ณ จุดนี้และลบข้อความทั้งหมดหลังจากจุดนี้"
+			"restoreFilesAndTaskDescription": "คืนค่าไฟล์โปรเจ็กต์ของคุณกลับไปยังสแนปช็อตที่ถ่ายไว้ ณ จุดนี้และลบข้อความทั้งหมดหลังจากจุดนี้",
+			"more": "ตัวเลือกเพิ่มเติม"
 		},
 		"current": "ปัจจุบัน"
 	},
@@ -190,6 +196,10 @@
 		"wantsToEditOutsideWorkspace": "Kilo Code ต้องการแก้ไขไฟล์นี้นอกเวิร์กสเปซ:",
 		"wantsToEditProtected": "Kilo Code ต้องการแก้ไขไฟล์กำหนดค่าที่ได้รับการป้องกัน:",
 		"wantsToApplyBatchChanges": "Kilo Code ต้องการใช้การเปลี่ยนแปลงกับหลายไฟล์:",
+		"wantsToGenerateImage": "Kilo Code ต้องการสร้างภาพ:",
+		"wantsToGenerateImageOutsideWorkspace": "Kilo Code ต้องการสร้างภาพนอกพื้นที่ทำงาน:",
+		"wantsToGenerateImageProtected": "Kilo Code ต้องการสร้างภาพในตำแหน่งที่ได้รับการป้องกัน:",
+		"didGenerateImage": "Kilo Code ได้สร้างภาพแล้ว:",
 		"wantsToCreate": "Kilo Code ต้องการสร้างไฟล์ใหม่:",
 		"wantsToSearchReplace": "Kilo Code ต้องการค้นหาและแทนที่ในไฟล์นี้:",
 		"didSearchReplace": "Kilo Code ทำการค้นหาและแทนที่ในไฟล์นี้:",
@@ -224,7 +234,9 @@
 	},
 	"commandOutput": "ผลลัพธ์คำสั่ง",
 	"commandExecution": {
+		"abort": "ยกเลิก",
 		"running": "กำลังทำงาน",
+		"exitStatus": "ออกด้วยสถานะ {{exitCode}}",
 		"pid": "PID: {{pid}}",
 		"exited": "ออกแล้ว ({{exitCode}})",
 		"manageCommands": "จัดการสิทธิ์คำสั่ง",
@@ -241,6 +253,12 @@
 	},
 	"response": "การตอบสนอง",
 	"arguments": "อาร์กิวเมนต์",
+	"text": {
+		"rooSaid": "Kilo กล่าว"
+	},
+	"feedback": {
+		"youSaid": "คุณกล่าว"
+	},
 	"mcp": {
 		"wantsToUseTool": "Kilo Code ต้องการใช้เครื่องมือบนเซิร์ฟเวอร์ MCP {{serverName}}:",
 		"wantsToAccessResource": "Kilo Code ต้องการเข้าถึงทรัพยากรบนเซิร์ฟเวอร์ MCP {{serverName}}:"
@@ -278,10 +296,20 @@
 		"description": "การอนุมัติอัตโนมัติอนุญาตให้ Kilo Code ดำเนินการโดยไม่ต้องขออนุญาต เปิดใช้งานเฉพาะสำหรับการดำเนินการที่คุณเชื่อถืออย่างเต็มที่ การกำหนดค่าโดยละเอียดเพิ่มเติมมีใน<settingsLink>การตั้งค่า</settingsLink>",
 		"selectOptionsFirst": "เลือกอย่างน้อยหนึ่งตัวเลือกด้านล่างเพื่อเปิดใช้งานการอนุมัติอัตโนมัติ",
 		"toggleAriaLabel": "สลับการอนุมัติอัตโนมัติ",
-		"disabledAriaLabel": "การอนุมัติอัตโนมัติปิดใช้งาน - เลือกตัวเลือกก่อน"
+		"disabledAriaLabel": "การอนุมัติอัตโนมัติปิดใช้งาน - เลือกตัวเลือกก่อน",
+		"tooltip": "อนุมัติคำขอใช้เครื่องมืออัตโนมัติ",
+		"tooltipManage": "จัดการการตั้งค่าการอนุมัติอัตโนมัติ",
+		"tooltipStatus": "การอนุมัติอัตโนมัติเปิดใช้งานสำหรับ: {{toggles}}",
+		"all": "ทั้งหมด",
+		"triggerLabel_zero": "อนุมัติอัตโนมัติ: ปิด",
+		"triggerLabel_one": "อนุมัติอัตโนมัติ: 1",
+		"triggerLabel_other": "อนุมัติอัตโนมัติ: {{count}}",
+		"triggerLabelAll": "อนุมัติอัตโนมัติ: YOLO",
+		"triggerLabelOff": "ปิดการอนุมัติอัตโนมัติ",
+		"triggerLabelOffShort": "ปิด"
 	},
 	"announcement": {
-		"title": "🎉 เปิดตัว Kilo Code {{version}}",
+		"title": "🎉 เปิดตัว Roo Code {{version}}",
 		"description": "Kilo Code {{version}} นำเสนอฟีเจอร์ใหม่ที่สำคัญและการปรับปรุงตามคำติชมของคุณ",
 		"whatsNew": "มีอะไรใหม่",
 		"feature1": "<bold>เปิดตัว Kilo Code Marketplace</bold>: ตลาดกลางเปิดให้บริการแล้ว! ค้นพบและติดตั้งโหมดและ MCP ได้ง่ายกว่าที่เคย",
@@ -289,12 +317,30 @@
 		"feature3": "<bold>รองรับไฟล์ Excel และอื่นๆ</bold>: เพิ่มการรองรับไฟล์ Excel (.xlsx) และการแก้ไขข้อผิดพลาดและการปรับปรุงมากมาย!",
 		"hideButton": "ซ่อนประกาศ",
 		"detailsDiscussLinks": "ดูรายละเอียดเพิ่มเติมและพูดคุยใน <discordLink>Discord</discordLink> และ <redditLink>Reddit</redditLink> 🚀",
+		"learnMore": "เรียนรู้เพิ่มเติม",
+		"visitCloudButton": "เยี่ยมชม Roo Code Cloud",
+		"socialLinks": "ติดตามเรา",
 		"stealthModel": {
 			"feature": "<bold>โมเดลแฝงฟรีในเวลาจำกัด</bold> - โมเดลการให้เหตุผลที่รวดเร็วซึ่งเชี่ยวชาญในการเขียนโค้ดแบบ agentic ด้วย context window 262k พร้อมใช้งานผ่าน Roo Code Cloud",
 			"note": "(หมายเหตุ: พรอมต์และผลลัพธ์จะถูกบันทึกโดยผู้สร้างโมเดลเพื่อปรับปรุงโมเดล)",
 			"connectButton": "เชื่อมต่อกับ Roo Code Cloud",
-			"selectModel": "เลือก <code>roo/sonic</code> จากผู้ให้บริการ Roo Code Cloud ใน<br/><settingsLink>การตั้งค่า</settingsLink> เพื่อเริ่มต้น"
-		}
+			"selectModel": "เลือก <code>roo/code-supernova</code> จากผู้ให้บริการ Roo Code Cloud ใน<settingsLink>การตั้งค่า</settingsLink> เพื่อเริ่มต้น",
+			"goToSettingsButton": "ไปที่การตั้งค่า"
+		},
+		"release": {
+			"heading": "ใหม่ในส่วนขยาย:",
+			"openRouterEmbeddings": "รองรับโมเดล embedding ของ OpenRouter",
+			"chutesDynamic": "Chutes โหลดโมเดลล่าสุดแบบไดนามิก",
+			"queuedMessagesFix": "แก้ไขปัญหาข้อความในคิวที่สูญหาย"
+		},
+		"cloudAgents": {
+			"heading": "ใหม่ใน Cloud:",
+			"prFixer": "ขอแนะนำ <bold>PR Fixer</bold> cloud agent เพื่อเสริม PR Reviewer",
+			"prFixerDescription": "PR Fixer ใช้การเปลี่ยนแปลงคุณภาพสูงกับ PR ของคุณ ตรงจาก GitHub เรียกใช้ผ่านความคิดเห็น PR และจะอ่านประวัติความคิดเห็นทั้งหมดเพื่อเข้าใจบริบท ข้อตกลง และการแลกเปลี่ยน - จากนั้นดำเนินการแก้ไขที่ถูกต้อง",
+			"tryPrFixerButton": "ลอง PR Fixer"
+		},
+		"careers": "นอกจากนี้ <careersLink>เรากำลังรับสมัครงาน!</careersLink>",
+		"socialLinks": "เข้าร่วมกับเราบน <xLink>X</xLink>, <discordLink>Discord</discordLink> หรือ <redditLink>r/RooCode</redditLink> 🚀"
 	},
 	"reasoning": {
 		"thinking": "กำลังคิด",
@@ -375,8 +421,10 @@
 	},
 	"slashCommands": {
 		"tooltip": "จัดการคำสั่งแบบ slash",
+		"manageCommands": "จัดการคำสั่งแบบ slash ในการตั้งค่า",
 		"title": "คำสั่งแบบ Slash",
 		"description": "สร้างคำสั่งแบบ slash ที่กำหนดเองเพื่อเข้าถึงพรอมต์และเวิร์กโฟลว์ที่ใช้บ่อยได้อย่างรวดเร็ว <DocsLink>เอกสาร</DocsLink>",
+		"builtInCommands": "คำสั่งที่มีอยู่แล้ว",
 		"globalCommands": "คำสั่งทั่วไป",
 		"workspaceCommands": "คำสั่งเวิร์กสเปซ",
 		"globalCommand": "คำสั่งทั่วไป",
@@ -395,5 +443,15 @@
 		"title": "ข้อความในคิว:",
 		"clickToEdit": "คลิกเพื่อแก้ไขข้อความ"
 	},
-	"generateCommitMessage": "สร้างข้อความ Commit"
+	"generateCommitMessage": "สร้างข้อความ Commit",
+	"slashCommand": {
+		"wantsToRun": "Kilo Code ต้องการรันคำสั่ง slash:",
+		"didRun": "Kilo Code รันคำสั่ง slash แล้ว:"
+	},
+	"contextMenu": {
+		"noResults": "ไม่มีผลลัพธ์",
+		"problems": "ปัญหา",
+		"terminal": "เทอร์มินัล",
+		"url": "วาง URL เพื่อดึงเนื้อหา"
+	}
 }

@@ -65,13 +65,15 @@ export const toolParamNames = [
 	"target_file",
 	"instructions",
 	"code_edit",
+	"files",
 	// kilocode_change end
+	"query",
 	"args",
 	"start_line",
 	"end_line",
-	"query",
-	"args",
 	"todos",
+	"prompt",
+	"image",
 ] as const
 
 export type ToolParamName = (typeof toolParamNames)[number]
@@ -82,6 +84,7 @@ export interface ToolUse {
 	// params is a partial record, allowing only some or none of the possible parameters to be used
 	params: Partial<Record<ToolParamName, string>>
 	partial: boolean
+	toolUseId?: string // kilocode_change
 }
 
 export interface ExecuteCommandToolUse extends ToolUse {
@@ -170,10 +173,9 @@ export interface ReportBugToolUse extends ToolUse {
 	params: Partial<Pick<Record<ToolParamName, string>, "title" | "description">>
 }
 
-export interface SearchAndReplaceToolUse extends ToolUse {
-	name: "search_and_replace"
-	params: Required<Pick<Record<ToolParamName, string>, "path" | "search" | "replace">> &
-		Partial<Pick<Record<ToolParamName, string>, "use_regex" | "ignore_case" | "start_line" | "end_line">>
+export interface RunSlashCommandToolUse extends ToolUse {
+	name: "run_slash_command"
+	params: Partial<Pick<Record<ToolParamName, string>, "command" | "args">>
 }
 
 // kilocode_change start: Morph fast apply
@@ -182,6 +184,11 @@ export interface EditFileToolUse extends ToolUse {
 	params: Required<Pick<Record<ToolParamName, string>, "target_file" | "instructions" | "code_edit">>
 }
 // kilocode_change end
+
+export interface GenerateImageToolUse extends ToolUse {
+	name: "generate_image"
+	params: Partial<Pick<Record<ToolParamName, string>, "prompt" | "path" | "image">>
+}
 
 // Define tool group configuration
 export type ToolGroupConfig = {
@@ -207,12 +214,13 @@ export const TOOL_DISPLAY_NAMES: Record<ToolName, string> = {
 	switch_mode: "switch modes",
 	new_task: "create new task",
 	insert_content: "insert content",
-	search_and_replace: "search and replace",
 	new_rule: "create new rule",
 	report_bug: "report bug", // kilocode_change
 	condense: "condense the current context window", // kilocode_change
 	codebase_search: "codebase search",
 	update_todo_list: "update todo list",
+	run_slash_command: "run slash command",
+	generate_image: "generate images",
 } as const
 
 // Define available tool groups.
@@ -233,8 +241,8 @@ export const TOOL_GROUPS: Record<ToolGroup, ToolGroupConfig> = {
 			"edit_file", // kilocode_change: Morph fast apply
 			"write_to_file",
 			"insert_content",
-			"search_and_replace",
-			"new_rule",
+			"new_rule", // kilocode_change
+			"generate_image",
 		],
 	},
 	browser: {
@@ -261,6 +269,7 @@ export const ALWAYS_AVAILABLE_TOOLS: ToolName[] = [
 	"report_bug",
 	"condense", // kilocode_Change
 	"update_todo_list",
+	"run_slash_command",
 ] as const
 
 export type DiffResult =

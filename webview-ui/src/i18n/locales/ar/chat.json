@@ -24,7 +24,9 @@
 		"shareSuccessOrganization": "تم نسخ رابط المنظمة للحافظة",
 		"shareSuccessPublic": "تم نسخ الرابط العام للحافظة",
 		"expand": "توسيع المهمة",
-		"collapse": "طي المهمة"
+		"collapse": "طي المهمة",
+		"openInCloud": "افتح في السحابة",
+		"openInCloudIntro": "راقب وأدر هذه المهمة عن بُعد"
 	},
 	"history": {
 		"title": "السجل"
@@ -130,7 +132,8 @@
 		"settings": "إعدادات الأنماط",
 		"description": "شخصيات متخصصة تضبط سلوك Kilo Code.",
 		"searchPlaceholder": "ابحث في الأنماط...",
-		"noResults": "لا توجد نتائج"
+		"noResults": "لا توجد نتائج",
+		"organizationModes": "أنماط المنظمة"
 	},
 	"enhancePromptDescription": "زر «حسّن الموجه» يطوّر موجهك بإضافة سياق أو توضيح أو إعادة صياغة. جرّب اكتب موجه هنا ثم اضغط الزر مرة ثانية وشوف النتيجة.",
 	"addImages": "أضف صور للرسالة",
@@ -160,6 +163,8 @@
 		"initializingWarning": "لا يزال يتم إنشاء نقطة الحفظ... إذا طولت، تقدر تطفّي نقاط الحفظ من <settingsLink>الإعدادات</settingsLink> وتعيد تشغيل المهمة.",
 		"menu": {
 			"viewDiff": "عرض الفرق",
+			"viewDiffFromInit": "عرض كل التغييرات",
+			"viewDiffWithCurrent": "عرض التغييرات منذ هذه النقطة",
 			"restore": "استرجاع نقطة الحفظ",
 			"restoreFiles": "استرجاع الملفات",
 			"restoreFilesDescription": "يعيد ملفات مشروعك لنسخة محفوظة عند هذي النقطة.",
@@ -167,7 +172,8 @@
 			"confirm": "تأكيد",
 			"cancel": "إلغاء",
 			"cannotUndo": "هذا الإجراء ما تقدر تتراجع عنه.",
-			"restoreFilesAndTaskDescription": "يعيد ملفات مشروعك لنسخة محفوظة عند هذي النقطة ويحذف كل الرسائل بعدها."
+			"restoreFilesAndTaskDescription": "يعيد ملفات مشروعك لنسخة محفوظة عند هذي النقطة ويحذف كل الرسائل بعدها.",
+			"more": "خيارات إضافية"
 		},
 		"current": "الحالية"
 	},
@@ -190,6 +196,10 @@
 		"wantsToEditOutsideWorkspace": "Kilo Code يريد تعديل ملف خارج مساحة العمل:",
 		"wantsToEditProtected": "Kilo Code يريد تعديل ملف إعدادات محمي:",
 		"wantsToApplyBatchChanges": "Kilo Code يريد تطبيق تغييرات على عدة ملفات:",
+		"wantsToGenerateImage": "Kilo Code يريد إنشاء صورة:",
+		"wantsToGenerateImageOutsideWorkspace": "Kilo Code يريد إنشاء صورة خارج مساحة العمل:",
+		"wantsToGenerateImageProtected": "Kilo Code يريد إنشاء صورة في موقع محمي:",
+		"didGenerateImage": "Kilo Code أنشأ صورة:",
 		"wantsToCreate": "Kilo Code يريد إنشاء ملف جديد:",
 		"wantsToSearchReplace": "Kilo Code يريد البحث والاستبدال في هذا الملف:",
 		"didSearchReplace": "Kilo Code أجرى بحثًا واستبدالًا في هذا الملف:",
@@ -228,7 +238,9 @@
 	},
 	"commandOutput": "مخرجات الأمر",
 	"commandExecution": {
+		"abort": "إجهاض",
 		"running": "قيد التشغيل",
+		"exitStatus": "خرج بحالة {{exitCode}}",
 		"pid": "معرف العملية: {{pid}}",
 		"exited": "تم الإنهاء ({{exitCode}})",
 		"manageCommands": "أدارة صلاحيات الأوامر",
@@ -277,12 +289,22 @@
 		"issues": "يبدو أنك تواجه مشاكل مع Windows PowerShell، اطلع هنا"
 	},
 	"autoApprove": {
+		"tooltipManage": "إدارة إعدادات الموافقة التلقائية",
+		"tooltipStatus": "الموافقة التلقائية مفعّلة لـ: {{toggles}}",
+		"triggerLabelOff": "الموافقة التلقائية مغلقة",
 		"title": "الموافقة التلقائية:",
 		"none": "لا شيء",
 		"description": "الموافقة التلقائية تسمح لـ Kilo Code بتنفيذ إجراءات دون طلب إذن. فعّلها فقط للإجراءات اللي تثق فيها تماماً. إعدادات تفصيلية أكثر متوفرة في <settingsLink>الإعدادات</settingsLink>.",
 		"selectOptionsFirst": "اختر خيار واحد على الأقل أدناه لتفعيل الموافقة التلقائية",
 		"toggleAriaLabel": "تبديل الموافقة التلقائية",
-		"disabledAriaLabel": "الموافقة التلقائية معطّلة - اختر الخيارات أولاً"
+		"disabledAriaLabel": "الموافقة التلقائية معطّلة - اختر الخيارات أولاً",
+		"triggerLabelOffShort": "مطفأة",
+		"tooltip": "الموافقة التلقائية على طلبات استخدام الأدوات",
+		"all": "الكل",
+		"triggerLabel_zero": "الموافقة التلقائية: مطفأة",
+		"triggerLabel_one": "الموافقة التلقائية: 1",
+		"triggerLabel_other": "الموافقة التلقائية: {{count}}",
+		"triggerLabelAll": "الموافقة التلقائية: YOLO"
 	},
 	"autoApproval": {
 		"approveAll": "الموافقة على الكل",
@@ -292,17 +314,34 @@
 		"title": "🎉 Kilo Code {{version}} تم إطلاقه",
 		"stealthModel": {
 			"feature": "<bold>نموذج سري مجاني لفترة محدودة</bold> - نموذج تفكير سريع جداً يتفوق في البرمجة الذكية مع نافذة سياق 262k، متاح عبر Roo Code Cloud.",
+			"goToSettingsButton": "اذهب للإعدادات",
 			"note": "(ملاحظة: يتم تسجيل المحادثات والاستجابات من قِبل منشئ النموذج لتحسينه)",
 			"connectButton": "اتصل بـ Roo Code Cloud",
 			"selectModel": "اختر <code>roo/sonic</code> من موفر Roo Code Cloud في<br/><settingsLink>الإعدادات</settingsLink> لتبدأ"
 		},
+		"release": {
+			"heading": "الجديد في الإضافة:",
+			"openRouterEmbeddings": "دعم نماذج التضمين من OpenRouter",
+			"chutesDynamic": "Chutes الآن يحمّل أحدث النماذج ديناميكياً",
+			"queuedMessagesFix": "إصلاحات لمشكلة فقدان الرسائل في الطابور"
+		},
+		"cloudAgents": {
+			"heading": "الجديد في السحابة:",
+			"prFixer": "نقدّم وكيل <bold>PR Fixer</bold> السحابي لاستكمال PR Reviewer.",
+			"prFixerDescription": "PR Fixer يطبّق تغييرات عالية الجودة على طلبات السحب مباشرة من GitHub. فعّله عبر تعليق في PR وسيقرأ كامل سجل التعليقات لفهم السياق والاتفاقات والمقايضات - ثم ينفّذ الإصلاح المناسب.",
+			"tryPrFixerButton": "جرّب PR Fixer"
+		},
+		"careers": "أيضاً، <careersLink>نحن نوظّف!</careersLink>",
 		"description": "Kilo Code {{version}} يجلب ميزات وتحسينات كبيرة بناءً على ملاحظاتكم.",
 		"whatsNew": "الجديد",
 		"feature1": "<bold>إطلاق سوق Kilo Code</bold>: السوق صار متاح! اكتشف وثبّت الأنماط و MCPs بسهولة.",
 		"feature2": "<bold>نماذج Gemini 2.5</bold>: دعم نماذج Gemini 2.5 Pro و Flash و Flash Lite.",
 		"feature3": "<bold>دعم ملفات Excel والمزيد</bold>: دعم ملفات .xlsx بالإضافة لكثير من الإصلاحات والتحسينات!",
 		"hideButton": "إخفاء الإعلان",
-		"detailsDiscussLinks": "للتفاصيل والنقاش زرونا في <discordLink>ديسكورد</discordLink> و <redditLink>ريديت</redditLink> 🚀"
+		"detailsDiscussLinks": "للتفاصيل والنقاش زرونا في <discordLink>ديسكورد</discordLink> و <redditLink>ريديت</redditLink> 🚀",
+		"learnMore": "اعرف أكثر",
+		"visitCloudButton": "زر Roo Code Cloud",
+		"socialLinks": "تابعنا"
 	},
 	"reasoning": {
 		"thinking": "يفكّر",
@@ -383,8 +422,10 @@
 	},
 	"slashCommands": {
 		"tooltip": "إدارة أوامر الشرطة المائلة",
+		"manageCommands": "إدارة أوامر الشرطة المائلة في الإعدادات",
 		"title": "أوامر الشرطة المائلة",
 		"description": "أنشئ أوامر شرطة مائلة مخصصة للوصول السريع للموجهات وسير العمل المستخدمة بكثرة. <DocsLink>التوثيق</DocsLink>",
+		"builtInCommands": "الأوامر المدمجة",
 		"globalCommands": "الأوامر العامة",
 		"workspaceCommands": "أوامر مساحة العمل",
 		"globalCommand": "أمر عام",
@@ -399,9 +440,25 @@
 			"confirm": "حذف"
 		}
 	},
+	"slashCommand": {
+		"wantsToRun": "Kilo Code يريد تشغيل أمر شرطة مائلة:",
+		"didRun": "Kilo Code شغّل أمر شرطة مائلة:"
+	},
 	"queuedMessages": {
 		"title": "الرسائل في الطابور:",
 		"clickToEdit": "انقر لتعديل الرسالة"
+	},
+	"contextMenu": {
+		"noResults": "لا توجد نتائج",
+		"problems": "المشاكل",
+		"terminal": "الطرفية",
+		"url": "لصق الرابط لجلب المحتوى"
+	},
+	"text": {
+		"rooSaid": "قال Kilo"
+	},
+	"feedback": {
+		"youSaid": "قلت"
 	},
 	"generateCommitMessage": "إنشاء رسالة الالتزام"
 }

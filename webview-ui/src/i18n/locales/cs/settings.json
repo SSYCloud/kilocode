@@ -29,13 +29,25 @@
 		"notifications": "Oznámení",
 		"contextManagement": "Kontext",
 		"terminal": "Terminál",
-		"prompts": "Výzvy",
+		"slashCommands": "Slash příkazy",
+		"prompts": "Podpůrné výzvy",
+		"ui": "Uživatelské rozhraní",
 		"experimental": "Experimentální",
 		"language": "Jazyk",
-		"about": "O Kilo Code Chinese"
+		"about": "O Kilo SSY",
+		"autoPurge": "Automatické čištění"
+	},
+	"slashCommands": {
+		"description": "Spravujte své slash příkazy pro rychlé spouštění vlastních pracovních postupů a akcí. <DocsLink>Více informací</DocsLink>"
+	},
+	"ui": {
+		"collapseThinking": {
+			"label": "Sbalit zprávy Přemýšlení ve výchozím nastavení",
+			"description": "Když je povoleno, bloky přemýšlení budou ve výchozím nastavení sbalené, dokud s nimi neinteragujete"
+		}
 	},
 	"prompts": {
-		"description": "Nakonfigurujte podpůrné výzvy, které se používají pro rychlé akce, jako je vylepšení výzev, vysvětlení kódu a oprava problémů. Tyto výzvy pomáhají Kilo Code poskytovat lepší pomoc při běžných vývojových úkolech."
+		"description": "Nakonfigurujte podpůrné výzvy, které se používají pro rychlé akce, jako je vylepšení výzev, vysvětlení kódu a oprava problémů. Tyto výzvy pomáhají Kilo SSY poskytovat lepší pomoc při běžných vývojových úkolech."
 	},
 	"codeIndex": {
 		"title": "Indexování kódové báze",
@@ -56,6 +68,12 @@
 		"mistralProvider": "Mistral",
 		"mistralApiKeyLabel": "Klíč API:",
 		"mistralApiKeyPlaceholder": "Zadejte svůj klíč API Mistral",
+		"vercelAiGatewayProvider": "Vercel AI Gateway",
+		"vercelAiGatewayApiKeyLabel": "Klíč API",
+		"vercelAiGatewayApiKeyPlaceholder": "Zadejte svůj klíč API Vercel AI Gateway",
+		"openRouterProvider": "OpenRouter",
+		"openRouterApiKeyLabel": "Klíč API OpenRouter",
+		"openRouterApiKeyPlaceholder": "Zadejte svůj klíč API OpenRouter",
 		"openaiCompatibleProvider": "Kompatibilní s OpenAI",
 		"openAiKeyLabel": "Klíč API OpenAI",
 		"openAiKeyPlaceholder": "Zadejte svůj klíč API OpenAI",
@@ -121,24 +139,29 @@
 			"modelDimensionRequired": "Dimenze modelu je povinná",
 			"geminiApiKeyRequired": "Klíč API Gemini je povinný",
 			"mistralApiKeyRequired": "Klíč API Mistral je povinný",
+			"vercelAiGatewayApiKeyRequired": "Je vyžadován klíč API Vercel AI Gateway",
+			"openRouterApiKeyRequired": "Klíč API OpenRouter je povinný",
 			"ollamaBaseUrlRequired": "Základní URL Ollama je povinné",
 			"baseUrlRequired": "Základní URL je povinné",
 			"modelDimensionMinValue": "Dimenze modelu musí být větší než 0"
-		}
+		},
+		"cancelling": "Probíhá rušení...",
+		"cancelIndexingButton": "Zrušit indexování"
 	},
 	"autoApproval": {
 		"title": "Automatické schválení",
-		"description": "Povolit Kilo Code automaticky provádět operace bez nutnosti schválení. Povolte tato nastavení pouze v případě, že plně důvěřujete AI a rozumíte souvisejícím bezpečnostním rizikům."
+		"description": "Povolit Kilo SSY automaticky provádět operace bez nutnosti schválení. Povolte tato nastavení pouze v případě, že plně důvěřujete AI a rozumíte souvisejícím bezpečnostním rizikům."
 	},
 	"autoApprove": {
-		"description": "Povolit Kilo Code automaticky provádět operace bez nutnosti schválení. Povolte tato nastavení pouze v případě, že plně důvěřujete AI a rozumíte souvisejícím bezpečnostním rizikům.",
+		"description": "Povolit Kilo SSY automaticky provádět operace bez nutnosti schválení. Povolte tato nastavení pouze v případě, že plně důvěřujete AI a rozumíte souvisejícím bezpečnostním rizikům.",
+		"toggleShortcut": "Můžete nakonfigurovat klávesovou zkratku pro toto nastavení <SettingsLink>v nastaveních vašeho IDE</SettingsLink>.",
 		"enabled": "Automatické schválení povoleno",
 		"readOnly": {
 			"label": "Číst",
-			"description": "Pokud je povoleno, Kilo Code automaticky zobrazí obsah adresáře a přečte soubory, aniž byste museli klikat na tlačítko Schválit.",
+			"description": "Pokud je povoleno, Kilo SSY automaticky zobrazí obsah adresáře a přečte soubory, aniž byste museli klikat na tlačítko Schválit.",
 			"outsideWorkspace": {
 				"label": "Zahrnout soubory mimo pracovní prostor",
-				"description": "Povolit Kilo Code číst soubory mimo aktuální pracovní prostor bez nutnosti schválení."
+				"description": "Povolit Kilo SSY číst soubory mimo aktuální pracovní prostor bez nutnosti schválení."
 			}
 		},
 		"write": {
@@ -147,11 +170,11 @@
 			"delayLabel": "Zpoždění po zápisu, aby diagnostika mohla detekovat potenciální problémy",
 			"outsideWorkspace": {
 				"label": "Zahrnout soubory mimo pracovní prostor",
-				"description": "Povolit Kilo Code vytvářet a upravovat soubory mimo aktuální pracovní prostor bez nutnosti schválení."
+				"description": "Povolit Kilo SSY vytvářet a upravovat soubory mimo aktuální pracovní prostor bez nutnosti schválení."
 			},
 			"protected": {
 				"label": "Zahrnout chráněné soubory",
-				"description": "Povolit Kilo Code vytvářet a upravovat chráněné soubory (jako .kilocodeignore a konfigurační soubory .kilocode/) bez nutnosti schválení."
+				"description": "Povolit Kilo SSY vytvářet a upravovat chráněné soubory (jako .kilocodeignore a konfigurační soubory .kilocode/) bez nutnosti schválení."
 			}
 		},
 		"browser": {
@@ -219,6 +242,8 @@
 		"providerDocumentation": "Dokumentace {{provider}}",
 		"configProfile": "Konfigurační profil",
 		"description": "Uložte si různé konfigurace API pro rychlé přepínání mezi poskytovateli a nastaveními.",
+		"makeActiveProfile": "Nastavit jako aktivní profil",
+		"makeActiveTooltip": "Aktivuj tento profil pro použití v API požadavcích",
 		"apiProvider": "Poskytovatel API",
 		"model": "Model",
 		"nameEmpty": "Jméno nemůže být prázdné",
@@ -237,10 +262,14 @@
 		"noProviderMatchFound": "Nebyli nalezeni žádní poskytovatelé",
 		"noMatchFound": "Nebyly nalezeny žádné odpovídající profily",
 		"vscodeLmDescription": "API jazykového modelu VS Code vám umožňuje spouštět modely poskytované jinými rozšířeními VS Code (včetně, ale nejen, GitHub Copilot). Nejjednodušší způsob, jak začít, je nainstalovat rozšíření Copilot a Copilot Chat z VS Code Marketplace.",
+		"vscodeLmUnavailable": "Podpora jazykových modelů VS Code je dostupná pouze ve Visual Studio Code. Forky jako VSCodium a další nemusí fungovat. Dále tato funkce není dostupná v nástrojích JetBrains.",
+		"vscodeLmUnavailableInstructions": "Ujistěte se, že používáte podporovaný nástroj a že máte nainstalovaný a povolený VS Code Chat",
 		"awsCustomArnUse": "Zadejte platný Amazon Bedrock ARN pro model, který chcete použít. Příklady formátu:",
 		"awsCustomArnDesc": "Ujistěte se, že region v ARN odpovídá výše vybranému regionu AWS.",
 		"openRouterApiKey": "Klíč API OpenRouter",
 		"getOpenRouterApiKey": "Získat klíč API OpenRouter",
+		"vercelAiGatewayApiKey": "Klíč API Vercel AI Gateway",
+		"getVercelAiGatewayApiKey": "Získat klíč API Vercel AI Gateway",
 		"apiKeyStorageNotice": "Klíče API jsou bezpečně uloženy v tajném úložišti VSCode",
 		"glamaApiKey": "Klíč API Glama",
 		"getGlamaApiKey": "Získat klíč API Glama",
@@ -286,13 +315,21 @@
 		"getFeatherlessApiKey": "Získat klíč API Featherless",
 		"fireworksApiKey": "Klíč API Fireworks",
 		"getFireworksApiKey": "Získat klíč API Fireworks",
+		"syntheticApiKey": "Klíč API Synthetic",
+		"getSyntheticApiKey": "Získat klíč API Synthetic",
 		"zaiApiKey": "Klíč API Z.AI",
 		"getZaiApiKey": "Získat klíč API Z.AI",
 		"moonshotApiKey": "Klíč API Moonshot",
 		"getMoonshotApiKey": "Získat klíč API Moonshot",
 		"moonshotBaseUrl": "Vstupní bod Moonshot",
+		"minimaxApiKey": "Klíč API MiniMax",
+		"getMiniMaxApiKey": "Získat klíč API MiniMax",
+		"minimaxBaseUrl": "Vstupní bod MiniMax",
 		"zaiEntrypoint": "Vstupní bod Z AI",
 		"zaiEntrypointDescription": "Vyberte prosím vhodný vstupní bod API podle vaší polohy. Pokud jste v Číně, vyberte open.bigmodel.cn. Jinak vyberte api.z.ai.",
+		"minimaxApiKey": "Klíč API MiniMax",
+		"getMiniMaxApiKey": "Získat klíč API MiniMax",
+		"minimaxBaseUrl": "Vstupní bod MiniMax",
 		"geminiApiKey": "Klíč API Gemini",
 		"getGroqApiKey": "Získat klíč API Groq",
 		"groqApiKey": "Klíč API Groq",
@@ -302,6 +339,10 @@
 		"openAiApiKey": "Klíč API OpenAI",
 		"getHuggingFaceApiKey": "Získat klíč API Hugging Face",
 		"huggingFaceApiKey": "Klíč API Hugging Face",
+		"getOvhCloudAiEndpointsApiKey": "Získat klíč API OVHcloud AI Endpoints",
+		"ovhCloudAiEndpointsApiKey": "Klíč API OVHcloud AI Endpoints",
+		"ovhCloudAiEndpointsBaseUrl": "Základní URL",
+		"getOvhCloudAiEndpointsBaseUrl": "Použít vlastní základní URL",
 		"huggingFaceModelId": "ID modelu",
 		"huggingFaceLoading": "Načítání...",
 		"huggingFaceModelsCount": "({{count}} modelů)",
@@ -383,7 +424,7 @@
 			"draftModelDesc": "Model konceptu musí být ze stejné rodiny modelů, aby spekulativní dekódování fungovalo správně.",
 			"selectDraftModel": "Vybrat model konceptu",
 			"noModelsFound": "Nebyly nalezeny žádné modely konceptu. Ujistěte se, že LM Studio běží s povoleným režimem serveru.",
-			"description": "LM Studio vám umožňuje spouštět modely lokálně na vašem počítači. Pokyny k zahájení práce naleznete v jejich <a>průvodci rychlým startem</a>. Budete také muset spustit funkci <b>lokálního serveru</b> LM Studio, abyste jej mohli používat s tímto rozšířením. <span>Poznámka:</span> Kilo Code používá složité výzvy a nejlépe funguje s modely Claude. Méně schopné modely nemusí fungovat podle očekávání."
+			"description": "LM Studio vám umožňuje spouštět modely lokálně na vašem počítači. Pokyny k zahájení práce naleznete v jejich <a>průvodci rychlým startem</a>. Budete také muset spustit funkci <b>lokálního serveru</b> LM Studio, abyste jej mohli používat s tímto rozšířením. <span>Poznámka:</span> Kilo SSY používá složité výzvy a nejlépe funguje s modely Claude. Méně schopné modely nemusí fungovat podle očekávání."
 		},
 		"ollama": {
 			"baseUrl": "Základní URL (volitelné)",
@@ -391,8 +432,11 @@
 			"apiKey": "Klíč API",
 			"apiKeyPlaceholder": "Zadejte svůj klíč API",
 			"apiKeyInfo": "Klíč API bude odeslán jako Authorization hlavička",
+			"apiKeyHelp": "Volitelný klíč API pro autentizované instance Ollama nebo cloudové služby. Ponechte prázdné pro místní instalace.",
+			"numCtx": "Velikost kontextového okna (num_ctx)",
+			"numCtxHelp": "Přepsat výchozí velikost kontextového okna modelu. Ponechte prázdné pro použití konfigurace Modelfile modelu. Minimální hodnota je 128.",
 			"description": "Ollama vám umožňuje spouštět modely lokálně na vašem počítači. Pokyny k zahájení práce naleznete v jejich průvodci rychlým startem.",
-			"warning": "Poznámka: Kilo Code používá složité výzvy a nejlépe funguje s modely Claude. Méně schopné modely nemusí fungovat podle očekávání."
+			"warning": "Poznámka: Kilo SSY používá složité výzvy a nejlépe funguje s modely Claude. Méně schopné modely nemusí fungovat podle očekávání."
 		},
 		"unboundApiKey": "Klíč API Unbound",
 		"getUnboundApiKey": "Získat klíč API Unbound",
@@ -414,7 +458,7 @@
 			}
 		},
 		"customModel": {
-			"capabilities": "Nakonfigurujte schopnosti a ceny pro váš vlastní model kompatibilní s OpenAI. Při zadávání schopností modelu buďte opatrní, protože mohou ovlivnit výkon Kilo Code.",
+			"capabilities": "Nakonfigurujte schopnosti a ceny pro váš vlastní model kompatibilní s OpenAI. Při zadávání schopností modelu buďte opatrní, protože mohou ovlivnit výkon Kilo SSY.",
 			"maxTokens": {
 				"label": "Maximální počet výstupních tokenů",
 				"description": "Maximální počet tokenů, které může model vygenerovat v odpovědi. (Zadejte -1, aby server mohl nastavit maximální počet tokenů.)"
@@ -455,22 +499,27 @@
 			},
 			"resetDefaults": "Obnovit výchozí"
 		},
+		"rateLimitAfter": {
+			"label": "Omezení rychlosti na konci",
+			"description": "Začněte omezovat rychlost poté, co stream API skončí."
+		},
 		"rateLimitSeconds": {
 			"label": "Omezení rychlosti",
 			"description": "Minimální čas mezi požadavky API."
 		},
 		"consecutiveMistakeLimit": {
 			"label": "Limit chyb a opakování",
-			"description": "Počet po sobě jdoucích chyb nebo opakovaných akcí před zobrazením dialogu 'Kilo Code má problémy'",
+			"description": "Počet po sobě jdoucích chyb nebo opakovaných akcí před zobrazením dialogu 'Kilo SSY má problémy'",
 			"unlimitedDescription": "Neomezené opakování povoleno (automatické pokračování). Dialog se nikdy nezobrazí.",
 			"warning": "⚠️ Nastavení na 0 umožňuje neomezené opakování, což může spotřebovat značné množství API využití"
 		},
 		"reasoningEffort": {
 			"label": "Úsilí modelu při uvažování",
+			"none": "Žádné",
 			"minimal": "Minimální (nejrychlejší)",
-			"high": "Vysoké",
+			"low": "Nízké",
 			"medium": "Střední",
-			"low": "Nízké"
+			"high": "Vysoké"
 		},
 		"verbosity": {
 			"label": "Podrobnost výstupu",
@@ -537,7 +586,7 @@
 	"browser": {
 		"enable": {
 			"label": "Povolit nástroj prohlížeče",
-			"description": "Pokud je povoleno, Kilo Code může používat prohlížeč k interakci s webovými stránkami při používání modelů, které podporují používání počítače. <0>Dozvědět se více</0>"
+			"description": "Pokud je povoleno, Kilo SSY může používat prohlížeč k interakci s webovými stránkami při používání modelů, které podporují používání počítače. <0>Dozvědět se více</0>"
 		},
 		"viewport": {
 			"label": "Velikost zobrazení",
@@ -563,26 +612,82 @@
 		}
 	},
 	"checkpoints": {
+		"timeout": {
+			"label": "Časový limit inicializace kontrolního bodu (sekundy)",
+			"description": "Maximální doba čekání na inicializaci služby kontrolních bodů. Výchozí je 15 sekund. Rozsah: 10-60 sekund."
+		},
 		"enable": {
 			"label": "Povolit automatické kontrolní body",
-			"description": "Pokud je povoleno, Kilo Code automaticky vytvoří kontrolní body během provádění úkolu, což usnadní kontrolu změn nebo návrat do předchozích stavů. <0>Dozvědět se více</0>"
+			"description": "Pokud je povoleno, Kilo SSY automaticky vytvoří kontrolní body během provádění úkolu, což usnadní kontrolu změn nebo návrat do předchozích stavů. <0>Dozvědět se více</0>"
+		}
+	},
+	"autoPurge": {
+		"enable": {
+			"label": "Povolit automatické čištění úkolů",
+			"description": "Automaticky mazat staré úkoly pro uvolnění místa na disku a zlepšení výkonu. Úkoly jsou klasifikovány podle typu a stáří pro určení, kdy mají být odstraněny."
+		},
+		"defaultRetention": {
+			"label": "Výchozí doba uchovávání (dny)",
+			"description": "Počet dní pro uchovávání úkolů před tím, než jsou způsobilé k čištění"
+		},
+		"neverPurgeFavorited": {
+			"label": "Nikdy nemazat oblíbené úkoly",
+			"description": "Když je povoleno, oblíbené úkoly nebudou nikdy automaticky smazány bez ohledu na stáří"
+		},
+		"favoritedRetention": {
+			"label": "Uchovávání oblíbených úkolů (dny)",
+			"description": "Počet dní pro uchovávání oblíbených úkolů (platí pouze když je 'Nikdy nemazat oblíbené úkoly' zakázáno)"
+		},
+		"completedRetention": {
+			"label": "Uchovávání dokončených úkolů (dny)",
+			"description": "Počet dní pro uchovávání úkolů, které byly úspěšně dokončeny"
+		},
+		"incompleteRetention": {
+			"label": "Uchovávání nedokončených úkolů (dny)",
+			"description": "Počet dní pro uchovávání úkolů, které nebyly dokončeny (obvykle kratší než dokončené úkoly)"
+		},
+		"lastRun": {
+			"label": "Poslední čištění"
+		},
+		"manualPurge": {
+			"button": "Spustit čištění nyní"
 		}
 	},
 	"display": {
 		"taskTimeline": {
 			"label": "Zobrazit časovou osu úkolu",
 			"description": "Zobrazit vizuální časovou osu zpráv úkolu, barevně odlišenou podle typu, což vám umožní rychle zobrazit průběh úkolu a posunout se zpět na konkrétní body v historii úkolu."
+		},
+		"sendMessageOnEnter": {
+			"label": "Odeslat zprávu pomocí Enter",
+			"description": "Je-li povoleno, stiskněte Enter pro odeslání a Shift+Enter pro nový řádek. Vypněte pro použití Shift+Enter pro odeslání."
+		},
+		"costThreshold": {
+			"label": "Skrýt cenu pod prahem",
+			"currentValue": "Aktuální práh: ${{value}}",
+			"description": "Zobrazovat pouze náklady na požadavky převyšující tuto částku. Náklady jsou vždy viditelné, když je panel podrobností otevřený."
+		},
+		"showTimestamps": {
+			"label": "Zobrazit časová razítka",
+			"description": "Zobrazit časové razítko pro každou zprávu v zobrazení chatu"
+		}
+	},
+	"ghost": {
+		"showGutterAnimation": {
+			"label": "Zobrazit animaci v okraji při automatickém dokončování",
+			"description": "Zobrazit animovaný indikátor v okraji editoru, když běží automatické dokončování",
+			"preview": "Náhled animace"
 		}
 	},
 	"notifications": {
 		"sound": {
 			"label": "Povolit zvukové efekty",
-			"description": "Pokud je povoleno, Kilo Code bude přehrávat zvukové efekty pro oznámení a události.",
+			"description": "Pokud je povoleno, Kilo SSY bude přehrávat zvukové efekty pro oznámení a události.",
 			"volumeLabel": "Hlasitost"
 		},
 		"tts": {
 			"label": "Povolit převod textu na řeč",
-			"description": "Pokud je povoleno, Kilo Code bude nahlas číst své odpovědi pomocí převodu textu na řeč.",
+			"description": "Pokud je povoleno, Kilo SSY bude nahlas číst své odpovědi pomocí převodu textu na řeč.",
 			"speedLabel": "Rychlost"
 		}
 	},
@@ -590,7 +695,7 @@
 		"description": "Kontrolujte, jaké informace jsou zahrnuty v kontextovém okně AI, což ovlivňuje využití tokenů a kvalitu odpovědi",
 		"autoCondenseContextPercent": {
 			"label": "Prahová hodnota pro spuštění inteligentního zhušťování kontextu",
-			"description": "Když kontextové okno dosáhne této prahové hodnoty, Kilo Code jej automaticky zhušťí."
+			"description": "Když kontextové okno dosáhne této prahové hodnoty, Kilo SSY jej automaticky zhušťí."
 		},
 		"condensingApiConfiguration": {
 			"label": "Konfigurace API pro zhušťování kontextu",
@@ -606,7 +711,7 @@
 		},
 		"autoCondenseContext": {
 			"name": "Automaticky spouštět inteligentní zhušťování kontextu",
-			"description": "Pokud je povoleno, Kilo Code automaticky zhušťí kontext, když je dosaženo prahové hodnoty. Pokud je zakázáno, můžete stále ručně spouštět zhušťování kontextu."
+			"description": "Pokud je povoleno, Kilo SSY automaticky zhušťí kontext, když je dosaženo prahové hodnoty. Pokud je zakázáno, můžete stále ručně spouštět zhušťování kontextu."
 		},
 		"openTabs": {
 			"label": "Limit kontextu otevřených karet",
@@ -626,9 +731,19 @@
 		},
 		"maxReadFile": {
 			"label": "Prahová hodnota automatického zkrácení při čtení souboru",
-			"description": "Kilo Code načte tento počet řádků, když model vynechá počáteční/koncové hodnoty. Pokud je toto číslo menší než celkový počet řádků souboru, Kilo Code vygeneruje index čísel řádků definic kódu. Speciální případy: -1 instruuje Kilo Code, aby přečetl celý soubor (bez indexování), a 0 ho instruuje, aby nenačítal žádné řádky a poskytoval pouze indexy řádků pro minimální kontext. Nižší hodnoty minimalizují počáteční využití kontextu, což umožňuje přesné následné čtení rozsahu řádků. Explicitní požadavky na začátek/konec nejsou tímto nastavením omezeny.",
+			"description": "Kilo SSY načte tento počet řádků, když model vynechá počáteční/koncové hodnoty. Pokud je toto číslo menší než celkový počet řádků souboru, Kilo SSY vygeneruje index čísel řádků definic kódu. Speciální případy: -1 instruuje Kilo SSY, aby přečetl celý soubor (bez indexování), a 0 ho instruuje, aby nenačítal žádné řádky a poskytoval pouze indexy řádků pro minimální kontext. Nižší hodnoty minimalizují počáteční využití kontextu, což umožňuje přesné následné čtení rozsahu řádků. Explicitní požadavky na začátek/konec nejsou tímto nastavením omezeny.",
 			"lines": "řádky",
 			"always_full_read": "Vždy číst celý soubor"
+		},
+		"maxImageFileSize": {
+			"label": "Maximální velikost souboru obrázku",
+			"mb": "MB",
+			"description": "Maximální velikost (v MB) pro soubory obrázků, které může nástroj pro čtení souborů zpracovat."
+		},
+		"maxTotalImageSize": {
+			"label": "Maximální celková velikost obrázků",
+			"mb": "MB",
+			"description": "Maximální kumulativní limit velikosti (v MB) pro všechny obrázky zpracované v jedné operaci read_file. Při čtení více obrázků se velikost každého obrázku přičte k celkové velikosti. Pokud by zahrnutí dalšího obrázku překročilo tento limit, bude přeskočen."
 		},
 		"condensingThreshold": {
 			"label": "Prahová hodnota spouštění zhušťování",
@@ -655,15 +770,13 @@
 				"description": "Čas čekání po zápisu souborů před pokračováním (v milisekundách). Vyšší hodnoty mohou zlepšit přesnost, ale zpomalují detekci chyb."
 			}
 		},
-		"maxImageFileSize": {
-			"label": "Maximální velikost souboru obrázku",
-			"mb": "MB",
-			"description": "Maximální velikost (v MB) pro soubory obrázků, které mohou být zahrnuty do požadavků. Větší soubory budou automaticky změněny na menší velikost."
+		"includeCurrentTime": {
+			"label": "Zahrnout aktuální čas do kontextu",
+			"description": "Pokud je povoleno, aktuální čas a informace o časovém pásmu budou zahrnuty do systémové výzvy. Zakažte toto, pokud modely přestávají pracovat kvůli obavám o čas."
 		},
-		"maxTotalImageSize": {
-			"label": "Maximální celková velikost obrázků",
-			"mb": "MB",
-			"description": "Maximální kumulativní limit velikosti (v MB) pro všechny obrázky v jednom požadavku. Při překročení budou obrázky změněny na menší velikost, aby se vešly do tohoto limitu."
+		"includeCurrentCost": {
+			"label": "Zahrnout aktuální náklady do kontextu",
+			"description": "Pokud je povoleno, aktuální náklady na využití API budou zahrnuty do systémové výzvy. Zakažte toto, pokud modely přestávají pracovat kvůli obavám o náklady."
 		}
 	},
 	"terminal": {
@@ -689,7 +802,7 @@
 		},
 		"shellIntegrationDisabled": {
 			"label": "Zakázat integraci shellu terminálu",
-			"description": "Povolte tuto možnost, pokud příkazy terminálu nefungují správně nebo se zobrazují chyby „Integrace shellu není k dispozici“. Tímto se použije jednodušší metoda spouštění příkazů, která obejde některé pokročilé funkce terminálu. <0>Dozvědět se více</0>"
+			"description": "Povolte tuto možnost, pokud příkazy terminálu nefungují správně nebo se zobrazují chyby „Integrace shellu není k dispozici“. Tím k se použije jednodušší metoda spouštění příkazů, která obejde některé pokročilé funkce terminálu. <0>Dozvědět se více</0>"
 		},
 		"commandDelay": {
 			"label": "Zpoždění příkazu terminálu",
@@ -741,7 +854,7 @@
 		"maxTokensDescription": "Maximální počet tokenů v odpovědi",
 		"diff": {
 			"label": "Povolit úpravy prostřednictvím diffů",
-			"description": "Pokud je povoleno, Kilo Code bude moci rychleji upravovat soubory a automaticky odmítne zkrácené zápisy celých souborů. Nejlépe funguje s nejnovějším modelem Claude 4 Sonnet.",
+			"description": "Pokud je povoleno, Kilo SSY bude moci rychleji upravovat soubory a automaticky odmítne zkrácené zápisy celých souborů. Nejlépe funguje s nejnovějším modelem Claude 4 Sonnet.",
 			"strategy": {
 				"label": "Strategie diff",
 				"options": {
@@ -751,7 +864,7 @@
 				},
 				"descriptions": {
 					"standard": "Standardní strategie diff aplikuje změny na jeden blok kódu najednou.",
-					"unified": "Sjednocená strategie diff používá více přístupů k aplikaci diffů a vybírá ten nejlepší.",
+					"unified": "Sjednocená strategie diff používá více přístupů k aplikace diffů a vybírá ten nejlepší.",
 					"multiBlock": "Strategie diff s více bloky umožňuje aktualizovat více bloků kódu v souboru v jednom požadavku."
 				}
 			},
@@ -762,7 +875,7 @@
 		},
 		"todoList": {
 			"label": "Povolit nástroj seznamu úkolů",
-			"description": "Pokud je povoleno, Kilo Code může vytvářet a spravovat seznamy úkolů pro sledování průběhu úkolu. To pomáhá organizovat složité úkoly do zvládnutelných kroků."
+			"description": "Pokud je povoleno, Kilo SSY může vytvářet a spravovat seznamy úkolů pro sledování průběhu úkolu. To pomáhá organizovat složité úkoly do zvládnutelných kroků."
 		}
 	},
 	"experimental": {
@@ -770,25 +883,35 @@
 			"name": "Použít experimentální sjednocenou strategii diff",
 			"description": "Povolit experimentální sjednocenou strategii diff. Tato strategie může snížit počet opakování způsobených chybami modelu, ale může způsobit neočekávané chování nebo nesprávné úpravy. Povolte pouze pokud rozumíte rizikům a jste ochotni pečlivě zkontrolovat všechny změny."
 		},
-		"SEARCH_AND_REPLACE": {
-			"name": "Použít experimentální nástroj hledání a nahrazování",
-			"description": "Povolit experimentální nástroj hledání a nahrazování, který umožňuje Kilo Code nahradit více výskytů hledaného výrazu v jednom požadavku."
+		"MORPH_FAST_APPLY": {
+			"name": "Povolit Fast Apply",
+			"description": "Pokud je povoleno, Kilo SSY může upravovat soubory pomocí Fast Apply se specializovanými modely optimalizovanými pro úpravy kódu. Vyžaduje Kilo Gateway Provider, OpenRouter nebo klíč API Morph.",
+			"apiKey": "Klíč API Morph (volitelné)",
+			"placeholder": "Zadejte svůj klíč API Morph (volitelné)",
+			"modelLabel": "Výběr modelu",
+			"modelDescription": "Vyberte, který model rychlého aplikování použít pro úpravy souborů",
+			"models": {
+				"auto": "Automaticky (výchozí - vybere nejlepší dostupný)",
+				"morphFast": "Morph v3 Fast (rychlejší, nižší náklady)",
+				"morphLarge": "Morph v3 Large (schopnější)",
+				"relace": "Relace Apply v3"
+			}
 		},
 		"INSERT_BLOCK": {
 			"name": "Použít experimentální nástroj vkládání obsahu",
-			"description": "Povolit experimentální nástroj vkládání obsahu, který umožňuje Kilo Code vkládat obsah na konkrétní čísla řádků bez nutnosti vytvářet diff."
+			"description": "Povolit experimentální nástroj vkládání obsahu, který umožňuje Kilo SSY vkládat obsah na konkrétní čísla řádků bez nutnosti vytvářet diff."
 		},
 		"POWER_STEERING": {
 			"name": "Použít experimentální režim \"posilovače řízení\"",
-			"description": "Pokud je povoleno, Kilo Code bude modelu častěji připomínat podrobnosti jeho aktuální definice režimu. To povede k silnějšímu dodržování definic rolí a vlastních instrukcí, ale použije více tokenů na zprávu."
+			"description": "Pokud je povoleno, Kilo SSY bude modelu častěji připomínat podrobnosti jeho aktuální definice režimu. To povede k silnějšímu dodržování definic rolí a vlastních instrukcí, ale použije více tokenů na zprávu."
 		},
 		"CONCURRENT_FILE_READS": {
 			"name": "Povolit souběžné čtení souborů",
-			"description": "Pokud je povoleno, Kilo Code může číst více souborů v jednom požadavku. Pokud je zakázáno, Kilo Code musí číst soubory jeden po druhém. Zakázání může pomoci při práci s méně schopnými modely nebo když chcete mít větší kontrolu nad přístupem k souborům."
+			"description": "Pokud je povoleno, Kilo SSY může číst více souborů v jednom požadavku. Pokud je zakázáno, Kilo SSY musí číst soubory jeden po druhém. Zakázání může pomoci při práci s méně schopnými modely nebo když chcete mít větší kontrolu nad přístupem k souborům."
 		},
 		"MULTI_SEARCH_AND_REPLACE": {
 			"name": "Použít experimentální nástroj diff s více bloky",
-			"description": "Pokud je povoleno, Kilo Code bude používat nástroj diff s více bloky. To se pokusí aktualizovat více bloků kódu v souboru v jednom požadavku."
+			"description": "Pokud je povoleno, Kilo SSY bude používat nástroj diff s více bloky. To se pokusí aktualizovat více bloků kódu v souboru v jednom požadavku."
 		},
 		"MARKETPLACE": {
 			"name": "Povolit Marketplace",
@@ -796,21 +919,11 @@
 		},
 		"MULTI_FILE_APPLY_DIFF": {
 			"name": "Povolit souběžné úpravy souborů",
-			"description": "Pokud je povoleno, Kilo Code může upravovat více souborů v jednom požadavku. Pokud je zakázáno, Kilo Code musí upravovat soubory jeden po druhém. Zakázání může pomoci při práci s méně schopnými modely nebo když chcete mít větší kontrolu nad úpravami souborů."
-		},
-		"MORPH_FAST_APPLY": {
-			"name": "Povolit Morph Fast Apply",
-			"description": "Pokud je povoleno, Kilo Code může upravovat soubory pomocí Morph Fast Apply. Vyžaduje poskytovatele Kilo Code API, OpenRouter nebo klíč API Morph.",
-			"apiKey": "Klíč API Morph (volitelné)",
-			"placeholder": "Zadejte svůj klíč API Morph (volitelné)"
-		},
-		"INLINE_ASSIST": {
-			"name": "Inline pomoc",
-			"description": "Povolte funkce Inline Assist pro rychlé návrhy a vylepšení kódu přímo ve vašem editoru. Zahrnuje Rychlý inline úkol (Cmd+I) pro cílené změny a Automatický inline úkol pro kontextová vylepšení."
+			"description": "Pokud je povoleno, Kilo SSY může upravovat více souborů v jednom požadavku. Pokud je zakázáno, Kilo SSY musí upravovat soubory jeden po druhém. Zakázání může pomoci při práci s méně schopnými modely nebo když chcete mít větší kontrolu nad úpravami souborů."
 		},
 		"PREVENT_FOCUS_DISRUPTION": {
 			"name": "Úpravy na pozadí",
-			"description": "Zabránit narušení zaměření editoru, když je povoleno. Úpravy souborů probíhají na pozadí bez otevírání diff zobrazení nebo krádeže zaměření. Můžete pokračovat v práci bez přerušení, zatímco Kilo Code provádí změny. Soubory mohou být otevřeny bez zaměření pro zachycení diagnostiky nebo zůstat zcela zavřené."
+			"description": "Zabránit narušení zaměření editoru, když je povoleno. Úpravy souborů probíhají na pozadí bez otevírání diff zobrazení nebo krádeže zaměření. Můžete pokračovat v práci bez přerušení, zatímco Kilo SSY provádí změny. Soubory mohou být otevřeny bez zaměření pro zachycení diagnostiky nebo zůstat zcela zavřené."
 		},
 		"ASSISTANT_MESSAGE_PARSER": {
 			"name": "Použít nový parser zpráv",
@@ -819,11 +932,34 @@
 		"NEW_TASK_REQUIRE_TODOS": {
 			"name": "Vyžadovat seznam 'úkolů' pro nové úkoly",
 			"description": "Pokud je povoleno, nástroj new_task bude vyžadovat poskytnutí parametru úkolů. Tím se zajistí, že všechny nové úkoly začnou s jasným seznamem cílů. Pokud je zakázáno (výchozí), parametr úkolů zůstane volitelný pro zpětnou kompatibilitu."
+		},
+		"IMAGE_GENERATION": {
+			"name": "Povolit AI generování obrázků",
+			"description": "Když je povoleno, Kilo SSY může generovat obrázky z textových podnětů. Vyžaduje Kilo SSY nebo OpenRouter API klíč.",
+			"apiProvider": "Poskytovatel API",
+			"openRouterApiKeyLabel": "OpenRouter API Key",
+			"openRouterApiKeyPlaceholder": "Zadejte svůj OpenRouter API klíč",
+			"kiloCodeApiKeyLabel": "Kilo SSY API klíč",
+			"kiloCodeApiKeyPlaceholder": "Zadejte svůj Kilo SSY API klíč",
+			"kiloCodeApiKeyPaste": "Vložte aktuální Kilo SSY API klíč",
+			"getApiKeyText": "Získejte API klíč z",
+			"modelSelectionLabel": "Model pro generování obrázků",
+			"modelSelectionDescription": "Vyberte model pro použití při generování obrázků",
+			"warningMissingKey": "⚠️ API klíč je vyžadován pro generování obrázků, nakonfigurujte ho výše.",
+			"successConfigured": "✓ Generování obrázků je nakonfigurováno a připraveno k použití"
+		},
+		"RUN_SLASH_COMMAND": {
+			"name": "Povolit slash příkazy iniciované modelem",
+			"description": "Když je povoleno, Kilo SSY může spouštět vaše slash příkazy k provedení pracovních toků."
+		},
+		"INLINE_ASSIST": {
+			"name": "Autocomplete",
+			"description": "Povolit funkce Autocomplete pro rychlé návrhy kódu a vylepšení přímo ve tvém editoru. Zahrnuje Rychlý úkol (Cmd+I) pro cílené změny a Autocomplete pro kontextová vylepšení."
 		}
 	},
 	"promptCaching": {
 		"label": "Zakázat ukládání výzev do mezipaměti",
-		"description": "Pokud je zaškrtnuto, Kilo Code nebude používat ukládání výzev do mezipaměti pro tento model."
+		"description": "Pokud je zaškrtnuto, Kilo SSY nebude používat ukládání výzev do mezipaměti pro tento model."
 	},
 	"temperature": {
 		"useCustom": "Použít vlastní teplotu",
@@ -855,7 +991,7 @@
 		}
 	},
 	"modelPicker": {
-		"automaticFetch": "Rozšíření automaticky načítá nejnovější seznam modelů dostupných na <serviceLink>{{serviceName}}</serviceLink>. Pokud si nejste jisti, který model vybrat, Kilo Code funguje nejlépe s <defaultModelLink>{{defaultModelId}}</defaultModelLink>.",
+		"automaticFetch": "Rozšíření automaticky načítá nejnovější seznam modelů dostupných na <serviceLink>{{serviceName}}</serviceLink>. Pokud si nejste jisti, který model vybrat, Kilo SSY funguje nejlépe s <defaultModelLink>{{defaultModelId}}</defaultModelLink>.",
 		"label": "Model",
 		"searchPlaceholder": "Hledat",
 		"noMatchFound": "Nebyla nalezena žádná shoda",
@@ -866,7 +1002,7 @@
 		"support": "Pro finanční dotazy kontaktujte prosím zákaznickou podporu na <supportLink>https://kilocode.ai/support</supportLink>",
 		"telemetry": {
 			"label": "Povolit hlášení chyb a používání",
-			"description": "Pomozte vylepšit Kilo Code odesíláním dat o používání a hlášení chyb. Nikdy se neodesílá žádný kód, výzvy ani osobní informace. Další podrobnosti najdete v našich zásadách ochrany osobních údajů."
+			"description": "Pomozte vylepšit Kilo SSY odesíláním dat o používání a hlášení chyb. Nikdy se neodesílá žádný kód, výzvy ani osobní informace. Další podrobnosti najdete v našich zásadách ochrany osobních údajů."
 		},
 		"settings": {
 			"import": "Importovat",
@@ -892,7 +1028,9 @@
 		"modelAvailability": "ID modelu ({{modelId}}), které jste zadali, není k dispozici. Vyberte prosím jiný model.",
 		"providerNotAllowed": "Poskytovatel '{{provider}}' není povolen vaší organizací",
 		"modelNotAllowed": "Model '{{model}}' není povolen pro poskytovatele '{{provider}}' vaší organizací",
-		"profileInvalid": "Tento profil obsahuje poskytovatele nebo model, který není povolen vaší organizací"
+		"profileInvalid": "Tento profil obsahuje poskytovatele nebo model, který není povolen vaší organizací",
+		"modelDeprecated": "Tento model již není dostupný. Prosím vyberte jiný model.",
+		"qwenCodeOauthPath": "Musíte poskytnout platnou cestu k OAuth pověřením."
 	},
 	"placeholders": {
 		"apiKey": "Zadejte klíč API...",
@@ -931,5 +1069,19 @@
 	"maxOutputTokensLabel": "Maximální počet výstupních tokenů",
 	"maxTokensGenerateDescription": "Maximální počet tokenů k vygenerování v odpovědi",
 	"includeMaxOutputTokens": "Zahrnout maximální počet výstupních tokenů",
-	"includeMaxOutputTokensDescription": "Odeslat parametr maximálního počtu výstupních tokenů v požadavcích API. Někteří poskytovatelé to nemusí podporovat."
+	"includeMaxOutputTokensDescription": "Odeslat parametr maximálního počtu výstupních tokenů v požadavcích API. Někteří poskytovatelé to nemusí podporovat.",
+	"serviceTier": {
+		"label": "Úroveň služby",
+		"tooltip": "Pro rychlejší zpracování API požadavků zkuste úroveň prioritního zpracování. Pro nižší ceny s vyšší latencí zkuste flexibilní úroveň zpracování.",
+		"standard": "Standardní",
+		"flex": "Flexibilní",
+		"priority": "Prioritní",
+		"pricingTableTitle": "Ceny podle úrovně služby (cena za 1M tokenů)",
+		"columns": {
+			"tier": "Úroveň",
+			"input": "Vstup",
+			"output": "Výstup",
+			"cacheReads": "Čtení cache"
+		}
+	}
 }

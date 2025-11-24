@@ -4,15 +4,14 @@ import { usePathname, useSearchParams } from "next/navigation"
 import posthog from "posthog-js"
 import { PostHogProvider as OriginalPostHogProvider } from "posthog-js/react"
 import { useEffect, Suspense } from "react"
+import { hasConsent } from "@/lib/analytics/consent-manager"
 
-// Create a separate component for analytics tracking that uses useSearchParams
 function PageViewTracker() {
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
 
 	// Track page views
 	useEffect(() => {
-		// Only track page views if PostHog is properly initialized
 		if (pathname && process.env.NEXT_PUBLIC_POSTHOG_KEY) {
 			let url = window.location.origin + pathname
 			if (searchParams && searchParams.toString()) {
@@ -30,8 +29,8 @@ function PageViewTracker() {
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
 	useEffect(() => {
-		// Initialize PostHog only on the client side
-		if (typeof window !== "undefined") {
+		// Initialize PostHog immediately on the client side
+		if (typeof window !== "undefined" && !posthog.__loaded) {
 			const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY
 			const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST
 
@@ -51,20 +50,25 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 				)
 			}
 
+			// Check if user has already consented to cookies
+			const userHasConsented = hasConsent()
+
+			// Initialize PostHog with appropriate persistence based on consent
 			posthog.init(posthogKey, {
 				api_host: posthogHost || "https://us.i.posthog.com",
-				capture_pageview: false, // We'll handle this manually
+				capture_pageview: false, // We handle pageview tracking manually
 				loaded: (posthogInstance) => {
 					if (process.env.NODE_ENV === "development") {
-						// Log to console in development
 						posthogInstance.debug()
 					}
 				},
+				save_referrer: true, // Save referrer information
+				save_campaign_params: true, // Save UTM parameters
 				respect_dnt: true, // Respect Do Not Track
+				persistence: userHasConsented ? "localStorage+cookie" : "memory", // Use localStorage if consented, otherwise memory-only
+				opt_out_capturing_by_default: false, // Start tracking immediately
 			})
 		}
-
-		// No explicit cleanup needed for posthog-js v1.231.0
 	}, [])
 
 	return (

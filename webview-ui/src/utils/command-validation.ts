@@ -1,4 +1,11 @@
 import { parse } from "shell-quote"
+// kilocode_change start
+import {
+	protectNewlinesInQuotes,
+	NEWLINE_PLACEHOLDER,
+	CARRIAGE_RETURN_PLACEHOLDER,
+} from "./command-validation-quote-protection"
+// kilocode_change end
 
 type ShellToken = string | { op: string } | { command: string }
 
@@ -36,7 +43,7 @@ type ShellToken = string | { op: string } | { command: string }
  *
  * ## Command Processing Pipeline:
  *
- * 1. **Subshell Detection**: Commands containing dangerous patterns like $(), ``, or (cmd1; cmd2) are flagged as security risks
+ * 1. **Dangerous Substitution Detection**: Commands containing dangerous patterns like ${var@P} are never auto-approved
  * 2. **Command Parsing**: Split chained commands (&&, ||, ;, |, &) into individual commands for separate validation
  * 3. **Pattern Matching**: For each individual command, find the longest matching prefix in both allowlist and denylist
  * 4. **Decision Logic**: Apply longest prefix match rule - more specific (longer) matches take precedence
@@ -44,7 +51,7 @@ type ShellToken = string | { op: string } | { command: string }
  *
  * ## Security Considerations:
  *
- * - **Subshell Protection**: Detects and blocks command injection attempts via command substitution, process substitution, and subshell grouping
+ * - **Dangerous Substitution Protection**: Detects dangerous parameter expansions and escape sequences that could execute commands
  * - **Chain Analysis**: Each command in a chain (cmd1 && cmd2) is validated separately to prevent bypassing via chaining
  * - **Case Insensitive**: All pattern matching is case-insensitive for consistent behavior across different input styles
  * - **Whitespace Handling**: Commands are trimmed and normalized before matching to prevent whitespace-based bypasses
@@ -59,81 +66,94 @@ type ShellToken = string | { op: string } | { command: string }
  */
 
 /**
- * Detect subshell usage and command substitution patterns that could be security risks.
- *
- * Subshells allow executing commands in isolated environments and can be used to bypass
- * command validation by hiding dangerous commands inside substitution patterns.
+ * Detect dangerous parameter substitutions that could lead to command execution.
+ * These patterns are never auto-approved and always require explicit user approval.
  *
  * Detected patterns:
- * - $() - command substitution: executes command and substitutes output
- * - `` - backticks (legacy command substitution): same as $() but older syntax
- * - <() - process substitution (input): creates temporary file descriptor for command output
- * - >() - process substitution (output): creates temporary file descriptor for command input
- * - $(()) - arithmetic expansion: evaluates mathematical expressions (can contain commands)
- * - $[] - arithmetic expansion (alternative syntax): same as $(()) but older syntax
- * - (cmd1; cmd2) - subshell grouping: executes multiple commands in isolated subshell
+ * - ${var@P} - Prompt string expansion (interprets escape sequences and executes embedded commands)
+ * - ${var@Q} - Quote removal
+ * - ${var@E} - Escape sequence expansion
+ * - ${var@A} - Assignment statement
+ * - ${var@a} - Attribute flags
+ * - ${var=value} with escape sequences - Can embed commands via \140 (backtick), \x60, or \u0060
+ * - ${!var} - Indirect variable references
+ * - <<<$(...) or <<<`...` - Here-strings with command substitution
+ * - =(...) - Zsh process substitution that executes commands
+ * - *(e:...:) or similar - Zsh glob qualifiers with code execution
  *
- * @param source - The command string to analyze for subshell patterns
- * @returns true if any subshell patterns are detected, false otherwise
- *
- * @example
- * ```typescript
- * // Command substitution - executes 'date' and substitutes its output
- * containsSubshell("echo $(date)")     // true
- *
- * // Backtick substitution - legacy syntax for command substitution
- * containsSubshell("echo `date`")      // true
- *
- * // Process substitution - creates file descriptor for command output
- * containsSubshell("diff <(sort f1)")  // true
- *
- * // Arithmetic expansion - can contain command execution
- * containsSubshell("echo $((1+2))")    // true
- * containsSubshell("echo $[1+2]")      // true
- *
- * // Subshell grouping - executes commands in isolated environment
- * containsSubshell("(ls; rm file)")    // true
- * containsSubshell("(cd /tmp && rm -rf *)")  // true
- *
- * // Safe patterns that should NOT be flagged
- * containsSubshell("func(arg1, arg2)") // false - function call, not subshell
- * containsSubshell("echo hello")       // false - no subshell patterns
- * containsSubshell("(simple text)")    // false - no shell operators in parentheses
- * ```
+ * @param source - The command string to analyze
+ * @returns true if dangerous substitution patterns are detected, false otherwise
  */
-export function containsSubshell(source: string): boolean {
-	// Check for command substitution, process substitution, and arithmetic expansion patterns
-	// These patterns allow executing commands and substituting their output, which can bypass validation
-	const commandSubstitutionPatterns = /(\$\()|`|(<\(|>\()|(\$\(\()|(\$\[)/.test(source)
+export function containsDangerousSubstitution(source: string): boolean {
+	// Check for dangerous parameter expansion operators that can execute commands
+	// ${var@P} - Prompt string expansion (interprets escape sequences and executes embedded commands)
+	// ${var@Q} - Quote removal
+	// ${var@E} - Escape sequence expansion
+	// ${var@A} - Assignment statement
+	// ${var@a} - Attribute flags
+	const dangerousParameterExpansion = /\$\{[^}]*@[PQEAa][^}]*\}/.test(source)
 
-	// Check for subshell grouping: parentheses containing shell command operators
-	// Pattern explanation: \( = literal opening paren, [^)]* = any chars except closing paren,
-	// [;&|]+ = one or more shell operators (semicolon, ampersand, pipe), [^)]* = any chars except closing paren, \) = literal closing paren
-	// This detects dangerous patterns like: (cmd1; cmd2), (cmd1 && cmd2), (cmd1 || cmd2), (cmd1 | cmd2), (cmd1 & cmd2)
-	// But avoids false positives like function calls: func(arg1, arg2) - no shell operators inside
-	const subshellGroupingPattern = /\([^)]*[;&|]+[^)]*\)/.test(source)
+	// Check for parameter expansions with assignments that could contain escape sequences
+	// ${var=value} or ${var:=value} can embed commands via escape sequences like \140 (backtick)
+	// Also check for ${var+value}, ${var:-value}, ${var:+value}, ${var:?value}
+	const parameterAssignmentWithEscapes =
+		/\$\{[^}]*[=+\-?][^}]*\\[0-7]{3}[^}]*\}/.test(source) || // octal escapes
+		/\$\{[^}]*[=+\-?][^}]*\\x[0-9a-fA-F]{2}[^}]*\}/.test(source) || // hex escapes
+		/\$\{[^}]*[=+\-?][^}]*\\u[0-9a-fA-F]{4}[^}]*\}/.test(source) // unicode escapes
 
-	// Return true if any subshell pattern is detected
-	return commandSubstitutionPatterns || subshellGroupingPattern
+	// Check for indirect variable references that could execute commands
+	// ${!var} performs indirect expansion which can be dangerous with crafted variable names
+	const indirectExpansion = /\$\{![^}]+\}/.test(source)
+
+	// Check for here-strings with command substitution
+	// <<<$(...) or <<<`...` can execute commands
+	const hereStringWithSubstitution = /<<<\s*(\$\(|`)/.test(source)
+
+	// Check for zsh process substitution =(...) which executes commands
+	// =(...) creates a temporary file containing the output of the command, but executes it
+	const zshProcessSubstitution = /=\([^)]+\)/.test(source)
+
+	// Check for zsh glob qualifiers with code execution (e:...:)
+	// Patterns like *(e:whoami:) or ?(e:rm -rf /:) execute commands during glob expansion
+	// This regex matches patterns like *(e:...:), ?(e:...:), +(e:...:), @(e:...:), !(e:...:)
+	const zshGlobQualifier = /[*?+@!]\(e:[^:]+:\)/.test(source)
+
+	// Return true if any dangerous pattern is detected
+	return (
+		dangerousParameterExpansion ||
+		parameterAssignmentWithEscapes ||
+		indirectExpansion ||
+		hereStringWithSubstitution ||
+		zshProcessSubstitution ||
+		zshGlobQualifier
+	)
 }
 
+// kilocode_change start added exception for quoted newlines
 /**
  * Split a command string into individual sub-commands by
  * chaining operators (&&, ||, ;, |, or &) and newlines.
  *
  * Uses shell-quote to properly handle:
- * - Quoted strings (preserves quotes)
+ * - Quoted strings (preserves quotes and newlines within quotes)
  * - Subshell commands ($(cmd), `cmd`, <(cmd), >(cmd))
  * - PowerShell redirections (2>&1)
  * - Chain operators (&&, ||, ;, |, &)
- * - Newlines as command separators
+ * - Newlines as command separators (but not within quotes)
  */
+//kilocode_change end
 export function parseCommand(command: string): string[] {
 	if (!command?.trim()) return []
 
-	// Split by newlines first (handle different line ending formats)
+	// kilocode_change start
+	// First, protect newlines inside quoted strings by replacing them with placeholders
+	// This prevents splitting multi-line quoted strings (e.g., git commit -m "multi\nline")
+	const protectedCommand = protectNewlinesInQuotes(command, NEWLINE_PLACEHOLDER, CARRIAGE_RETURN_PLACEHOLDER)
+
+	// Split by newlines (handle different line ending formats)
 	// This regex splits on \r\n (Windows), \n (Unix), or \r (old Mac)
-	const lines = command.split(/\r\n|\r|\n/)
+	const lines = protectedCommand.split(/\r\n|\r|\n/)
+	// kilocode_change end
 	const allCommands: string[] = []
 
 	for (const line of lines) {
@@ -145,7 +165,14 @@ export function parseCommand(command: string): string[] {
 		allCommands.push(...lineCommands)
 	}
 
-	return allCommands
+	// kilocode_change start
+	// Restore newlines and carriage returns in quoted strings
+	return allCommands.map((cmd) =>
+		cmd
+			.replace(new RegExp(NEWLINE_PLACEHOLDER, "g"), "\n")
+			.replace(new RegExp(CARRIAGE_RETURN_PLACEHOLDER, "g"), "\r"),
+	)
+	// kilocode_change end
 }
 
 /**
@@ -471,21 +498,25 @@ export type CommandDecision = "auto_approve" | "auto_deny" | "ask_user"
  * to resolve conflicts between allowlist and denylist patterns.
  *
  * **Decision Logic:**
- * 1. **Subshell Protection**: If subshells ($() or ``) are present and denylist exists → auto-deny
+ * 1. **Dangerous Substitution Protection**: Commands with dangerous parameter expansions are never auto-approved
  * 2. **Command Parsing**: Split command chains (&&, ||, ;, |, &) into individual commands
  * 3. **Individual Validation**: For each sub-command, apply longest prefix match rule
  * 4. **Aggregation**: Combine decisions using "any denial blocks all" principle
  *
  * **Return Values:**
- * - `"auto_approve"`: All sub-commands are explicitly allowed
+ * - `"auto_approve"`: All sub-commands are explicitly allowed and no dangerous patterns detected
  * - `"auto_deny"`: At least one sub-command is explicitly denied
- * - `"ask_user"`: Mixed or no matches found, requires user decision
+ * - `"ask_user"`: Mixed or no matches found, requires user decision, or contains dangerous patterns
  *
  * **Examples:**
  * ```typescript
  * // Simple approval
  * getCommandDecision("git status", ["git"], [])
  * // Returns "auto_approve"
+ *
+ * // Dangerous pattern - never auto-approved
+ * getCommandDecision('echo "${var@P}"', ["echo"], [])
+ * // Returns "ask_user"
  *
  * // Longest prefix match - denial wins
  * getCommandDecision("git push origin", ["git"], ["git push"])
@@ -526,6 +557,11 @@ export function getCommandDecision(
 	// If any sub-command is denied, deny the whole command
 	if (decisions.includes("auto_deny")) {
 		return "auto_deny"
+	}
+
+	// Require explicit user approval for dangerous patterns
+	if (containsDangerousSubstitution(command)) {
+		return "ask_user"
 	}
 
 	// If all sub-commands are approved, approve the whole command
@@ -681,10 +717,10 @@ export class CommandValidator {
 		subCommands: string[]
 		allowedMatches: Array<{ command: string; match: string | null }>
 		deniedMatches: Array<{ command: string; match: string | null }>
-		hasSubshells: boolean
+		hasDangerousSubstitution: boolean
 	} {
 		const subCommands = parseCommand(command)
-		const hasSubshells = containsSubshell(command)
+		const hasDangerousSubstitution = containsDangerousSubstitution(command)
 
 		const allowedMatches = subCommands.map((cmd) => ({
 			command: cmd,
@@ -701,7 +737,7 @@ export class CommandValidator {
 			subCommands,
 			allowedMatches,
 			deniedMatches,
-			hasSubshells,
+			hasDangerousSubstitution,
 		}
 	}
 

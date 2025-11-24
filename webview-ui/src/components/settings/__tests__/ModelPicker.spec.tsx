@@ -3,7 +3,6 @@
 import { screen, fireEvent, render } from "@/utils/test-utils"
 import { act } from "react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { vi } from "vitest"
 
 import {
 	ModelInfo,
@@ -27,7 +26,6 @@ describe("ModelPicker", () => {
 		maxTokens: 8192,
 		contextWindow: 200_000,
 		supportsImages: true,
-		supportsComputerUse: true,
 		supportsPromptCache: true,
 		inputPrice: 3.0,
 		outputPrice: 15.0,

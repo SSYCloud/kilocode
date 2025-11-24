@@ -67,6 +67,12 @@
 			"copyError": "画像のコピーエラー"
 		}
 	},
+	"image": {
+		"tabs": {
+			"view": "画像"
+		},
+		"noData": "画像データなし"
+	},
 	"file": {
 		"errors": {
 			"invalidDataUri": "無効なデータURI形式",
@@ -85,7 +91,13 @@
 		"deleteWarning": "このメッセージを削除すると、会話内の後続のメッセージもすべて削除されます。続行しますか？",
 		"editMessage": "メッセージを編集",
 		"editWarning": "このメッセージを編集すると、会話内の後続のメッセージもすべて削除されます。続行しますか？",
-		"proceed": "続行"
+		"editQuestionWithCheckpoint": "このメッセージを編集すると、会話内の後続のメッセージもすべて削除されます。このチェックポイントまでのすべての変更も元に戻しますか？",
+		"deleteQuestionWithCheckpoint": "このメッセージを削除すると、会話内の後続のメッセージもすべて削除されます。このチェックポイントまでのすべての変更も元に戻しますか？",
+		"editOnly": "いいえ、メッセージのみ編集",
+		"deleteOnly": "いいえ、メッセージのみ削除",
+		"restoreToCheckpoint": "はい、チェックポイントを復元",
+		"proceed": "続行",
+		"dontShowAgain": "今後表示しない"
 	},
 	"time_ago": {
 		"just_now": "たった今",
@@ -102,5 +114,9 @@
 		"months_ago": "{{count}}ヶ月前",
 		"year_ago": "1年前",
 		"years_ago": "{{count}}年前"
+	},
+	"errors": {
+		"wait_checkpoint_long_time": "{{timeout}} 秒間チェックポイントの初期化を待機しました。チェックポイント機能が不要な場合は、<settingsLink>チェックポイント設定</settingsLink>でオフにしてください。",
+		"init_checkpoint_fail_long_time": "チェックポイントの初期化が {{timeout}} 秒以上かかったため、このタスクではチェックポイントが無効化されました。チェックポイントをオフにするか、<settingsLink>チェックポイント設定</settingsLink>で待機時間を延長できます。"
 	}
 }

@@ -1,4 +1,8 @@
-import type { ToolName, ModeConfig } from "@roo-code/types"
+import type {
+	ToolName,
+	ModeConfig,
+	ToolUseStyle, // kilocode_change
+} from "@roo-code/types"
 
 import { TOOL_GROUPS, ALWAYS_AVAILABLE_TOOLS, DiffStrategy } from "../../../shared/tools"
 import { McpHub } from "../../../services/mcp/McpHub"
@@ -14,7 +18,6 @@ import { getWriteToFileDescription } from "./write-to-file"
 import { getSearchFilesDescription } from "./search-files"
 import { getListFilesDescription } from "./list-files"
 import { getInsertContentDescription } from "./insert-content"
-import { getSearchAndReplaceDescription } from "./search-and-replace"
 import { getListCodeDefinitionNamesDescription } from "./list-code-definition-names"
 import { getBrowserActionDescription } from "./browser-action"
 import { getAskFollowupQuestionDescription } from "./ask-followup-question"
@@ -25,10 +28,12 @@ import { getSwitchModeDescription } from "./switch-mode"
 import { getNewTaskDescription } from "./new-task"
 import { getCodebaseSearchDescription } from "./codebase-search"
 import { getUpdateTodoListDescription } from "./update-todo-list"
+import { getRunSlashCommandDescription } from "./run-slash-command"
+import { getGenerateImageDescription } from "./generate-image"
 import { CodeIndexManager } from "../../../services/code-index/manager"
-import { isMorphAvailable } from "../../tools/editFileTool"
 
 // kilocode_change start: Morph fast apply
+import { isFastApplyAvailable } from "../../tools/editFileTool"
 import { getEditFileDescription } from "./edit-file"
 import { type ClineProviderState } from "../../webview/ClineProvider"
 // kilocode_change end
@@ -58,11 +63,12 @@ const toolDescriptionMap: Record<string, (args: ToolArgs) => string | undefined>
 	switch_mode: () => getSwitchModeDescription(),
 	new_task: (args) => getNewTaskDescription(args),
 	insert_content: (args) => getInsertContentDescription(args),
-	search_and_replace: (args) => getSearchAndReplaceDescription(args),
 	edit_file: () => getEditFileDescription(), // kilocode_change: Morph fast apply
 	apply_diff: (args) =>
 		args.diffStrategy ? args.diffStrategy.getToolDescription({ cwd: args.cwd, toolOptions: args.toolOptions }) : "",
 	update_todo_list: (args) => getUpdateTodoListDescription(args),
+	run_slash_command: () => getRunSlashCommandDescription(),
+	generate_image: (args) => getGenerateImageDescription(args),
 }
 
 export function getToolDescriptionsForMode(
@@ -129,13 +135,17 @@ export function getToolDescriptionsForMode(
 		!codeIndexManager ||
 		!(codeIndexManager.isFeatureEnabled && codeIndexManager.isFeatureConfigured && codeIndexManager.isInitialized)
 	) {
-		tools.delete("codebase_search")
+		// kilocode_change start
+		if (!codeIndexManager?.isManagedIndexingAvailable) {
+			tools.delete("codebase_search")
+		}
+		// kilocode_change end
 	}
 
 	// kilocode_change start: Morph fast apply
-	if (isMorphAvailable(clineProviderState)) {
+	if (isFastApplyAvailable(clineProviderState)) {
 		// When Morph is enabled, disable traditional editing tools
-		const traditionalEditingTools = ["apply_diff", "write_to_file", "insert_content", "search_and_replace"]
+		const traditionalEditingTools = ["apply_diff", "write_to_file", "insert_content"]
 		traditionalEditingTools.forEach((tool) => tools.delete(tool))
 	} else {
 		tools.delete("edit_file")
@@ -145,6 +155,16 @@ export function getToolDescriptionsForMode(
 	// Conditionally exclude update_todo_list if disabled in settings
 	if (settings?.todoListEnabled === false) {
 		tools.delete("update_todo_list")
+	}
+
+	// Conditionally exclude generate_image if experiment is not enabled
+	if (!experiments?.imageGeneration) {
+		tools.delete("generate_image")
+	}
+
+	// Conditionally exclude run_slash_command if experiment is not enabled
+	if (!experiments?.runSlashCommand) {
+		tools.delete("run_slash_command")
 	}
 
 	// Map tool descriptions for allowed tools
@@ -180,7 +200,8 @@ export {
 	getAccessMcpResourceDescription,
 	getSwitchModeDescription,
 	getInsertContentDescription,
-	getSearchAndReplaceDescription,
 	getEditFileDescription, // kilocode_change: Morph fast apply
 	getCodebaseSearchDescription,
+	getRunSlashCommandDescription,
+	getGenerateImageDescription,
 }

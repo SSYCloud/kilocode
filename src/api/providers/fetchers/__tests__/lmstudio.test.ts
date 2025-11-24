@@ -1,8 +1,9 @@
 import axios from "axios"
-import { vi, describe, it, expect, beforeEach } from "vitest"
-import { LMStudioClient, LLM, LLMInstanceInfo, LLMInfo } from "@lmstudio/sdk"
+import { LMStudioClient, LLMInstanceInfo, LLMInfo } from "@lmstudio/sdk"
+
+import { ModelInfo, lMStudioDefaultModelInfo } from "@roo-code/types"
+
 import { getLMStudioModels, parseLMStudioModel } from "../lmstudio"
-import { ModelInfo, lMStudioDefaultModelInfo } from "@roo-code/types" // ModelInfo is a type
 
 // Mock axios
 vi.mock("axios")
@@ -59,7 +60,6 @@ describe("LMStudio Fetcher", () => {
 				contextWindow: rawModel.contextLength,
 				supportsPromptCache: true,
 				supportsImages: rawModel.vision,
-				supportsComputerUse: false,
 				maxTokens: rawModel.contextLength,
 				inputPrice: 0,
 				outputPrice: 0,

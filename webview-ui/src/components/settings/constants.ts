@@ -7,23 +7,24 @@ import {
 	claudeCodeModels,
 	deepSeekModels,
 	moonshotModels,
-	geminiModels,
 	// kilocode_change start
+	// geminiModels,
 	geminiCliModels,
-	qwenCodeModels,
+	syntheticModels,
 	// kilocode_change end
 	mistralModels,
 	openAiNativeModels,
+	qwenCodeModels,
 	vertexModels,
 	xaiModels,
 	groqModels,
-	chutesModels,
 	sambaNovaModels,
 	doubaoModels,
 	internationalZAiModels,
 	fireworksModels,
 	rooModels,
 	featherlessModels,
+	minimaxModels,
 } from "@roo-code/types"
 
 export const MODELS_BY_PROVIDER: Partial<Record<ProviderName, Record<string, ModelInfo>>> = {
@@ -34,42 +35,48 @@ export const MODELS_BY_PROVIDER: Partial<Record<ProviderName, Record<string, Mod
 	deepseek: deepSeekModels,
 	doubao: doubaoModels,
 	moonshot: moonshotModels,
-	gemini: geminiModels,
 	// kilocode_change start
+	// gemini: geminiModels,
 	"gemini-cli": geminiCliModels,
-	"qwen-code": qwenCodeModels,
+	synthetic: syntheticModels,
 	// kilocode_change end
 	mistral: mistralModels,
 	"openai-native": openAiNativeModels,
+	"qwen-code": qwenCodeModels,
 	vertex: vertexModels,
 	xai: xaiModels,
 	groq: groqModels,
-	chutes: chutesModels,
+	// chutes: chutesModels, // kilocode_change
 	sambanova: sambaNovaModels,
 	zai: internationalZAiModels,
 	fireworks: fireworksModels,
 	roo: rooModels,
 	featherless: featherlessModels,
+	minimax: minimaxModels,
 }
 
 export const PROVIDERS = [
 	{ value: "shengsuanyun", label: "胜算云" },
 	// { value: "kilocode", label: "Kilo Code" },
 	{ value: "openrouter", label: "OpenRouter" },
+	{ value: "deepinfra", label: "DeepInfra" },
 	{ value: "anthropic", label: "Anthropic" },
 	{ value: "claude-code", label: "Claude Code" },
 	{ value: "cerebras", label: "Cerebras" },
 	{ value: "gemini", label: "Google Gemini" },
 	{ value: "doubao", label: "Doubao" },
 	// kilocode_change start
+	{ value: "inception", label: "Inception" },
 	{ value: "gemini-cli", label: "Gemini CLI" },
 	{ value: "virtual-quota-fallback", label: "Virtual Quota Fallback" },
-	{ value: "qwen-code", label: "Qwen Code" },
+	{ value: "synthetic", label: "Synthetic" },
+	{ value: "ovhcloud", label: "OVHcloud AI Endpoints" },
 	// kilocode_change end
 	{ value: "deepseek", label: "DeepSeek" },
 	{ value: "moonshot", label: "Moonshot" },
 	{ value: "openai-native", label: "OpenAI" },
 	{ value: "openai", label: "OpenAI Compatible" },
+	{ value: "qwen-code", label: "Qwen Code" },
 	{ value: "vertex", label: "GCP Vertex AI" },
 	{ value: "bedrock", label: "Amazon Bedrock" },
 	{ value: "glama", label: "Glama" },
@@ -91,9 +98,8 @@ export const PROVIDERS = [
 	{ value: "featherless", label: "Featherless AI" },
 	{ value: "io-intelligence", label: "IO Intelligence" },
 	// kilocode_change start
-	{ value: "deepinfra", label: "Deep Infra" },
 	// { value: "roo", label: "Roo Code Cloud" },
 	// kilocode_change end
-] //.sort((a, b) => a.label.localeCompare(b.label))
-
-// PROVIDERS.unshift({ value: "kilocode", label: "Kilo Code" }) // kilocode_change
+	{ value: "vercel-ai-gateway", label: "Vercel AI Gateway" },
+	{ value: "minimax", label: "MiniMax" },
+].sort((a, b) => a.label.localeCompare(b.label))

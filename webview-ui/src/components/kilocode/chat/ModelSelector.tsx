@@ -13,9 +13,15 @@ interface ModelSelectorProps {
 	currentApiConfigName?: string
 	apiConfiguration: ProviderSettings
 	fallbackText: string
+	virtualQuotaActiveModel?: { id: string; name: string } // kilocode_change: Add virtual quota active model for UI display
 }
 
-export const ModelSelector = ({ currentApiConfigName, apiConfiguration, fallbackText }: ModelSelectorProps) => {
+export const ModelSelector = ({
+	currentApiConfigName,
+	apiConfiguration,
+	fallbackText,
+	virtualQuotaActiveModel, //kilocode_change
+}: ModelSelectorProps) => {
 	const { t } = useAppTranslation()
 	const { provider, providerModels, providerDefaultModel, isLoading, isError } = useProviderModels(apiConfiguration)
 	const selectedModelId = getSelectedModelId({
@@ -26,15 +32,14 @@ export const ModelSelector = ({ currentApiConfigName, apiConfiguration, fallback
 	const modelIdKey = getModelIdKey({ provider })
 
 	const modelsIds = usePreferredModels(providerModels)
-	const options = useMemo(
-		() =>
-			modelsIds.map((modelId) => ({
-				value: modelId,
-				label: prettyModelName(modelId),
-				type: DropdownOptionType.ITEM,
-			})),
-		[modelsIds],
-	)
+	const options = useMemo(() => {
+		const missingModelIds = modelsIds.indexOf(selectedModelId) >= 0 ? [] : [selectedModelId]
+		return missingModelIds.concat(modelsIds).map((modelId) => ({
+			value: modelId,
+			label: providerModels[modelId]?.displayName ?? prettyModelName(modelId),
+			type: DropdownOptionType.ITEM,
+		}))
+	}, [modelsIds, providerModels, selectedModelId])
 
 	const disabled = isLoading || isError
 
@@ -62,18 +67,23 @@ export const ModelSelector = ({ currentApiConfigName, apiConfiguration, fallback
 		return null
 	}
 
+	// kilocode_change start: Display active model for virtual quota fallback
+	if (provider === "virtual-quota-fallback" && virtualQuotaActiveModel) {
+		return (
+			<span className="text-xs text-vscode-descriptionForeground opacity-70 truncate">
+				{prettyModelName(virtualQuotaActiveModel.id)}
+			</span>
+		)
+	}
+	// kilocode_change end
+
 	if (isError || options.length <= 0) {
 		return <span className="text-xs text-vscode-descriptionForeground opacity-70 truncate">{fallbackText}</span>
 	}
 
-	const selectedModelNoLongerExistsButDefaultDoes =
-		modelsIds.indexOf(selectedModelId) < 0 && modelsIds.indexOf(providerDefaultModel) >= 0
-
-	const currentValue = selectedModelNoLongerExistsButDefaultDoes ? providerDefaultModel : selectedModelId
-
 	return (
 		<SelectDropdown
-			value={currentValue}
+			value={selectedModelId}
 			disabled={disabled}
 			title={t("chat:selectApiConfig")}
 			options={options}

@@ -12,7 +12,8 @@ try {
 	console.warn("Failed to load environment variables:", e)
 }
 
-import { CloudService, ExtensionBridgeService } from "@roo-code/cloud"
+import type { CloudUserInfo, AuthState } from "@roo-code/types"
+import { CloudService, BridgeOrchestrator } from "@roo-code/cloud"
 import { TelemetryService, PostHogTelemetryClient } from "@roo-code/telemetry"
 
 import "./utils/path" // Necessary to have access to String.prototype.toPosix.
@@ -31,7 +32,6 @@ import { MdmService } from "./services/mdm/MdmService"
 import { migrateSettings } from "./utils/migrateSettings"
 import { checkAndRunAutoLaunchingTask as checkAndRunAutoLaunchingTask } from "./utils/autoLaunchingTask"
 import { autoImportSettings } from "./utils/autoImportSettings"
-import { isRemoteControlEnabled } from "./utils/remoteControl"
 import { API } from "./extension/api"
 
 import {
@@ -43,7 +43,12 @@ import {
 } from "./activate"
 import { initializeI18n } from "./i18n"
 import { registerGhostProvider } from "./services/ghost" // kilocode_change
-import { TerminalWelcomeService } from "./services/terminal-welcome/TerminalWelcomeService" // kilocode_change
+import { registerMainThreadForwardingLogger } from "./utils/fowardingLogger" // kilocode_change
+import { getKiloCodeWrapperProperties } from "./core/kilocode/wrapper" // kilocode_change
+import { flushModels, getModels } from "./api/providers/fetchers/modelCache"
+import { ManagedIndexer } from "./services/code-index/managed/ManagedIndexer" // kilocode_change
+import { updateCodeIndexWithKiloProps } from "./services/code-index/managed/webview" // kilocode_change
+import { getCommand } from "./utils/commands"
 
 /**
  * Built using https://github.com/microsoft/vscode-webview-ui-toolkit
@@ -55,6 +60,11 @@ import { TerminalWelcomeService } from "./services/terminal-welcome/TerminalWelc
 
 let outputChannel: vscode.OutputChannel
 let extensionContext: vscode.ExtensionContext
+let cloudService: CloudService | undefined
+
+let authStateChangedHandler: ((data: { state: AuthState; previousState: AuthState }) => Promise<void>) | undefined
+let settingsUpdatedHandler: (() => void) | undefined
+let userInfoHandler: ((data: { userInfo: CloudUserInfo }) => Promise<void>) | undefined
 
 // This method is called when your extension is activated.
 // Your extension is activated the very first time the command is executed.
@@ -72,7 +82,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	try {
 		telemetryService.register(new PostHogTelemetryClient())
 	} catch (error) {
-		console.warn("Failed to register PostHogTelemetryClient:", error)
+		console.warn("Failed to register PostHogTelemetryClient:", error.message)
 	}
 
 	// Create logger for cloud services.
@@ -121,35 +131,122 @@ export async function activate(context: vscode.ExtensionContext) {
 		context.globalState.update("allowedCommands", defaultCommands)
 	}
 
-	// kilocode_change start
-	if (!context.globalState.get("firstInstallCompleted")) {
-		await context.globalState.update("telemetrySetting", "enabled")
-	}
+	const contextProxy = await ContextProxy.getInstance(context)
+	// kilocode_change start: Initialize ManagedIndexer
+	const managedIndexer = new ManagedIndexer(contextProxy)
+	context.subscriptions.push(managedIndexer)
 	// kilocode_change end
 
-	const contextProxy = await ContextProxy.getInstance(context)
-
-	// Initialize code index managers for all workspace folders
+	// Initialize code index managers for all workspace folders.
 	const codeIndexManagers: CodeIndexManager[] = []
+
 	if (vscode.workspace.workspaceFolders) {
 		for (const folder of vscode.workspace.workspaceFolders) {
 			const manager = CodeIndexManager.getInstance(context, folder.uri.fsPath)
+
 			if (manager) {
 				codeIndexManagers.push(manager)
-				try {
-					await manager.initialize(contextProxy)
-				} catch (error) {
+
+				// Initialize in background; do not block extension activation
+				void manager.initialize(contextProxy).catch((error) => {
+					const message = error instanceof Error ? error.message : String(error)
 					outputChannel.appendLine(
-						`[CodeIndexManager] Error during background CodeIndexManager configuration/indexing for ${folder.uri.fsPath}: ${error.message || error}`,
+						`[CodeIndexManager] Error during background CodeIndexManager configuration/indexing for ${folder.uri.fsPath}: ${message}`,
 					)
-				}
+				})
+
 				context.subscriptions.push(manager)
 			}
 		}
 	}
 
+	// Initialize the provider *before* the Roo Code Cloud service.
+	const provider = new ClineProvider(context, outputChannel, "sidebar", contextProxy, mdmService)
+	// const initManagedCodeIndexing = updateCodeIndexWithKiloProps(provider) // kilocode_change
+
 	// Initialize Roo Code Cloud service.
-	const cloudService = await CloudService.createInstance(context, cloudLogger)
+	const postStateListener = () => ClineProvider.getVisibleInstance()?.postStateToWebview()
+
+	authStateChangedHandler = async (data: { state: AuthState; previousState: AuthState }) => {
+		postStateListener()
+
+		if (data.state === "logged-out") {
+			try {
+				await provider.remoteControlEnabled(false)
+			} catch (error) {
+				cloudLogger(
+					`[authStateChangedHandler] remoteControlEnabled(false) failed: ${error instanceof Error ? error.message : String(error)}`,
+				)
+			}
+		}
+
+		// Handle Roo models cache based on auth state
+		const handleRooModelsCache = async () => {
+			try {
+				await flushModels("roo")
+
+				if (data.state === "active-session") {
+					// Reload models with the new auth token
+					const sessionToken = cloudService?.authService?.getSessionToken()
+					await getModels({
+						provider: "roo",
+						baseUrl: process.env.ROO_CODE_PROVIDER_URL ?? "https://api.roocode.com/proxy",
+						apiKey: sessionToken,
+					})
+					cloudLogger(`[authStateChangedHandler] Reloaded Roo models cache for active session`)
+				} else {
+					cloudLogger(`[authStateChangedHandler] Flushed Roo models cache on logout`)
+				}
+			} catch (error) {
+				cloudLogger(
+					`[authStateChangedHandler] Failed to handle Roo models cache: ${error instanceof Error ? error.message : String(error)}`,
+				)
+			}
+		}
+
+		if (data.state === "active-session" || data.state === "logged-out") {
+			// kilocode_change: await handleRooModelsCache()
+		}
+	}
+
+	settingsUpdatedHandler = async () => {
+		const userInfo = CloudService.instance.getUserInfo()
+
+		if (userInfo && CloudService.instance.cloudAPI) {
+			try {
+				provider.remoteControlEnabled(CloudService.instance.isTaskSyncEnabled())
+			} catch (error) {
+				cloudLogger(
+					`[settingsUpdatedHandler] remoteControlEnabled failed: ${error instanceof Error ? error.message : String(error)}`,
+				)
+			}
+		}
+
+		postStateListener()
+	}
+
+	userInfoHandler = async ({ userInfo }: { userInfo: CloudUserInfo }) => {
+		postStateListener()
+
+		if (!CloudService.instance.cloudAPI) {
+			cloudLogger("[userInfoHandler] CloudAPI is not initialized")
+			return
+		}
+
+		try {
+			provider.remoteControlEnabled(CloudService.instance.isTaskSyncEnabled())
+		} catch (error) {
+			cloudLogger(
+				`[userInfoHandler] remoteControlEnabled failed: ${error instanceof Error ? error.message : String(error)}`,
+			)
+		}
+	}
+
+	cloudService = await CloudService.createInstance(context, cloudLogger, {
+		"auth-state-changed": authStateChangedHandler,
+		"settings-updated": settingsUpdatedHandler,
+		"user-info": userInfoHandler,
+	})
 
 	try {
 		if (cloudService.telemetryClient) {
@@ -161,33 +258,19 @@ export async function activate(context: vscode.ExtensionContext) {
 		)
 	}
 
-	const postStateListener = () => ClineProvider.getVisibleInstance()?.postStateToWebview()
-
-	cloudService.on("auth-state-changed", postStateListener)
-	cloudService.on("settings-updated", postStateListener)
-
-	cloudService.on("user-info", async ({ userInfo }) => {
-		postStateListener()
-
-		const bridgeConfig = await cloudService.cloudAPI?.bridgeConfig().catch(() => undefined)
-
-		if (!bridgeConfig) {
-			outputChannel.appendLine("[CloudService] Failed to get bridge config")
-			return
-		}
-
-		ExtensionBridgeService.handleRemoteControlState(
-			userInfo,
-			contextProxy.getValue("remoteControlEnabled"),
-			{ ...bridgeConfig, provider: provider as any, sessionId: vscode.env.sessionId },
-			(message: string) => outputChannel.appendLine(message),
-		)
-	})
-
 	// Add to subscriptions for proper cleanup on deactivate.
 	context.subscriptions.push(cloudService)
 
-	const provider = new ClineProvider(context, outputChannel, "sidebar", contextProxy, mdmService)
+	// Trigger initial cloud profile sync now that CloudService is ready.
+	try {
+		await provider.initializeCloudProfileSyncWhenReady()
+	} catch (error) {
+		outputChannel.appendLine(
+			`[CloudService] Failed to initialize cloud profile sync: ${error instanceof Error ? error.message : String(error)}`,
+		)
+	}
+
+	// Finish initializing the provider.
 	TelemetryService.instance.setProvider(provider)
 
 	context.subscriptions.push(
@@ -208,6 +291,15 @@ export async function activate(context: vscode.ExtensionContext) {
 				"shengsuan-cloud.kilo-ssy#kiloSSYCodeAgent",
 				false,
 			)
+
+			// Enable autocomplete by default for new installs
+			const currentGhostSettings = contextProxy.getValue("ghostServiceSettings")
+			await contextProxy.setValue("ghostServiceSettings", {
+				...currentGhostSettings,
+				enableAutoTrigger: true,
+				enableQuickInlineTaskKeybinding: true,
+				enableSmartInlineTaskKeybinding: true,
+			})
 		} catch (error) {
 			outputChannel.appendLine(`Error during first-time setup: ${error.message}`)
 		} finally {
@@ -266,8 +358,18 @@ export async function activate(context: vscode.ExtensionContext) {
 		}),
 	)
 
-	registerGhostProvider(context, provider) // kilocode_change
+	// kilocode_change start - Kilo Code specific registrations
+	const { kiloCodeWrapped } = getKiloCodeWrapperProperties()
+	if (!kiloCodeWrapped) {
+		// Only use autocomplete in VS Code
+		registerGhostProvider(context, provider)
+	} else {
+		// Only foward logs in Jetbrains
+		registerMainThreadForwardingLogger(context)
+	}
 	registerCommitMessageProvider(context, outputChannel) // kilocode_change
+	// kilocode_change end - Kilo Code specific registrations
+
 	registerCodeActions(context)
 	registerTerminalActions(context)
 
@@ -331,6 +433,12 @@ export async function activate(context: vscode.ExtensionContext) {
 	}
 
 	await checkAndRunAutoLaunchingTask(context) // kilocode_change
+	// await initManagedCodeIndexing // kilocode_change
+	void managedIndexer.start().catch((error) => {
+		outputChannel.appendLine(
+			`Failed to start ManagedIndexer: ${error instanceof Error ? error.message : String(error)}`,
+		)
+	})
 
 	return new API(outputChannel, provider, socketPath, enableLogging)
 }
@@ -339,10 +447,32 @@ export async function activate(context: vscode.ExtensionContext) {
 export async function deactivate() {
 	outputChannel.appendLine(`${Package.name} extension deactivated`)
 
-	const bridgeService = ExtensionBridgeService.getInstance()
+	if (cloudService && CloudService.hasInstance()) {
+		try {
+			if (authStateChangedHandler) {
+				CloudService.instance.off("auth-state-changed", authStateChangedHandler)
+			}
 
-	if (bridgeService) {
-		await bridgeService.disconnect()
+			if (settingsUpdatedHandler) {
+				CloudService.instance.off("settings-updated", settingsUpdatedHandler)
+			}
+
+			if (userInfoHandler) {
+				CloudService.instance.off("user-info", userInfoHandler as any)
+			}
+
+			outputChannel.appendLine("CloudService event handlers cleaned up")
+		} catch (error) {
+			outputChannel.appendLine(
+				`Failed to clean up CloudService event handlers: ${error instanceof Error ? error.message : String(error)}`,
+			)
+		}
+	}
+
+	const bridge = BridgeOrchestrator.getInstance()
+
+	if (bridge) {
+		await bridge.disconnect()
 	}
 
 	await McpServerManager.cleanup(extensionContext)

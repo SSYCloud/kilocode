@@ -16,7 +16,7 @@ export async function getRequestyModels(baseUrl?: string, apiKey?: string): Prom
 		}
 
 		const resolvedBaseUrl = toRequestyServiceUrl(baseUrl)
-		const modelsUrl = new URL("models", resolvedBaseUrl)
+		const modelsUrl = new URL("v1/models", resolvedBaseUrl)
 
 		const response = await axios.get(modelsUrl.toString(), { headers })
 		const rawModels = response.data.data
@@ -36,7 +36,6 @@ export async function getRequestyModels(baseUrl?: string, apiKey?: string): Prom
 				contextWindow: rawModel.context_window,
 				supportsPromptCache: rawModel.supports_caching,
 				supportsImages: rawModel.supports_vision,
-				supportsComputerUse: rawModel.supports_computer_use,
 				supportsReasoningBudget: reasoningBudget,
 				supportsReasoningEffort: reasoningEffort,
 				inputPrice: parseApiPrice(rawModel.input_price),

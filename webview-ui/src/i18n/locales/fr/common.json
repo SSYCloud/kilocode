@@ -67,6 +67,12 @@
 			"copyError": "Erreur lors de la copie de l'image"
 		}
 	},
+	"image": {
+		"tabs": {
+			"view": "Image"
+		},
+		"noData": "Aucune donnée d'image"
+	},
 	"file": {
 		"errors": {
 			"invalidDataUri": "Format d'URI de données invalide",
@@ -85,7 +91,13 @@
 		"deleteWarning": "Supprimer ce message supprimera tous les messages suivants dans la conversation. Voulez-vous continuer ?",
 		"editMessage": "Modifier le message",
 		"editWarning": "Modifier ce message supprimera tous les messages suivants dans la conversation. Voulez-vous continuer ?",
-		"proceed": "Continuer"
+		"editQuestionWithCheckpoint": "Modifier ce message supprimera tous les messages ultérieurs dans la conversation. Voulez-vous aussi annuler tous les changements jusqu'à ce point de contrôle ?",
+		"deleteQuestionWithCheckpoint": "Supprimer ce message supprimera tous les messages ultérieurs dans la conversation. Voulez-vous aussi annuler tous les changements jusqu'à ce point de contrôle ?",
+		"editOnly": "Non, modifier le message seulement",
+		"deleteOnly": "Non, supprimer le message seulement",
+		"restoreToCheckpoint": "Oui, restaurer le point de contrôle",
+		"proceed": "Continuer",
+		"dontShowAgain": "Ne plus afficher ceci"
 	},
 	"time_ago": {
 		"just_now": "à l'instant",
@@ -102,5 +114,9 @@
 		"months_ago": "il y a {{count}} mois",
 		"year_ago": "il y a un an",
 		"years_ago": "il y a {{count}} ans"
+	},
+	"errors": {
+		"wait_checkpoint_long_time": "Tu as attendu {{timeout}} secondes pour l'initialisation du checkpoint. Si tu n'as pas besoin de cette fonction, désactive-la dans <settingsLink>les paramètres du checkpoint</settingsLink>.",
+		"init_checkpoint_fail_long_time": "L'initialisation du checkpoint a pris plus de {{timeout}} secondes, donc les checkpoints sont désactivés pour cette tâche. Tu peux désactiver les checkpoints ou prolonger le délai dans <settingsLink>les paramètres du checkpoint</settingsLink>."
 	}
 }

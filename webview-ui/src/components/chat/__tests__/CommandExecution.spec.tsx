@@ -1,6 +1,6 @@
 import React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
-import { describe, it, expect, vi, beforeEach } from "vitest"
+
 import { CommandExecution } from "../CommandExecution"
 import { ExtensionStateContext } from "../../../context/ExtensionStateContext"
 
@@ -17,7 +17,7 @@ vi.mock("../../../utils/vscode", () => ({
 	},
 }))
 
-vi.mock("../../common/CodeBlock", () => ({
+vi.mock("../../kilocode/common/CodeBlock", () => ({
 	default: ({ source }: { source: string }) => <div data-testid="code-block">{source}</div>,
 }))
 

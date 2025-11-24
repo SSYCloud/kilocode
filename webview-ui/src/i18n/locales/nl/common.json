@@ -67,6 +67,12 @@
 			"copyError": "Fout bij kopiëren van afbeelding"
 		}
 	},
+	"image": {
+		"tabs": {
+			"view": "Afbeelding"
+		},
+		"noData": "Geen afbeeldingsgegevens"
+	},
 	"file": {
 		"errors": {
 			"invalidDataUri": "Ongeldig data-URI-formaat",
@@ -85,7 +91,13 @@
 		"deleteWarning": "Het verwijderen van dit bericht zal alle volgende berichten in het gesprek verwijderen. Wil je doorgaan?",
 		"editMessage": "Bericht Bewerken",
 		"editWarning": "Het bewerken van dit bericht zal alle volgende berichten in het gesprek verwijderen. Wil je doorgaan?",
-		"proceed": "Doorgaan"
+		"editQuestionWithCheckpoint": "Het bewerken van dit bericht zal alle latere berichten in het gesprek verwijderen. Wil je ook alle wijzigingen ongedaan maken tot dit checkpoint?",
+		"deleteQuestionWithCheckpoint": "Het verwijderen van dit bericht zal alle latere berichten in het gesprek verwijderen. Wil je ook alle wijzigingen ongedaan maken tot dit checkpoint?",
+		"editOnly": "Nee, alleen bericht bewerken",
+		"deleteOnly": "Nee, alleen bericht verwijderen",
+		"restoreToCheckpoint": "Ja, checkpoint herstellen",
+		"proceed": "Doorgaan",
+		"dontShowAgain": "Niet meer tonen"
 	},
 	"time_ago": {
 		"just_now": "zojuist",
@@ -102,5 +114,9 @@
 		"months_ago": "{{count}} maanden geleden",
 		"year_ago": "een jaar geleden",
 		"years_ago": "{{count}} jaar geleden"
+	},
+	"errors": {
+		"wait_checkpoint_long_time": "Je hebt {{timeout}} seconden gewacht op de initialisatie van de checkpoint. Als je deze functie niet nodig hebt, schakel hem dan uit in de <settingsLink>checkpoint-instellingen</settingsLink>.",
+		"init_checkpoint_fail_long_time": "De initialisatie van de checkpoint duurde meer dan {{timeout}} seconden, dus checkpoints zijn uitgeschakeld voor deze taak. Je kunt checkpoints uitschakelen of de wachttijd in de <settingsLink>checkpoint-instellingen</settingsLink> verhogen."
 	}
 }

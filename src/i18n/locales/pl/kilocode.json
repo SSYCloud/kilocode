@@ -13,10 +13,13 @@
 	},
 	"task": {
 		"noAssistantMessages": "Odpowiedź modelu zakończyła się nieoczekiwanie (brak komunikatów asystenta). To może być oznaka ograniczenia częstotliwości żądań.",
-		"notLoggedInError": "Nie można ukończyć żądania, upewnij się, że jesteś połączony i zalogowany u wybranego dostawcy.\n\n{{error}}"
+		"notLoggedInError": "Nie można ukończyć żądania, upewnij się, że jesteś połączony i zalogowany u wybranego dostawcy.\n\n{{error}}",
+		"maxCompletionTokens": "Osiągnięto maksymalną liczbę tokenów uzupełnienia.",
+		"disableApplyDiff": "Jeśli ten błąd będzie się powtarzał, wyłącz Edycję Przez Różnice w Ustawieniach Zaawansowanych.",
+		"disableEditFile": "Jeśli ten błąd będzie się powtarzał, wyłącz eksperymentalną funkcję Szybkiego Zastosowania."
 	},
 	"checkpoints": {
-		"nestedGitRepos": "Punkty kontrolne są niedostępne, ponieważ wykryto zagnieżdżone repozytoria Git w obszarze roboczym. Usuń lub przenieś zagnieżdżone repozytoria Git, aby korzystać z funkcji punktów kontrolnych, lub wyłącz punkty kontrolne w ustawieniach, aby pominąć to ostrzeżenie.",
+		"nestedGitRepos": "Punkty kontrolne są niedostępne, ponieważ wykryto zagnieżdżone repozytorium Git w: {{path}}. Usuń lub przenieś zagnieżdżone repozytoria Git, aby korzystać z funkcji punktów kontrolnych, lub wyłącz punkty kontrolne w ustawieniach, aby pominąć to ostrzeżenie.",
 		"protectedPaths": "Punkty kontrolne są niedostępne w {{workspaceDir}}. Otwórz podfolder jako obszar roboczy, aby korzystać z funkcji punktów kontrolnych, lub wyłącz punkty kontrolne w ustawieniach, aby pominąć to ostrzeżenie.",
 		"dismissWarning": "Odrzuć"
 	},
@@ -57,62 +60,40 @@
 		"generationFailed": "Kilo: Nie udało się wygenerować wiadomości commit: {{errorMessage}}",
 		"generatingFromUnstaged": "Kilo: Generowanie wiadomości przy użyciu niezatwierdzonych zmian",
 		"activationFailed": "Kilo: Nie udało się aktywować generatora wiadomości: {{error}}",
-		"providerRegistered": "Kilo: Zarejestrowano dostawcę wiadomości commit"
-	},
-	"ghost": {
-		"statusBar": {
-			"enabled": "$(sparkle) Asystent Inline Kilo",
-			"disabled": "$(circle-slash) Asystent Inline Kilo",
-			"warning": "$(warning) Asystent Inline Kilo",
-			"tooltip": {
-				"basic": "Asystent Inline Kilo Code",
-				"disabled": "Asystent Inline Kilo Code (wyłączony)",
-				"tokenError": "Musisz ustawić prawidłowy token, aby korzystać z Asystenta Inline",
-				"lastCompletion": "Ostatnia sugestia:",
-				"sessionTotal": "Całkowity koszt sesji:",
-				"model": "Model:"
-			},
-			"cost": {
-				"zero": "$0.00",
-				"lessThanCent": "<$0.01"
-			}
+		"providerRegistered": "Kilo: Zarejestrowano dostawcę wiadomości commit",
+		"errors": {
+			"noProject": "Brak dostępnego projektu",
+			"timeout": "Upłynął limit czasu żądania po 30 sekundach",
+			"connectionFailed": "Nie udało się połączyć z rozszerzeniem Kilo Code",
+			"invalidResponse": "Nieprawidłowy format odpowiedzi otrzymany z rozszerzenia",
+			"noChanges": "Nie znaleziono zmian do zatwierdzenia",
+			"missingMessage": "Nie otrzymano komunikatu zatwierdzenia z rozszerzenia",
+			"noWorkspacePath": "Nie można określić ścieżki przestrzeni roboczej dla repozytorium Git",
+			"workspaceNotFound": "Nie udało się ustalić ścieżki obszaru roboczego dla repozytorium Git",
+			"processingError": "Błąd przetwarzania generowania wiadomości commit: {{error}}"
 		},
-		"toggleMessage": "Asystent Inline Kilo {{status}}",
+		"error": {
+			"title": "Błąd",
+			"workspacePathNotFound": "Nie można określić ścieżki obszaru roboczego dla repozytorium Git",
+			"generationFailed": "Nie udało się wygenerować komunikatu commita: {{error}}",
+			"unknown": "Nieznany błąd",
+			"processingFailed": "Błąd podczas przetwarzania generowania wiadomości commita: {{error}}"
+		},
+		"dialogs": {
+			"success": "Sukces",
+			"error": "Błąd",
+			"info": "Wiadomość Commita AI",
+			"title": "Wiadomość Commita AI"
+		},
 		"progress": {
-			"title": "Kilo Code",
-			"analyzing": "Analizowanie Twojego kodu...",
-			"generating": "Generowanie sugerowanych edycji...",
-			"processing": "Przetwarzanie sugerowanych edycji...",
-			"showing": "Wyświetlanie sugerowanych edycji..."
+			"title": "Generowanie treści commita",
+			"analyzing": "Analizowanie zmian...",
+			"connecting": "Łączenie z Kilo Code...",
+			"generating": "Generowanie wiadomości do commita..."
 		},
-		"input": {
-			"title": "Kilo Code: Szybkie Zadanie",
-			"placeholder": "np. 'refaktoryzuj tę funkcję, aby była bardziej wydajna'"
-		},
-		"commands": {
-			"generateSuggestions": "Kilo Code: Generuj Sugerowane Edycje",
-			"displaySuggestions": "Wyświetl Sugerowane Edycje",
-			"cancelSuggestions": "Anuluj Sugerowane Edycje",
-			"applyCurrentSuggestion": "Zastosuj Bieżącą Sugerowaną Edycję",
-			"applyAllSuggestions": "Zastosuj Wszystkie Sugerowane Edycje",
-			"promptCodeSuggestion": "Szybkie Zadanie",
-			"category": "Kilo Code"
-		},
-		"codeAction": {
-			"title": "Kilo Code: Sugerowane Edycje"
-		},
-		"chatParticipant": {
-			"fullName": "Agent Kilo Code",
-			"name": "Agent",
-			"description": "Mogę pomóc w szybkich zadaniach i sugerowanych edycjach."
-		},
-		"messages": {
-			"provideCodeSuggestions": "Dostarczanie sugestii kodu..."
-		},
-		"incompatibilityExtensionPopup": {
-			"message": "Asystent Kilo Code Inline jest blokowany przez konflikt z GitHub Copilot. Aby to naprawić, musisz wyłączyć sugestie inline Copilota.",
-			"disableCopilot": "Wyłącz Copilota",
-			"disableInlineAssist": "Wyłącz Asystenta Inline"
+		"ui": {
+			"generateButton": "Generuj Treść Commitu",
+			"generateButtonTooltip": "Generuje komunikaty commitów za pomocą AI, analizując zmiany w twoim kodzie"
 		}
 	},
 	"seeNewChanges": {
@@ -120,6 +101,59 @@
 		"checkpointsUnavailable": "Nie można wyświetlić nowych zmian, punkty kontrolne są niedostępne.",
 		"noChanges": "Nie można wyświetlić nowych zmian, nie znaleziono żadnych zmian.",
 		"error": "Nie można wyświetlić nowych zmian, wystąpił błąd."
+	},
+	"ghost": {
+		"statusBar": {
+			"enabled": "$(sparkle) Kilo Code Autocomplete",
+			"disabled": "$(circle-slash) Kilo Code Autocomplete",
+			"warning": "$(warning) Kilo Code Autocomplete",
+			"tooltip": {
+				"basic": "Kilo Code Autocomplete",
+				"disabled": "Kilo Code Autocomplete (wyłączone)",
+				"tokenError": "Aby używać Autocomplete, musi być ustawiony ważny token",
+				"lastCompletion": "Ostatnia sugestia:",
+				"sessionTotal": "Całkowity koszt sesji:",
+				"provider": "Dostawca:",
+				"model": "Model:"
+			},
+			"cost": {
+				"zero": "$0.00",
+				"lessThanCent": "<$0.01"
+			}
+		},
+		"toggleMessage": "Kilo Code Autocomplete {{status}}",
+		"progress": {
+			"title": "Kilo Code",
+			"analyzing": "Analizuję twój kod...",
+			"generating": "Generuję sugerowane edycje...",
+			"processing": "Przetwarzam sugerowane edycje...",
+			"showing": "Wyświetlam sugerowane edycje..."
+		},
+		"input": {
+			"title": "Kilo Code: Szybkie Zadanie",
+			"placeholder": "np. 'zrefaktoruj tę funkcję, aby była bardziej wydajna'"
+		},
+		"commands": {
+			"generateSuggestions": "Kilo Code: Generuj Sugerowane Edycje",
+			"displaySuggestions": "Wyświetl Sugerowane Edycje",
+			"cancelSuggestions": "Anuluj Sugerowane Edycje",
+			"applyCurrentSuggestion": "Zastosuj Bieżącą Sugerowaną Edycję",
+			"applyAllSuggestions": "Zastosuj Wszystkie Sugerowane Edycje",
+			"category": "Kilo Code"
+		},
+		"codeAction": {
+			"title": "Kilo Code: Sugerowane Edycje"
+		},
+		"chatParticipant": {
+			"fullName": "Kilo Code Agent",
+			"name": "Agent",
+			"description": "Mogę pomóc ci w szybkich zadaniach i sugerowanych edycjach."
+		},
+		"incompatibilityExtensionPopup": {
+			"message": "Kilo Code Autocomplete jest blokowane przez konflikt z GitHub Copilot. Aby to naprawić, musisz wyłączyć sugestie inline Copilot.",
+			"disableCopilot": "Wyłącz Copilot",
+			"disableInlineAssist": "Wyłącz Autocomplete"
+		}
 	},
 	"terminalCommandGenerator": {
 		"inputPrompt": "Kilo: Opisz polecenie, które chcesz wygenerować",

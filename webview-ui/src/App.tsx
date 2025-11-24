@@ -22,16 +22,19 @@ import BottomControls from "./components/kilocode/BottomControls" // kilocode_ch
 import Profile from "./components/kilocode/profile/Profile"
 // import { AccountView } from "./components/account/AccountView" // kilocode_change: we have our own profile view
 import { MemoryService } from "./services/MemoryService" // kilocode_change
+import { CheckpointRestoreDialog } from "./components/chat/CheckpointRestoreDialog"
 import { DeleteMessageDialog, EditMessageDialog } from "./components/chat/MessageModificationConfirmationDialog"
 import ErrorBoundary from "./components/ErrorBoundary"
 // import { AccountView } from "./components/account/AccountView" // kilocode_change: we have our own profile view
+// import { CloudView } from "./components/cloud/CloudView" // kilocode_change: not rendering this
 import { useAddNonInteractiveClickListener } from "./components/ui/hooks/useNonInteractiveClick"
 import { TooltipProvider } from "./components/ui/tooltip"
 import { STANDARD_TOOLTIP_DELAY } from "./components/ui/standard-tooltip"
 import { useKiloIdentity } from "./utils/kilocode/useKiloIdentity"
 import WelcomeView from "./components/welcome/WelcomeView"
+import { MemoryWarningBanner } from "./kilocode/MemoryWarningBanner"
 
-type Tab = "settings" | "history" | "mcp" | "modes" | "chat" | "marketplace" | "account" | "profile" // kilocode_change: add "profile"
+type Tab = "settings" | "history" | "mcp" | "modes" | "chat" | "marketplace" | "account" | "cloud" | "profile" // kilocode_change: add "profile"
 
 interface HumanRelayDialogState {
 	isOpen: boolean
@@ -42,18 +45,21 @@ interface HumanRelayDialogState {
 interface DeleteMessageDialogState {
 	isOpen: boolean
 	messageTs: number
+	hasCheckpoint: boolean
 }
 
 interface EditMessageDialogState {
 	isOpen: boolean
 	messageTs: number
 	text: string
+	hasCheckpoint: boolean
 	images?: string[]
 }
 
 // Memoize dialog components to prevent unnecessary re-renders
 const MemoizedDeleteMessageDialog = React.memo(DeleteMessageDialog)
 const MemoizedEditMessageDialog = React.memo(EditMessageDialog)
+const MemoizedCheckpointRestoreDialog = React.memo(CheckpointRestoreDialog)
 const MemoizedHumanRelayDialog = React.memo(HumanRelayDialog)
 
 const tabsByMessageAction: Partial<Record<NonNullable<ExtensionMessage["action"]>, Tab>> = {
@@ -63,8 +69,7 @@ const tabsByMessageAction: Partial<Record<NonNullable<ExtensionMessage["action"]
 	historyButtonClicked: "history",
 	profileButtonClicked: "profile",
 	marketplaceButtonClicked: "marketplace",
-	accountButtonClicked: "account",
-	mcpButtonClicked: "mcp",
+	// cloudButtonClicked: "cloud", // kilocode_change: no cloud
 }
 
 const App = () => {
@@ -75,8 +80,12 @@ const App = () => {
 		telemetrySetting,
 		telemetryKey,
 		machineId,
-		// cloudUserInfo, // kilocode_change not used
-		// cloudIsAuthenticated, // kilocode_change not used
+		// kilocode_change start: unused
+		// cloudUserInfo,
+		// cloudIsAuthenticated,
+		// cloudApiUrl,
+		// cloudOrganizations,
+		// kilocode_change end
 		renderContext,
 		mdmCompliant,
 		apiConfiguration, // kilocode_change
@@ -97,12 +106,14 @@ const App = () => {
 	const [deleteMessageDialogState, setDeleteMessageDialogState] = useState<DeleteMessageDialogState>({
 		isOpen: false,
 		messageTs: 0,
+		hasCheckpoint: false,
 	})
 
 	const [editMessageDialogState, setEditMessageDialogState] = useState<EditMessageDialogState>({
 		isOpen: false,
 		messageTs: 0,
 		text: "",
+		hasCheckpoint: false,
 		images: [],
 	})
 
@@ -113,7 +124,7 @@ const App = () => {
 		(newTab: Tab) => {
 			// Only check MDM compliance if mdmCompliant is explicitly false (meaning there's an MDM policy and user is non-compliant)
 			// If mdmCompliant is undefined or true, allow tab switching
-			if (mdmCompliant === false && newTab !== "account") {
+			if (mdmCompliant === false && newTab !== "cloud") {
 				// Notify the user that authentication is required by their organization
 				vscode.postMessage({ type: "showMdmAuthRequiredNotification" })
 				return
@@ -150,7 +161,10 @@ const App = () => {
 				if (message.action === "switchTab" && message.tab) {
 					const targetTab = message.tab as Tab
 					switchTab(targetTab)
-					setCurrentSection(undefined)
+					// Extract targetSection from values if provided
+					const targetSection = message.values?.section as string | undefined
+					setCurrentSection(targetSection)
+					// setCurrentMarketplaceTab(undefined)
 				} else {
 					// Handle other actions using the mapping
 					const newTab = tabsByMessageAction[message.action]
@@ -169,7 +183,11 @@ const App = () => {
 			}
 
 			if (message.type === "showDeleteMessageDialog" && message.messageTs) {
-				setDeleteMessageDialogState({ isOpen: true, messageTs: message.messageTs })
+				setDeleteMessageDialogState({
+					isOpen: true,
+					messageTs: message.messageTs,
+					hasCheckpoint: message.hasCheckpoint || false,
+				})
 			}
 
 			if (message.type === "showEditMessageDialog" && message.messageTs && message.text) {
@@ -177,6 +195,7 @@ const App = () => {
 					isOpen: true,
 					messageTs: message.messageTs,
 					text: message.text,
+					hasCheckpoint: message.hasCheckpoint || false,
 					images: message.images || [],
 				})
 			}
@@ -192,11 +211,11 @@ const App = () => {
 	useEvent("message", onMessage)
 
 	useEffect(() => {
-		if (shouldShowAnnouncement) {
+		if (shouldShowAnnouncement && tab === "chat") {
 			setShowAnnouncement(true)
 			vscode.postMessage({ type: "didShowAnnouncement" })
 		}
-	}, [shouldShowAnnouncement])
+	}, [shouldShowAnnouncement, tab])
 
 	// kilocode_change start
 	const telemetryDistinctId = useKiloIdentity(apiConfiguration?.kilocodeToken ?? "", machineId ?? "")
@@ -256,6 +275,8 @@ const App = () => {
 		<WelcomeView />
 	) : (
 		<>
+			{/* kilocode_change: add MemoryWarningBanner */}
+			<MemoryWarningBanner />
 			{tab === "modes" && <ModesView onDone={() => switchTab("chat")} />}
 			{tab === "mcp" && <McpView onDone={() => switchTab("chat")} />}
 			{tab === "history" && <HistoryView onDone={() => switchTab("chat")} />}
@@ -272,6 +293,16 @@ const App = () => {
 					targetTab="mode"
 				/>
 			)}
+			{/* kilocode_change: no cloud view */}
+			{/* {tab === "cloud" && (
+				<CloudView
+					userInfo={cloudUserInfo}
+					isAuthenticated={cloudIsAuthenticated}
+					cloudApiUrl={cloudApiUrl}
+					organizations={cloudOrganizations}
+					onDone={() => switchTab("chat")}
+				/>
+			)} */}
 			{/* kilocode_change: we have our own profile view */}
 			{/* {tab === "account" && (
 				<AccountView userInfo={cloudUserInfo} isAuthenticated={false} onDone={() => switchTab("chat")} />
@@ -290,30 +321,65 @@ const App = () => {
 				onSubmit={(requestId, text) => vscode.postMessage({ type: "humanRelayResponse", requestId, text })}
 				onCancel={(requestId) => vscode.postMessage({ type: "humanRelayCancel", requestId })}
 			/>
-			<MemoizedDeleteMessageDialog
-				open={deleteMessageDialogState.isOpen}
-				onOpenChange={(open) => setDeleteMessageDialogState((prev) => ({ ...prev, isOpen: open }))}
-				onConfirm={() => {
-					vscode.postMessage({
-						type: "deleteMessageConfirm",
-						messageTs: deleteMessageDialogState.messageTs,
-					})
-					setDeleteMessageDialogState((prev) => ({ ...prev, isOpen: false }))
-				}}
-			/>
-			<MemoizedEditMessageDialog
-				open={editMessageDialogState.isOpen}
-				onOpenChange={(open) => setEditMessageDialogState((prev) => ({ ...prev, isOpen: open }))}
-				onConfirm={() => {
-					vscode.postMessage({
-						type: "editMessageConfirm",
-						messageTs: editMessageDialogState.messageTs,
-						text: editMessageDialogState.text,
-						images: editMessageDialogState.images,
-					})
-					setEditMessageDialogState((prev) => ({ ...prev, isOpen: false }))
-				}}
-			/>
+			{deleteMessageDialogState.hasCheckpoint ? (
+				<MemoizedCheckpointRestoreDialog
+					open={deleteMessageDialogState.isOpen}
+					type="delete"
+					hasCheckpoint={deleteMessageDialogState.hasCheckpoint}
+					onOpenChange={(open: boolean) => setDeleteMessageDialogState((prev) => ({ ...prev, isOpen: open }))}
+					onConfirm={(restoreCheckpoint: boolean) => {
+						vscode.postMessage({
+							type: "deleteMessageConfirm",
+							messageTs: deleteMessageDialogState.messageTs,
+							restoreCheckpoint,
+						})
+						setDeleteMessageDialogState((prev) => ({ ...prev, isOpen: false }))
+					}}
+				/>
+			) : (
+				<MemoizedDeleteMessageDialog
+					open={deleteMessageDialogState.isOpen}
+					onOpenChange={(open: boolean) => setDeleteMessageDialogState((prev) => ({ ...prev, isOpen: open }))}
+					onConfirm={() => {
+						vscode.postMessage({
+							type: "deleteMessageConfirm",
+							messageTs: deleteMessageDialogState.messageTs,
+						})
+						setDeleteMessageDialogState((prev) => ({ ...prev, isOpen: false }))
+					}}
+				/>
+			)}
+			{editMessageDialogState.hasCheckpoint ? (
+				<MemoizedCheckpointRestoreDialog
+					open={editMessageDialogState.isOpen}
+					type="edit"
+					hasCheckpoint={editMessageDialogState.hasCheckpoint}
+					onOpenChange={(open: boolean) => setEditMessageDialogState((prev) => ({ ...prev, isOpen: open }))}
+					onConfirm={(restoreCheckpoint: boolean) => {
+						vscode.postMessage({
+							type: "editMessageConfirm",
+							messageTs: editMessageDialogState.messageTs,
+							text: editMessageDialogState.text,
+							restoreCheckpoint,
+						})
+						setEditMessageDialogState((prev) => ({ ...prev, isOpen: false }))
+					}}
+				/>
+			) : (
+				<MemoizedEditMessageDialog
+					open={editMessageDialogState.isOpen}
+					onOpenChange={(open: boolean) => setEditMessageDialogState((prev) => ({ ...prev, isOpen: open }))}
+					onConfirm={() => {
+						vscode.postMessage({
+							type: "editMessageConfirm",
+							messageTs: editMessageDialogState.messageTs,
+							text: editMessageDialogState.text,
+							images: editMessageDialogState.images,
+						})
+						setEditMessageDialogState((prev) => ({ ...prev, isOpen: false }))
+					}}
+				/>
+			)}
 			{/* kilocode_change */}
 			{/* Chat, modes and history view contain their own bottom controls */}
 			{!["chat", "modes", "history"].includes(tab) && (

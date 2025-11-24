@@ -2,8 +2,8 @@
 	"welcome": {
 		"greeting": "Benvingut a Kilo Code!",
 		"introText1": "Kilo Code és un agent de codificació d'IA gratuït i de codi obert.",
-		"introText2": "Funciona amb els models d'IA més recents com Claude 4 Sonnet, Gemini 2.5 Pro, GPT-4.1, i més de 450 més.",
-		"introText3": "Crea un compte gratuït i obtén fins a $25 en tokens per utilitzar en qualsevol model d'IA.",
+		"introText2": "Funciona amb els models d'IA més recents com Claude Sonnet 4.5, Gemini 2.5 Pro, GPT-5, i més de 450 més.",
+		"introText3": "Crea un compte gratuït i obtén $20 en crèdits de bonificació quan recarreguis per primera vegada.",
 		"ctaButton": "Comença",
 		"manualModeButton": "Utilitza la teva pròpia clau API",
 		"alreadySignedUp": "Ja t'has registrat?",
@@ -11,15 +11,18 @@
 	},
 	"lowCreditWarning": {
 		"addCredit": "Afegir crèdit",
-		"lowBalance": "El teu saldo de Kilo Code és baix"
+		"lowBalance": "El teu saldo de Kilo Code és baix",
+		"newOrganization": "Utilitzes Kilo per a la feina?"
+	},
+	"pagination": {
+		"previous": "Anterior",
+		"next": "Següent",
+		"page": "Pàgina {{page}} / {{count}}"
 	},
 	"pricing": {
 		"costUnknown": "cost desconegut",
 		"costUnknownDescription": "El proveïdor de l'API no va proporcionar cap dada de cost o la sol·licitud va ser cancel·lada.",
-		"freeModelsDescription": "Els models gratuïts poden tenir límits de velocitat. Utilitza l'enllaç de sota per optimitzar l'ús dels models gratuïts!",
-		"freeModelsLink": "Descobreix les opcions de models gratuïts i econòmics",
-		"openRouterMarkup": "El proveïdor de Kilo Code ShengSuanYun inclou tots els models d'OpenRouter, sense sobrecàrrec i amb 0% de comissió!",
-		"switchToKiloCode": "Canvia a Kilo Code ShengSuanYun"
+		"freeModelsLink": "Descobreix les opcions de models gratuïts i econòmics"
 	},
 	"notifications": {
 		"toolRequest": "Sol·licitud d'eina pendent d'aprovació",
@@ -37,7 +40,9 @@
 			"logout": "Tancar sessió de Kilo Code",
 			"automaticFetch": "Els models més recents estan disponibles automàticament a Kilo Code. Si no estàs segur de quin model triar, Kilo Code funciona millor amb els models recomanats que apareixen a la part superior en <strong>negreta</strong>.",
 			"providerRouting": {
-				"title": "Kilo Code - Encaminament de proveïdors OpenRouter",
+				"title": "Encaminament de proveïdors",
+				"managedByOrganization": "Gestionar encaminament de proveïdors a nivell d'organització",
+				"createOrganization": "Crear organització per gestionar encaminament de proveïdors",
 				"description": "Kilo Code encamina les sol·licituds als millors proveïdors disponibles per al vostre model. Per defecte, les sol·licituds es distribueixen entre els principals proveïdors per maximitzar el temps de funcionament. No obstant això, podeu triar un proveïdor específic per a aquest model.",
 				"sorting": {
 					"default": "Ordenació de proveïdors per defecte",
@@ -47,8 +52,10 @@
 				},
 				"dataCollection": {
 					"default": "No hi ha política de dades establerta",
-					"allow": "Permetre la recol·lecció de dades del proveïdor",
-					"deny": "Denegar la recol·lecció de dades del proveïdor"
+					"allowFree": "Permetre entrenament de prompts (només gratuït)",
+					"allow": "Permetre entrenament de prompts",
+					"deny": "Denegar entrenament de prompts",
+					"zdr": "Retenció zero de dades"
 				}
 			}
 		},
@@ -103,14 +110,19 @@
 			"credits": "crèdits",
 			"action": "Comprar Ara",
 			"viewAll": "Veure totes les opcions de preus"
-		}
+		},
+		"detailedUsage": "Ús detallat",
+		"createOrganization": "Crear organització per fer seguiment de l'ús detallat"
 	},
 	"chat": {
 		"condense": {
 			"wantsToCondense": "Kilo Code vol condensar la teva conversa",
 			"condenseConversation": "Condensar Conversa"
 		},
-		"seeNewChanges": "Mostrar Nous Canvis"
+		"seeNewChanges": "Mostrar Nous Canvis",
+		"revertNewChanges": "Revertir Nous Canvis",
+		"confirmRevertChanges": "Confirmar Revertir Canvis",
+		"cancelRevertChanges": "Cancel·lar Revertir Canvis"
 	},
 	"newTaskPreview": {
 		"task": "Tasca"
@@ -189,41 +201,30 @@
 		}
 	},
 	"ghost": {
-		"title": "Assistència en línia",
+		"title": "Autocomplete",
 		"settings": {
-			"autoTrigger": "Activació automàtica",
-			"enableQuickInlineTaskKeybinding": {
-				"label": "Tasca ràpida en línia",
-				"description": "Només necessites un canvi ràpid? Selecciona codi (o no!) i prem Cmd+I. Descriu el teu objectiu en llenguatge natural (\"crea un component de React amb aquestes props\", \"afegeix gestió d'errors a aquesta funció\"), i obtén múltiples suggeriments llestos per utilitzar directament al teu editor. <DocsLink>Veure drecera</DocsLink>"
-			},
-			"enableAutoInlineTaskKeybinding": {
-				"label": "Tasca automàtica en línia",
-				"description": "Necessites una solució ràpida, completar alguna cosa o refactoritzar? Kilo utilitzarà el context del voltant per oferir millores immediates, mantenint el teu flux de treball. <DocsLink>Veure drecera</DocsLink>"
-			},
+			"triggers": "Activadors",
+			"keybindingDescription": "Les funcionalitats d'Autocomplete es poden activar mitjançant ordres. Pots configurar les <DocsLink>Dreceres de Teclat aquí</DocsLink>.",
 			"enableAutoTrigger": {
-				"label": "Activar l'activació automàtica",
-				"description": "Quan està activat, Kilo Code activarà automàticament l'Assistència en línia quan deixis d'escriure. Això pot ser útil per a correccions i suggeriments ràpids."
+				"label": "Habilitar Autocomplete",
+				"description": "Quan està habilitat, Kilo Code activarà automàticament Autocomplete quan deixis d'escriure. Això pot ser útil per a correccions ràpides i suggeriments."
 			},
 			"autoTriggerDelay": {
-				"label": "Retard de l'activació automàtica",
-				"description": "El retard en segons abans que Kilo Code activi l'Assistència en línia després que deixis d'escriure. Un retard més curt significa suggeriments més ràpids, però pot consumir més recursos."
+				"label": "Retard d'Activació Automàtica",
+				"description": "El retard en segons abans que Kilo Code activi Autocomplete després que deixis d'escriure. Un retard més curt significa suggeriments més ràpids, però pot ser més intensiu en recursos."
+			},
+			"enableQuickInlineTaskKeybinding": {
+				"label": "Tasca ràpida ({{keybinding}})",
+				"description": "Només necessites un canvi ràpid? Selecciona codi (o no!) i prem Cmd+I. Descriu el teu objectiu en català simple (\"crear un component React amb aquestes props\", \"afegir gestió d'errors a aquesta funció\"), i obtén múltiples suggeriments llestos per usar directament al teu editor. <DocsLink>Veure drecera</DocsLink>"
 			},
 			"enableSmartInlineTaskKeybinding": {
-				"label": "Tasca intel·ligent en línia",
-				"description": "Necessites una correcció ràpida, completar o refactoritzar? Kilo utilitzarà el context del voltant per oferir millores immediates, mantenint-te en el flux. <DocsLink>Veure drecera</DocsLink>"
+				"label": "Autocompleció Manual ({{keybinding}})",
+				"description": "Necessites una correcció ràpida, completació o refactorització? Kilo utilitzarà el context circumdant per oferir millores immediates, mantenint-te en el flux. <DocsLink>Veure drecera</DocsLink>"
 			},
-			"enableCustomProvider": {
-				"label": "Utilitzar proveïdor personalitzat",
-				"description": "Inline Assist utilitza les teves credencials de KiloCode / OpenRouter / Mistral per utilitzar el model Codestral per defecte"
-			},
-			"provider": "Proveïdor",
-			"apiConfigId": {
-				"label": "Configuració de l'API",
-				"current": "Utilitza la configuració de l'API seleccionada actualment",
-				"description": "Selecciona una configuració de l'API per utilitzar en els prompts d'assistència en línia, o simplement utilitza la que estigui seleccionada actualment"
-			},
-			"triggers": "Activadors",
-			"keybindingDescription": "Les funcions d'Assistència en línia es desencadenen mitjançant ordres. Podeu configurar les <DocsLink>dreceres de teclat aquí</DocsLink>."
+			"keybindingNotFound": "no trobat",
+			"noModelConfigured": "No s'ha trobat cap model d'autocompletat adequat. Configura un proveïdor a la configuració de l'API.",
+			"model": "Model",
+			"provider": "Proveïdor"
 		}
 	},
 	"virtualProvider": {
@@ -236,7 +237,7 @@
 		"removeProfile": "Eliminar perfil",
 		"selectProfilePlaceholder": "Selecciona el perfil...",
 		"addProfile": "Afegir perfil",
-		"noProfilesAvailable": "No hi ha perfils de perfil disponibles. Si us plau, configureu primer almenys un perfil de proveïdor no virtual.",
+		"noProfilesAvailable": "No hi ha perfils disponibles. Si us plau, configureu primer almenys un perfil de proveïdor no virtual.",
 		"dangerZoneTitle": "Zona de Perill",
 		"dangerZoneDescription": "Aquestes accions són destructives i no es poden desfer.",
 		"clearUsageData": "Esborrar Dades d'Ús",
@@ -247,5 +248,38 @@
 		"perHour": "Per hora",
 		"requestsLabel": "Sol·licituds",
 		"tokensLabel": "Tokens"
+	},
+	"imageWarnings": {
+		"modelNoImageSupport": "Les imatges no són compatibles amb el model actual.",
+		"maxImagesReached": "Màxim de 20 imatges per missatge. Elimineu algunes imatges per afegir-ne més.",
+		"imagesRemovedNoSupport": "Imatges eliminades, no compatibles amb el model."
+	},
+	"memoryWarning": {
+		"message": "L'ús de memòria està al {{percentage}}%. Si us plau, reinicia el teu IDE per evitar fallades."
+	},
+	"toolCallStyle": {
+		"title": "Estil de Crida d'Eina",
+		"description": "Tria com es formaten les crides d'eina al prompt del sistema. JSON és actualment experimental i està principalment destinat a usuaris interessats a contribuir al seu desenvolupament.",
+		"automatic": "Deixa que Kilo decideixi",
+		"xml": "XML",
+		"json": "JSON"
+	},
+	"invalidModel": {
+		"alphaPeriodEnded": "🎉 El període alfa per a {{model}} ha finalitzat! Canvia a un model diferent per continuar.",
+		"notAllowedForTeam": "⚠️ La teva organització no permet l'ús del model {{model}}. Canvia a un model diferent per continuar.",
+		"modelUnavailable": "⚠️ El model {{model}} no està disponible. Canvia a un model diferent per continuar.",
+		"continueWith": "Continua amb {{model}}",
+		"continue": "Continua"
+	},
+	"marketplace": {
+		"modes": {
+			"description": "Aquests modes estan disponibles des de la comunitat. Feu clic <1>aquí</1> per editar els vostres propis modes personalitzats."
+		},
+		"mcp": {
+			"description": "Aquests servidors MCP són mantinguts per la comunitat. Fes clic <1>aquí</1> per editar els teus propis ajustos de MCP."
+		}
+	},
+	"modes": {
+		"shareModesNewBanner": "Nou: Comparteix modes creant una organització"
 	}
 }

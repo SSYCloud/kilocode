@@ -2,8 +2,8 @@
 	"welcome": {
 		"greeting": "Vítej v Kilo Code!",
 		"introText1": "Kilo Code je bezplatný open source AI coding agent.",
-		"introText2": "Funguje s nejnovějšími AI modely jako Claude 4 Sonnet, Gemini 2.5 Pro, GPT-4.1 a více než 450 dalšími.",
-		"introText3": "Vytvoř si bezplatný účet a získej tokeny v hodnotě až $25 pro použití s jakýmkoli AI modelem.",
+		"introText2": "Funguje s nejnovějšími AI modely jako Claude Sonnet 4.5, Gemini 2.5 Pro, GPT-5 a více než 450 dalšími.",
+		"introText3": "Vytvoř si bezplatný účet a získej $20 bonusových kreditů při prvním dobití.",
 		"ctaButton": "Začít",
 		"manualModeButton": "Použij vlastní API key",
 		"alreadySignedUp": "Už jsi registrovaný?",
@@ -11,15 +11,25 @@
 	},
 	"lowCreditWarning": {
 		"addCredit": "Přidat kredit",
-		"lowBalance": "Tvůj Kilo Code zůstatek je nízký"
+		"lowBalance": "Tvůj Kilo Code zůstatek je nízký",
+		"newOrganization": "Používáš Kilo pro práci?"
+	},
+	"pagination": {
+		"previous": "Předchozí",
+		"next": "Další",
+		"page": "Stránka {{page}} / {{count}}"
+	},
+	"invalidModel": {
+		"alphaPeriodEnded": "🎉 Alfa období pro {{model}} skončilo! Změň na jiný model pro pokračování.",
+		"notAllowedForTeam": "⚠️ Tvoje organizace nepovoluje použití modelu {{model}}. Změň na jiný model pro pokračování.",
+		"modelUnavailable": "⚠️ Model {{model}} není dostupný. Změň na jiný model pro pokračování.",
+		"continueWith": "Pokračovat s {{model}}",
+		"continue": "Pokračovat"
 	},
 	"pricing": {
 		"costUnknown": "neznámé náklady",
 		"costUnknownDescription": "Poskytovatel API neposkytl žádné údaje o nákladech nebo byl požadavek zrušen.",
-		"freeModelsDescription": "Bezplatné modely mohou mít limity na počet požadavků. Použij odkaz níže pro optimalizaci využití bezplatných modelů!",
-		"freeModelsLink": "Objevte možnosti bezplatných a rozpočtových modelů",
-		"openRouterMarkup": "Poskytovatel Kilo Code ShengSuanYun zahrnuje všechny modely OpenRouter, bez přirážky a s 0% provizí!",
-		"switchToKiloCode": "Přepnout na Kilo Code ShengSuanYun"
+		"freeModelsLink": "Objevte možnosti bezplatných a rozpočtových modelů"
 	},
 	"notifications": {
 		"toolRequest": "Požadavek na nástroj čeká na schválení",
@@ -37,7 +47,9 @@
 			"logout": "Odhlásit se z Kilo Code",
 			"automaticFetch": "Nejnovější modely jsou v Kilo Code automaticky dostupné. Pokud si nejste jisti, který model zvolit, Kilo Code funguje nejlépe s doporučenými modely uvedenými nahoře <strong>tučně</strong>.",
 			"providerRouting": {
-				"title": "Kilo Code - Směrování poskytovatelů OpenRouter",
+				"title": "Směrování poskytovatelů",
+				"managedByOrganization": "Spravovat směrování poskytovatelů na úrovni organizace",
+				"createOrganization": "Vytvořit organizaci pro správu směrování poskytovatelů",
 				"description": "Kilo Code směruje požadavky na nejlepší dostupné poskytovatele pro váš model. Ve výchozím nastavení jsou požadavky rozloženy mezi nejlepší poskytovatele, aby se maximalizovala doba provozu. Můžete si však vybrat konkrétního poskytovatele, kterého chcete pro tento model použít.",
 				"sorting": {
 					"default": "Výchozí řazení poskytovatelů",
@@ -47,8 +59,10 @@
 				},
 				"dataCollection": {
 					"default": "Není nastavena zásada dat",
-					"allow": "Povolit shromažďování dat poskytovateli",
-					"deny": "Zakázat shromažďování dat poskytovateli"
+					"allowFree": "Povolit trénování promptů (pouze zdarma)",
+					"allow": "Povolit trénování promptů",
+					"deny": "Zakázat trénování promptů",
+					"zdr": "Nulové uchovávání dat"
 				}
 			}
 		},
@@ -94,7 +108,10 @@
 			"wantsToCondense": "Kilo Code chce zkrátit tvou konverzaci",
 			"condenseConversation": "Zkrátit konverzaci"
 		},
-		"seeNewChanges": "Zobrazit nové změny"
+		"seeNewChanges": "Zobrazit nové změny",
+		"revertNewChanges": "Vrátit nové změny",
+		"confirmRevertChanges": "Potvrdit vrácení změn",
+		"cancelRevertChanges": "Zrušit vrácení změn"
 	},
 	"newTaskPreview": {
 		"task": "Úkol"
@@ -113,7 +130,9 @@
 			"credits": "kredity",
 			"action": "Koupit nyní",
 			"viewAll": "Zobrazit všechny cenové možnosti"
-		}
+		},
+		"detailedUsage": "Podrobné využití",
+		"createOrganization": "Vytvořit organizaci pro sledování podrobného využití"
 	},
 	"docs": "Dokumentace",
 	"rules": {
@@ -188,42 +207,38 @@
 			"idea7": "Vytvoř uklidňující interaktivní hvězdné pole, které se pohybuje s gesty myši"
 		}
 	},
+	"toolCallStyle": {
+		"title": "Styl volání nástrojů",
+		"description": "Vyber, jak jsou volání nástrojů formátována v systémovém promptu. JSON je momentálně experimentální a je určen především pro uživatele, kteří mají zájem přispět k jeho vývoji.",
+		"automatic": "Nech Kilo rozhodnout",
+		"xml": "XML",
+		"json": "JSON"
+	},
 	"ghost": {
-		"title": "Inline asistence",
+		"title": "Autocomplete",
 		"settings": {
-			"autoTrigger": "Automatické spuštění",
-			"enableQuickInlineTaskKeybinding": {
-				"label": "Rychlý inline úkol",
-				"description": "Potřebujete jen rychlou změnu? Vyberte nějaký kód (nebo ne!) a stiskněte Cmd+I. Popište svůj cíl běžnou češtinou (\"vytvořit React komponentu s těmito props\", \"přidat ošetření chyb do této funkce\") a získejte několik připravených návrhů přímo ve svém editoru. <DocsLink>Zobrazit zkratku</DocsLink>"
-			},
-			"enableAutoInlineTaskKeybinding": {
-				"label": "Automatický inline úkol",
-				"description": "Potřebujete rychlou opravu, doplnění nebo refaktoring? Kilo využije okolní kontext a nabídne okamžitá vylepšení, abyste neztratili tempo. <DocsLink>Zobrazit klávesovou zkratku</DocsLink>"
-			},
+			"triggers": "Spouštěče",
+			"keybindingDescription": "Funkce Autocomplete lze spustit pomocí příkazů. Můžeš nakonfigurovat <DocsLink>Klávesové Zkratky zde</DocsLink>.",
 			"enableAutoTrigger": {
-				"label": "Povolit automatické spuštění",
-				"description": "Když je povoleno, Kilo Code automaticky spustí Inline Assist, když přestaneš psát. To může být užitečné pro rychlé opravy a návrhy."
+				"label": "Povolit Autocomplete",
+				"description": "Když je povoleno, Kilo Code automaticky spustí Autocomplete, když přestaneš psát. To může být užitečné pro rychlé opravy a návrhy."
 			},
 			"autoTriggerDelay": {
-				"label": "Zpoždění automatického spuštění",
-				"description": "Zpoždění v sekundách před tím, než Kilo Code spustí Inline Assist poté, co přestaneš psát. Kratší zpoždění znamená rychlejší návrhy, ale může být náročnější na zdroje."
+				"label": "Zpoždění Automatického Spuštění",
+				"description": "Zpoždění v sekundách před tím, než Kilo Code spustí Autocomplete poté, co přestaneš psát. Kratší zpoždění znamená rychlejší návrhy, ale může být náročnější na zdroje."
+			},
+			"enableQuickInlineTaskKeybinding": {
+				"label": "Rychlý úkol ({{keybinding}})",
+				"description": "Potřebuješ jen rychlou změnu? Vyber nějaký kód (nebo ne!) a stiskni Cmd+I. Popiš svůj cíl v jednoduché češtině (\"vytvoř React komponentu s těmito props\", \"přidej zpracování chyb do této funkce\"), a získej několik připravených návrhů přímo ve svém editoru. <DocsLink>Zobrazit zkratku</DocsLink>"
 			},
 			"enableSmartInlineTaskKeybinding": {
-				"label": "Chytrý inline úkol",
-				"description": "Potřebuješ rychlou opravu, dokončení nebo refaktoring? Kilo použije okolní kontext k nabídnutí okamžitých vylepšení, což tě udrží v pracovním tempu. <DocsLink>Zobrazit zkratku</DocsLink>"
+				"label": "Ruční dokončování ({{keybinding}})",
+				"description": "Potřebuješ rychlou opravu, dokončení nebo refaktoring? Kilo použije okolní kontext k nabídnutí okamžitých vylepšení, udržujíc tě v toku. <DocsLink>Zobrazit zkratku</DocsLink>"
 			},
-			"enableCustomProvider": {
-				"label": "Použít vlastního poskytovatele",
-				"description": "Inline Assist používá vaše přihlašovací údaje KiloCode / OpenRouter / Mistral pro výchozí použití modelu Codestral"
-			},
-			"provider": "Poskytovatel",
-			"apiConfigId": {
-				"label": "Konfigurace API",
-				"current": "Použít aktuálně vybranou konfiguraci API",
-				"description": "Vyberte konfiguraci API, kterou chcete použít pro výzvy Inline Assist, nebo prostě použijte tu, která je aktuálně vybrána"
-			},
-			"triggers": "Spouštěče",
-			"keybindingDescription": "Funkce Inline Assist jsou spouštěny příkazy. <DocsLink>Klávesové zkratky si můžete nakonfigurovat zde</DocsLink>."
+			"keybindingNotFound": "nenalezeno",
+			"noModelConfigured": "Nebyl nalezen žádný vhodný model pro automatické dokončování. Nakonfiguruj prosím poskytovatele v nastavení API.",
+			"model": "Model",
+			"provider": "Poskytovatel"
 		}
 	},
 	"virtualProvider": {
@@ -236,7 +251,7 @@
 		"removeProfile": "Odstranit profil",
 		"selectProfilePlaceholder": "Vybrat profil...",
 		"addProfile": "Přidat profil",
-		"noProfilesAvailable": "Žádné profily nejsou k dispozici. Nejprve prosím nakonfigurujte alespoň jeden nevirtualní profil poskytovatele.",
+		"noProfilesAvailable": "Žádné profily nejsou k dispozici. Nejprve nakonfigurujte alespoň jeden profil nevirtuálního poskytovatele.",
 		"dangerZoneTitle": "Nebezpečná zóna",
 		"dangerZoneDescription": "Tyto akce jsou destruktivní a nelze je vrátit zpět.",
 		"clearUsageData": "Vymazat data o využití",
@@ -247,5 +262,24 @@
 		"perHour": "Za hodinu",
 		"requestsLabel": "Požadavky",
 		"perDay": "Za den"
+	},
+	"imageWarnings": {
+		"modelNoImageSupport": "Obrázky nejsou podporovány aktuálním modelem.",
+		"maxImagesReached": "Maximálně 20 obrázků na zprávu. Odstraňte některé obrázky, abyste mohli přidat další.",
+		"imagesRemovedNoSupport": "Obrázky odstraněny, nejsou podporovány modelem."
+	},
+	"memoryWarning": {
+		"message": "Využití paměti je na {{percentage}}%. Restartuj prosím své IDE, aby se předešlo pádům."
+	},
+	"marketplace": {
+		"mcp": {
+			"description": "Tyto servery MCP jsou spravovány komunitou. Klikněte <1>zde</1> pro úpravu vašich vlastních nastavení MCP."
+		},
+		"modes": {
+			"description": "Tyto režimy jsou dostupné od komunity. Klikněte <1>zde</1> pro úpravu vašich vlastních režimů."
+		}
+	},
+	"modes": {
+		"shareModesNewBanner": "Novinka: Sdílejte režimy vytvořením organizace"
 	}
 }

@@ -4,7 +4,6 @@ import { VSCodeLink } from "@vscode/webview-ui-toolkit/react"
 
 import { Package } from "@roo/package"
 import { useAppTranslation } from "@src/i18n/TranslationContext"
-import { useExtensionState } from "@src/context/ExtensionStateContext"
 import { vscode } from "@src/utils/vscode"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@src/components/ui"
 import { Button } from "@src/components/ui"
@@ -25,7 +24,6 @@ interface AnnouncementProps {
 const Announcement = ({ hideAnnouncement }: AnnouncementProps) => {
 	const { t } = useAppTranslation()
 	const [open, setOpen] = useState(true)
-	const { cloudIsAuthenticated } = useExtensionState()
 
 	return (
 		<Dialog
@@ -42,63 +40,121 @@ const Announcement = ({ hideAnnouncement }: AnnouncementProps) => {
 					<DialogTitle>{t("chat:announcement.title", { version: Package.version })}</DialogTitle>
 				</DialogHeader>
 				<div>
-					<ul className="space-y-2">
-						<li>
-							•{" "}
+					{/* Regular Release Highlights */}
+					<div className="mb-4">
+						<p className="mb-3">{t("chat:announcement.release.heading")}</p>
+						<ul className="list-disc list-inside text-sm space-y-1">
+							<li>{t("chat:announcement.release.openRouterEmbeddings")}</li>
+							<li>{t("chat:announcement.release.chutesDynamic")}</li>
+							<li>{t("chat:announcement.release.queuedMessagesFix")}</li>
+						</ul>
+					</div>
+
+					{/* Horizontal Rule */}
+					<hr className="my-4 border-vscode-widget-border" />
+
+					{/* Cloud Agents Section */}
+					<div>
+						<p className="mb-3">{t("chat:announcement.cloudAgents.heading")}</p>
+
+						<div className="mb-3">
 							<Trans
-								i18nKey="chat:announcement.stealthModel.feature"
+								i18nKey="chat:announcement.cloudAgents.prFixer"
 								components={{
 									bold: <b />,
 								}}
 							/>
-						</li>
-					</ul>
+						</div>
 
-					<p className="text-xs text-muted-foreground mt-2">{t("chat:announcement.stealthModel.note")}</p>
+						<p className="mb-3 text-sm text-vscode-descriptionForeground">
+							{t("chat:announcement.cloudAgents.prFixerDescription")}
+						</p>
 
-					<div className="mt-4">
-						{!cloudIsAuthenticated ? (
+						<div className="mt-4">
 							<Button
 								onClick={() => {
-									vscode.postMessage({ type: "rooCloudSignIn" })
+									vscode.postMessage({
+										type: "openExternal",
+										url: "https://roocode.com/pr-fixer?utm_source=roocode&utm_medium=extension&utm_campaign=announcement",
+									})
+									setOpen(false)
+									hideAnnouncement()
 								}}
 								className="w-full">
-								{t("chat:announcement.stealthModel.connectButton")}
+								{t("chat:announcement.cloudAgents.tryPrFixerButton")}
 							</Button>
-						) : (
-							<div className="text-sm w-full">
-								<Trans
-									i18nKey="chat:announcement.stealthModel.selectModel"
-									components={{
-										code: <code className="px-1 py-0.5 bg-gray-100 dark:bg-gray-800 rounded" />,
-										settingsLink: (
-											<VSCodeLink
-												href="#"
-												onClick={(e) => {
-													e.preventDefault()
-													setOpen(false)
-													hideAnnouncement()
-													window.postMessage(
-														{
-															type: "action",
-															action: "settingsButtonClicked",
-															values: { section: "provider" },
-														},
-														"*",
-													)
-												}}
-											/>
-										),
-									}}
-								/>
-							</div>
-						)}
+						</div>
+					</div>
+
+					<div className="mt-4 text-sm text-center">
+						<Trans
+							i18nKey="chat:announcement.socialLinks"
+							components={{
+								xLink: <XLink />,
+								discordLink: <DiscordLink />,
+								redditLink: <RedditLink />,
+							}}
+						/>
+					</div>
+
+					{/* Careers Section */}
+					<div className="mt-2 text-sm text-center">
+						<Trans
+							i18nKey="chat:announcement.careers"
+							components={{
+								careersLink: <CareersLink />,
+							}}
+						/>
 					</div>
 				</div>
 			</DialogContent>
 		</Dialog>
 	)
 }
+
+const XLink = () => (
+	<VSCodeLink
+		href="https://x.com/roocode"
+		onClick={(e) => {
+			e.preventDefault()
+			vscode.postMessage({ type: "openExternal", url: "https://x.com/roocode" })
+		}}>
+		X
+	</VSCodeLink>
+)
+
+const DiscordLink = () => (
+	<VSCodeLink
+		href="https://discord.gg/rCQcvT7Fnt"
+		onClick={(e) => {
+			e.preventDefault()
+			vscode.postMessage({ type: "openExternal", url: "https://discord.gg/rCQcvT7Fnt" })
+		}}>
+		Discord
+	</VSCodeLink>
+)
+
+const RedditLink = () => (
+	<VSCodeLink
+		href="https://www.reddit.com/r/RooCode/"
+		onClick={(e) => {
+			e.preventDefault()
+			vscode.postMessage({ type: "openExternal", url: "https://www.reddit.com/r/RooCode/" })
+		}}>
+		r/RooCode
+	</VSCodeLink>
+)
+
+const CareersLink = ({ children }: { children?: React.ReactNode }) => (
+	<VSCodeLink
+		href="https://careers.roocode.com"
+		onClick={(e) => {
+			e.preventDefault()
+			vscode.postMessage({ type: "openExternal", url: "https://careers.roocode.com" })
+		}}>
+		{children}
+	</VSCodeLink>
+)
 
 export default memo(Announcement)
 // kilocode_change: file unused, no need to touch anything

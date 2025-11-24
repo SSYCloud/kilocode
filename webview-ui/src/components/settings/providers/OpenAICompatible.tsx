@@ -7,11 +7,11 @@ import {
 	type ProviderSettings,
 	type ModelInfo,
 	type ReasoningEffort,
+	type OrganizationAllowList,
 	azureOpenAiDefaultApiVersion,
 	openAiModelInfoSaneDefaults,
 } from "@roo-code/types"
 
-import type { OrganizationAllowList } from "@roo/cloud"
 import { ExtensionMessage } from "@roo/ExtensionMessage"
 
 import { useAppTranslation } from "@src/i18n/TranslationContext"
@@ -392,32 +392,6 @@ export const OpenAICompatible = ({
 						{t("settings:providers.customModel.imageSupport.description")}
 					</div>
 				</div>
-
-				{/* kilocode_change: supports computer use => supports browser
-				<div>
-					<div className="flex items-center gap-1">
-						<Checkbox
-							checked={apiConfiguration?.openAiCustomModelInfo?.supportsComputerUse ?? false}
-							onChange={handleInputChange("openAiCustomModelInfo", (checked) => {
-								return {
-									...(apiConfiguration?.openAiCustomModelInfo || openAiModelInfoSaneDefaults),
-									supportsComputerUse: checked,
-								}
-							})}>
-							<span className="font-medium">{t("settings:providers.customModel.computerUse.label")}</span>
-						</Checkbox>
-						<StandardTooltip content={t("settings:providers.customModel.computerUse.description")}>
-							<i
-								className="codicon codicon-info text-vscode-descriptionForeground"
-								style={{ fontSize: "12px" }}
-							/>
-						</StandardTooltip>
-					</div>
-					<div className="text-sm text-vscode-descriptionForeground pt-1">
-						{t("settings:providers.customModel.computerUse.description")}
-					</div>
-				</div>
-				*/}
 
 				<div>
 					<div className="flex items-center gap-1">

@@ -29,10 +29,23 @@
 		"notifications": "Сповіщення",
 		"contextManagement": "Контекст",
 		"terminal": "Термінал",
+		"slashCommands": "Slash Команди",
 		"prompts": "Prompts",
+		"ui": "Інтерфейс",
 		"experimental": "Експериментальне",
 		"language": "Мова",
-		"about": "Про Kilo Code Chinese"
+		"about": "Про Kilo Code",
+		"autoPurge": "Авто-очищення",
+		"ghost": "Ghost"
+	},
+	"slashCommands": {
+		"description": "Керуйте своїми slash командами для швидкого виконання власних робочих процесів та дій. <DocsLink>Дізнатися більше</DocsLink>"
+	},
+	"ui": {
+		"collapseThinking": {
+			"label": "Згортати повідомлення Thinking за замовчуванням",
+			"description": "Коли увімкнено, блоки thinking будуть згорнуті за замовчуванням, поки ви не взаємодієте з ними"
+		}
 	},
 	"prompts": {
 		"description": "Налаштуйте допоміжні підказки, які використовуються для швидких дій, таких як покращення підказок, пояснення коду та виправлення проблем. Ці підказки допомагають Kilo Code надавати кращу допомогу для типових завдань розробки."
@@ -56,6 +69,12 @@
 		"mistralProvider": "Mistral",
 		"mistralApiKeyLabel": "Ключ API:",
 		"mistralApiKeyPlaceholder": "Введіть ваш ключ API Mistral",
+		"vercelAiGatewayProvider": "Vercel AI Gateway",
+		"vercelAiGatewayApiKeyLabel": "Ключ API",
+		"vercelAiGatewayApiKeyPlaceholder": "Введіть ваш ключ API Vercel AI Gateway",
+		"openRouterProvider": "OpenRouter",
+		"openRouterApiKeyLabel": "Ключ API OpenRouter",
+		"openRouterApiKeyPlaceholder": "Введіть ваш ключ API OpenRouter",
 		"openaiCompatibleProvider": "Сумісний з OpenAI",
 		"openAiKeyLabel": "Ключ API OpenAI",
 		"openAiKeyPlaceholder": "Введіть ваш ключ API OpenAI",
@@ -129,11 +148,16 @@
 			"mistralApiKeyRequired": "Ключ API Mistral є обов'язковим",
 			"ollamaBaseUrlRequired": "Базовий URL Ollama є обов'язковим",
 			"baseUrlRequired": "Базовий URL є обов'язковим",
-			"modelDimensionMinValue": "Розмірність моделі повинна бути більше 0"
-		}
+			"modelDimensionMinValue": "Розмірність моделі повинна бути більше 0",
+			"vercelAiGatewayApiKeyRequired": "Ключ API Vercel AI Gateway є обов'язковим",
+			"openRouterApiKeyRequired": "Ключ API OpenRouter є обов'язковим"
+		},
+		"cancelling": "Скасування...",
+		"cancelIndexingButton": "Скасувати індексацію"
 	},
 	"autoApprove": {
 		"description": "Дозволити Kilo Code автоматично виконувати операції без необхідності затвердження. Вмикайте ці налаштування, лише якщо ви повністю довіряєте ШІ та розумієте пов'язані з цим ризики безпеки.",
+		"toggleShortcut": "Ви можете налаштувати гарячу клавішу для цього налаштування <SettingsLink>у настройках вашого IDE</SettingsLink>.",
 		"enabled": "Автоматичне затвердження увімкнено",
 		"readOnly": {
 			"label": "Читати",
@@ -221,6 +245,8 @@
 		"providerDocumentation": "Документація {{provider}}",
 		"configProfile": "Профіль конфігурації",
 		"description": "Збережіть різні конфігурації API для швидкого перемикання між провайдерами та налаштуваннями.",
+		"makeActiveProfile": "Зробити активним профілем",
+		"makeActiveTooltip": "Активуй цей профіль для використання в API-запитах",
 		"apiProvider": "Провайдер API",
 		"model": "Модель",
 		"nameEmpty": "Ім'я не може бути порожнім",
@@ -239,10 +265,14 @@
 		"noProviderMatchFound": "Провайдерів не знайдено",
 		"noMatchFound": "Збігів не знайдено",
 		"vscodeLmDescription": "API мовної моделі VS Code дозволяє запускати моделі, надані іншими розширеннями VS Code (включаючи, але не обмежуючись, GitHub Copilot). Найпростіший спосіб почати роботу — встановити розширення Copilot і Copilot Chat з VS Code Marketplace.",
+		"vscodeLmUnavailable": "Підтримка мовних моделей VS Code доступна лише у Visual Studio Code. Форки на кшталт VSCodium та інші можуть не працювати. Крім того, ця можливість недоступна в інструментах JetBrains.",
+		"vscodeLmUnavailableInstructions": "Переконайтеся, що ви використовуєте підтримуваний інструмент, і що VS Code Chat встановлено та ввімкнено",
 		"awsCustomArnUse": "Введіть дійсний ARN Amazon Bedrock для моделі, яку ви хочете використовувати. Приклади формату:",
 		"awsCustomArnDesc": "Переконайтеся, що регіон у ARN відповідає вибраному вами регіону AWS вище.",
 		"openRouterApiKey": "Ключ API OpenRouter",
 		"getOpenRouterApiKey": "Отримати ключ API OpenRouter",
+		"vercelAiGatewayApiKey": "Vercel AI Gateway API Key",
+		"getVercelAiGatewayApiKey": "Отримати Vercel AI Gateway API Key",
 		"apiKeyStorageNotice": "Ключі API надійно зберігаються в Secret Storage VSCode",
 		"glamaApiKey": "Ключ API Glama",
 		"getGlamaApiKey": "Отримати ключ API Glama",
@@ -286,11 +316,19 @@
 		"getFeatherlessApiKey": "Отримати ключ API Featherless",
 		"fireworksApiKey": "Ключ API Fireworks",
 		"getFireworksApiKey": "Отримати ключ API Fireworks",
+		"syntheticApiKey": "Ключ API Synthetic",
+		"getSyntheticApiKey": "Отримати ключ API Synthetic",
 		"moonshotApiKey": "Ключ API Moonshot",
 		"getMoonshotApiKey": "Отримати ключ API Moonshot",
 		"moonshotBaseUrl": "Точка входу Moonshot",
+		"minimaxApiKey": "Ключ API MiniMax",
+		"getMiniMaxApiKey": "Отримати ключ API MiniMax",
+		"minimaxBaseUrl": "Точка входу MiniMax",
 		"zaiEntrypoint": "Точка входу Z AI",
 		"zaiEntrypointDescription": "Будь ласка, виберіть відповідну точку входу API залежно від вашого місцезнаходження. Якщо ви в Китаї, виберіть open.bigmodel.cn. Інакше виберіть api.z.ai.",
+		"minimaxApiKey": "Ключ API MiniMax",
+		"getMiniMaxApiKey": "Отримати ключ API MiniMax",
+		"minimaxBaseUrl": "Точка входу MiniMax",
 		"geminiApiKey": "Ключ API Gemini",
 		"geminiUrlContext": "Включати URL у контекст",
 		"geminiUrlContextDescription": "Коли увімкнено, URL будуть включені в контекст при надсиланні запитів до Gemini",
@@ -302,6 +340,10 @@
 		"openAiApiKey": "Ключ API OpenAI",
 		"getHuggingFaceApiKey": "Отримати ключ API Hugging Face",
 		"huggingFaceApiKey": "Ключ API Hugging Face",
+		"getOvhCloudAiEndpointsApiKey": "Отримати ключ API OVHcloud AI Endpoints",
+		"ovhCloudAiEndpointsApiKey": "Ключ API OVHcloud AI Endpoints",
+		"ovhCloudAiEndpointsBaseUrl": "Базовий URL",
+		"getOvhCloudAiEndpointsBaseUrl": "Використовувати користувацький базовий URL",
 		"huggingFaceModelId": "ID моделі",
 		"huggingFaceLoading": "Завантаження...",
 		"huggingFaceModelsCount": "({{count}} моделей)",
@@ -377,6 +419,9 @@
 			"baseUrl": "Базовий URL (необов'язково)",
 			"modelId": "Ідентифікатор моделі",
 			"apiKey": "Ключ API",
+			"apiKeyHelp": "Додатковий API ключ для автентифікованих екземплярів Ollama або хмарних сервісів. Залиш порожнім для локальних установок.",
+			"numCtx": "Розмір контекстного вікна (num_ctx)",
+			"numCtxHelp": "Перевизначити розмір контекстного вікна моделі за замовчуванням. Залиш порожнім для використання конфігурації Modelfile. Мінімальне значення 128.",
 			"apiKeyPlaceholder": "Введіть ваш ключ API",
 			"apiKeyInfo": "Ключ API буде надісланий як заголовок Authorization",
 			"description": "Ollama дозволяє запускати моделі локально на вашому комп'ютері. Інструкції щодо початку роботи див. у їхньому посібнику зі швидкого старту.",
@@ -449,6 +494,10 @@
 			},
 			"resetDefaults": "Скинути до стандартних"
 		},
+		"rateLimitAfter": {
+			"label": "Обмеження швидкості в кінці",
+			"description": "Розпочніть обмеження швидкості після завершення потоку API."
+		},
 		"rateLimitSeconds": {
 			"label": "Обмеження швидкості",
 			"description": "Мінімальний час між запитами API."
@@ -461,6 +510,7 @@
 		},
 		"reasoningEffort": {
 			"label": "Зусилля з міркування моделі",
+			"none": "Немає",
 			"minimal": "Мінімальний (найшвидший)",
 			"high": "Високий",
 			"medium": "Середній",
@@ -557,15 +607,71 @@
 		}
 	},
 	"checkpoints": {
+		"timeout": {
+			"label": "Тайм-аут ініціалізації контрольної точки (секунди)",
+			"description": "Максимальний час очікування ініціалізації служби контрольних точок. За замовчуванням 15 секунд. Діапазон: 10-60 секунд."
+		},
 		"enable": {
 			"label": "Увімкнути автоматичні контрольні точки",
 			"description": "Якщо ввімкнено, Kilo Code автоматично створюватиме контрольні точки під час виконання завдання, що полегшить перегляд змін або повернення до попередніх станів. <0>Дізнатися більше</0>"
+		}
+	},
+	"ghost": {
+		"showGutterAnimation": {
+			"label": "Показувати анімацію на полях при автозаповненні",
+			"description": "Відображати анімований індикатор на полях редактора під час роботи автозаповнення",
+			"preview": "Попередній перегляд анімації"
+		}
+	},
+	"autoPurge": {
+		"enable": {
+			"label": "Увімкнути автоматичне очищення завдань",
+			"description": "Автоматично видаляти старі завдання для звільнення дискового простору та покращення продуктивності. Завдання класифікуються за типом та віком для визначення часу видалення."
+		},
+		"defaultRetention": {
+			"label": "Період зберігання за замовчуванням (дні)",
+			"description": "Кількість днів для зберігання завдань перед їх видаленням"
+		},
+		"neverPurgeFavorited": {
+			"label": "Ніколи не видаляти улюблені завдання",
+			"description": "При увімкненні улюблені завдання ніколи не будуть автоматично видалені незалежно від віку"
+		},
+		"favoritedRetention": {
+			"label": "Зберігання улюблених завдань (дні)",
+			"description": "Кількість днів для зберігання улюблених завдань (застосовується лише коли 'Ніколи не видаляти улюблені завдання' вимкнено)"
+		},
+		"completedRetention": {
+			"label": "Зберігання завершених завдань (дні)",
+			"description": "Кількість днів для зберігання завдань, які були успішно завершені"
+		},
+		"incompleteRetention": {
+			"label": "Зберігання незавершених завдань (дні)",
+			"description": "Кількість днів для зберігання завдань, які не були завершені (зазвичай коротше ніж завершені завдання)"
+		},
+		"lastRun": {
+			"label": "Останнє очищення"
+		},
+		"manualPurge": {
+			"button": "Запустити очищення зараз"
 		}
 	},
 	"display": {
 		"taskTimeline": {
 			"label": "Показувати хронологію завдань",
 			"description": "Відображати візуальну хронологію повідомлень завдання, розфарбовану за типом, що дозволяє швидко переглядати хід виконання завдання та повертатися до певних моментів у історії завдання."
+		},
+		"sendMessageOnEnter": {
+			"label": "Надсилати повідомлення з Enter",
+			"description": "Якщо ввімкнено, натисніть Enter для надсилання та Shift+Enter для нового рядка. Вимкніть, щоб використовувати Shift+Enter для надсилання."
+		},
+		"costThreshold": {
+			"label": "Сховати вартість нижче порогового значення",
+			"currentValue": "Поточний поріг: ${{value}}",
+			"description": "Показувати лише витрати на запити, що перевищують цю суму. Витрати завжди видно, коли відкрита панель деталей."
+		},
+		"showTimestamps": {
+			"label": "Показувати часові мітки",
+			"description": "Показувати часову мітку для кожного повідомлення у вікні чату"
 		}
 	},
 	"notifications": {
@@ -663,6 +769,14 @@
 			"label": "Максимальний загальний розмір зображень",
 			"mb": "МБ",
 			"description": "Максимальний кумулятивний ліміт розміру (у МБ) для всіх зображень в одному запиті. При перевищенні зображення будуть змінені на менший розмір, щоб поміститися в цей ліміт."
+		},
+		"includeCurrentTime": {
+			"label": "Включати поточний час у контекст",
+			"description": "Якщо ввімкнено, поточний час та інформація про часовий пояс будуть включені в системну підказку. Вимкніть це, якщо моделі припиняють роботу через занепокоєння часом."
+		},
+		"includeCurrentCost": {
+			"label": "Включати поточну вартість у контекст",
+			"description": "Якщо ввімкнено, поточна вартість використання API буде включена в системну підказку. Вимкніть це, якщо моделі припиняють роботу через занепокоєння вартістю."
 		}
 	},
 	"terminal": {
@@ -758,10 +872,6 @@
 			"name": "Використовувати експериментальну уніфіковану стратегію diff",
 			"description": "Увімкнути експериментальну уніфіковану стратегію diff. Ця стратегія може зменшити кількість повторних спроб, спричинених помилками моделі, але може викликати несподівану поведінку або неправильні редагування. Вмикайте лише якщо ти розумієш ризики та готовий ретельно переглядати всі зміни."
 		},
-		"SEARCH_AND_REPLACE": {
-			"name": "Використовувати експериментальний інструмент пошуку та заміни",
-			"description": "Увімкнути експериментальний інструмент пошуку та заміни, що дозволяє Kilo Code замінювати кілька екземплярів пошукового терміна за один запит."
-		},
 		"INSERT_BLOCK": {
 			"name": "Використовувати експериментальний інструмент вставки вмісту",
 			"description": "Увімкнути експериментальний інструмент вставки вмісту, що дозволяє Kilo Code вставляти вміст у певні номери рядків без необхідності створювати diff."
@@ -786,16 +896,6 @@
 			"name": "Увімкнути одночасне редагування файлів",
 			"description": "Якщо ввімкнено, Kilo Code може редагувати кілька файлів за один запит. Якщо вимкнено, Kilo Code повинен редагувати файли по одному. Вимкнення цього може допомогти при роботі з менш здатними моделями або коли ти хочеш більше контролю над модифікаціями файлів."
 		},
-		"MORPH_FAST_APPLY": {
-			"name": "Увімкнути Morph Fast Apply",
-			"description": "Якщо ввімкнено, Kilo Code може редагувати файли за допомогою Morph Fast Apply. Потребує провайдера API Kilo Code, OpenRouter або ключа API Morph.",
-			"apiKey": "Ключ API Morph (необов'язково)",
-			"placeholder": "Введіть ваш ключ API Morph (необов'язково)"
-		},
-		"INLINE_ASSIST": {
-			"name": "Вбудований помічник",
-			"description": "Увімкніть функції Inline Assist для швидких пропозицій та покращень коду безпосередньо у вашому редакторі. Включає Quick Inline Task (Cmd+I) для цільових змін та Auto Inline Task для контекстуальних покращень."
-		},
 		"PREVENT_FOCUS_DISRUPTION": {
 			"name": "Редагування у фоновому режимі",
 			"description": "Запобігає порушенню фокусу редактора, коли увімкнено. Редагування файлів відбувається у фоновому режимі без відкриття diff-перегляду або крадіжки фокусу. Ви можете продовжувати працювати без переривань, поки Kilo Code вносить зміни. Файли можуть відкриватися без фокусу для захоплення діагностики або залишатися повністю закритими."
@@ -807,6 +907,43 @@
 		"NEW_TASK_REQUIRE_TODOS": {
 			"name": "Вимагати список 'завдань' для нових завдань",
 			"description": "Коли увімкнено, інструмент new_task вимагатиме надання параметра завдань. Це забезпечить, що всі нові завдання почнуть з чітким списком цілей. Коли вимкнено (за замовчуванням), параметр завдань залишається необов'язковим для зворотної сумісності."
+		},
+		"IMAGE_GENERATION": {
+			"name": "Увімкнути генерацію зображень ШІ",
+			"description": "Коли увімкнено, Kilo Code може генерувати зображення з текстових запитів. Потребує Kilo Code або OpenRouter API ключ.",
+			"apiProvider": "Провайдер API",
+			"openRouterApiKeyLabel": "OpenRouter API Key",
+			"openRouterApiKeyPlaceholder": "Введіть свій OpenRouter API ключ",
+			"kiloCodeApiKeyLabel": "Kilo Code API ключ",
+			"kiloCodeApiKeyPlaceholder": "Введіть свій Kilo Code API ключ",
+			"kiloCodeApiKeyPaste": "Вставити поточний API ключ Kilo Code",
+			"getApiKeyText": "Отримайте API ключ з",
+			"modelSelectionLabel": "Модель генерації зображень",
+			"modelSelectionDescription": "Виберіть модель для використання при генерації зображень",
+			"warningMissingKey": "⚠️ API ключ потрібен для генерації зображень, будь ласка, налаштуйте його вище.",
+			"successConfigured": "✓ Генерація зображень налаштована і готова до використання"
+		},
+		"RUN_SLASH_COMMAND": {
+			"name": "Увімкнути slash команди, ініційовані моделлю",
+			"description": "Коли увімкнено, Kilo Code може запускати ваші slash команди для виконання робочих процесів."
+		},
+		"MORPH_FAST_APPLY": {
+			"name": "Увімкнути Fast Apply",
+			"description": "Коли увімкнено, Kilo Code може редагувати файли за допомогою Fast Apply зі спеціалізованими моделями, оптимізованими для модифікацій коду. Потребує Kilo Gateway Provider, OpenRouter або ключа API Morph.",
+			"apiKey": "Ключ API Morph (необов'язково)",
+			"placeholder": "Введіть ваш ключ API Morph (необов'язково)",
+			"modelLabel": "Вибір моделі",
+			"modelDescription": "Виберіть, яку модель швидкого застосування використовувати для редагування файлів",
+			"models": {
+				"auto": "Автоматично (За замовчуванням - вибирає найкращу доступну)",
+				"morphFast": "Morph v3 Fast (Швидше, нижча вартість)",
+				"morphLarge": "Morph v3 Large (Більш здатна)",
+				"relace": "Relace Apply v3"
+			}
+		},
+		"INLINE_ASSIST": {
+			"name": "Autocomplete",
+			"description": "Увімкни функції Autocomplete для швидких пропозицій коду та покращень безпосередньо у твоєму редакторі. Включає Швидке Завдання (Cmd+I) для цільових змін та Autocomplete для контекстуальних покращень."
 		}
 	},
 	"promptCaching": {
@@ -878,9 +1015,11 @@
 			"regionMismatch": "Попередження: регіон у твоєму ARN ({{arnRegion}}) не відповідає вибраному регіону ({{region}}). Це може спричинити проблеми з доступом. Провайдер використовуватиме регіон з ARN."
 		},
 		"modelAvailability": "Ідентифікатор моделі ({{modelId}}), який ти надав, недоступний. Будь ласка, вибери іншу модель.",
+		"modelDeprecated": "Ця модель більше недоступна. Будь ласка, вибери іншу модель.",
 		"providerNotAllowed": "Провайдер '{{provider}}' не дозволений твоєю організацією",
 		"modelNotAllowed": "Модель '{{model}}' не дозволена для провайдера '{{provider}}' твоєю організацією",
-		"profileInvalid": "Цей профіль містить провайдера або модель, які не дозволені твоєю організацією"
+		"profileInvalid": "Цей профіль містить провайдера або модель, які не дозволені твоєю організацією",
+		"qwenCodeOauthPath": "Ви повинні надати дійсний шлях до облікових даних OAuth."
 	},
 	"placeholders": {
 		"apiKey": "Введи ключ API...",
@@ -919,5 +1058,19 @@
 	"maxOutputTokensLabel": "Максимальні вихідні токени",
 	"maxTokensGenerateDescription": "Максимальна кількість токенів для генерації у відповіді",
 	"includeMaxOutputTokens": "Включити макс. вихідні токени",
-	"includeMaxOutputTokensDescription": "Надсилати параметр макс. вихідних токенів у запитах API. Деякі провайдери можуть не підтримувати це."
+	"includeMaxOutputTokensDescription": "Надсилати параметр макс. вихідних токенів у запитах API. Деякі провайдери можуть не підтримувати це.",
+	"serviceTier": {
+		"label": "Рівень сервісу",
+		"tooltip": "Для швидшого обробки API запитів, спробуйте рівень пріоритетного обробки. Для нижчих цін з вищою затримкою, спробуйте гнучкий рівень обробки.",
+		"standard": "Стандартний",
+		"flex": "Гнучкий",
+		"priority": "Пріоритетний",
+		"pricingTableTitle": "Ціни за рівнем сервісу (ціна за 1М токенів)",
+		"columns": {
+			"tier": "Рівень",
+			"input": "Вхід",
+			"output": "Вихід",
+			"cacheReads": "Читання кешу"
+		}
+	}
 }

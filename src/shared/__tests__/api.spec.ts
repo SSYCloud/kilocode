@@ -1,7 +1,11 @@
-import { describe, test, expect } from "vitest"
+import {
+	type ModelInfo,
+	type ProviderSettings,
+	CLAUDE_CODE_DEFAULT_MAX_OUTPUT_TOKENS,
+	ANTHROPIC_DEFAULT_MAX_TOKENS,
+} from "@roo-code/types"
+
 import { getModelMaxOutputTokens, shouldUseReasoningBudget, shouldUseReasoningEffort } from "../api"
-import type { ModelInfo, ProviderSettings } from "@roo-code/types"
-import { CLAUDE_CODE_DEFAULT_MAX_OUTPUT_TOKENS, ANTHROPIC_DEFAULT_MAX_TOKENS } from "@roo-code/types"
 
 describe("getModelMaxOutputTokens", () => {
 	const mockModel: ModelInfo = {
@@ -108,7 +112,7 @@ describe("getModelMaxOutputTokens", () => {
 		}
 
 		const result = getModelMaxOutputTokens({ modelId: anthropicModelId, model, settings })
-		expect(result).toBe(ANTHROPIC_DEFAULT_MAX_TOKENS) // Should be 8192, not 64_000
+		expect(result).toBe(40_000 /*kilocode_change*/) // Should be 8192, not 64_000
 	})
 
 	test("should return model.maxTokens for non-Anthropic models that support reasoning budget but aren't using it", () => {

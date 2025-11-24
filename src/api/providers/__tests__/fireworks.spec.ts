@@ -115,6 +115,27 @@ describe("FireworksHandler", () => {
 		)
 	})
 
+	it("should return MiniMax M2 model with correct configuration", () => {
+		const testModelId: FireworksModelId = "accounts/fireworks/models/minimax-m2"
+		const handlerWithModel = new FireworksHandler({
+			apiModelId: testModelId,
+			fireworksApiKey: "test-fireworks-api-key",
+		})
+		const model = handlerWithModel.getModel()
+		expect(model.id).toBe(testModelId)
+		expect(model.info).toEqual(
+			expect.objectContaining({
+				maxTokens: 4096,
+				contextWindow: 204800,
+				supportsImages: false,
+				supportsPromptCache: false,
+				inputPrice: 0.3,
+				outputPrice: 1.2,
+				description: expect.stringContaining("MiniMax M2 is a high-performance language model"),
+			}),
+		)
+	})
+
 	it("should return Qwen3 235B model with correct configuration", () => {
 		const testModelId: FireworksModelId = "accounts/fireworks/models/qwen3-235b-a22b-instruct-2507"
 		const handlerWithModel = new FireworksHandler({
@@ -179,6 +200,27 @@ describe("FireworksHandler", () => {
 		)
 	})
 
+	it("should return DeepSeek V3.1 model with correct configuration", () => {
+		const testModelId: FireworksModelId = "accounts/fireworks/models/deepseek-v3p1"
+		const handlerWithModel = new FireworksHandler({
+			apiModelId: testModelId,
+			fireworksApiKey: "test-fireworks-api-key",
+		})
+		const model = handlerWithModel.getModel()
+		expect(model.id).toBe(testModelId)
+		expect(model.info).toEqual(
+			expect.objectContaining({
+				maxTokens: 16384,
+				contextWindow: 163840,
+				supportsImages: false,
+				supportsPromptCache: false,
+				inputPrice: 0.56,
+				outputPrice: 1.68,
+				description: expect.stringContaining("DeepSeek v3.1 is an improved version"),
+			}),
+		)
+	})
+
 	it("should return GLM-4.5 model with correct configuration", () => {
 		const testModelId: FireworksModelId = "accounts/fireworks/models/glm-4p5"
 		const handlerWithModel = new FireworksHandler({
@@ -217,6 +259,27 @@ describe("FireworksHandler", () => {
 				inputPrice: 0.55,
 				outputPrice: 2.19,
 				description: expect.stringContaining("Z.ai GLM-4.5-Air with 106B total parameters"),
+			}),
+		)
+	})
+
+	it("should return GLM-4.6 model with correct configuration", () => {
+		const testModelId: FireworksModelId = "accounts/fireworks/models/glm-4p6"
+		const handlerWithModel = new FireworksHandler({
+			apiModelId: testModelId,
+			fireworksApiKey: "test-fireworks-api-key",
+		})
+		const model = handlerWithModel.getModel()
+		expect(model.id).toBe(testModelId)
+		expect(model.info).toEqual(
+			expect.objectContaining({
+				maxTokens: 25344,
+				contextWindow: 198000,
+				supportsImages: false,
+				supportsPromptCache: false,
+				inputPrice: 0.55,
+				outputPrice: 2.19,
+				description: expect.stringContaining("Z.ai GLM-4.6 is an advanced coding model"),
 			}),
 		)
 	})
@@ -352,6 +415,7 @@ describe("FireworksHandler", () => {
 			expect.objectContaining({
 				model: modelId,
 				max_tokens: modelInfo.maxTokens,
+				temperature: 0.5,
 				messages: expect.arrayContaining([{ role: "system", content: systemPrompt }]),
 				stream: true,
 				stream_options: { include_usage: true },

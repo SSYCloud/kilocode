@@ -19,7 +19,6 @@ import {
 	xaiModels,
 	groqModels,
 	groqDefaultModelId,
-	chutesModels,
 	chutesDefaultModelId,
 	vscodeLlmModels,
 	vscodeLlmDefaultModelId,
@@ -38,6 +37,8 @@ import {
 	doubaoDefaultModelId,
 	fireworksModels,
 	fireworksDefaultModelId,
+	syntheticModels,
+	syntheticDefaultModelId,
 	ioIntelligenceDefaultModelId,
 	moonshotModels,
 	moonshotDefaultModelId,
@@ -46,8 +47,13 @@ import {
 	featherlessModels,
 	featherlessDefaultModelId,
 	deepInfraDefaultModelId,
+	cerebrasModels,
+	cerebrasDefaultModelId,
+	ovhCloudAiEndpointsDefaultModelId,
+	inceptionDefaultModelId,
+	minimaxModels,
+	minimaxDefaultModelId,
 } from "@roo-code/types"
-import { cerebrasModels, cerebrasDefaultModelId } from "@roo/api"
 import type { ModelRecord, RouterModels } from "@roo/api"
 import { useRouterModels } from "../../ui/hooks/useRouterModels"
 import { useExtensionState } from "@/context/ExtensionStateContext"
@@ -117,7 +123,7 @@ export const getModelsByProvider = ({
 		}
 		case "chutes": {
 			return {
-				models: chutesModels,
+				models: routerModels.chutes, // kilocode_change
 				defaultModel: chutesDefaultModelId,
 			}
 		}
@@ -141,7 +147,10 @@ export const getModelsByProvider = ({
 		}
 		case "gemini": {
 			return {
-				models: geminiModels,
+				models:
+					routerModels.gemini && Object.keys(routerModels.gemini).length > 0
+						? routerModels.gemini
+						: geminiModels,
 				defaultModel: geminiDefaultModelId,
 			}
 		}
@@ -190,7 +199,7 @@ export const getModelsByProvider = ({
 		}
 		case "kilocode": {
 			return {
-				models: routerModels["kilocode-openrouter"],
+				models: routerModels.kilocode,
 				defaultModel: kilocodeDefaultModel,
 			}
 		}
@@ -230,6 +239,26 @@ export const getModelsByProvider = ({
 				defaultModel: fireworksDefaultModelId,
 			}
 		}
+		// kilocode_change start
+		case "synthetic": {
+			return {
+				models: syntheticModels,
+				defaultModel: syntheticDefaultModelId,
+			}
+		}
+		case "ovhcloud": {
+			return {
+				models: routerModels.ovhcloud,
+				defaultModel: ovhCloudAiEndpointsDefaultModelId,
+			}
+		}
+		case "inception": {
+			return {
+				models: routerModels.inception,
+				defaultModel: inceptionDefaultModelId,
+			}
+		}
+		// kilocode_change end
 		case "io-intelligence": {
 			return {
 				models: routerModels["io-intelligence"],
@@ -260,6 +289,12 @@ export const getModelsByProvider = ({
 				defaultModel: deepInfraDefaultModelId,
 			}
 		}
+		case "minimax": {
+			return {
+				models: minimaxModels,
+				defaultModel: minimaxDefaultModelId,
+			}
+		}
 		default:
 			return {
 				models: {},
@@ -277,6 +312,9 @@ export const useProviderModels = (apiConfiguration?: ProviderSettings) => {
 		openRouterBaseUrl: apiConfiguration?.openRouterBaseUrl,
 		openRouterApiKey: apiConfiguration?.apiKey,
 		kilocodeOrganizationId: apiConfiguration?.kilocodeOrganizationId ?? "personal",
+		chutesApiKey: apiConfiguration?.chutesApiKey,
+		geminiApiKey: apiConfiguration?.geminiApiKey,
+		googleGeminiBaseUrl: apiConfiguration?.googleGeminiBaseUrl,
 	})
 
 	const { models, defaultModel } =
@@ -290,7 +328,7 @@ export const useProviderModels = (apiConfiguration?: ProviderSettings) => {
 
 	return {
 		provider,
-		providerModels: models,
+		providerModels: models as ModelRecord,
 		providerDefaultModel: defaultModel,
 		isLoading: routerModels.isLoading,
 		isError: routerModels.isError,

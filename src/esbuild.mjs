@@ -2,6 +2,7 @@ import * as esbuild from "esbuild"
 import * as fs from "fs"
 import * as path from "path"
 import { fileURLToPath } from "url"
+import { createRequire } from "module"
 import process from "node:process"
 import * as console from "node:console"
 
@@ -28,6 +29,11 @@ async function main() {
 		format: "cjs",
 		sourcesContent: false,
 		platform: "node",
+		// kilocode_change start: for ps-list
+		banner: {
+			js: "const __importMetaUrl = typeof __filename !== 'undefined' ? require('url').pathToFileURL(__filename).href : undefined;",
+		},
+		// kilocode_change end
 	}
 
 	const srcDir = __dirname
@@ -43,6 +49,24 @@ async function main() {
 	 * @type {import('esbuild').Plugin[]}
 	 */
 	const plugins = [
+		// kilocode_change start
+		{
+			name: "import-meta-url-plugin",
+			setup(build) {
+				build.onLoad({ filter: /\.js$/ }, async (args) => {
+					const fs = await import("fs")
+					let contents = await fs.promises.readFile(args.path, "utf8")
+
+					// Replace import.meta.url with our polyfill
+					if (contents.includes("import.meta.url")) {
+						contents = contents.replace(/import\.meta\.url/g, "__importMetaUrl")
+					}
+
+					return { contents, loader: "js" }
+				})
+			},
+		},
+		// kilocode_change end
 		{
 			name: "copyFiles",
 			setup(build) {
@@ -62,6 +86,26 @@ async function main() {
 
 					// Copy walkthrough files to dist directory
 					copyPaths([["walkthrough", "walkthrough"]], srcDir, distDir)
+
+					// Copy tree-sitter files to dist directory
+					copyPaths([["services/continuedev/tree-sitter", "tree-sitter"]], srcDir, distDir)
+
+					// Copy JSDOM xhr-sync-worker.js to fix runtime resolution
+					const jsdomWorkerDest = path.join(distDir, "xhr-sync-worker.js")
+
+					try {
+						const require = createRequire(import.meta.url)
+						const jsdomModulePath = require.resolve("jsdom/package.json")
+						const jsdomDir = path.dirname(jsdomModulePath)
+						const jsdomWorkerSource = path.join(jsdomDir, "lib/jsdom/living/xhr/xhr-sync-worker.js")
+
+						if (fs.existsSync(jsdomWorkerSource)) {
+							fs.copyFileSync(jsdomWorkerSource, jsdomWorkerDest)
+							console.log(`[${name}] Copied JSDOM xhr-sync-worker.js to dist from: ${jsdomWorkerSource}`)
+						}
+					} catch (error) {
+						console.error(`[${name}] Failed to copy JSDOM xhr-sync-worker.js:`, error.message)
+					}
 				})
 			},
 		},

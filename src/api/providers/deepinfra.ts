@@ -1,9 +1,11 @@
-// kilocode_change - provider added
-
-import { Anthropic } from "@anthropic-ai/sdk" // for message param types
+import { Anthropic } from "@anthropic-ai/sdk"
 import OpenAI from "openai"
 
-import { deepInfraDefaultModelId, deepInfraDefaultModelInfo } from "@roo-code/types"
+import {
+	deepInfraDefaultModelId,
+	deepInfraDefaultModelInfo,
+	getActiveToolUseStyle, // kilocode_change
+} from "@roo-code/types"
 
 import type { ApiHandlerOptions } from "../../shared/api"
 import { calculateApiCostOpenAI } from "../../shared/cost"
@@ -15,10 +17,8 @@ import type { SingleCompletionHandler, ApiHandlerCreateMessageMetadata } from ".
 import { RouterProvider } from "./router-provider"
 import { getModelParams } from "../transform/model-params"
 import { getModels } from "./fetchers/modelCache"
+import { addNativeToolCallsToParams, processNativeToolCallsFromDelta } from "./kilocode/nativeToolCallHelpers"
 
-/**
- * DeepInfra provider handler (OpenAI compatible)
- */
 export class DeepInfraHandler extends RouterProvider implements SingleCompletionHandler {
 	constructor(options: ApiHandlerOptions) {
 		super({
@@ -62,13 +62,15 @@ export class DeepInfraHandler extends RouterProvider implements SingleCompletion
 		messages: Anthropic.Messages.MessageParam[],
 		_metadata?: ApiHandlerCreateMessageMetadata,
 	): ApiStream {
+		// Ensure we have up-to-date model metadata
+		await this.fetchModel()
 		const { id: modelId, info, reasoningEffort: reasoning_effort } = await this.fetchModel()
 		let prompt_cache_key = undefined
 		if (info.supportsPromptCache && _metadata?.taskId) {
 			prompt_cache_key = _metadata.taskId
 		}
 
-		const requestOptions = {
+		const requestOptions: OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming = {
 			model: modelId,
 			messages: [{ role: "system", content: systemPrompt }, ...convertToOpenAiMessages(messages)],
 			stream: true,
@@ -81,17 +83,21 @@ export class DeepInfraHandler extends RouterProvider implements SingleCompletion
 			requestOptions.temperature = this.options.modelTemperature ?? 0
 		}
 
-		// If includeMaxTokens is enabled, set a cap using model info
 		if (this.options.includeMaxTokens === true && info.maxTokens) {
-			// Prefer modern OpenAI param when available in SDK
 			;(requestOptions as any).max_completion_tokens = this.options.modelMaxTokens || info.maxTokens
 		}
 
-		const { data: stream } = await this.client.chat.completions.create(requestOptions).withResponse()
+		const { data: stream } = await this.client.chat.completions
+			.create(
+				addNativeToolCallsToParams(requestOptions, this.options, _metadata), // kilocode_change
+			)
+			.withResponse()
 
 		let lastUsage: OpenAI.CompletionUsage | undefined
 		for await (const chunk of stream) {
 			const delta = chunk.choices[0]?.delta
+
+			yield* processNativeToolCallsFromDelta(delta, getActiveToolUseStyle(this.options)) // kilocode_change
 
 			if (delta?.content) {
 				yield { type: "text", text: delta.content }
@@ -112,7 +118,8 @@ export class DeepInfraHandler extends RouterProvider implements SingleCompletion
 	}
 
 	async completePrompt(prompt: string): Promise<string> {
-		const { id: modelId, info } = await this.fetchModel()
+		await this.fetchModel()
+		const { id: modelId, info } = this.getModel()
 
 		const requestOptions: OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming = {
 			model: modelId,
@@ -135,9 +142,9 @@ export class DeepInfraHandler extends RouterProvider implements SingleCompletion
 		const cacheWriteTokens = usage?.prompt_tokens_details?.cache_write_tokens || 0
 		const cacheReadTokens = usage?.prompt_tokens_details?.cached_tokens || 0
 
-		const totalCost = modelInfo
+		const { totalCost } = modelInfo
 			? calculateApiCostOpenAI(modelInfo, inputTokens, outputTokens, cacheWriteTokens, cacheReadTokens)
-			: 0
+			: { totalCost: 0 }
 
 		return {
 			type: "usage",

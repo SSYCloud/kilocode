@@ -1,24 +1,38 @@
-import { useCallback, useState } from "react"
+import { useCallback, useState, useEffect } from "react"
+import knuthShuffle from "knuth-shuffle-seeded"
 import { Trans } from "react-i18next"
 import { VSCodeButton, VSCodeLink } from "@vscode/webview-ui-toolkit/react"
+import posthog from "posthog-js"
 
 import type { ProviderSettings } from "@roo-code/types"
+import { TelemetryEventName } from "@roo-code/types"
 
 import { useExtensionState } from "@src/context/ExtensionStateContext"
 import { validateApiConfiguration } from "@src/utils/validate"
 import { vscode } from "@src/utils/vscode"
 import { useAppTranslation } from "@src/i18n/TranslationContext"
+import { getRequestyAuthUrl, getOpenRouterAuthUrl } from "@src/oauth/urls"
+import { telemetryClient } from "@src/utils/TelemetryClient"
 
 import ApiOptions from "../settings/ApiOptions"
 import { Tab, TabContent } from "../common/Tab"
 
 // import RooHero from "./RooHero"
 import { getShengSuanYunAuthUrl } from "../kilocode/helpers"
+import RooHero from "./RooHero"
 
 const WelcomeView = () => {
 	const { apiConfiguration, currentApiConfigName, setApiConfiguration, uriScheme } = useExtensionState()
 	const { t } = useAppTranslation()
 	const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined)
+	const [showRooProvider, setShowRooProvider] = useState(false)
+
+	// Check PostHog feature flag for Roo provider
+	useEffect(() => {
+		posthog.onFeatureFlags(function () {
+			setShowRooProvider(posthog?.getFeatureFlag("roo-provider-featured") === "test")
+		})
+	}, [])
 
 	// Memoize the setApiConfigurationField function to pass to ApiOptions
 	const setApiConfigurationFieldForApiOptions = useCallback(
@@ -47,30 +61,27 @@ const WelcomeView = () => {
 
 	return (
 		<Tab>
-			<TabContent className="flex flex-col gap-3 p-12">
-				{/* <RooHero /> */}
-				<div className="flex flex-col">
-					<h4 className="mt-0 mb-0">
-						{t("welcome:greeting")}
-						<Trans i18nKey="welcome:introduction" />
-					</h4>
-				</div>
-				{/* <div className="font-bold">
-					<p>
+			<TabContent className="flex flex-col gap-4 p-6">
+				<RooHero />
+				<h2 className="mt-0 mb-4 text-xl text-center">{t("welcome:greeting")}</h2>
+
+				<div className="text-base text-vscode-foreground py-2 px-2 mb-4">
+					<p className="mb-3 leading-relaxed">
 						<Trans i18nKey="welcome:introduction" />
 					</p>
-					<p>
+					<p className="mb-0 leading-relaxed">
 						<Trans i18nKey="welcome:chooseProvider" />
 					</p>
-				</div> */}
+				</div>
 
 				<div className="mb-4">
-					<p className="font-bold mt-0">{t("welcome:startRouter")}</p>
+					<p className="text-sm font-medium mt-4 mb-3">{t("welcome:startRouter")}</p>
 
 					<div>
 						{/* Define the providers */}
 						{(() => {
-							const providers = [
+							// Provider card configuration
+							const baseProviders = [
 								{
 									slug: "panel_light",
 									name: "胜算云",
@@ -80,14 +91,41 @@ const WelcomeView = () => {
 							]
 
 							// Render the provider cards
-							return providers.map((provider, index) => (
+							return baseProviders.map((provider, index) => (
 								<a
 									key={index}
 									href={provider.authUrl}
-									className="w-full border border-vscode-panel-border hover:bg-secondary rounded-lg p-6 mb-2 flex flex-col items-center gap-4 cursor-pointer transition-all no-underline text-inherit"
+									className="relative flex-1 border border-vscode-panel-border hover:bg-secondary rounded-md py-3 px-4 mb-2 flex flex-row gap-3 cursor-pointer transition-all no-underline text-inherit"
 									target="_blank"
-									rel="noopener noreferrer">
-									<div className="w-10 h-10">
+									rel="noopener noreferrer"
+									onClick={(e) => {
+										// Track telemetry for featured provider click
+										telemetryClient.capture(TelemetryEventName.FEATURED_PROVIDER_CLICKED, {
+											provider: provider.slug,
+										})
+
+										// Special handling for Roo provider
+										if (provider.slug === "roo") {
+											e.preventDefault()
+
+											// Set the Roo provider configuration
+											const rooConfig: ProviderSettings = {
+												apiProvider: "roo",
+											}
+
+											// Save the Roo provider configuration
+											vscode.postMessage({
+												type: "upsertApiConfiguration",
+												text: currentApiConfigName,
+												apiConfiguration: rooConfig,
+											})
+
+											// Then trigger cloud sign-in
+											vscode.postMessage({ type: "rooCloudSignIn" })
+										}
+										// For other providers, let the default link behavior work
+									}}>
+									<div className="w-8 h-8 flex-shrink-0">
 										<img
 											src={`${imagesBaseUri}/${provider.slug}.png`}
 											alt={provider.name}
@@ -96,6 +134,9 @@ const WelcomeView = () => {
 									</div>
 									<div className="font-bold text-vscode-foreground">{provider.name}</div>
 									<div>
+										<div className="text-sm font-medium text-vscode-foreground">
+											{provider.name}
+										</div>
 										<div className="text-xs text-vscode-descriptionForeground">
 											{provider.description}
 										</div>
@@ -105,7 +146,7 @@ const WelcomeView = () => {
 						})()}
 					</div>
 
-					<p className="font-bold mt-8 mb-6">{t("welcome:startCustom")}</p>
+					<p className="text-sm font-medium mt-6 mb-3">{t("welcome:startCustom")}</p>
 					<ApiOptions
 						fromWelcomeView
 						apiConfiguration={apiConfiguration || {}}
@@ -116,8 +157,8 @@ const WelcomeView = () => {
 					/>
 				</div>
 			</TabContent>
-			<div className="sticky bottom-0 bg-vscode-sideBar-background p-5">
-				<div className="flex flex-col gap-1">
+			<div className="sticky bottom-0 bg-vscode-sideBar-background p-4 border-t border-vscode-panel-border">
+				<div className="flex flex-col gap-2">
 					<div className="flex justify-end">
 						<VSCodeLink
 							href="#"

@@ -6,6 +6,7 @@ import { t } from "../../i18n"
 import { ApiHandler } from "../../api"
 import { ApiMessage } from "../task-persistence/apiMessages"
 import { maybeRemoveImageBlocks } from "../../api/transform/image-cleaning"
+import { maybeRemoveReasoningDetails_kilocode } from "../../api/transform/kilocode/reasoning-details"
 
 export const N_MESSAGES_TO_KEEP = 3
 export const MIN_CONDENSE_THRESHOLD = 5 // Minimum percentage of context window to trigger condensing
@@ -100,7 +101,23 @@ export async function summarizeConversation(
 	)
 
 	const response: SummarizeResponse = { messages, cost: 0, summary: "" }
-	const messagesToSummarize = getMessagesSinceLastSummary(messages.slice(0, -N_MESSAGES_TO_KEEP))
+
+	// Always preserve the first message (which may contain slash command content)
+	const firstMessage = messages[0]
+	// Get messages to summarize, including the first message and excluding the last N messages
+	let messagesToSummarize = getMessagesSinceLastSummary(messages.slice(0, -N_MESSAGES_TO_KEEP)) // kilocode_change: const=>let
+
+	// kilocode_change start
+	// discard tool_use, because it won't have a result
+	const lastMessageToSummarizeContent = messagesToSummarize.at(-1)?.content
+	if (
+		Array.isArray(lastMessageToSummarizeContent) &&
+		lastMessageToSummarizeContent.some((item) => item.type === "tool_use")
+	) {
+		console.debug("[summarizeConversation] discarding tool_use", lastMessageToSummarizeContent)
+		messagesToSummarize = messagesToSummarize.slice(0, -1)
+	}
+	// kilocode_change end
 
 	if (messagesToSummarize.length <= 1) {
 		// kilocode_change start
@@ -116,7 +133,17 @@ export async function summarizeConversation(
 		return { ...response, error }
 	}
 
-	const keepMessages = messages.slice(-N_MESSAGES_TO_KEEP)
+	let keepMessages = messages.slice(-N_MESSAGES_TO_KEEP) // kilocode_change: const=>let
+
+	// kilocode_change start
+	// discard tool_result, because the corresponding tool_use will be removed
+	const firstKeepMessageContent = keepMessages.at(0)?.content
+	if (Array.isArray(firstKeepMessageContent) && firstKeepMessageContent.some((item) => item.type === "tool_result")) {
+		console.debug("[summarizeConversation] discarding tool_result", firstKeepMessageContent)
+		keepMessages = keepMessages.slice(1)
+	}
+	// kilocode_change end
+
 	// Check if there's a recent summary in the messages we're keeping
 	const recentSummaryExists = keepMessages.some((message) => message.isSummary)
 
@@ -130,8 +157,12 @@ export async function summarizeConversation(
 		content: "Summarize the conversation so far, as described in the prompt instructions.",
 	}
 
-	const requestMessages = maybeRemoveImageBlocks([...messagesToSummarize, finalRequestMessage], apiHandler).map(
-		({ role, content }) => ({ role, content }),
+	const requestMessages = maybeRemoveReasoningDetails_kilocode(
+		maybeRemoveImageBlocks([...messagesToSummarize, finalRequestMessage], apiHandler).map(({ role, content }) => ({
+			role,
+			content,
+		})),
+		undefined,
 	)
 
 	// Note: this doesn't need to be a stream, consider using something like apiHandler.completePrompt
@@ -190,7 +221,8 @@ export async function summarizeConversation(
 		isSummary: true,
 	}
 
-	const newMessages = [...messages.slice(0, -N_MESSAGES_TO_KEEP), summaryMessage, ...keepMessages]
+	// Reconstruct messages: [first message, summary, last N messages]
+	const newMessages = [firstMessage, summaryMessage, ...keepMessages]
 
 	// Count the tokens in the context for the next API request
 	// We only estimate the tokens in summaryMesage if outputTokens is 0, otherwise we use outputTokens
@@ -225,11 +257,24 @@ export function getMessagesSinceLastSummary(messages: ApiMessage[]): ApiMessage[
 	const messagesSinceSummary = messages.slice(lastSummaryIndex)
 
 	// Bedrock requires the first message to be a user message.
+	// We preserve the original first message to maintain context.
 	// See https://github.com/RooCodeInc/Roo-Code/issues/4147
-	const userMessage: ApiMessage = {
-		role: "user",
-		content: "Please continue from the following summary:",
-		ts: messages[0]?.ts ? messages[0].ts - 1 : Date.now(),
+	if (messagesSinceSummary.length > 0 && messagesSinceSummary[0].role !== "user") {
+		// Get the original first message (should always be a user message with the task)
+		const originalFirstMessage = messages[0]
+		if (originalFirstMessage && originalFirstMessage.role === "user") {
+			// Use the original first message unchanged to maintain full context
+			return [originalFirstMessage, ...messagesSinceSummary]
+		} else {
+			// Fallback to generic message if no original first message exists (shouldn't happen)
+			const userMessage: ApiMessage = {
+				role: "user",
+				content: "Please continue from the following summary:",
+				ts: messages[0]?.ts ? messages[0].ts - 1 : Date.now(),
+			}
+			return [userMessage, ...messagesSinceSummary]
+		}
 	}
-	return [userMessage, ...messagesSinceSummary]
+
+	return messagesSinceSummary
 }

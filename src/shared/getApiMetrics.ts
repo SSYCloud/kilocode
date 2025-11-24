@@ -41,7 +41,7 @@ export function getApiMetrics(messages: ClineMessage[]) {
 		contextTokens: 0,
 	}
 
-	// Calculate running totals
+	// Calculate running totals.
 	messages.forEach((message) => {
 		if (message.type === "say" && message.say === "api_req_started" && message.text) {
 			try {
@@ -51,15 +51,19 @@ export function getApiMetrics(messages: ClineMessage[]) {
 				if (typeof tokensIn === "number") {
 					result.totalTokensIn += tokensIn
 				}
+
 				if (typeof tokensOut === "number") {
 					result.totalTokensOut += tokensOut
 				}
+
 				if (typeof cacheWrites === "number") {
 					result.totalCacheWrites = (result.totalCacheWrites ?? 0) + cacheWrites
 				}
+
 				if (typeof cacheReads === "number") {
 					result.totalCacheReads = (result.totalCacheReads ?? 0) + cacheReads
 				}
+
 				if (typeof cost === "number") {
 					result.totalCost += cost
 				}
@@ -80,22 +84,22 @@ export function getApiMetrics(messages: ClineMessage[]) {
 		}
 	})
 
-	// Calculate context tokens, from the last API request started or condense context message
+	// Calculate context tokens, from the last API request started or condense
+	// context message.
 	result.contextTokens = 0
+
 	for (let i = messages.length - 1; i >= 0; i--) {
 		const message = messages[i]
+
 		if (message.type === "say" && message.say === "api_req_started" && message.text) {
 			try {
 				const parsedText: ParsedApiReqStartedTextType = JSON.parse(message.text)
-				const { tokensIn, tokensOut, cacheWrites, cacheReads, apiProtocol } = parsedText
+				const { tokensIn, tokensOut } = parsedText
 
-				// Calculate context tokens based on API protocol
-				if (apiProtocol === "anthropic") {
-					result.contextTokens = (tokensIn || 0) + (tokensOut || 0) + (cacheWrites || 0) + (cacheReads || 0)
-				} else {
-					// For OpenAI (or when protocol is not specified)
-					result.contextTokens = (tokensIn || 0) + (tokensOut || 0)
-				}
+				// Since tokensIn now stores TOTAL input tokens (including cache tokens),
+				// we no longer need to add cacheWrites and cacheReads separately.
+				// This applies to both Anthropic and OpenAI protocols.
+				result.contextTokens = (tokensIn || 0) + (tokensOut || 0)
 			} catch (error) {
 				console.error("Error parsing JSON:", error)
 				continue
@@ -109,4 +113,27 @@ export function getApiMetrics(messages: ClineMessage[]) {
 	}
 
 	return result
+}
+
+/**
+ * Check if token usage has changed by comparing relevant properties.
+ * @param current - Current token usage data
+ * @param snapshot - Previous snapshot to compare against
+ * @returns true if any relevant property has changed or snapshot is undefined
+ */
+export function hasTokenUsageChanged(current: TokenUsage, snapshot?: TokenUsage): boolean {
+	if (!snapshot) {
+		return true
+	}
+
+	const keysToCompare: (keyof TokenUsage)[] = [
+		"totalTokensIn",
+		"totalTokensOut",
+		"totalCacheWrites",
+		"totalCacheReads",
+		"totalCost",
+		"contextTokens",
+	]
+
+	return keysToCompare.some((key) => current[key] !== snapshot[key])
 }

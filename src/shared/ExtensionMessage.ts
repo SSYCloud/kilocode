@@ -2,6 +2,7 @@ import type {
 	GlobalSettings,
 	ProviderSettingsEntry,
 	ProviderSettings,
+	ModelInfo, // kilocode_change
 	HistoryItem,
 	ModeConfig,
 	TelemetrySetting,
@@ -9,8 +10,12 @@ import type {
 	ClineMessage,
 	MarketplaceItem,
 	TodoItem,
+	CloudUserInfo,
+	CloudOrganizationMembership,
+	OrganizationAllowList,
+	ShareVisibility,
+	QueuedMessage,
 } from "@roo-code/types"
-import type { CloudUserInfo, OrganizationAllowList, ShareVisibility } from "@roo-code/cloud"
 
 import { GitCommit } from "../utils/git"
 
@@ -18,13 +23,21 @@ import { McpServer } from "./mcp"
 import { McpMarketplaceCatalog, McpDownloadResponse } from "./kilocode/mcp"
 import { Mode } from "./modes"
 import { ModelRecord, RouterModels } from "./api"
-import { ProfileDataResponsePayload, BalanceDataResponsePayload } from "./WebviewMessage" // kilocode_change
-import { ClineRulesToggles } from "./cline-rules" // kilocode_change
+// kilocode_change start
+import {
+	ProfileDataResponsePayload,
+	BalanceDataResponsePayload,
+	TaskHistoryResponsePayload,
+	TasksByIdResponsePayload,
+} from "./WebviewMessage"
+import { ClineRulesToggles } from "./cline-rules"
+import { KiloCodeWrapperProperties } from "./kilocode/wrapper"
+// kilocode_change end
 
 // Command interface for frontend/backend communication
 export interface Command {
 	name: string
-	source: "global" | "project"
+	source: "global" | "project" | "built-in"
 	filePath?: string
 	description?: string
 	argumentHint?: string
@@ -44,6 +57,12 @@ export interface IndexingStatus {
 	totalItems: number
 	currentItemUnit?: string
 	workspacePath?: string
+	gitBranch?: string // Current git branch being indexed
+	manifest?: {
+		totalFiles: number
+		totalChunks: number
+		lastUpdated: string
+	}
 }
 
 export interface IndexingStatusUpdateMessage {
@@ -84,6 +103,7 @@ export interface ExtensionMessage {
 		| "updatePrompt"
 		| "systemPrompt"
 		| "autoApprovalEnabled"
+		| "yoloMode" // kilocode_change
 		| "updateCustomMode"
 		| "deleteCustomMode"
 		| "exportModeResult"
@@ -91,6 +111,7 @@ export interface ExtensionMessage {
 		| "checkRulesDirectoryResult"
 		| "deleteCustomModeCheck"
 		| "currentCheckpointUpdated"
+		| "checkpointInitWarning"
 		| "showHumanRelayDialog"
 		| "humanRelayResponse"
 		| "humanRelayCancel"
@@ -116,6 +137,7 @@ export interface ExtensionMessage {
 		| "profileDataResponse" // kilocode_change
 		| "balanceDataResponse" // kilocode_change
 		| "updateProfileData" // kilocode_change
+		| "profileConfigurationForEditing" // kilocode_change: Response with profile config for editing
 		| "authenticatedUser"
 		| "condenseTaskContextResponse"
 		| "singleRouterModelFetchResponse"
@@ -127,6 +149,8 @@ export interface ExtensionMessage {
 		| "marketplaceRemoveResult"
 		| "marketplaceData"
 		| "mermaidFixResponse" // kilocode_change
+		| "tasksByIdResponse" // kilocode_change
+		| "taskHistoryResponse" // kilocode_change
 		| "shareTaskSuccess"
 		| "codeIndexSettingsSaved"
 		| "codeIndexSecretStatus"
@@ -134,10 +158,32 @@ export interface ExtensionMessage {
 		| "showEditMessageDialog"
 		| "kilocodeNotificationsResponse" // kilocode_change
 		| "usageDataResponse" // kilocode_change
+		| "keybindingsResponse" // kilocode_change
+		| "autoPurgeEnabled" // kilocode_change
+		| "autoPurgeDefaultRetentionDays" // kilocode_change
+		| "autoPurgeFavoritedTaskRetentionDays" // kilocode_change
+		| "autoPurgeCompletedTaskRetentionDays" // kilocode_change
+		| "autoPurgeIncompleteTaskRetentionDays" // kilocode_change
+		| "manualPurge" // kilocode_change
 		| "commands"
 		| "insertTextIntoTextarea"
+		| "dismissedUpsells"
+		| "showTimestamps" // kilocode_change
+		| "organizationSwitchResult"
+		| "managedIndexerState" // kilocode_change
 	text?: string
-	payload?: ProfileDataResponsePayload | BalanceDataResponsePayload // kilocode_change: Add payload for profile and balance data
+	// kilocode_change start
+	payload?:
+		| ProfileDataResponsePayload
+		| BalanceDataResponsePayload
+		| TasksByIdResponsePayload
+		| TaskHistoryResponsePayload
+	// kilocode_change end
+	// Checkpoint warning message
+	checkpointWarning?: {
+		type: "WAIT_TIMEOUT" | "INIT_TIMEOUT"
+		timeout: number
+	}
 	action?:
 		| "chatButtonClicked"
 		| "mcpButtonClicked"
@@ -146,11 +192,12 @@ export interface ExtensionMessage {
 		| "promptsButtonClicked"
 		| "profileButtonClicked" // kilocode_change
 		| "marketplaceButtonClicked"
-		| "accountButtonClicked"
+		| "cloudButtonClicked"
 		| "didBecomeVisible"
 		| "focusInput"
 		| "switchTab"
 		| "focusChatInput" // kilocode_change
+		| "toggleAutoApprove"
 	invoke?: "newChat" | "sendMessage" | "primaryButtonClick" | "secondaryButtonClick" | "setChatBoxMessage"
 	state?: ExtensionState
 	images?: string[]
@@ -163,7 +210,7 @@ export interface ExtensionMessage {
 	clineMessage?: ClineMessage
 	routerModels?: RouterModels
 	openAiModels?: string[]
-	ollamaModels?: string[]
+	ollamaModels?: ModelRecord
 	lmStudioModels?: ModelRecord
 	vsCodeLmModels?: { vendor?: string; family?: string; version?: string; id?: string }[]
 	huggingFaceModels?: Array<{
@@ -186,6 +233,7 @@ export interface ExtensionMessage {
 	mcpServers?: McpServer[]
 	commits?: GitCommit[]
 	listApiConfig?: ProviderSettingsEntry[]
+	apiConfiguration?: ProviderSettings // kilocode_change: For profileConfigurationForEditing response
 	mode?: Mode
 	customMode?: ModeConfig
 	slug?: string
@@ -203,6 +251,7 @@ export interface ExtensionMessage {
 		message: string
 	} // kilocode_change
 	url?: string // kilocode_change
+	keybindings?: Record<string, string> // kilocode_change
 	setting?: string
 	value?: any
 	hasContent?: boolean // For checkRulesDirectoryResult
@@ -224,6 +273,7 @@ export interface ExtensionMessage {
 	rulesFolderPath?: string
 	settings?: any
 	messageTs?: number
+	hasCheckpoint?: boolean
 	context?: string
 	// kilocode_change start: Notifications
 	notifications?: Array<{
@@ -237,6 +287,29 @@ export interface ExtensionMessage {
 	}>
 	// kilocode_change end
 	commands?: Command[]
+	queuedMessages?: QueuedMessage[]
+	list?: string[] // For dismissedUpsells
+	organizationId?: string | null // For organizationSwitchResult
+	managedIndexerState?: Array<{
+		workspaceFolderPath: string
+		workspaceFolderName: string
+		gitBranch: string | null
+		projectId: string | null
+		isIndexing: boolean
+		hasManifest: boolean
+		manifestFileCount: number
+		hasWatcher: boolean
+		error?: {
+			type: string
+			message: string
+			timestamp: string
+			context?: {
+				filePath?: string
+				branch?: string
+				operation?: string
+			}
+		}
+	}> // kilocode_change
 }
 
 export type ExtensionState = Pick<
@@ -247,7 +320,9 @@ export type ExtensionState = Pick<
 	// | "lastShownAnnouncementId"
 	| "customInstructions"
 	// | "taskHistory" // Optional in GlobalSettings, required here.
+	| "dismissedUpsells"
 	| "autoApprovalEnabled"
+	| "yoloMode" // kilocode_change
 	| "alwaysAllowReadOnly"
 	| "alwaysAllowReadOnlyOutsideWorkspace"
 	| "alwaysAllowWrite"
@@ -260,8 +335,10 @@ export type ExtensionState = Pick<
 	| "alwaysAllowMcp"
 	| "alwaysAllowModeSwitch"
 	| "alwaysAllowSubtasks"
+	| "alwaysAllowFollowupQuestions"
 	| "alwaysAllowExecute"
 	| "alwaysAllowUpdateTodoList"
+	| "followupAutoApproveTimeoutMs"
 	| "allowedCommands"
 	| "deniedCommands"
 	| "allowedMaxRequests"
@@ -269,8 +346,10 @@ export type ExtensionState = Pick<
 	| "browserToolEnabled"
 	| "browserViewportSize"
 	| "showAutoApproveMenu" // kilocode_change
+	| "hideCostBelowThreshold" // kilocode_change
 	| "screenshotQuality"
 	| "remoteBrowserEnabled"
+	| "cachedChromeHostUrl"
 	| "remoteBrowserHost"
 	// | "enableCheckpoints" // Optional in GlobalSettings, required here.
 	| "ttsEnabled"
@@ -298,6 +377,7 @@ export type ExtensionState = Pick<
 	| "diffEnabled"
 	| "fuzzyMatchThreshold"
 	| "morphApiKey" // kilocode_change: Morph fast apply - global setting
+	| "fastApplyModel" // kilocode_change: Fast Apply model selection
 	// | "experiments" // Optional in GlobalSettings, required here.
 	| "language"
 	// | "telemetrySetting" // Optional in GlobalSettings, required here.
@@ -317,32 +397,48 @@ export type ExtensionState = Pick<
 	| "terminalCommandApiConfigId" // kilocode_change
 	| "dismissedNotificationIds" // kilocode_change
 	| "ghostServiceSettings" // kilocode_change
+	| "autoPurgeEnabled" // kilocode_change
+	| "autoPurgeDefaultRetentionDays" // kilocode_change
+	| "autoPurgeFavoritedTaskRetentionDays" // kilocode_change
+	| "autoPurgeCompletedTaskRetentionDays" // kilocode_change
+	| "autoPurgeIncompleteTaskRetentionDays" // kilocode_change
+	| "autoPurgeLastRunTimestamp" // kilocode_change
 	| "condensingApiConfigId"
 	| "customCondensingPrompt"
+	| "yoloGatekeeperApiConfigId" // kilocode_change: AI gatekeeper for YOLO mode
 	| "codebaseIndexConfig"
 	| "codebaseIndexModels"
 	| "profileThresholds"
 	| "systemNotificationsEnabled" // kilocode_change
 	| "includeDiagnosticMessages"
 	| "maxDiagnosticMessages"
-	| "remoteControlEnabled"
+	| "openRouterImageGenerationSelectedModel"
+	| "includeTaskHistoryInEnhance"
+	| "reasoningBlockCollapsed"
+	| "includeCurrentTime"
+	| "includeCurrentCost"
 > & {
 	version: string
 	clineMessages: ClineMessage[]
 	currentTaskItem?: HistoryItem
 	currentTaskTodos?: TodoItem[] // Initial todos for the current task
-	apiConfiguration?: ProviderSettings
+	apiConfiguration: ProviderSettings
 	uriScheme?: string
 	uiKind?: string // kilocode_change
+
+	kiloCodeWrapperProperties?: KiloCodeWrapperProperties // kilocode_change: Wrapper information
+
 	kilocodeDefaultModel: string
 	shouldShowAnnouncement: boolean
 
-	taskHistory: HistoryItem[]
+	taskHistoryFullLength: number // kilocode_change
+	taskHistoryVersion: number // kilocode_change
 
 	writeDelayMs: number
 	requestDelaySeconds: number
 
 	enableCheckpoints: boolean
+	checkpointTimeout: number // Timeout for checkpoint initialization in seconds (default: 15)
 	maxOpenTabsContext: number // Maximum number of VSCode open tabs to include in context (0-500)
 	maxWorkspaceFiles: number // Maximum number of files to include in current working directory details (0-500)
 	showRooIgnoredFiles: boolean // Whether to show .kilocodeignore'd files in listings
@@ -369,10 +465,13 @@ export type ExtensionState = Pick<
 	settingsImportedAt?: number
 	historyPreviewCollapsed?: boolean
 	showTaskTimeline?: boolean // kilocode_change
+	sendMessageOnEnter?: boolean // kilocode_change
+	hideCostBelowThreshold?: number // kilocode_change
 
 	cloudUserInfo: CloudUserInfo | null
 	cloudIsAuthenticated: boolean
 	cloudApiUrl?: string
+	cloudOrganizations?: CloudOrganizationMembership[]
 	sharingEnabled: boolean
 	organizationAllowList: OrganizationAllowList
 	organizationSettingsVersion?: number
@@ -383,6 +482,20 @@ export type ExtensionState = Pick<
 	marketplaceInstalledMetadata?: { project: Record<string, any>; global: Record<string, any> }
 	profileThresholds: Record<string, number>
 	hasOpenedModeSelector: boolean
+	openRouterImageApiKey?: string
+	kiloCodeImageApiKey?: string
+	openRouterUseMiddleOutTransform?: boolean
+	messageQueue?: QueuedMessage[]
+	lastShownAnnouncementId?: string
+	apiModelId?: string
+	mcpServers?: McpServer[]
+	hasSystemPromptOverride?: boolean
+	mdmCompliant?: boolean
+	remoteControlEnabled: boolean
+	taskSyncEnabled: boolean
+	featureRoomoteControlEnabled: boolean
+	virtualQuotaActiveModel?: { id: string; info: ModelInfo } // kilocode_change: Add virtual quota active model for UI display
+	showTimestamps?: boolean // kilocode_change: Show timestamps in chat messages
 }
 
 export interface ClineSayTool {
@@ -400,8 +513,10 @@ export interface ClineSayTool {
 		| "switchMode"
 		| "newTask"
 		| "finishTask"
-		| "searchAndReplace"
 		| "insertContent"
+		| "generateImage"
+		| "imageGenerated"
+		| "runSlashCommand"
 	path?: string
 	diff?: string
 	content?: string
@@ -412,12 +527,6 @@ export interface ClineSayTool {
 	isOutsideWorkspace?: boolean
 	isProtected?: boolean
 	additionalFileCount?: number // Number of additional files in the same read_file request
-	search?: string
-	replace?: string
-	useRegex?: boolean
-	ignoreCase?: boolean
-	startLine?: number
-	endLine?: number
 	lineNumber?: number
 	query?: string
 	batchFiles?: Array<{
@@ -446,6 +555,12 @@ export interface ClineSayTool {
 		cost?: number
 	}
 	// kilocode_change end
+	imageData?: string // Base64 encoded image data for generated images
+	// Properties for runSlashCommand tool
+	command?: string
+	args?: string
+	source?: string
+	description?: string
 }
 
 // Must keep in sync with system prompt.
@@ -492,7 +607,10 @@ export interface ClineApiReqInfo {
 	cacheWrites?: number
 	cacheReads?: number
 	cost?: number
-	usageMissing?: boolean // kilocode_change
+	// kilocode_change
+	usageMissing?: boolean
+	inferenceProvider?: string
+	// kilocode_change end
 	cancelReason?: ClineApiReqCancelReason
 	streamingFailedMessage?: string
 	apiProtocol?: "anthropic" | "openai"

@@ -14,6 +14,8 @@
 		"drizzle-kit:production": "dotenvx run -f .env.production -- tsx node_modules/drizzle-kit/bin.cjs",
 		"db:generate": "pnpm drizzle-kit generate",
 		"db:migrate": "pnpm drizzle-kit migrate",
+		"db:test:migrate": "pnpm drizzle-kit:test migrate",
+		"db:production:migrate": "pnpm drizzle-kit:production migrate",
 		"db:push": "pnpm drizzle-kit push",
 		"db:test:push": "pnpm drizzle-kit:test push",
 		"db:production:push": "pnpm drizzle-kit:production push",
@@ -35,7 +37,7 @@
 		"p-queue": "^8.1.0",
 		"p-wait-for": "^5.0.2",
 		"postgres": "^3.4.7",
-		"ps-tree": "^1.2.0",
+		"ps-list": "^8.1.1",
 		"redis": "^5.5.5",
 		"zod": "^3.25.61"
 	},
@@ -44,7 +46,6 @@
 		"@roo-code/config-typescript": "workspace:^",
 		"@types/node": "20.x",
 		"@types/node-ipc": "^9.2.3",
-		"@types/ps-tree": "^1.1.6",
 		"drizzle-kit": "^0.31.1",
 		"tsx": "^4.19.3",
 		"vitest": "^3.2.3"
