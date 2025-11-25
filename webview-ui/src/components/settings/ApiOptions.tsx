@@ -1,8 +1,8 @@
 import React, { memo, useCallback, useEffect, useMemo, useState } from "react"
 import { convertHeadersToObject } from "./utils/headers"
 import { useDebounce } from "react-use"
-import { VSCodeButton } from "@vscode/webview-ui-toolkit/react"
-import { VSCodeLink } from "@vscode/webview-ui-toolkit/react"
+// import { VSCodeButton } from "@vscode/webview-ui-toolkit/react"
+// import { VSCodeLink } from "@vscode/webview-ui-toolkit/react"
 // import { ExternalLinkIcon } from "@radix-ui/react-icons" // kilocode_change
 
 import {
@@ -134,7 +134,6 @@ import { ConsecutiveMistakeLimitControl } from "./ConsecutiveMistakeLimitControl
 import { ToolUseControl } from "./kilocode/ToolUseControl" // kilocode_change
 import { BedrockCustomArn } from "./providers/BedrockCustomArn"
 import { KiloCode } from "../kilocode/settings/providers/KiloCode" // kilocode_change
-import { buildDocLink } from "@src/utils/docLinks"
 import { KiloProviderRouting, KiloProviderRoutingManagedByOrganization } from "./providers/KiloProviderRouting"
 import { RateLimitAfterControl } from "./RateLimitAfterSettings" // kilocode_change
 
@@ -442,46 +441,6 @@ const ApiOptions = ({
 	const modelValidationError = useMemo(() => {
 		return getModelValidationError(apiConfiguration, routerModels, organizationAllowList)
 	}, [apiConfiguration, routerModels, organizationAllowList])
-
-	const docs = useMemo(() => {
-		const provider = PROVIDERS.find(({ value }) => value === selectedProvider)
-		const name = provider?.label
-
-		if (!name) {
-			return undefined
-		}
-
-		// kilocode_change start
-		// Providers that don't have documentation pages yet
-		const excludedProviders = [
-			"gemini-cli",
-			"moonshot",
-			"chutes",
-			"cerebras",
-			"litellm",
-			"zai",
-			"qwen-code",
-			"minimax",
-		]
-
-		// Skip documentation link when the provider is excluded because documentation is not available
-		if (excludedProviders.includes(selectedProvider)) {
-			return undefined
-		}
-		// kilocode_change end
-
-		// Get the URL slug - use custom mapping if available, otherwise use the provider key.
-		const slugs: Record<string, string> = {
-			"openai-native": "openai",
-			openai: "openai-compatible",
-		}
-
-		const slug = slugs[selectedProvider] || selectedProvider
-		return {
-			url: buildDocLink(`providers/${slug}`, "provider_docs"),
-			name,
-		}
-	}, [selectedProvider])
 
 	// Convert providers to SearchableSelect options
 	// kilocode_change start: no organizationAllowList

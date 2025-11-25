@@ -1,24 +1,16 @@
-import { useCallback, useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useExtensionState } from "../../../context/ExtensionStateContext"
-import { validateApiConfiguration } from "../../../utils/validate"
+// import { validateApiConfiguration } from "../../../utils/validate"
 import { vscode } from "../../../utils/vscode"
 import { Tab, TabContent } from "../../common/Tab"
 import { useAppTranslation } from "../../../i18n/TranslationContext"
-import { ButtonPrimary } from "../common/ButtonPrimary"
 import { ButtonLink } from "../common/ButtonLink"
 import ApiOptions from "../../settings/ApiOptions"
 import { getShengSuanYunAuthUrl } from "../helpers"
 import { ButtonSecondary } from "../common/ButtonSecondary"
 
 const WelcomeView = () => {
-	const {
-		apiConfiguration,
-		currentApiConfigName,
-		setApiConfiguration,
-		uriScheme,
-		uiKind,
-		kiloCodeWrapperProperties,
-	} = useExtensionState()
+	const { apiConfiguration, setApiConfiguration, uriScheme } = useExtensionState()
 	const [errorMessage, setErrorMessage] = useState<string | undefined>()
 	const [manualConfig, setManualConfig] = useState(false)
 	const { t } = useAppTranslation()
@@ -41,20 +33,20 @@ const WelcomeView = () => {
 		return () => window.removeEventListener("message", handleMessage)
 	}, [])
 
-	const handleSubmit = useCallback(() => {
-		const error = apiConfiguration ? validateApiConfiguration(apiConfiguration) : undefined
+	// const handleSubmit = useCallback(() => {
+	// 	const error = apiConfiguration ? validateApiConfiguration(apiConfiguration) : undefined
 
-		if (error) {
-			setErrorMessage(error)
-			return
-		}
+	// 	if (error) {
+	// 		setErrorMessage(error)
+	// 		return
+	// 	}
 
-		setErrorMessage(undefined)
-		// Mark that we want to activate this profile after save completes
-		pendingActivation.current = currentApiConfigName
-		// Save the configuration - activation will happen when state update is received
-		vscode.postMessage({ type: "upsertApiConfiguration", text: currentApiConfigName, apiConfiguration })
-	}, [apiConfiguration, currentApiConfigName])
+	// 	setErrorMessage(undefined)
+	// 	// Mark that we want to activate this profile after save completes
+	// 	pendingActivation.current = currentApiConfigName
+	// 	// Save the configuration - activation will happen when state update is received
+	// 	vscode.postMessage({ type: "upsertApiConfiguration", text: currentApiConfigName, apiConfiguration })
+	// }, [apiConfiguration, currentApiConfigName])
 
 	return (
 		<Tab>

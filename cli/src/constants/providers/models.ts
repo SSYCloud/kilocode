@@ -66,6 +66,7 @@ export type RouterName =
 	| "deepinfra"
 	| "vercel-ai-gateway"
 	| "ovhcloud"
+	| "shengsuanyun"
 
 /**
  * ModelInfo interface - mirrors the one from packages/types/src/model.ts
@@ -141,6 +142,7 @@ export const PROVIDER_TO_ROUTER_NAME: Record<ProviderName, RouterName | null> = 
 	huggingface: null,
 	inception: null,
 	synthetic: null,
+	shengsuanyun: "shengsuanyun",
 }
 
 /**

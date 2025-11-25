@@ -1,8 +1,6 @@
-import { useCallback, useState, useEffect } from "react"
-import knuthShuffle from "knuth-shuffle-seeded"
+import { useCallback, useState } from "react"
 import { Trans } from "react-i18next"
 import { VSCodeButton, VSCodeLink } from "@vscode/webview-ui-toolkit/react"
-import posthog from "posthog-js"
 
 import type { ProviderSettings } from "@roo-code/types"
 import { TelemetryEventName } from "@roo-code/types"
@@ -11,7 +9,6 @@ import { useExtensionState } from "@src/context/ExtensionStateContext"
 import { validateApiConfiguration } from "@src/utils/validate"
 import { vscode } from "@src/utils/vscode"
 import { useAppTranslation } from "@src/i18n/TranslationContext"
-import { getRequestyAuthUrl, getOpenRouterAuthUrl } from "@src/oauth/urls"
 import { telemetryClient } from "@src/utils/TelemetryClient"
 
 import ApiOptions from "../settings/ApiOptions"
@@ -25,14 +22,14 @@ const WelcomeView = () => {
 	const { apiConfiguration, currentApiConfigName, setApiConfiguration, uriScheme } = useExtensionState()
 	const { t } = useAppTranslation()
 	const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined)
-	const [showRooProvider, setShowRooProvider] = useState(false)
+	// const [ setShowRooProvider] = useState(false)
 
 	// Check PostHog feature flag for Roo provider
-	useEffect(() => {
-		posthog.onFeatureFlags(function () {
-			setShowRooProvider(posthog?.getFeatureFlag("roo-provider-featured") === "test")
-		})
-	}, [])
+	// useEffect(() => {
+	// 	posthog.onFeatureFlags(function () {
+	// 		setShowRooProvider(posthog?.getFeatureFlag("roo-provider-featured") === "test")
+	// 	})
+	// }, [])
 
 	// Memoize the setApiConfigurationField function to pass to ApiOptions
 	const setApiConfigurationFieldForApiOptions = useCallback(
