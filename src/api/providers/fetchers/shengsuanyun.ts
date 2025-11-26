@@ -20,7 +20,6 @@ export async function getShengSuanYunModels(): Promise<Record<string, ModelInfo>
 				contextWindow: rawModel.context_window,
 				supportsPromptCache: rawModel.supports_prompt_cache,
 				supportsImages: isSPTImg,
-				supportsComputerUse: isSPTImg,
 				inputPrice: parsePrice(rawModel.pricing.prompt),
 				outputPrice: parsePrice(rawModel.pricing.completion),
 				description: rawModel.description,

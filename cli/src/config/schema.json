@@ -267,11 +267,29 @@
 						"fake-ai",
 						"ovhcloud",
 						"inception",
-						"synthetic"
+						"synthetic",
+						"shengsuanyun"
 					]
 				}
 			},
 			"allOf": [
+				{
+					"if": {
+						"properties": { "provider": { "const": "shengsuanyun" } }
+					},
+					"then": {
+						"properties": {
+							"shengSuanYunApiKey": {
+								"type": "string",
+								"description": "胜算云 API Key"
+							},
+							"shengSuanYunModel": {
+								"type": "string",
+								"description": "胜算云 model ID"
+							}
+						}
+					}
+				},
 				{
 					"if": {
 						"properties": { "provider": { "const": "kilocode" } }

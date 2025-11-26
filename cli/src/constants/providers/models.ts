@@ -192,6 +192,7 @@ export const PROVIDER_MODEL_FIELD: Record<ProviderName, string | null> = {
 	huggingface: null,
 	inception: "inceptionLabsModelId",
 	synthetic: null,
+	shengsuanyun: "shengSuanYunModelId",
 }
 
 /**

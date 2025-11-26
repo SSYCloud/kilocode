@@ -34,7 +34,7 @@
 		"ui": "UI",
 		"experimental": "Experimental",
 		"language": "Idioma",
-		"about": "Sobre Kilo SSY",
+		"about": "Sobre Kilo Code",
 		"autoPurge": "Auto-neteja"
 	},
 	"slashCommands": {
@@ -770,7 +770,7 @@
 	"advanced": {
 		"diff": {
 			"label": "Habilitar edició mitjançant diffs",
-			"description": "Quan està habilitat, Kilo SSY podrà editar fitxers més ràpidament i rebutjarà automàticament escriptures completes de fitxers truncats",
+			"description": "Quan està habilitat, Kilo Code podrà editar fitxers més ràpidament i rebutjarà automàticament escriptures completes de fitxers truncats",
 			"strategy": {
 				"label": "Estratègia de diff",
 				"options": {

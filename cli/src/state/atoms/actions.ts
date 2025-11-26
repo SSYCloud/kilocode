@@ -5,7 +5,7 @@
 
 import { atom } from "jotai"
 import type { WebviewMessage, ProviderSettings, ClineAskResponse } from "../../types/messages.js"
-import { extensionServiceAtom, isServiceReadyAtom, setServiceErrorAtom } from "./service.js"
+import { extensionServiceAtom, isServiceReadyAtom, setServiceErrorAtom, serviceErrorAtom } from "./service.js"
 import { resetMessageCutoffAtom } from "./ui.js"
 import { logs } from "../../services/logs.js"
 
@@ -18,13 +18,17 @@ export const sendWebviewMessageAtom = atom(null, async (get, set, message: Webvi
 	const isReady = get(isServiceReadyAtom)
 
 	if (!service) {
-		const error = new Error("ExtensionService not available")
+		const error = new Error("ExtensionService 不可用")
 		set(setServiceErrorAtom, error)
 		throw error
 	}
 
 	if (!isReady) {
-		const error = new Error("ExtensionService not ready")
+		const existingError = get(serviceErrorAtom)
+		const errorMessage = existingError
+			? `ExtensionService 未就绪: ${existingError.message}`
+			: "ExtensionService 未就绪。"
+		const error = new Error(errorMessage)
 		set(setServiceErrorAtom, error)
 		throw error
 	}
@@ -186,7 +190,6 @@ export const respondToToolAtom = atom(
 			...(params.text && { text: params.text }),
 			...(params.images && { images: params.images }),
 		}
-
 		await set(sendWebviewMessageAtom, message)
 	},
 )

@@ -2,7 +2,7 @@ import type { ModelInfo } from "../model.js"
 
 // shengSuanYun
 // https://www.shengsuanyun.com/
-export const shengSuanYunDefaultModelId = "anthropic/claude-sonnet-4"
+export const shengSuanYunDefaultModelId = "aanthropic/claude-sonnet-4.5"
 
 export const shengSuanYunDefaultModelInfo: ModelInfo = {
 	maxTokens: 64_000,
@@ -14,5 +14,5 @@ export const shengSuanYunDefaultModelInfo: ModelInfo = {
 	cacheWritesPrice: 3.75,
 	cacheReadsPrice: 0.3,
 	description:
-		"Claude Sonnet 4 显著增强了其前代产品 Sonnet 3.7 的能力，在编码和推理任务方面均表现出色，并具有更高的精确度和可控性。Sonnet 4 在 SWE-bench 测试中取得了业界领先的 72.7% 的成绩，它平衡了强大的功能与计算效率，使其适用于从日常编码任务到复杂软件开发项目的广泛应用。其关键增强功能包括改进的自主代码库导航能力、降低了代理驱动工作流程中的错误率，以及提高了遵循复杂指令的可靠性。Sonnet 4 针对实际日常使用进行了优化，在保持多样化内部和外部场景中的效率和响应能力的同时，提供了先进的推理能力。可通过reasoning.max_tokens开启思考并控制思维链长度。",
+		"Claude Sonnet 4.5 是 Anthropic 迄今为止最先进的 Sonnet 模型，针对真实代理和编码工作流程进行了优化。它在 SWE-bench Verified 等编码基准测试中展现出顶尖性能，并在系统设计、代码安全性和规范遵循性方面均有所改进。该模型旨在实现扩展自主操作，保持跨会话的任务连续性，并提供基于事实的进度跟踪。\n\nSonnet 4.5 还引入了更强大的代理功能，包括改进的工具编排、推测并行执行以及更高效的上下文和内存管理。凭借增强的上下文跟踪和跨工具调用的令牌使用感知功能，它尤其适用于多上下文和长时间运行的工作流。用例涵盖软件工程、网络安全、财务分析、研究代理以及其他需要持续推理和工具使用的领域。",
 }

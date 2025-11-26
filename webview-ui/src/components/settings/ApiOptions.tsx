@@ -291,6 +291,7 @@ const ApiOptions = ({
 		250,
 		[
 			selectedProvider,
+			apiConfiguration?.shengSuanYunApiKey,
 			apiConfiguration?.requestyApiKey,
 			apiConfiguration?.openAiBaseUrl,
 			apiConfiguration?.openAiApiKey,

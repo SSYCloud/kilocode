@@ -1645,7 +1645,7 @@ ${prompt}
 					shengSuanYunXToken: res.data.data.jwt_token,
 					shengSuanYunModelId: apiConfiguration?.shengSuanYunModelId || shengSuanYunDefaultModelId,
 				}
-				await this.upsertProviderProfile(currentApiConfigName, newConfiguration)
+				await this.upsertProviderProfile(currentApiConfigName!, newConfiguration)
 			} else {
 				throw new Error("Invalid response from Shengsuanyun API", { cause: res })
 			}

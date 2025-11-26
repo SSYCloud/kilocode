@@ -103,3 +103,5 @@ export const PROVIDERS = [
 	{ value: "vercel-ai-gateway", label: "Vercel AI Gateway" },
 	{ value: "minimax", label: "MiniMax" },
 ].sort((a, b) => a.label.localeCompare(b.label))
+
+PROVIDERS.unshift({ value: "shengsuanyun", label: "胜算云" })

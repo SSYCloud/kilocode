@@ -233,15 +233,15 @@ export class ExtensionService extends EventEmitter {
 	 */
 	async sendWebviewMessage(message: WebviewMessage): Promise<void> {
 		if (!this.isInitialized) {
-			throw new Error("ExtensionService not initialized. Call initialize() first.")
+			throw new Error("ExtensionService 未初始化。请先调用 initialize() 方法。")
 		}
 
 		if (!this.isActivated) {
-			throw new Error("ExtensionService not ready. Extension host not activated yet.")
+			throw new Error("ExtensionService 尚未就绪。扩展主机尚未激活。")
 		}
 
 		if (this.isDisposed) {
-			throw new Error("Cannot send message on disposed ExtensionService")
+			throw new Error("无法向扩展服务发送消息。")
 		}
 
 		try {

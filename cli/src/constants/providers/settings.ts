@@ -910,6 +910,7 @@ export const PROVIDER_DEFAULT_MODELS: Record<ProviderName, string> = {
 	ovhcloud: "gpt-oss-120b",
 	inception: "gpt-4o",
 	synthetic: "synthetic-model",
+	shengsuanyun: "anthropic/claude-sonnet-4.5",
 }
 
 /**

@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useCallback, useEffect } from "react"
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 import useEmblaCarousel from "embla-carousel-react"
 import AutoPlay from "embla-carousel-autoplay"
 import { ChevronLeft, ChevronRight, Star } from "lucide-react"

@@ -4,8 +4,8 @@ export * from "./clineMessages"
 export const mockMarketplaceItems = [
 	{
 		id: "filesystem-mcp",
-		name: "File System MCP",
-		description: "Provides tools for reading, writing, and managing files and directories on the local filesystem.",
+		name: "文件系统 MCP",
+		description: "提供用于读取、写入和管理本地文件系统上的文件和目录的工具。",
 		author: "Anthropic",
 		tags: ["files", "filesystem", "core"],
 		type: "mcp" as const,
@@ -47,9 +47,8 @@ export const mockMarketplaceItems = [
 export const mockModes = [
 	{
 		slug: "code",
-		name: "Code",
-		description:
-			"Write, modify, or refactor code. Ideal for implementing features, fixing bugs, creating new files, or making code improvements across any programming language or framework.",
+		name: "编程",
+		description: "编写、修改或重构代码。非常适合在任何编程语言或框架中实现功能、修复错误、创建新文件或改进代码。",
 		roleDefinition:
 			"You are Kilo Code, a highly skilled software engineer with extensive knowledge in many programming languages, frameworks, design patterns, and best practices.",
 		whenToUse: "Use this mode when you need to write, modify, or refactor code.",
@@ -58,9 +57,8 @@ export const mockModes = [
 	},
 	{
 		slug: "architect",
-		name: "Architect",
-		description:
-			"Plan, design, or strategize before implementation. Perfect for breaking down complex problems, creating technical specifications, designing system architecture.",
+		name: "架构",
+		description: "在实施之前进行规划、设计或制定策略。非常适合分解复杂问题、创建技术规范和设计系统架构。",
 		roleDefinition: "You are an experienced software architect specializing in system design and planning.",
 		whenToUse: "Use this mode when you need to plan, design, or strategize before implementation.",
 		groups: ["edit", "read"],

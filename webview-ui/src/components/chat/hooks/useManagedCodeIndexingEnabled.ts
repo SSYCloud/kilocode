@@ -10,7 +10,7 @@ export function useManagedCodeIndexingEnabled() {
 		const interval = setInterval(() => {
 			console.log("[useManagedCodeIndexingEnabled] requesting managed indexer state")
 			vscode.postMessage({ type: "requestManagedIndexerEnabled" as any })
-		}, 500)
+		}, 1500)
 
 		const handleMessage = (event: MessageEvent<any>) => {
 			console.log("[useManagedCodeIndexingEnabled] received event", event)

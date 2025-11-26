@@ -596,6 +596,9 @@ importers:
       '@google/genai':
         specifier: ^1.0.0
         version: 1.30.0(@modelcontextprotocol/sdk@1.22.0)
+      '@kilocode/cli':
+        specifier: 'link:'
+        version: 'link:'
       '@lmstudio/sdk':
         specifier: ^1.1.1
         version: 1.5.0

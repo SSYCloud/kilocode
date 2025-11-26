@@ -387,7 +387,7 @@ const ModesView = ({ onDone }: ModesViewProps) => {
 	)
 
 	const openCreateModeDialog = useCallback(() => {
-		const baseNamePrefix = "New Custom Mode"
+		const baseNamePrefix = "创建自定义模式"
 		// Find unique name and slug
 		let attempt = 0
 		let name = baseNamePrefix

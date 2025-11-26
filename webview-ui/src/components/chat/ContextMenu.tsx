@@ -167,7 +167,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 				return <span>{t("chat:contextMenu.noResults")}</span>
 			// kilocode_change start
 			case ContextMenuOptionType.Image:
-				return <span>Add Image</span>
+				return <span>添加图片</span>
 			// kilocode_change end
 			case ContextMenuOptionType.Git:
 				if (option.value) {
@@ -228,7 +228,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 						</div>
 					)
 				} else {
-					return <span>Add {option.type === ContextMenuOptionType.File ? "File" : "Folder"}</span>
+					return <span>添加 {option.type === ContextMenuOptionType.File ? "文件" : "文件夹"}</span>
 				}
 		}
 	}

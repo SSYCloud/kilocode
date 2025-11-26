@@ -41,7 +41,6 @@ const WelcomeView = () => {
 
 	const handleSubmit = () => {
 		const error = apiConfiguration ? validateApiConfiguration(apiConfiguration) : undefined
-
 		if (error) {
 			setErrorMessage(error)
 			return
@@ -61,7 +60,6 @@ const WelcomeView = () => {
 			<TabContent className="flex flex-col gap-4 p-6">
 				<RooHero />
 				<h2 className="mt-0 mb-4 text-xl text-center">{t("welcome:greeting")}</h2>
-
 				<div className="text-base text-vscode-foreground py-2 px-2 mb-4">
 					<p className="mb-3 leading-relaxed">
 						<Trans i18nKey="welcome:introduction" />
@@ -72,12 +70,8 @@ const WelcomeView = () => {
 				</div>
 
 				<div className="mb-4">
-					<p className="text-sm font-medium mt-4 mb-3">{t("welcome:startRouter")}</p>
-
 					<div>
-						{/* Define the providers */}
 						{(() => {
-							// Provider card configuration
 							const baseProviders = [
 								{
 									slug: "panel_light",
@@ -86,8 +80,6 @@ const WelcomeView = () => {
 									authUrl: getShengSuanYunAuthUrl(uriScheme),
 								},
 							]
-
-							// Render the provider cards
 							return baseProviders.map((provider, index) => (
 								<a
 									key={index}
@@ -129,7 +121,6 @@ const WelcomeView = () => {
 											className="w-full h-full object-contain"
 										/>
 									</div>
-									<div className="font-bold text-vscode-foreground">{provider.name}</div>
 									<div>
 										<div className="text-sm font-medium text-vscode-foreground">
 											{provider.name}
