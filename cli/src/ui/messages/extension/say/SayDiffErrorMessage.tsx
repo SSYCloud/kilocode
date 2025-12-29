@@ -20,7 +20,7 @@ export const SayDiffErrorMessage: React.FC<MessageComponentProps> = ({ message }
 			marginY={1}>
 			<Box>
 				<Text color={theme.semantic.warning} bold>
-					⚠ Diff Application Error
+					⚠ 差异应用程序错误
 				</Text>
 			</Box>
 			{message.text && (

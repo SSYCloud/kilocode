@@ -22,7 +22,7 @@ export const ToolListCodeDefinitionNamesMessage: React.FC<ToolMessageProps> = ({
 				{toolData.isOutsideWorkspace && (
 					<Text color={theme.semantic.warning} dimColor>
 						{" "}
-						⚠ Outside workspace
+						⚠ 工作区外
 					</Text>
 				)}
 			</Box>
@@ -51,7 +51,7 @@ export const ToolListCodeDefinitionNamesMessage: React.FC<ToolMessageProps> = ({
 
 			<Box marginLeft={2} marginTop={1}>
 				<Text color={theme.ui.text.dimmed} dimColor>
-					Total: {definitions.length} definitions
+					共: {definitions.length} definitions
 				</Text>
 			</Box>
 		</Box>

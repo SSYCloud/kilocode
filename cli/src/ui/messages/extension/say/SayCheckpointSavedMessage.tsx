@@ -14,7 +14,7 @@ export const SayCheckpointSavedMessage: React.FC<MessageComponentProps> = ({ mes
 	return (
 		<Box marginY={1}>
 			<Text color={theme.semantic.info} bold>
-				{icon} Checkpoint Saved
+				{icon} 保存检查点
 			</Text>
 			{message.text && (
 				<Text color={theme.ui.text.dimmed} dimColor>

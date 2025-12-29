@@ -17,7 +17,7 @@ export const ToolFetchInstructionsMessage: React.FC<ToolMessageProps> = ({ toolD
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.messages.user} bold>
-					{icon} Fetch Instructions
+					{icon} 获取指令
 				</Text>
 			</Box>
 

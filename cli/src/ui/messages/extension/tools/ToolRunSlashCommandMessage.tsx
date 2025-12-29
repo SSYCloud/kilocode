@@ -15,21 +15,21 @@ export const ToolRunSlashCommandMessage: React.FC<ToolMessageProps> = ({ toolDat
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.ui.text.highlight} bold>
-					{icon} Run Slash Command
+					{icon} 运行斜杠命令
 				</Text>
 			</Box>
 
 			<Box marginLeft={2} flexDirection="column">
 				<Box>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						Command:{" "}
+						命令:{" "}
 					</Text>
 					<Text color={theme.semantic.info}>/{toolData.command || ""}</Text>
 				</Box>
 				{toolData.args && (
 					<Box>
 						<Text color={theme.ui.text.dimmed} dimColor>
-							Args:{" "}
+							参数:{" "}
 						</Text>
 						<Text color={theme.ui.text.primary}>{toolData.args}</Text>
 					</Box>
@@ -37,7 +37,7 @@ export const ToolRunSlashCommandMessage: React.FC<ToolMessageProps> = ({ toolDat
 				{toolData.description && (
 					<Box marginTop={1}>
 						<Text color={theme.ui.text.dimmed} dimColor>
-							Description:{" "}
+							描述:{" "}
 						</Text>
 						<Text color={theme.ui.text.primary}>{toolData.description}</Text>
 					</Box>
@@ -45,7 +45,7 @@ export const ToolRunSlashCommandMessage: React.FC<ToolMessageProps> = ({ toolDat
 				{toolData.source && (
 					<Box>
 						<Text color={theme.ui.text.dimmed} dimColor>
-							Source:{" "}
+							源:{" "}
 						</Text>
 						<Text color={theme.ui.text.dimmed}>{toolData.source}</Text>
 					</Box>

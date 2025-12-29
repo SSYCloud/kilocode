@@ -16,7 +16,7 @@ export const AskCondenseMessage: React.FC<MessageComponentProps> = ({ message })
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.semantic.warning} bold>
-					{icon} Context Condensation Request
+					{icon} 上下文压缩请求
 				</Text>
 			</Box>
 
@@ -28,14 +28,14 @@ export const AskCondenseMessage: React.FC<MessageComponentProps> = ({ message })
 
 			<Box marginLeft={2} marginTop={1}>
 				<Text color={theme.ui.text.dimmed} dimColor>
-					The conversation context will be condensed to save tokens and improve performance.
+					对话内容将被精简，以节省令牌并提高性能。
 				</Text>
 			</Box>
 
 			{message.isAnswered && (
 				<Box marginLeft={2} marginTop={1}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						✓ Answered
+						✓ 已回答
 					</Text>
 				</Box>
 			)}

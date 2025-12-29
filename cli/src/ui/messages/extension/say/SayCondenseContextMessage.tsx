@@ -13,7 +13,7 @@ export const SayCondenseContextMessage: React.FC<MessageComponentProps> = ({ mes
 	if (message.partial) {
 		return (
 			<Box marginY={1}>
-				<Text color={theme.semantic.info}>📦 Condensing context...</Text>
+				<Text color={theme.semantic.info}>📦 正在压缩上下文...</Text>
 			</Box>
 		)
 	}
@@ -23,7 +23,7 @@ export const SayCondenseContextMessage: React.FC<MessageComponentProps> = ({ mes
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.semantic.success} bold>
-					✓ Context Condensed
+					✓ 压缩完成
 				</Text>
 			</Box>
 

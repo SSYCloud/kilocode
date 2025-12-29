@@ -21,7 +21,7 @@ describe("Cost Utility", () => {
 
 			// Input cost: (3.0 / 1_000_000) * 1000 = 0.003
 			// Output cost: (15.0 / 1_000_000) * 500 = 0.0075
-			// Total: 0.003 + 0.0075 = 0.0105
+			// 共: 0.003 + 0.0075 = 0.0105
 			expect(result.totalCost).toBe(0.0105)
 			expect(result.totalInputTokens).toBe(1000)
 			expect(result.totalOutputTokens).toBe(500)
@@ -33,7 +33,7 @@ describe("Cost Utility", () => {
 			// Input cost: (3.0 / 1_000_000) * 1000 = 0.003
 			// Output cost: (15.0 / 1_000_000) * 500 = 0.0075
 			// Cache writes: (3.75 / 1_000_000) * 2000 = 0.0075
-			// Total: 0.003 + 0.0075 + 0.0075 = 0.018
+			// 共: 0.003 + 0.0075 + 0.0075 = 0.018
 			expect(result.totalCost).toBeCloseTo(0.018, 6)
 			expect(result.totalInputTokens).toBe(3000) // 1000 + 2000
 			expect(result.totalOutputTokens).toBe(500)
@@ -45,7 +45,7 @@ describe("Cost Utility", () => {
 			// Input cost: (3.0 / 1_000_000) * 1000 = 0.003
 			// Output cost: (15.0 / 1_000_000) * 500 = 0.0075
 			// Cache reads: (0.3 / 1_000_000) * 3000 = 0.0009
-			// Total: 0.003 + 0.0075 + 0.0009 = 0.0114
+			// 共: 0.003 + 0.0075 + 0.0009 = 0.0114
 			expect(result.totalCost).toBe(0.0114)
 			expect(result.totalInputTokens).toBe(4000) // 1000 + 3000
 			expect(result.totalOutputTokens).toBe(500)
@@ -58,7 +58,7 @@ describe("Cost Utility", () => {
 			// Output cost: (15.0 / 1_000_000) * 500 = 0.0075
 			// Cache writes: (3.75 / 1_000_000) * 2000 = 0.0075
 			// Cache reads: (0.3 / 1_000_000) * 3000 = 0.0009
-			// Total: 0.003 + 0.0075 + 0.0075 + 0.0009 = 0.0189
+			// 共: 0.003 + 0.0075 + 0.0075 + 0.0009 = 0.0189
 			expect(result.totalCost).toBe(0.0189)
 			expect(result.totalInputTokens).toBe(6000) // 1000 + 2000 + 3000
 			expect(result.totalOutputTokens).toBe(500)
@@ -89,7 +89,7 @@ describe("Cost Utility", () => {
 
 			// Input cost: (3.0 / 1_000_000) * 1000 = 0.003
 			// Output cost: (15.0 / 1_000_000) * 500 = 0.0075
-			// Total: 0.003 + 0.0075 = 0.0105
+			// 共: 0.003 + 0.0075 = 0.0105
 			expect(result.totalCost).toBe(0.0105)
 			expect(result.totalInputTokens).toBe(1000)
 			expect(result.totalOutputTokens).toBe(500)
@@ -107,7 +107,7 @@ describe("Cost Utility", () => {
 			// Should only include input and output costs
 			// Input cost: (3.0 / 1_000_000) * 1000 = 0.003
 			// Output cost: (15.0 / 1_000_000) * 500 = 0.0075
-			// Total: 0.003 + 0.0075 = 0.0105
+			// 共: 0.003 + 0.0075 = 0.0105
 			expect(result.totalCost).toBe(0.0105)
 			expect(result.totalInputTokens).toBe(6000) // 1000 + 2000 + 3000
 			expect(result.totalOutputTokens).toBe(500)
@@ -130,7 +130,7 @@ describe("Cost Utility", () => {
 
 			// Input cost: (3.0 / 1_000_000) * 1000 = 0.003
 			// Output cost: (15.0 / 1_000_000) * 500 = 0.0075
-			// Total: 0.003 + 0.0075 = 0.0105
+			// 共: 0.003 + 0.0075 = 0.0105
 			expect(result.totalCost).toBe(0.0105)
 			expect(result.totalInputTokens).toBe(1000)
 			expect(result.totalOutputTokens).toBe(500)
@@ -142,7 +142,7 @@ describe("Cost Utility", () => {
 			// Input cost: (3.0 / 1_000_000) * (3000 - 2000) = 0.003
 			// Output cost: (15.0 / 1_000_000) * 500 = 0.0075
 			// Cache writes: (3.75 / 1_000_000) * 2000 = 0.0075
-			// Total: 0.003 + 0.0075 + 0.0075 = 0.018
+			// 共: 0.003 + 0.0075 + 0.0075 = 0.018
 			expect(result.totalCost).toBeCloseTo(0.018, 6)
 			expect(result.totalInputTokens).toBe(3000) // Total already includes cache
 			expect(result.totalOutputTokens).toBe(500)
@@ -154,7 +154,7 @@ describe("Cost Utility", () => {
 			// Input cost: (3.0 / 1_000_000) * (4000 - 3000) = 0.003
 			// Output cost: (15.0 / 1_000_000) * 500 = 0.0075
 			// Cache reads: (0.3 / 1_000_000) * 3000 = 0.0009
-			// Total: 0.003 + 0.0075 + 0.0009 = 0.0114
+			// 共: 0.003 + 0.0075 + 0.0009 = 0.0114
 			expect(result.totalCost).toBe(0.0114)
 			expect(result.totalInputTokens).toBe(4000) // Total already includes cache
 			expect(result.totalOutputTokens).toBe(500)
@@ -167,7 +167,7 @@ describe("Cost Utility", () => {
 			// Output cost: (15.0 / 1_000_000) * 500 = 0.0075
 			// Cache writes: (3.75 / 1_000_000) * 2000 = 0.0075
 			// Cache reads: (0.3 / 1_000_000) * 3000 = 0.0009
-			// Total: 0.003 + 0.0075 + 0.0075 + 0.0009 = 0.0189
+			// 共: 0.003 + 0.0075 + 0.0075 + 0.0009 = 0.0189
 			expect(result.totalCost).toBe(0.0189)
 			expect(result.totalInputTokens).toBe(6000) // Total already includes cache
 			expect(result.totalOutputTokens).toBe(500)
@@ -198,7 +198,7 @@ describe("Cost Utility", () => {
 
 			// Input cost: (3.0 / 1_000_000) * 1000 = 0.003
 			// Output cost: (15.0 / 1_000_000) * 500 = 0.0075
-			// Total: 0.003 + 0.0075 = 0.0105
+			// 共: 0.003 + 0.0075 = 0.0105
 			expect(result.totalCost).toBe(0.0105)
 			expect(result.totalInputTokens).toBe(1000)
 			expect(result.totalOutputTokens).toBe(500)
@@ -216,7 +216,7 @@ describe("Cost Utility", () => {
 			// Should only include input and output costs
 			// Input cost: (3.0 / 1_000_000) * (6000 - 2000 - 3000) = 0.003
 			// Output cost: (15.0 / 1_000_000) * 500 = 0.0075
-			// Total: 0.003 + 0.0075 = 0.0105
+			// 共: 0.003 + 0.0075 = 0.0105
 			expect(result.totalCost).toBe(0.0105)
 			expect(result.totalInputTokens).toBe(6000) // Total already includes cache
 			expect(result.totalOutputTokens).toBe(500)

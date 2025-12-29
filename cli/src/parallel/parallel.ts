@@ -8,7 +8,7 @@ import { getTelemetryService } from "../services/telemetry/index.js"
  * Helper function to commit changes with a fallback message
  */
 async function commitWithFallback(cwd: string): Promise<void> {
-	const fallbackMessage = "chore: parallel mode task completion"
+	const fallbackMessage = "chore: 并行模式任务完成"
 	const git = simpleGit(cwd)
 
 	await git.commit(fallbackMessage)

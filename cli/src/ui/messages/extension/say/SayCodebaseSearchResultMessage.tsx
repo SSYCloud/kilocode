@@ -17,7 +17,7 @@ export const SayCodebaseSearchResultMessage: React.FC<MessageComponentProps> = (
 		return (
 			<Box marginY={1}>
 				<Text color={theme.semantic.info} bold>
-					{icon} Codebase Search Results (invalid data)
+					{icon} 代码搜索结果 (invalid data)
 				</Text>
 			</Box>
 		)
@@ -33,13 +33,13 @@ export const SayCodebaseSearchResultMessage: React.FC<MessageComponentProps> = (
 			marginY={1}>
 			<Box>
 				<Text color={theme.semantic.info} bold>
-					{icon} Codebase Search Results
+					{icon} 代码搜索结果
 				</Text>
 			</Box>
 
 			<Box marginTop={1}>
 				<Text color={theme.ui.text.dimmed} dimColor>
-					Found {results.length} result{results.length !== 1 ? "s" : ""}
+					找到 {results.length} result{results.length !== 1 ? "s" : ""}
 				</Text>
 			</Box>
 
@@ -55,7 +55,7 @@ export const SayCodebaseSearchResultMessage: React.FC<MessageComponentProps> = (
 					</Box>
 					<Box marginLeft={2}>
 						<Text color={theme.semantic.info} dimColor>
-							Score: {result.score.toFixed(2)}
+							匹配度: {result.score.toFixed(2)}
 						</Text>
 					</Box>
 				</Box>
@@ -64,7 +64,7 @@ export const SayCodebaseSearchResultMessage: React.FC<MessageComponentProps> = (
 			{results.length > 5 && (
 				<Box marginTop={1}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						... and {results.length - 5} more result{results.length - 5 !== 1 ? "s" : ""}
+						... {results.length - 5} 更多结果 {results.length - 5 !== 1 ? "s" : ""}
 					</Text>
 				</Box>
 			)}

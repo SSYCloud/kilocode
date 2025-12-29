@@ -872,7 +872,7 @@ core/
 **Typical Autocomplete Request**:
 
 ```
-Total: 200-500ms
+共: 200-500ms
 ├── Debounce wait: 150ms
 ├── Context gathering: 10-30ms
 ├── Prompt building: 5-10ms
@@ -883,7 +883,7 @@ Total: 200-500ms
 **Typical NextEdit Request**:
 
 ```
-Total: 500-2000ms
+共: 500-2000ms
 ├── Region calculation: 10-20ms
 ├── Context building: 20-50ms
 ├── LLM call: 400-1800ms

@@ -10,7 +10,7 @@ export const SayMcpServerRequestStartedMessage: React.FC<MessageComponentProps> 
 	const theme = useTheme()
 	return (
 		<Box marginY={1}>
-			<Text color={theme.semantic.info}>⚙ MCP Server Request in progress...</Text>
+			<Text color={theme.semantic.info}>⚙ MCP 服务请求...</Text>
 		</Box>
 	)
 }

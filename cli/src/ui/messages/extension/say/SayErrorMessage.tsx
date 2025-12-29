@@ -20,7 +20,7 @@ export const SayErrorMessage: React.FC<MessageComponentProps> = ({ message }) =>
 			marginY={1}>
 			<Box>
 				<Text color={theme.semantic.error} bold>
-					✖ Error
+					✖ 错误
 				</Text>
 			</Box>
 			{message.text && (

@@ -16,12 +16,12 @@ export const ToolSearchAndReplaceMessage: React.FC<ToolMessageProps> = ({ toolDa
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.ui.text.highlight} bold>
-					{icon} Search & Replace: {formatFilePath(toolData.path || "")}
+					{icon} 搜索 & 替换: {formatFilePath(toolData.path || "")}
 				</Text>
 				{toolData.isProtected && (
 					<Text color={theme.semantic.warning} dimColor>
 						{" "}
-						🔒 Protected
+						🔒 受保护
 					</Text>
 				)}
 			</Box>

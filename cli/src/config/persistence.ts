@@ -128,7 +128,7 @@ export async function loadConfig(): Promise<ConfigLoadResult> {
 			const envConfig = buildConfigFromEnv()
 
 			if (envConfig) {
-				logs.info("Using configuration from environment variables (ephemeral mode)", "ConfigPersistence")
+				logs.info("使用环境变量中的配置（临时模式）", "ConfigPersistence")
 
 				// Validate the env config
 				const validation = await validateConfig(envConfig)
@@ -149,7 +149,7 @@ export async function loadConfig(): Promise<ConfigLoadResult> {
 			// File doesn't exist, write default config directly without validation
 			// (DEFAULT_CONFIG may have empty credentials which is ok for initial setup)
 			await fs.writeFile(configFile, JSON.stringify(DEFAULT_CONFIG, null, 2))
-			logs.debug("Created default config file", "ConfigPersistence")
+			logs.debug("创建默认配置文件", "ConfigPersistence")
 
 			// Validate the default config
 			const validation = await validateConfig(DEFAULT_CONFIG)
@@ -169,7 +169,7 @@ export async function loadConfig(): Promise<ConfigLoadResult> {
 		// Validate merged config
 		const validation = await validateConfig(config)
 		if (!validation.valid) {
-			logs.error("Invalid config file", "ConfigPersistence", { errors: validation.errors })
+			logs.error("无效的配置文件", "ConfigPersistence", { errors: validation.errors })
 			// Return config with validation errors instead of throwing
 			return {
 				config,
@@ -187,7 +187,7 @@ export async function loadConfig(): Promise<ConfigLoadResult> {
 		}
 	} catch (error) {
 		// For errors (e.g., file read errors, JSON parse errors), log and throw
-		logs.error("Failed to load config", "ConfigPersistence", { error })
+		logs.error("加载配置失败", "ConfigPersistence", { error })
 		throw error
 	}
 }
@@ -206,9 +206,9 @@ export async function saveConfig(config: CLIConfig, skipValidation: boolean = fa
 
 		// Write config with pretty formatting
 		await fs.writeFile(configFile, JSON.stringify(config, null, 2))
-		logs.debug("Config saved successfully", "ConfigPersistence")
+		logs.debug("配置保存成功", "ConfigPersistence")
 	} catch (error) {
-		logs.error("Failed to save config", "ConfigPersistence", { error })
+		logs.error("配置保存失败", "ConfigPersistence", { error })
 		throw error
 	}
 }

@@ -23,7 +23,7 @@ export const SayUserEditTodosMessage: React.FC<MessageComponentProps> = ({ messa
 			marginY={1}>
 			<Box>
 				<Text color={theme.semantic.info} bold>
-					☐ User Edited Todos
+					☐ 用户编辑的待办事项
 				</Text>
 			</Box>
 

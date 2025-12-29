@@ -8,7 +8,7 @@ import openConfigFile from "../config/openConfig.js"
 export const configCommand: Command = {
 	name: "config",
 	aliases: ["c", "settings"],
-	description: "Open the CLI configuration file in your default editor",
+	description: "编辑配置文件",
 	usage: "/config",
 	examples: ["/config"],
 	category: "settings",
@@ -19,7 +19,7 @@ export const configCommand: Command = {
 		addMessage({
 			id: Date.now().toString(),
 			type: "system",
-			content: "Opening configuration file...",
+			content: "打开配置文件...",
 			ts: Date.now(),
 		})
 

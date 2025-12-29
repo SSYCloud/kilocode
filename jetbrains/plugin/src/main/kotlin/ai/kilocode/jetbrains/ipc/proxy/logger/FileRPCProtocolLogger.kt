@@ -175,7 +175,7 @@ class FileRPCProtocolLogger : IRPCProtocolLogger, Disposable {
             val logEntry = StringBuilder()
             logEntry.append("[$timestamp] ")
             logEntry.append("[$direction] ")
-            logEntry.append("[Total: ${totalLength.toString().padStart(7)}] ")
+            logEntry.append("[共: ${totalLength.toString().padStart(7)}] ")
             logEntry.append("[Len: ${msgLength.toString().padStart(5)}] ")
             logEntry.append("[${req.toString().padStart(5)}] ")
             logEntry.append("[$initiatorStr] ")

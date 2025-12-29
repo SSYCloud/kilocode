@@ -2,9 +2,9 @@
  * /tasks command - View and manage task history
  */
 
+import type { HistoryItem } from "@roo-code/types"
 import { generateMessage } from "../ui/utils/messages.js"
 import type { Command, ArgumentProviderContext, CommandContext } from "./core/types.js"
-import type { HistoryItem } from "@roo-code/types"
 import type { TaskHistoryData, TaskHistoryFilters } from "../state/atoms/taskHistory.js"
 
 /**
@@ -79,7 +79,7 @@ async function showTaskHistory(context: CommandContext, dataOverride?: TaskHisto
 		addMessage({
 			...generateMessage(),
 			type: "system",
-			content: "Loading task history...",
+			content: "加载任务历史...",
 		})
 		return
 	}
@@ -89,7 +89,7 @@ async function showTaskHistory(context: CommandContext, dataOverride?: TaskHisto
 		addMessage({
 			...generateMessage(),
 			type: "error",
-			content: `Failed to load task history: ${taskHistoryError}`,
+			content: `加载任务历史失败: ${taskHistoryError}`,
 		})
 		return
 	}
@@ -100,7 +100,7 @@ async function showTaskHistory(context: CommandContext, dataOverride?: TaskHisto
 		addMessage({
 			...generateMessage(),
 			type: "system",
-			content: "Loading task history...",
+			content: "加载任务历史...",
 		})
 		return
 	}
@@ -111,17 +111,17 @@ async function showTaskHistory(context: CommandContext, dataOverride?: TaskHisto
 		addMessage({
 			...generateMessage(),
 			type: "system",
-			content: "No tasks found in history.",
+			content: "没有任务历史.",
 		})
 		return
 	}
 
 	// Build the task list display
-	let content = `**Task History** (Page ${pageIndex + 1}/${pageCount}):\n\n`
+	let content = `**任务历史** (页 ${pageIndex + 1}/${pageCount}):\n\n`
 
 	historyItems.forEach((task: HistoryItem, index: number) => {
 		const taskNum = pageIndex * 10 + index + 1
-		const taskText = truncate(task.task || "Untitled task", 60)
+		const taskText = truncate(task.task || "未命名", 60)
 		const time = formatRelativeTime(task.ts || 0)
 		const cost = formatCost(task.totalCost || 0)
 		const totalTokens = (task.tokensIn || 0) + (task.tokensOut || 0)
@@ -157,7 +157,7 @@ async function searchTasks(context: CommandContext, query: string): Promise<void
 	addMessage({
 		...generateMessage(),
 		type: "system",
-		content: `Searching for "${query}"...`,
+		content: `查找 "${query}"...`,
 	})
 
 	try {
@@ -169,7 +169,7 @@ async function searchTasks(context: CommandContext, query: string): Promise<void
 		addMessage({
 			...generateMessage(),
 			type: "error",
-			content: `Failed to search tasks: ${error instanceof Error ? error.message : String(error)}`,
+			content: `查询任务失败: ${error instanceof Error ? error.message : String(error)}`,
 		})
 	}
 }
@@ -201,7 +201,7 @@ async function selectTask(context: CommandContext, taskId: string): Promise<void
 			{
 				id: `system-${now + 1}`,
 				type: "system",
-				content: `Switching to task ${taskId}...`,
+				content: `切换到任务 ${taskId}...`,
 				ts: 2,
 			},
 		])
@@ -216,7 +216,7 @@ async function selectTask(context: CommandContext, taskId: string): Promise<void
 		addMessage({
 			...generateMessage(),
 			type: "error",
-			content: `Failed to switch to task: ${error instanceof Error ? error.message : String(error)}`,
+			content: `切换任务失败: ${error instanceof Error ? error.message : String(error)}`,
 		})
 	}
 }
@@ -231,7 +231,7 @@ async function changePage(context: CommandContext, pageNum: string): Promise<voi
 		addMessage({
 			...generateMessage(),
 			type: "error",
-			content: "No task history loaded. Use /tasks to load history first.",
+			content: "未加载任务历史记录。请先使用 /tasks 命令加载历史记录。",
 		})
 		return
 	}
@@ -242,7 +242,7 @@ async function changePage(context: CommandContext, pageNum: string): Promise<voi
 		addMessage({
 			...generateMessage(),
 			type: "error",
-			content: `Invalid page number. Must be between 1 and ${taskHistoryData.pageCount}.`,
+			content: `无效的页数. 必须在 1 - ${taskHistoryData.pageCount}.`,
 		})
 		return
 	}
@@ -250,7 +250,7 @@ async function changePage(context: CommandContext, pageNum: string): Promise<voi
 	addMessage({
 		...generateMessage(),
 		type: "system",
-		content: `Loading page ${pageIndex + 1}...`,
+		content: `加载页 ${pageIndex + 1}...`,
 	})
 
 	try {
@@ -262,7 +262,7 @@ async function changePage(context: CommandContext, pageNum: string): Promise<voi
 		addMessage({
 			...generateMessage(),
 			type: "error",
-			content: `Failed to load page: ${error instanceof Error ? error.message : String(error)}`,
+			content: `加载页失败: ${error instanceof Error ? error.message : String(error)}`,
 		})
 	}
 }
@@ -276,7 +276,7 @@ async function nextPage(context: CommandContext): Promise<void> {
 		addMessage({
 			...generateMessage(),
 			type: "error",
-			content: "No task history loaded. Use /tasks to load history first.",
+			content: "未加载任务历史记录。请先使用 /tasks 命令加载历史记录。",
 		})
 		return
 	}
@@ -285,7 +285,7 @@ async function nextPage(context: CommandContext): Promise<void> {
 		addMessage({
 			...generateMessage(),
 			type: "system",
-			content: "Already on the last page.",
+			content: "已经翻到最后一页了。",
 		})
 		return
 	}
@@ -293,7 +293,7 @@ async function nextPage(context: CommandContext): Promise<void> {
 	addMessage({
 		...generateMessage(),
 		type: "system",
-		content: "Loading next page...",
+		content: "加载下一页...",
 	})
 
 	try {
@@ -305,7 +305,7 @@ async function nextPage(context: CommandContext): Promise<void> {
 		addMessage({
 			...generateMessage(),
 			type: "error",
-			content: `Failed to load next page: ${error instanceof Error ? error.message : String(error)}`,
+			content: `加载下一页失败: ${error instanceof Error ? error.message : String(error)}`,
 		})
 	}
 }
@@ -320,7 +320,7 @@ async function previousPage(context: CommandContext): Promise<void> {
 		addMessage({
 			...generateMessage(),
 			type: "error",
-			content: "No task history loaded. Use /tasks to load history first.",
+			content: "未加载任务历史记录。请先使用 /tasks 命令加载历史记录。",
 		})
 		return
 	}
@@ -329,7 +329,7 @@ async function previousPage(context: CommandContext): Promise<void> {
 		addMessage({
 			...generateMessage(),
 			type: "system",
-			content: "Already on the first page.",
+			content: "已经上首页了。",
 		})
 		return
 	}
@@ -337,7 +337,7 @@ async function previousPage(context: CommandContext): Promise<void> {
 	addMessage({
 		...generateMessage(),
 		type: "system",
-		content: "Loading previous page...",
+		content: "加载上一页...",
 	})
 
 	try {
@@ -349,7 +349,7 @@ async function previousPage(context: CommandContext): Promise<void> {
 		addMessage({
 			...generateMessage(),
 			type: "error",
-			content: `Failed to load previous page: ${error instanceof Error ? error.message : String(error)}`,
+			content: `加载上一页失败: ${error instanceof Error ? error.message : String(error)}`,
 		})
 	}
 }
@@ -367,7 +367,7 @@ async function changeSortOrder(context: CommandContext, sortOption: string): Pro
 		addMessage({
 			...generateMessage(),
 			type: "error",
-			content: `Invalid sort option. Valid options: ${validSorts.join(", ")}`,
+			content: `无效的排序选项. 可用: ${validSorts.join(", ")}`,
 		})
 		return
 	}
@@ -375,7 +375,7 @@ async function changeSortOrder(context: CommandContext, sortOption: string): Pro
 	addMessage({
 		...generateMessage(),
 		type: "system",
-		content: `Sorting by ${sortOption}...`,
+		content: `排序项 ${sortOption}...`,
 	})
 
 	try {
@@ -387,7 +387,7 @@ async function changeSortOrder(context: CommandContext, sortOption: string): Pro
 		addMessage({
 			...generateMessage(),
 			type: "error",
-			content: `Failed to change sort order: ${error instanceof Error ? error.message : String(error)}`,
+			content: `更改排序顺序失败: ${error instanceof Error ? error.message : String(error)}`,
 		})
 	}
 }
@@ -404,29 +404,29 @@ async function changeFilter(context: CommandContext, filterOption: string): Prom
 	switch (filterOption) {
 		case "current":
 			filterUpdate = { workspace: "current" }
-			loadingMessage = "Filtering to current workspace..."
+			loadingMessage = "筛选到当前工作区..."
 			break
 
 		case "all":
 			filterUpdate = { workspace: "all" }
-			loadingMessage = "Showing all workspaces..."
+			loadingMessage = "显示所有工作区..."
 			break
 
 		case "favorites":
 			filterUpdate = { favoritesOnly: true }
-			loadingMessage = "Showing favorites only..."
+			loadingMessage = "仅显示收藏..."
 			break
 
 		case "all-tasks":
 			filterUpdate = { favoritesOnly: false }
-			loadingMessage = "Showing all tasks..."
+			loadingMessage = "显示所有任务..."
 			break
 
 		default:
 			addMessage({
 				...generateMessage(),
 				type: "error",
-				content: "Invalid filter option. Valid options: current, all, favorites, all-tasks",
+				content: "无效的过滤项. 可用: current, all, favorites, all-tasks",
 			})
 			return
 	}
@@ -446,7 +446,7 @@ async function changeFilter(context: CommandContext, filterOption: string): Prom
 		addMessage({
 			...generateMessage(),
 			type: "error",
-			content: `Failed to change filter: ${error instanceof Error ? error.message : String(error)}`,
+			content: `切换过滤失败: ${error instanceof Error ? error.message : String(error)}`,
 		})
 	}
 }
@@ -491,17 +491,17 @@ async function sortOptionAutocompleteProvider(_context: ArgumentProviderContext)
  */
 async function filterOptionAutocompleteProvider(_context: ArgumentProviderContext) {
 	return [
-		{ value: "current", description: "Current workspace only", matchScore: 1.0, highlightedValue: "current" },
-		{ value: "all", description: "All workspaces", matchScore: 1.0, highlightedValue: "all" },
-		{ value: "favorites", description: "Favorites only", matchScore: 1.0, highlightedValue: "favorites" },
-		{ value: "all-tasks", description: "All tasks (no filter)", matchScore: 1.0, highlightedValue: "all-tasks" },
+		{ value: "current", description: "进当前工作区", matchScore: 1.0, highlightedValue: "current" },
+		{ value: "all", description: "所有工作区", matchScore: 1.0, highlightedValue: "all" },
+		{ value: "favorites", description: "仅收藏", matchScore: 1.0, highlightedValue: "favorites" },
+		{ value: "all-tasks", description: "所有任务", matchScore: 1.0, highlightedValue: "all-tasks" },
 	]
 }
 
 export const tasksCommand: Command = {
 	name: "tasks",
 	aliases: ["t", "history"],
-	description: "View and manage task history",
+	description: "查看和管理任务历史",
 	usage: "/tasks [subcommand] [args]",
 	examples: [
 		"/tasks",
@@ -518,21 +518,21 @@ export const tasksCommand: Command = {
 	arguments: [
 		{
 			name: "subcommand",
-			description: "Subcommand: search, select, page, next, prev, sort, filter",
+			description: "子命令: search, select, page, next, prev, sort, filter",
 			required: false,
 			values: [
-				{ value: "search", description: "Search tasks by query" },
-				{ value: "select", description: "Switch to a specific task" },
-				{ value: "page", description: "Go to a specific page" },
-				{ value: "next", description: "Go to next page" },
-				{ value: "prev", description: "Go to previous page" },
-				{ value: "sort", description: "Change sort order" },
-				{ value: "filter", description: "Filter tasks" },
+				{ value: "search", description: "查询任务" },
+				{ value: "select", description: "切换到任务" },
+				{ value: "page", description: "导航到页" },
+				{ value: "next", description: "下一页" },
+				{ value: "prev", description: "上一页" },
+				{ value: "sort", description: "当前排序" },
+				{ value: "filter", description: "过滤任务" },
 			],
 		},
 		{
 			name: "argument",
-			description: "Argument for the subcommand",
+			description: "子命令参数",
 			required: false,
 			conditionalProviders: [
 				{
@@ -600,7 +600,7 @@ export const tasksCommand: Command = {
 				context.addMessage({
 					...generateMessage(),
 					type: "error",
-					content: `Unknown subcommand "${subcommand}". Available: search, select, page, next, prev, sort, filter`,
+					content: `未知子命令 "${subcommand}". 可用: search, select, page, next, prev, sort, filter`,
 				})
 		}
 	},

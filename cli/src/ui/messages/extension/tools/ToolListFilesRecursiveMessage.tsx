@@ -17,12 +17,12 @@ export const ToolListFilesRecursiveMessage: React.FC<ToolMessageProps> = ({ tool
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.actions.pending} bold>
-					{icon} List Files (Recursive): {formatFilePath(toolData.path || "")}
+					{icon} 文件列表（递归）: {formatFilePath(toolData.path || "")}
 				</Text>
 				{toolData.isOutsideWorkspace && (
 					<Text color={theme.semantic.warning} dimColor>
 						{" "}
-						⚠ Outside workspace
+						⚠ 工作区外
 					</Text>
 				)}
 			</Box>
@@ -43,7 +43,7 @@ export const ToolListFilesRecursiveMessage: React.FC<ToolMessageProps> = ({ tool
 					))}
 					{files.length > 15 && (
 						<Text color={theme.ui.text.dimmed} dimColor>
-							... ({files.length - 15} more items)
+							... ({files.length - 15} 项)
 						</Text>
 					)}
 				</Box>
@@ -51,7 +51,7 @@ export const ToolListFilesRecursiveMessage: React.FC<ToolMessageProps> = ({ tool
 
 			<Box marginLeft={2} marginTop={1}>
 				<Text color={theme.ui.text.dimmed} dimColor>
-					Total: {files.length} items
+					共: {files.length} 项
 				</Text>
 			</Box>
 		</Box>

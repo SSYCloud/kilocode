@@ -55,7 +55,7 @@ export async function validateConfig(config: unknown): Promise<ValidationResult>
 	} catch (error) {
 		return {
 			valid: false,
-			errors: [`Validation error: ${error instanceof Error ? error.message : String(error)}`],
+			errors: [`验证错误: ${error instanceof Error ? error.message : String(error)}`],
 		}
 	}
 }
@@ -66,7 +66,7 @@ export async function validateConfig(config: unknown): Promise<ValidationResult>
 function validateRequiredField(provider: ProviderConfig, fieldName: string, errors: string[]): void {
 	const value = provider[fieldName]
 	if (!value || (typeof value === "string" && value.length === 0)) {
-		errors.push(`${fieldName} is required and cannot be empty for selected provider`)
+		errors.push(`${fieldName} 对于所选提供商，此项为必填项，不能为空。`)
 	}
 }
 
@@ -83,9 +83,7 @@ function handleSpecialValidations(provider: ProviderConfig, errors: string[]): v
 			const hasKeyFile = keyFile && keyFile.length > 0
 
 			if (!hasJsonCredentials && !hasKeyFile) {
-				errors.push(
-					"Either vertexJsonCredentials or vertexKeyFile is required and cannot be empty for selected provider",
-				)
+				errors.push("vertexJsonCredentials 和 vertexKeyFile 对于所选提供商，此项为必填项，不能为空。")
 			}
 
 			// These fields are always required for vertex
@@ -98,13 +96,13 @@ function handleSpecialValidations(provider: ProviderConfig, errors: string[]): v
 		case "vscode-lm": {
 			const selector = provider.vsCodeLmModelSelector as { vendor?: string; family?: string } | undefined
 			if (!selector) {
-				errors.push("vsCodeLmModelSelector is required for selected provider")
+				errors.push("vsCodeLmModelSelector 对于所选提供商，此项为必填项，不能为空。")
 			} else {
 				if (!selector.vendor || selector.vendor.length === 0) {
-					errors.push("vsCodeLmModelSelector.vendor is required and cannot be empty for selected provider")
+					errors.push("vsCodeLmModelSelector.vendor 对于所选提供商，此项为必填项，不能为空。")
 				}
 				if (!selector.family || selector.family.length === 0) {
-					errors.push("vsCodeLmModelSelector.family is required and cannot be empty for selected provider")
+					errors.push("vsCodeLmModelSelector.family 对于所选提供商，此项为必填项，不能为空。")
 				}
 			}
 			break
@@ -113,7 +111,7 @@ function handleSpecialValidations(provider: ProviderConfig, errors: string[]): v
 		case "virtual-quota-fallback": {
 			const profiles = provider.profiles as unknown[] | undefined
 			if (!profiles || !Array.isArray(profiles) || profiles.length === 0) {
-				errors.push("profiles is required and must be a non-empty array for selected provider")
+				errors.push("所选提供商的配置文件为必填项，且必须为非空数组。")
 			}
 			break
 		}
@@ -167,7 +165,7 @@ export function validateSelectedProvider(config: CLIConfig): ValidationResult {
 	if (!config.provider) {
 		return {
 			valid: false,
-			errors: ["No provider selected in configuration"],
+			errors: ["配置中没有选择供应商"],
 		}
 	}
 
@@ -176,7 +174,7 @@ export function validateSelectedProvider(config: CLIConfig): ValidationResult {
 	if (!selectedProvider) {
 		return {
 			valid: false,
-			errors: [`Selected provider '${config.provider}' not found in providers list`],
+			errors: [`供应商 '${config.provider}' 在供应商列表中未找到`],
 		}
 	}
 

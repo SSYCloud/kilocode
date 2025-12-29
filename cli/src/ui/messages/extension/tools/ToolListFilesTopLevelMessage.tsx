@@ -22,7 +22,7 @@ export const ToolListFilesTopLevelMessage: React.FC<ToolMessageProps> = ({ toolD
 				{toolData.isOutsideWorkspace && (
 					<Text color={theme.semantic.warning} dimColor>
 						{" "}
-						⚠ Outside workspace
+						⚠ 工作区外
 					</Text>
 				)}
 			</Box>
@@ -51,7 +51,7 @@ export const ToolListFilesTopLevelMessage: React.FC<ToolMessageProps> = ({ toolD
 
 			<Box marginLeft={2} marginTop={1}>
 				<Text color={theme.ui.text.dimmed} dimColor>
-					Total: {files.length} items
+					共: {files.length} items
 				</Text>
 			</Box>
 		</Box>

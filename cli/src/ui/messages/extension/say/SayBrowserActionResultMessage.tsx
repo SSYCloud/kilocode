@@ -13,7 +13,7 @@ export const SayBrowserActionResultMessage: React.FC<MessageComponentProps> = ({
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.semantic.info} bold>
-					🌐 Browser Action Result
+					🌐 操作结果
 				</Text>
 			</Box>
 

@@ -7,6 +7,7 @@ This guide provides detailed information on how to configure each provider in Ki
 - [Introduction](#introduction)
 - [Configuration Methods](#configuration-methods)
 - [Provider Details](#provider-details)
+	- [胜算云](#shengsuanyun)
     - [Kilo Code](#kilocode)
     - [Anthropic](#anthropic)
     - [OpenAI Native](#openai-native)
@@ -65,6 +66,38 @@ You can configure providers using:
 ---
 
 ## Provider Details
+
+### shengsuanyun
+
+The official Kilo Code provider for accessing Kilo Code's managed AI services.
+
+**Description**: Access Kilo Code's managed AI infrastructure with support for multiple models and organizations.
+
+**Required Fields**:
+
+- `shengSuanYunAPIKey` (password): Your 胜算云 API Key
+- `shengSuanYunModel` (text): The model to use (default: `anthropic/claude-sonnet-4.5`)
+- `shengSuanYunToken` (password): Your Kilo Code authentication token
+
+**Example Configuration**:
+
+```json
+{
+	"id": "default",
+	"provider": "shengsuanyun",
+	"shengSuanYunAPIKey": "your-API-Key",
+	"shengSuanYunModel": "anthropic/claude-sonnet-4.5",
+	"shengSuanYunToken": "your-token-here",
+}
+```
+
+**Default Model**: `anthropic/claude-sonnet-4.5`
+
+**Notes**:
+
+- shengSuanYunToken config for accout info.
+
+---
 
 ### kilocode
 

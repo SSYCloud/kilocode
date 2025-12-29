@@ -23,7 +23,7 @@ export const AskUseMcpServerMessage: React.FC<MessageComponentProps> = ({ messag
 			return (
 				<Box marginY={1}>
 					<Text color={theme.semantic.warning} bold>
-						{icon} MCP Server Request (invalid data)
+						{icon} MCP 服务调用 (无效数据)
 					</Text>
 				</Box>
 			)
@@ -46,12 +46,12 @@ export const AskUseMcpServerMessage: React.FC<MessageComponentProps> = ({ messag
 				</Box>
 
 				<Box marginLeft={2} marginTop={1}>
-					<Text color={theme.semantic.info}>Server: {mcpData.serverName}</Text>
+					<Text color={theme.semantic.info}>服务: {mcpData.serverName}</Text>
 				</Box>
 
 				{isToolUse && mcpData.toolName && (
 					<Box marginLeft={2}>
-						<Text color={theme.ui.text.primary}>Tool: {mcpData.toolName}</Text>
+						<Text color={theme.ui.text.primary}>工具: {mcpData.toolName}</Text>
 					</Box>
 				)}
 
@@ -66,7 +66,7 @@ export const AskUseMcpServerMessage: React.FC<MessageComponentProps> = ({ messag
 						{/* Arguments metadata */}
 						<Box marginLeft={2} marginTop={1}>
 							<Text color={theme.ui.text.dimmed} dimColor>
-								Arguments ({buildMetadataString(formattedArgs)}):
+								参数 ({buildMetadataString(formattedArgs)}):
 							</Text>
 						</Box>
 
@@ -97,7 +97,7 @@ export const AskUseMcpServerMessage: React.FC<MessageComponentProps> = ({ messag
 				{message.isAnswered && (
 					<Box marginLeft={2} marginTop={1}>
 						<Text color={theme.ui.text.dimmed} dimColor>
-							✓ Answered
+							✓ 已回答
 						</Text>
 					</Box>
 				)}
@@ -109,11 +109,11 @@ export const AskUseMcpServerMessage: React.FC<MessageComponentProps> = ({ messag
 			<Box flexDirection="column" marginY={1}>
 				<Box>
 					<Text color={theme.semantic.error} bold>
-						{icon} MCP Server Request (Error displaying content)
+						{icon} MCP 服务请求 (Error displaying content)
 					</Text>
 				</Box>
 				<Box marginLeft={2} marginTop={1}>
-					<Text color={theme.ui.text.dimmed}>An error occurred while formatting the request.</Text>
+					<Text color={theme.ui.text.dimmed}>格式化请求时发生错误。</Text>
 				</Box>
 			</Box>
 		)

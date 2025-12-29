@@ -19,7 +19,7 @@ export const AskToolMessage: React.FC<MessageComponentProps> = ({ message }) => 
 		return (
 			<Box marginY={1}>
 				<Text color={theme.semantic.warning} bold>
-					⚙ Tool Request (invalid data)
+					⚙ 工具调用 (无效数据)
 				</Text>
 			</Box>
 		)
@@ -31,20 +31,20 @@ export const AskToolMessage: React.FC<MessageComponentProps> = ({ message }) => 
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.semantic.warning} bold>
-					{icon} Tool Request: {toolData.tool}
+					{icon} 工具调用: {toolData.tool}
 				</Text>
 			</Box>
 
 			{toolData.path && (
 				<Box marginLeft={2} marginTop={1}>
-					<Text color={theme.semantic.info}>Path: {toolData.path}</Text>
+					<Text color={theme.semantic.info}>路径: {toolData.path}</Text>
 				</Box>
 			)}
 
 			{toolData.reason && (
 				<Box marginLeft={2}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						Reason: {toolData.reason}
+						推理: {toolData.reason}
 					</Text>
 				</Box>
 			)}
@@ -67,7 +67,7 @@ export const AskToolMessage: React.FC<MessageComponentProps> = ({ message }) => 
 			{message.isAnswered && (
 				<Box marginLeft={2} marginTop={1}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						✓ Answered
+						✓ 已回答
 					</Text>
 				</Box>
 			)}

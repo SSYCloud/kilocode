@@ -28,7 +28,7 @@ export const AskCheckpointRestoreMessage: React.FC<MessageComponentProps> = ({ m
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.semantic.warning} bold>
-					{icon} Checkpoint Restore
+					{icon} 检查点恢复
 				</Text>
 			</Box>
 
@@ -39,7 +39,7 @@ export const AskCheckpointRestoreMessage: React.FC<MessageComponentProps> = ({ m
 			{message.isAnswered && (
 				<Box marginLeft={2} marginTop={1}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						✓ Answered
+						✓ 已回答
 					</Text>
 				</Box>
 			)}

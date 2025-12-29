@@ -337,7 +337,7 @@ describe("/model command", () => {
 			await modelCommand.handler(mockContext)
 
 			const message = addMessageMock.mock.calls[0][0]
-			expect(message.content).toContain("Total:")
+			expect(message.content).toContain("共:")
 			expect(message.content).toContain("2 models")
 		})
 

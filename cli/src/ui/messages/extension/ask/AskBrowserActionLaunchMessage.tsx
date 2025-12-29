@@ -26,7 +26,7 @@ export const AskBrowserActionLaunchMessage: React.FC<MessageComponentProps> = ({
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.semantic.warning} bold>
-					{icon} Browser Action Request
+					{icon} 浏览器操作请求
 				</Text>
 			</Box>
 
@@ -39,7 +39,7 @@ export const AskBrowserActionLaunchMessage: React.FC<MessageComponentProps> = ({
 			{message.isAnswered && (
 				<Box marginLeft={2} marginTop={1}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						✓ Answered
+						✓ 已回答
 					</Text>
 				</Box>
 			)}

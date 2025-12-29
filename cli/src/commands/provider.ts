@@ -17,7 +17,7 @@ async function showCurrentProvider(context: CommandContext): Promise<void> {
 		addMessage({
 			id: Date.now().toString(),
 			type: "error",
-			content: "No provider configured. Please configure a provider first.",
+			content: "未配置服务提供商。请先配置服务提供商。",
 			ts: Date.now(),
 		})
 		return
@@ -26,7 +26,7 @@ async function showCurrentProvider(context: CommandContext): Promise<void> {
 	const providerLabel = getProviderLabel(currentProvider.provider)
 	const totalProviders = config.providers.length
 
-	let content = `**Current Provider:**\n`
+	let content = `**当前供应商:**\n`
 	content += `  ID: ${currentProvider.id}\n`
 	content += `  Type: ${providerLabel}\n`
 
@@ -38,14 +38,14 @@ async function showCurrentProvider(context: CommandContext): Promise<void> {
 	})
 
 	if (currentModelId) {
-		content += `  Model: ${currentModelId}\n`
+		content += `  模型: ${currentModelId}\n`
 	}
 
-	content += `  Total Configured: ${totalProviders}\n`
+	content += `  共配置: ${totalProviders}\n`
 
 	content += `\n**Commands:**\n`
-	content += `  /provider list - List all configured providers\n`
-	content += `  /provider select <provider-id> - Switch to a different provider\n`
+	content += `  /provider list - 列出所有已配置的提供程序\n`
+	content += `  /provider select <provider-id> - 切换供应商\n`
 
 	addMessage({
 		id: Date.now().toString(),
@@ -65,18 +65,18 @@ async function listProviders(context: CommandContext): Promise<void> {
 		addMessage({
 			id: Date.now().toString(),
 			type: "system",
-			content: "No providers configured. Please configure a provider first.",
+			content: "未配置任何提供商。请先配置提供商。",
 			ts: Date.now(),
 		})
 		return
 	}
 
-	let content = `**Configured Providers:**\n\n`
+	let content = `**配置供应商:**\n\n`
 
 	for (const provider of config.providers) {
 		const isCurrent = currentProvider?.id === provider.id
 		const prefix = isCurrent ? "⭐ " : "  "
-		const suffix = isCurrent ? " (current)" : ""
+		const suffix = isCurrent ? " (当前)" : ""
 		const providerLabel = getProviderLabel(provider.provider)
 
 		content += `${prefix}**${provider.id}**${suffix}\n`
@@ -85,14 +85,14 @@ async function listProviders(context: CommandContext): Promise<void> {
 		// Show model information if available
 		const modelInfo = getModelIdForProvider(provider)
 		if (modelInfo) {
-			content += `   Model: ${modelInfo}\n`
+			content += `   模型: ${modelInfo}\n`
 		}
 
 		content += `\n`
 	}
 
-	content += `**Total:** ${config.providers.length} provider${config.providers.length !== 1 ? "s" : ""}\n`
-	content += `\nUse \`/provider select <provider-id>\` to switch providers\n`
+	content += `**共:** ${config.providers.length} 供应商 ${config.providers.length !== 1 ? "s" : ""}\n`
+	content += `使用 \`/provider 选择 <provider-id>\` 切换供应商\n`
 
 	addMessage({
 		id: Date.now().toString(),
@@ -114,7 +114,7 @@ async function selectProvider(context: CommandContext, providerId: string): Prom
 		addMessage({
 			id: Date.now().toString(),
 			type: "error",
-			content: `Provider "${providerId}" not found. Use \`/provider list\` to see available providers.`,
+			content: `供应商 "${providerId}" 未找到. 使用 \`/provider list\` 查看可用供应商.`,
 			ts: Date.now(),
 		})
 		return
@@ -126,11 +126,11 @@ async function selectProvider(context: CommandContext, providerId: string): Prom
 		const providerLabel = getProviderLabel(provider.provider)
 		const modelInfo = getModelIdForProvider(provider)
 
-		let content = `✓ Switched to **${providerId}**\n`
+		let content = `✓ 切换到 **${providerId}**\n`
 		content += `  Type: ${providerLabel}\n`
 
 		if (modelInfo) {
-			content += `  Model: ${modelInfo}\n`
+			content += `  模型: ${modelInfo}\n`
 		}
 
 		addMessage({
@@ -143,7 +143,7 @@ async function selectProvider(context: CommandContext, providerId: string): Prom
 		addMessage({
 			id: Date.now().toString(),
 			type: "error",
-			content: `Failed to switch provider: ${error instanceof Error ? error.message : String(error)}`,
+			content: `切换供应商失败: ${error instanceof Error ? error.message : String(error)}`,
 			ts: Date.now(),
 		})
 	}
@@ -180,7 +180,7 @@ async function providerAutocompleteProvider(context: ArgumentProviderContext) {
 export const providerCommand: Command = {
 	name: "provider",
 	aliases: ["prov"],
-	description: "View and manage providers",
+	description: "查看和管理供应商",
 	usage: "/provider [subcommand] [args]",
 	examples: ["/provider", "/provider list", "/provider select my-anthropic"],
 	category: "settings",
@@ -188,11 +188,11 @@ export const providerCommand: Command = {
 	arguments: [
 		{
 			name: "subcommand",
-			description: "Subcommand: list, select",
+			description: "子命令: list, select",
 			required: false,
 			values: [
-				{ value: "list", description: "List all configured providers" },
-				{ value: "select", description: "Switch to a different provider" },
+				{ value: "list", description: "列出所有已配置的提供程序" },
+				{ value: "select", description: "切换不同的供应商" },
 			],
 		},
 		{
@@ -248,7 +248,7 @@ export const providerCommand: Command = {
 				context.addMessage({
 					id: Date.now().toString(),
 					type: "error",
-					content: `Unknown subcommand "${subcommand}". Available: list, select`,
+					content: `未知子命令 "${subcommand}". 可用: list, select`,
 					ts: Date.now(),
 				})
 		}

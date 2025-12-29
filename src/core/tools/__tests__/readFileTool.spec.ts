@@ -804,7 +804,7 @@ describe("read_file tool XML output structure", () => {
 					{ path: "test/small1.png", sizeKB: 2048 }, // 2MB
 					{ path: "test/small2.jpg", sizeKB: 3072 }, // 3MB
 					{ path: "test/small3.gif", sizeKB: 4096 }, // 4MB
-				] // Total: 9MB (under 20MB limit)
+				] // 共: 9MB (under 20MB limit)
 
 				// Mock file stats for each image
 				fsPromises.stat = vi.fn().mockImplementation((filePath) => {

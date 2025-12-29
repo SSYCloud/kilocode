@@ -22,8 +22,8 @@ export const AskPaymentRequiredMessage: React.FC<MessageComponentProps> = ({ mes
 
 	// Parse JSON data with error handling and fallback values
 	let data: PaymentRequiredData = {
-		title: "Payment Required",
-		message: "Credits are required to continue.",
+		title: "需要付款",
+		message: "需要获得信用卡信息。",
 		balance: 0,
 		buyCreditsUrl: "",
 	}
@@ -60,7 +60,7 @@ export const AskPaymentRequiredMessage: React.FC<MessageComponentProps> = ({ mes
 			{/* Balance display in bordered box */}
 			<Box marginTop={1} borderStyle="single" borderColor={theme.semantic.info} paddingX={1} paddingY={0}>
 				<Text color={theme.semantic.info} bold>
-					Current Balance: ${data.balance.toFixed(2)}
+					余额: ${data.balance.toFixed(2)}
 				</Text>
 			</Box>
 
@@ -68,7 +68,7 @@ export const AskPaymentRequiredMessage: React.FC<MessageComponentProps> = ({ mes
 			{data.buyCreditsUrl && (
 				<Box flexDirection="column" marginTop={1}>
 					<Link url={data.buyCreditsUrl}>
-						<Text color={theme.ui.text.primary}>Add Credits:</Text>
+						<Text color={theme.ui.text.primary}>充值:</Text>
 						<Text color={theme.semantic.info}> {data.buyCreditsUrl}</Text>
 					</Link>
 				</Box>

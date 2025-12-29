@@ -23,7 +23,7 @@ export const AskMistakeLimitMessage: React.FC<MessageComponentProps> = ({ messag
 			marginY={1}>
 			<Box>
 				<Text color={theme.semantic.error} bold>
-					{icon} Mistake Limit Reached
+					{icon} 错误次数已达上限
 				</Text>
 			</Box>
 			{message.text && (
@@ -34,7 +34,7 @@ export const AskMistakeLimitMessage: React.FC<MessageComponentProps> = ({ messag
 			{message.isAnswered && (
 				<Box marginTop={1}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						✓ Answered
+						✓ 已回答
 					</Text>
 				</Box>
 			)}

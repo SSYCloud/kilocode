@@ -20,7 +20,7 @@ export const SayReasoningMessage: React.FC<MessageComponentProps> = ({ message }
 			marginY={1}>
 			<Box>
 				<Text color={theme.ui.text.highlight} bold>
-					💭 Reasoning
+					💭 推理
 				</Text>
 			</Box>
 			{message.text && (

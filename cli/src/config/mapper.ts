@@ -127,6 +127,8 @@ export function getModelIdForProvider(provider: ProviderConfig): string {
 		case "human-relay":
 		case "fake-ai":
 			return ""
+		case "shengsuanyun":
+			return provider.shengSuanYunModelId || ""
 	}
 }
 

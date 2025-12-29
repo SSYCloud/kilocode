@@ -7,7 +7,7 @@ import type { Command } from "./core/types.js"
 export const exitCommand: Command = {
 	name: "exit",
 	aliases: ["quit", "q"],
-	description: "Exit the CLI - in parallel mode, will commit changes before exiting",
+	description: "退出 - 并行模式下, 推出前会提交更改",
 	usage: "/exit",
 	examples: ["/exit"],
 	category: "system",

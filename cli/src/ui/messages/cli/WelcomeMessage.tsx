@@ -9,10 +9,7 @@ interface WelcomeMessageProps {
 	options?: WelcomeMessageOptions | undefined
 }
 
-const DEFAULT_INSTRUCTIONS = [
-	"Type a message to start chatting, or use /help to see available commands.",
-	"Commands start with / (e.g., /help, /mode, /model)",
-]
+const DEFAULT_INSTRUCTIONS = ["开始对话, or 输入 /help 查询命令", "命令以 / 开头 (e.g., /help, /mode, /model)"]
 
 export const WelcomeMessage: React.FC<WelcomeMessageProps> = ({ options = {} }) => {
 	const theme = useTheme()
@@ -43,17 +40,17 @@ export const WelcomeMessage: React.FC<WelcomeMessageProps> = ({ options = {} }) 
 			{showParallelMessage && (
 				<Box flexDirection="column" gap={1}>
 					<Text color={theme.ui.text.primary}>
-						You are working on branch{" "}
+						您正在分支上工作{" "}
 						<Text bold color={theme.ui.text.highlight}>
 							{options.worktreeBranch}
 						</Text>{" "}
-						in parallel mode. Changes will be committed when you /exit.
+						并行运行。当您使用 /exit 命令退出时，更改将被提交。
 					</Text>
 					<Box flexDirection="column">
 						<Text color={theme.ui.text.primary}>
-							In case of an error, your pending changes are saved in <Text bold>{options.workspace}</Text>
+							如果出现错误，您待处理的更改将保存在…… <Text bold>{options.workspace}</Text>
 						</Text>
-						<Text>Commits in that directory will be visible in your main repository directory.</Text>
+						<Text>该目录中的提交将在您的主仓库目录中可见。</Text>
 					</Box>
 				</Box>
 			)}

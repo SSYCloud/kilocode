@@ -39,6 +39,7 @@ async function ensureRouterModels(context: CommandContext): Promise<boolean> {
 		"io-intelligence",
 		"vercel-ai-gateway",
 		"ovhcloud",
+		"shengsuanyun",
 	].includes(routerName)
 
 	if (!needsRouterModels) {
@@ -407,7 +408,7 @@ async function listModels(context: CommandContext, filter?: string): Promise<voi
 		content += `\n`
 	}
 
-	content += `**Total:** ${modelIds.length} model${modelIds.length !== 1 ? "s" : ""}\n`
+	content += `**共:** ${modelIds.length} model${modelIds.length !== 1 ? "s" : ""}\n`
 	content += `\nUse \`/model select <model>\` to switch models\n`
 	content += `Use \`/model info <model>\` for detailed information\n`
 

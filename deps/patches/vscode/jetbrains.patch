@@ -1709,7 +1709,7 @@ index 00000000000..1b4fc52e001
 +			
 +			let logEntry = `[${timestamp}] `
 +			logEntry += `[${direction}] `
-+			logEntry += `[Total: ${String(totalLength).padStart(7)}] `
++			logEntry += `[共: ${String(totalLength).padStart(7)}] `
 +			logEntry += `[Len: ${String(msgLength).padStart(5)}] `
 +			logEntry += `[${String(req).padStart(5)}] `
 +			logEntry += `[${initiatorStr}] `

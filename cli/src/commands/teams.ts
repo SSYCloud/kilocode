@@ -24,23 +24,22 @@ function normalizeTeamName(name: string): string {
  */
 async function listTeams(context: CommandContext): Promise<void> {
 	const { currentProvider, addMessage, profileData, profileLoading } = context
-
 	// Check if user is authenticated with Kilocode
-	if (!currentProvider || currentProvider.provider !== "kilocode") {
+	if (!currentProvider || currentProvider.provider !== "shengsuanyun") {
 		addMessage({
 			id: Date.now().toString(),
 			type: "error",
-			content: "Teams command requires Kilocode provider. Please configure Kilocode as your provider.",
+			content: "Teams 命令需要 胜算云 提供程序。请将 胜算云 配置为您的提供程序。",
 			ts: Date.now(),
 		})
 		return
 	}
 
-	if (!currentProvider.kilocodeToken) {
+	if (!currentProvider.shengSuanYunToken) {
 		addMessage({
 			id: Date.now().toString(),
 			type: "error",
-			content: "Not authenticated. Please configure your Kilocode token first.",
+			content: "未通过身份验证。请先配置您的 胜算云 Token。",
 			ts: Date.now(),
 		})
 		return
@@ -51,7 +50,7 @@ async function listTeams(context: CommandContext): Promise<void> {
 		addMessage({
 			id: Date.now().toString(),
 			type: "system",
-			content: "Loading available teams...",
+			content: "加载 Teams...",
 			ts: Date.now(),
 		})
 		return
@@ -64,27 +63,27 @@ async function listTeams(context: CommandContext): Promise<void> {
 		addMessage({
 			id: Date.now().toString(),
 			type: "system",
-			content: `You're currently not a part of any Kilo Code teams. Go to https://app.kilocode.ai/get-started/teams to get started with Kilo Code for Teams!`,
+			content: `您目前不属于任何 Kilo Code 团队. Go to https://app.kilocode.ai/get-started/teams to get started with Kilo Code for Teams!`,
 			ts: Date.now(),
 		})
 		return
 	}
 
-	let content = "**Available Teams:**\n\n"
+	let content = "**可用 Teams:**\n\n"
 
 	// Add Personal option
 	const isPersonal = !currentOrgId
-	content += `${isPersonal ? "→ " : "  "}Personal${isPersonal ? " (current)" : ""}\n`
+	content += `${isPersonal ? "→ " : "  "} 个人 ${isPersonal ? " (当前)" : ""}\n`
 
 	// Add organizations
 	for (const org of organizations) {
 		const isCurrent = org.id === currentOrgId
-		content += `${isCurrent ? "→ " : "  "}${normalizeTeamName(org.name)}${isCurrent ? " (current)" : ""}\n`
+		content += `${isCurrent ? "→ " : "  "}${normalizeTeamName(org.name)}${isCurrent ? " (当前)" : ""}\n`
 	}
 	if (organizations.length > 0) {
-		content += `\nUse \`/teams select ${normalizeTeamName(organizations[0]!.name)}\` to select a team profile\n`
+		content += `\n使用 \`/teams select ${normalizeTeamName(organizations[0]!.name)}\` 来选择团队配置\n`
 	}
-	content += `Use \`/teams select personal\` to switch to personal account\n`
+	content += `使用 \`/teams select personal\` 切换到个人账户\n`
 
 	addMessage({
 		id: Date.now().toString(),
@@ -101,11 +100,11 @@ async function selectTeam(context: CommandContext, teamId: string): Promise<void
 	const { currentProvider, addMessage, updateProvider, profileData } = context
 
 	// Check if user is authenticated with Kilocode
-	if (!currentProvider || currentProvider.provider !== "kilocode") {
+	if (!currentProvider || currentProvider.provider !== "shengsuanyun") {
 		addMessage({
 			id: Date.now().toString(),
 			type: "error",
-			content: "Teams command requires Kilocode provider. Please configure Kilocode as your provider.",
+			content: "Teams 命令需要 胜算云 提供程序。请将 胜算云 配置为您的提供程序。",
 			ts: Date.now(),
 		})
 		return
@@ -115,7 +114,7 @@ async function selectTeam(context: CommandContext, teamId: string): Promise<void
 		addMessage({
 			id: Date.now().toString(),
 			type: "error",
-			content: "Not authenticated. Please configure your Kilocode token first.",
+			content: "未通过身份验证。请先配置您的 胜算云 令牌。",
 			ts: Date.now(),
 		})
 		return
@@ -127,7 +126,7 @@ async function selectTeam(context: CommandContext, teamId: string): Promise<void
 			addMessage({
 				id: Date.now().toString(),
 				type: "system",
-				content: "✓ Switched to **Personal** account",
+				content: "✓ 已切换到 **个人** 账户",
 				ts: Date.now(),
 			})
 
@@ -156,7 +155,7 @@ async function selectTeam(context: CommandContext, teamId: string): Promise<void
 				addMessage({
 					id: Date.now().toString(),
 					type: "error",
-					content: `Team "${teamId}" not found. Use \`/teams list\` to see available teams.`,
+					content: `未找到团队 "${teamId}"。使用 \`/teams list\` 查看可用团队。`,
 					ts: Date.now(),
 				})
 				return
@@ -165,7 +164,7 @@ async function selectTeam(context: CommandContext, teamId: string): Promise<void
 			addMessage({
 				id: Date.now().toString(),
 				type: "system",
-				content: `✓ Switched to team: **${targetOrg.name}** (${targetOrg.role})`,
+				content: `✓ 已切换到团队：**${targetOrg.name}** (${targetOrg.role})`,
 				ts: Date.now(),
 			})
 
@@ -178,7 +177,7 @@ async function selectTeam(context: CommandContext, teamId: string): Promise<void
 			addMessage({
 				id: Date.now().toString(),
 				type: "error",
-				content: `Failed to switch team`,
+				content: `切换团队失败`,
 				ts: Date.now(),
 			})
 		}
@@ -186,7 +185,7 @@ async function selectTeam(context: CommandContext, teamId: string): Promise<void
 		addMessage({
 			id: Date.now().toString(),
 			type: "error",
-			content: `Failed to switch team: ${error instanceof Error ? error.message : String(error)}`,
+			content: `切换团队失败：${error instanceof Error ? error.message : String(error)}`,
 			ts: Date.now(),
 		})
 	}
@@ -216,7 +215,7 @@ async function teamAutocompleteProvider(context: ArgumentProviderContext): Promi
 		return [
 			{
 				value: "loading",
-				title: "Loading teams...",
+				title: "加载账户信息...",
 				description: "Please wait",
 				matchScore: 1.0,
 				highlightedValue: "loading",
@@ -231,8 +230,8 @@ async function teamAutocompleteProvider(context: ArgumentProviderContext): Promi
 	// Add Personal option
 	suggestions.push({
 		value: "personal",
-		title: "Personal",
-		description: "Your personal account",
+		title: "个人",
+		description: "个人账户",
 		matchScore: 1.0,
 		highlightedValue: "personal",
 	})
@@ -255,7 +254,7 @@ async function teamAutocompleteProvider(context: ArgumentProviderContext): Promi
 export const teamsCommand: Command = {
 	name: "teams",
 	aliases: ["team", "org", "orgs"],
-	description: "Manage team/organization selection",
+	description: "管理团队或组织",
 	usage: "/teams [subcommand] [args]",
 	examples: ["/teams", "/teams list", "/teams select personal", "/teams select kilo-code", "/teams select my-team"],
 	category: "settings",
@@ -266,14 +265,14 @@ export const teamsCommand: Command = {
 			description: "Subcommand: list, select",
 			required: false,
 			values: [
-				{ value: "list", description: "List all available teams" },
-				{ value: "select", description: "Switch to a different team" },
+				{ value: "list", description: "列出所有可用的团队" },
+				{ value: "select", description: "换到其他队伍" },
 			],
 		},
 		{
 			name: "team-name",
 			description:
-				"Team name in lowercase with dashes (e.g., 'kilo-code' for 'Kilo Code') or 'personal' (for select subcommand)",
+				"团队名称用小写字母和短横线表示（例如，“kilo-code”代表“Kilo Code”），或者用“personal”（用于选择子命令）。",
 			required: false,
 			conditionalProviders: [
 				{
@@ -312,8 +311,7 @@ export const teamsCommand: Command = {
 					context.addMessage({
 						id: Date.now().toString(),
 						type: "error",
-						content:
-							"Usage: /teams select <team-id-or-name>\nUse 'personal' to switch to personal account.",
+						content: "用法: /teams select <team-id-or-name>\n使用 'personal' 切换到个人账户。",
 						ts: Date.now(),
 					})
 					return
@@ -325,7 +323,7 @@ export const teamsCommand: Command = {
 				context.addMessage({
 					id: Date.now().toString(),
 					type: "error",
-					content: `Unknown subcommand "${subcommand}". Available: list, select`,
+					content: `未知子命令 "${subcommand}"。可用命令：list, select`,
 					ts: Date.now(),
 				})
 		}

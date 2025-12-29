@@ -8,7 +8,7 @@ import type { Command } from "./core/types.js"
 export const newCommand: Command = {
 	name: "new",
 	aliases: ["n", "start"],
-	description: "Start a new task with a clean slate",
+	description: "从零开始，开启一项新任务",
 	usage: "/new",
 	examples: ["/new", "/n", "/start"],
 	category: "system",
@@ -26,9 +26,9 @@ export const newCommand: Command = {
 				clearScreen: true,
 				showInstructions: true,
 				instructions: [
-					"🎉 Fresh start! Ready for a new task.",
-					"All previous messages and task state have been cleared.",
-					"Type your message to begin, or use /help to explore available commands.",
+					"🎉 全新开始！准备迎接新挑战。",
+					"所有先前的消息和任务状态均已清除。",
+					"输入您的消息即可开始，或使用 /help 查看可用命令。",
 				],
 			}),
 		])

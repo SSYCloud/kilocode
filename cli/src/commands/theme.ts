@@ -79,7 +79,7 @@ function getThemeDisplayInfo(config: CLIConfig) {
 export const themeCommand: Command = {
 	name: "theme",
 	aliases: ["th"],
-	description: "Switch to a different theme",
+	description: "切换主题",
 	usage: "/theme [theme-name]",
 	examples: ["/theme dark", "/theme light", "/theme alpha"],
 	category: "settings",
@@ -87,9 +87,9 @@ export const themeCommand: Command = {
 	arguments: [
 		{
 			name: "theme-name",
-			description: "The theme to switch to (optional for interactive selection)",
+			description: "切换主题到 (optional for interactive selection)",
 			required: false,
-			placeholder: "Select a theme",
+			placeholder: "选择主题",
 			provider: themeAutocompleteProvider,
 			/**
 			 * Validate theme argument against available themes
@@ -101,7 +101,7 @@ export const themeCommand: Command = {
 
 				return {
 					valid: isValid,
-					...(isValid ? {} : { error: `Invalid theme. Available themes: ${availableThemeIds.join(", ")}` }),
+					...(isValid ? {} : { error: `无效主题. 可用: ${availableThemeIds.join(", ")}` }),
 				}
 			},
 		},
@@ -137,7 +137,7 @@ export const themeCommand: Command = {
 				const typeOrder = ["dark", "light", "custom"]
 
 				// Show interactive theme selection menu
-				const helpText: string[] = ["**Available Themes:**", ""]
+				const helpText: string[] = ["**可用主题:**", ""]
 
 				// Loop through theme types in the specified order
 				typeOrder.forEach((type) => {
@@ -167,7 +167,7 @@ export const themeCommand: Command = {
 				addMessage({
 					...generateMessage(),
 					type: "error",
-					content: `Invalid theme "${requestedTheme}". Available themes: ${availableThemeIds.join(", ")}`,
+					content: `无效主题 "${requestedTheme}". 可用: ${availableThemeIds.join(", ")}`,
 				})
 				return
 			}

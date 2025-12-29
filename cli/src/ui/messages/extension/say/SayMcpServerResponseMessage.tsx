@@ -51,7 +51,7 @@ export const SayMcpServerResponseMessage: React.FC<MessageComponentProps> = ({ m
 				<Box flexDirection="column" marginY={1}>
 					<Box>
 						<Text bold color={theme.semantic.error}>
-							⚙ MCP Tool Response (No data)
+							⚙ MCP 返回 (No data)
 						</Text>
 					</Box>
 				</Box>
@@ -63,7 +63,7 @@ export const SayMcpServerResponseMessage: React.FC<MessageComponentProps> = ({ m
 				{/* Header */}
 				<Box>
 					<Text bold color={theme.semantic.success}>
-						⚙ MCP Tool Response
+						⚙ MCP 返回
 					</Text>
 				</Box>
 
@@ -101,11 +101,11 @@ export const SayMcpServerResponseMessage: React.FC<MessageComponentProps> = ({ m
 			<Box flexDirection="column" marginY={1}>
 				<Box>
 					<Text bold color={theme.semantic.error}>
-						⚙ MCP Tool Response (Error displaying content)
+						⚙ MCP 返回 (Error displaying content)
 					</Text>
 				</Box>
 				<Box marginLeft={2} marginTop={1}>
-					<Text color={theme.ui.text.dimmed}>An error occurred while formatting the response.</Text>
+					<Text color={theme.ui.text.dimmed}>格式化响应时发生错误。</Text>
 				</Box>
 			</Box>
 		)

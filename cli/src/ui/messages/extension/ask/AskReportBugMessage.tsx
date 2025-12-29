@@ -16,7 +16,7 @@ export const AskReportBugMessage: React.FC<MessageComponentProps> = ({ message }
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.semantic.warning} bold>
-					{icon} Bug Report Request
+					{icon} 错误报告请求
 				</Text>
 			</Box>
 
@@ -28,14 +28,14 @@ export const AskReportBugMessage: React.FC<MessageComponentProps> = ({ message }
 
 			<Box marginLeft={2} marginTop={1}>
 				<Text color={theme.ui.text.dimmed} dimColor>
-					A GitHub issue will be created to report this bug.
+					我们将创建一个 GitHub issue 来报告这个 bug。
 				</Text>
 			</Box>
 
 			{message.isAnswered && (
 				<Box marginLeft={2} marginTop={1}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						✓ Answered
+						✓ 已回答
 					</Text>
 				</Box>
 			)}

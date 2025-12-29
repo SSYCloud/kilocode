@@ -17,7 +17,7 @@ const AVAILABLE_MODE_SLUGS = DEFAULT_MODES.map((mode) => mode.slug)
 export const modeCommand: Command = {
 	name: "mode",
 	aliases: ["m"],
-	description: "Switch to a different mode",
+	description: "切换模式",
 	usage: "/mode <mode-name>",
 	examples: ["/mode code", "/mode architect", "/mode debug"],
 	category: "settings",
@@ -25,7 +25,7 @@ export const modeCommand: Command = {
 	arguments: [
 		{
 			name: "mode-name",
-			description: "The mode to switch to",
+			description: "切换模式到",
 			required: true,
 			values: MODE_VALUES,
 			placeholder: "Select a mode",
@@ -33,7 +33,7 @@ export const modeCommand: Command = {
 				const isValid = AVAILABLE_MODE_SLUGS.includes(value.toLowerCase())
 				return {
 					valid: isValid,
-					...(isValid ? {} : { error: `Invalid mode. Available: ${AVAILABLE_MODE_SLUGS.join(", ")}` }),
+					...(isValid ? {} : { error: `无效的模式. 可用: ${AVAILABLE_MODE_SLUGS.join(", ")}` }),
 				}
 			},
 		},
@@ -47,7 +47,7 @@ export const modeCommand: Command = {
 				id: Date.now().toString(),
 				type: "system",
 				content: [
-					"**Available Modes:**",
+					"**可用的模式:**",
 					"",
 					...DEFAULT_MODES.map((mode) => `  - **${mode.name}** (${mode.slug}): ${mode.description}`),
 					"",
@@ -64,7 +64,7 @@ export const modeCommand: Command = {
 			addMessage({
 				id: Date.now().toString(),
 				type: "error",
-				content: `Invalid mode "${requestedMode}". Available modes: ${AVAILABLE_MODE_SLUGS.join(", ")}`,
+				content: `无效模式 "${requestedMode}". 可用模式: ${AVAILABLE_MODE_SLUGS.join(", ")}`,
 				ts: Date.now(),
 			})
 			return
@@ -79,7 +79,7 @@ export const modeCommand: Command = {
 		addMessage({
 			id: Date.now().toString(),
 			type: "system",
-			content: `Switched to **${modeName}** mode.`,
+			content: `切换到 **${modeName}** 模式.`,
 			ts: Date.now(),
 		})
 	},

@@ -34,7 +34,7 @@ const DefaultSayMessage: React.FC<MessageComponentProps> = ({ message }) => {
 	const theme = useTheme()
 	return (
 		<Box marginY={1}>
-			<Text color={theme.semantic.success}>{message.text || `Unknown say type: ${message.say}`}</Text>
+			<Text color={theme.semantic.success}>{message.text || `未知的说类型: ${message.say}`}</Text>
 		</Box>
 	)
 }

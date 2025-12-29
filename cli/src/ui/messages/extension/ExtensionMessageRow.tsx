@@ -15,7 +15,7 @@ function ErrorFallback({ error }: { error: Error }) {
 	const theme = useTheme()
 	return (
 		<Box width={getBoxWidth(1)} borderColor={theme.semantic.error} borderStyle="round" padding={1} marginY={1}>
-			<Text color={theme.semantic.error}>Error rendering message: {error.message}</Text>
+			<Text color={theme.semantic.error}>渲染消息时出错: {error.message}</Text>
 		</Box>
 	)
 }
@@ -32,7 +32,7 @@ export const ExtensionMessageRow: React.FC<ExtensionMessageRowProps> = ({ messag
 			) : (
 				<Box>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						Unknown message type: {message.type}
+						未知消息类型: {message.type}
 					</Text>
 				</Box>
 			)}

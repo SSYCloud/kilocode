@@ -130,7 +130,7 @@ describe("provider command", () => {
 			expect(message.content).toContain("anthropic-main")
 			expect(message.content).toContain("openai-backup")
 			expect(message.content).toContain("kilocode-test")
-			expect(message.content).toContain("**Total:** 3 providers")
+			expect(message.content).toContain("**共:** 3 providers")
 		})
 
 		it("should mark current provider with star", async () => {

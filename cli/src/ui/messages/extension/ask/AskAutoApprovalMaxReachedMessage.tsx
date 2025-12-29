@@ -23,7 +23,7 @@ export const AskAutoApprovalMaxReachedMessage: React.FC<MessageComponentProps> =
 			marginY={1}>
 			<Box>
 				<Text color={theme.semantic.warning} bold>
-					{icon} Auto-Approval Limit Reached
+					{icon} 自动审批限额已达
 				</Text>
 			</Box>
 
@@ -35,14 +35,14 @@ export const AskAutoApprovalMaxReachedMessage: React.FC<MessageComponentProps> =
 
 			<Box marginTop={1}>
 				<Text color={theme.ui.text.dimmed} dimColor>
-					The maximum number of auto-approved requests has been reached. Manual approval is now required.
+					自动审批的请求数量已达上限，现在需要人工审批。
 				</Text>
 			</Box>
 
 			{message.isAnswered && (
 				<Box marginTop={1}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						✓ Answered
+						✓ 已回答
 					</Text>
 				</Box>
 			)}

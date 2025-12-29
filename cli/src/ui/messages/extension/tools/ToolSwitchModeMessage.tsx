@@ -15,7 +15,7 @@ export const ToolSwitchModeMessage: React.FC<ToolMessageProps> = ({ toolData }) 
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.ui.text.highlight} bold>
-					{icon} Switch Mode
+					{icon} 切换模式
 				</Text>
 			</Box>
 

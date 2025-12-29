@@ -15,7 +15,7 @@ export const ToolFinishTaskMessage: React.FC<ToolMessageProps> = ({ toolData }) 
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.semantic.success} bold>
-					{icon} Finish Task
+					{icon} 结束任务
 				</Text>
 			</Box>
 

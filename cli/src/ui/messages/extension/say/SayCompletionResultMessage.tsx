@@ -16,7 +16,7 @@ export const SayCompletionResultMessage: React.FC<MessageComponentProps> = ({ me
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.semantic.success} bold>
-					{icon} Task Completed
+					{icon} 任务完成
 				</Text>
 			</Box>
 

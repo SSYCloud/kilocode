@@ -123,6 +123,6 @@ describe("AskFollowupMessage", () => {
 
 		const { lastFrame } = render(<AskFollowupMessage message={message} />)
 
-		expect(lastFrame()).toContain("✓ Answered")
+		expect(lastFrame()).toContain("✓ 已回答")
 	})
 })

@@ -23,7 +23,7 @@ export const AskCommandMessage: React.FC<MessageComponentProps> = ({ message }) 
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.semantic.warning} bold>
-					{icon} Command Request
+					{icon} 命令请求
 				</Text>
 			</Box>
 
@@ -42,7 +42,7 @@ export const AskCommandMessage: React.FC<MessageComponentProps> = ({ message }) 
 			{cwd && (
 				<Box marginLeft={2} marginTop={1}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						Working directory: {cwd}
+						工作目录: {cwd}
 					</Text>
 				</Box>
 			)}
@@ -50,7 +50,7 @@ export const AskCommandMessage: React.FC<MessageComponentProps> = ({ message }) 
 			{message.isAnswered && (
 				<Box marginLeft={2} marginTop={1}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						✓ Answered
+						✓ 已回答
 					</Text>
 				</Box>
 			)}

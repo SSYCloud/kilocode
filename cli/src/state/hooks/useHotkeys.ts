@@ -56,47 +56,47 @@ export function useHotkeys(): UseHotkeysReturn {
 	const hotkeys = useMemo((): Hotkey[] => {
 		// Priority 1: Resume task hotkey
 		if (hasResumeTask) {
-			return [{ keys: `${modifierKey}+R`, description: "to resume" }]
+			return [{ keys: `${modifierKey}+R`, description: "重启" }]
 		}
 
 		// Priority 2: Approval mode hotkeys
 		if (isApprovalPending) {
 			return [
-				{ keys: "Y", description: "to approve" },
-				{ keys: "N", description: "to reject" },
-				{ keys: "Esc", description: "to cancel" },
+				{ keys: "Y", description: "批准" },
+				{ keys: "N", description: "拒绝" },
+				{ keys: "Esc", description: "取消" },
 			]
 		}
 
 		// Priority 3: Streaming state - show cancel
 		if (isStreaming) {
-			return [{ keys: `${modifierKey}+X`, description: "to cancel" }]
+			return [{ keys: `${modifierKey}+X`, description: "取消" }]
 		}
 
 		// Priority 4: Followup suggestions visible
 		if (isFollowupVisible) {
 			return [
-				{ keys: "↑↓", description: "to navigate" },
-				{ keys: "Tab", description: "to fill" },
-				{ keys: "Enter", description: "to submit" },
+				{ keys: "↑↓", description: "导航" },
+				{ keys: "Tab", description: "自动补全" },
+				{ keys: "Enter", description: "提交" },
 			]
 		}
 
 		// Priority 5: Shell mode hotkeys
 		if (isShellModeActive) {
 			return [
-				{ keys: "Up/Down", description: "history" },
-				{ keys: "Enter", description: "to execute" },
-				{ keys: "Esc", description: "to exit" },
-				{ keys: "!", description: "to exit shell mode" },
+				{ keys: "Up/Down", description: "历史" },
+				{ keys: "Enter", description: "执行" },
+				{ keys: "Esc", description: "退出" },
+				{ keys: "!", description: "退出 shell 模式" },
 			]
 		}
 
 		// Default: General command hints
 		return [
-			{ keys: "/help", description: "for commands" },
-			{ keys: "/mode", description: "to switch mode" },
-			{ keys: "!", description: "for shell mode", primary: true },
+			{ keys: "/help", description: "查询命令" },
+			{ keys: "/mode", description: "切换模式" },
+			{ keys: "!", description: "shell 模式", primary: true },
 		]
 	}, [hasResumeTask, isApprovalPending, isStreaming, isFollowupVisible, isShellModeActive, modifierKey])
 

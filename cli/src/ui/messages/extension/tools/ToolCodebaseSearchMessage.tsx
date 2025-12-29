@@ -15,7 +15,7 @@ export const ToolCodebaseSearchMessage: React.FC<ToolMessageProps> = ({ toolData
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.semantic.info} bold>
-					{icon} Codebase Search
+					{icon} 代码搜索
 				</Text>
 			</Box>
 

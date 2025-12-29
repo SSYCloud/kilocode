@@ -20,7 +20,7 @@ export const SayCondenseContextErrorMessage: React.FC<MessageComponentProps> = (
 			marginY={1}>
 			<Box>
 				<Text color={theme.semantic.error} bold>
-					✖ Context Condensing Error
+					✖ 上下文压缩错误
 				</Text>
 			</Box>
 			{message.text && (

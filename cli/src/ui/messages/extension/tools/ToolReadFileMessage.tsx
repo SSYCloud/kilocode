@@ -25,7 +25,7 @@ export const ToolReadFileMessage: React.FC<ToolMessageProps> = ({ toolData }) =>
 				marginY={1}>
 				<Box>
 					<Text color={theme.messages.user} bold>
-						{icon} Read Files ({totalFiles} files)
+						{icon} 读取文件 ({totalFiles} files)
 					</Text>
 				</Box>
 				<Box flexDirection="column" marginTop={1}>
@@ -48,7 +48,7 @@ export const ToolReadFileMessage: React.FC<ToolMessageProps> = ({ toolData }) =>
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.messages.user} bold>
-					{icon} Read File
+					{icon} 读文件
 				</Text>
 			</Box>
 			<Box marginLeft={2}>
@@ -56,14 +56,14 @@ export const ToolReadFileMessage: React.FC<ToolMessageProps> = ({ toolData }) =>
 				{toolData.isOutsideWorkspace && (
 					<Text color={theme.semantic.warning} dimColor>
 						{" "}
-						⚠ Outside workspace
+						⚠ 工作区外
 					</Text>
 				)}
 			</Box>
 			{toolData.reason && (
 				<Box marginLeft={2}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						Reason: {toolData.reason}
+						推理: {toolData.reason}
 					</Text>
 				</Box>
 			)}

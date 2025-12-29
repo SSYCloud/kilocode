@@ -10,14 +10,14 @@ export default async function openConfigFile() {
 		// Check if config file exists, if not create it with defaults
 		const exists = await configExists()
 		if (!exists) {
-			console.log("Config file not found. Creating default configuration...")
+			console.log("未找到配置文件. 创建默认配置文件...")
 			// Skip validation when creating default config since tokens may be empty
 			await saveConfig(DEFAULT_CONFIG, true)
 			console.log("Default configuration created.")
 		}
 
 		// Get the config file path
-		const configPath = await getConfigPath()
+		const configPath = getConfigPath()
 		console.log(`Opening config file: ${configPath}`)
 
 		// Determine the editor command based on platform and environment

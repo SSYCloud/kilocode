@@ -10,7 +10,7 @@ export const SayApiReqRetryDelayedMessage: React.FC<MessageComponentProps> = ({ 
 	const theme = useTheme()
 	return (
 		<Box marginY={1}>
-			<Text color={theme.actions.pending}>⏳ API Request retry delayed...</Text>
+			<Text color={theme.actions.pending}>⏳ API 延时重试...</Text>
 			{message.text && (
 				<Text color={theme.ui.text.dimmed} dimColor>
 					{" "}

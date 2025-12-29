@@ -40,7 +40,7 @@ export const AskFollowupMessage: React.FC<MessageComponentProps> = ({ message })
 			{data.suggest && data.suggest.length > 0 && (
 				<Box flexDirection="column" marginLeft={2} marginTop={1}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						Suggestions:
+						建议:
 					</Text>
 					{data.suggest.map((suggestion, index) => (
 						<Box key={index} marginLeft={1} marginTop={index > 0 ? 0 : 1}>
@@ -50,7 +50,7 @@ export const AskFollowupMessage: React.FC<MessageComponentProps> = ({ message })
 							{suggestion.mode && (
 								<Text color={theme.ui.text.dimmed} dimColor>
 									{" "}
-									(switch to {suggestion.mode})
+									(切换到 {suggestion.mode})
 								</Text>
 							)}
 						</Box>
@@ -61,7 +61,7 @@ export const AskFollowupMessage: React.FC<MessageComponentProps> = ({ message })
 			{message.isAnswered && (
 				<Box marginLeft={2} marginTop={1}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						✓ Answered
+						✓ 已回答
 					</Text>
 				</Box>
 			)}

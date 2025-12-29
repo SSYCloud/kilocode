@@ -16,7 +16,7 @@ export const ToolNewTaskMessage: React.FC<ToolMessageProps> = ({ toolData }) => 
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.messages.user} bold>
-					{icon} New Subtask
+					{icon} 新子任务
 				</Text>
 			</Box>
 
@@ -24,7 +24,7 @@ export const ToolNewTaskMessage: React.FC<ToolMessageProps> = ({ toolData }) => 
 				{toolData.mode && (
 					<Box>
 						<Text color={theme.ui.text.dimmed} dimColor>
-							Mode:{" "}
+							更多:{" "}
 						</Text>
 						<Text color={theme.semantic.info}>{toolData.mode}</Text>
 					</Box>

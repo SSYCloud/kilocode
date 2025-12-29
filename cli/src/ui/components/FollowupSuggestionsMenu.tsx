@@ -35,7 +35,7 @@ export const FollowupSuggestionsMenu: React.FC<FollowupSuggestionsMenuProps> = (
 			))}
 			<Box marginTop={1}>
 				<Text color={theme.ui.text.dimmed} dimColor>
-					↑↓ Navigate • Tab Fill • Enter Submit
+					↑↓ 导航 • Tab Fill • 提交
 				</Text>
 			</Box>
 		</Box>

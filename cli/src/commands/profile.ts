@@ -12,21 +12,21 @@ async function showProfile(context: CommandContext): Promise<void> {
 	const { currentProvider, addMessage, profileData, balanceData, profileLoading, balanceLoading } = context
 
 	// Check if user is authenticated with Kilocode
-	if (!currentProvider || currentProvider.provider !== "kilocode") {
+	if (!currentProvider || currentProvider.provider !== "shengsuanyun") {
 		addMessage({
 			id: Date.now().toString(),
 			type: "error",
-			content: "Profile command requires Kilocode provider. Please configure Kilocode as your provider.",
+			content: "Profile 命令需要 胜算云 提供程序。请将 胜算云 配置为您的提供程序。",
 			ts: Date.now(),
 		})
 		return
 	}
 
-	if (!currentProvider.kilocodeToken) {
+	if (!currentProvider.shengSuanYunToken) {
 		addMessage({
 			id: Date.now().toString(),
 			type: "error",
-			content: "Not authenticated. Please configure your Kilocode token first.",
+			content: "未通过身份验证。请先配置您的胜算云令牌。",
 			ts: Date.now(),
 		})
 		return
@@ -37,7 +37,7 @@ async function showProfile(context: CommandContext): Promise<void> {
 		addMessage({
 			id: Date.now().toString(),
 			type: "system",
-			content: "Loading profile information...",
+			content: "加载账户信息...",
 			ts: Date.now(),
 		})
 		return
@@ -48,7 +48,7 @@ async function showProfile(context: CommandContext): Promise<void> {
 		addMessage({
 			id: Date.now().toString(),
 			type: "error",
-			content: "No profile data available",
+			content: "没有账户信息",
 			ts: Date.now(),
 		})
 		return
@@ -60,17 +60,17 @@ async function showProfile(context: CommandContext): Promise<void> {
 		addMessage({
 			id: Date.now().toString(),
 			type: "error",
-			content: "No user data available",
+			content: "没有账户信息",
 			ts: Date.now(),
 		})
 		return
 	}
 
 	// Format profile information
-	let content = "**Profile Information:**\n\n"
+	let content = "**账户信息:**\n\n"
 
 	if (user.name) {
-		content += `Name: ${user.name}\n`
+		content += `${user.name}\n`
 	}
 
 	if (user.email) {
@@ -78,7 +78,7 @@ async function showProfile(context: CommandContext): Promise<void> {
 	}
 
 	if (balanceData?.balance !== undefined && balanceData?.balance !== null) {
-		content += `Balance: $${balanceData.balance.toFixed(2)}\n`
+		content += `余额: $${balanceData.balance.toFixed(2)}\n`
 	}
 
 	// Show current organization if set
@@ -103,7 +103,7 @@ async function showProfile(context: CommandContext): Promise<void> {
 export const profileCommand: Command = {
 	name: "profile",
 	aliases: ["me", "whoami"],
-	description: "View your Kilocode profile information",
+	description: "查看账户信息",
 	usage: "/profile",
 	examples: ["/profile"],
 	category: "settings",

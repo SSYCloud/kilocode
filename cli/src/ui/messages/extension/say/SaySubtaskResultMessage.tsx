@@ -20,7 +20,7 @@ export const SaySubtaskResultMessage: React.FC<MessageComponentProps> = ({ messa
 			marginY={1}>
 			<Box>
 				<Text color={theme.semantic.info} bold>
-					📋 Subtask Result
+					📋 子任务结果
 				</Text>
 			</Box>
 			{message.text && (

@@ -47,7 +47,7 @@ export class IPCChannel extends EventEmitter {
 		return new Promise<T>((resolve, reject) => {
 			const timeout = setTimeout(() => {
 				this.pendingRequests.delete(id)
-				reject(new Error(`IPC request timeout after ${this.options.timeout}ms`))
+				reject(new Error(`IPC 超时 ${this.options.timeout} ms`))
 			}, this.options.timeout)
 
 			this.pendingRequests.set(id, { resolve, reject, timeout })

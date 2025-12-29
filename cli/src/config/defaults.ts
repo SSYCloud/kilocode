@@ -53,9 +53,9 @@ export const DEFAULT_CONFIG = {
 	providers: [
 		{
 			id: "default",
-			provider: "kilocode",
-			kilocodeToken: "",
-			kilocodeModel: "x-ai/grok-code-fast-1",
+			provider: "shengsuanyun",
+			shengSuanYunToken: "",
+			shengSuanYunModel: "anthropic/claude-opus-4.5",
 		},
 	],
 	autoApproval: DEFAULT_AUTO_APPROVAL,

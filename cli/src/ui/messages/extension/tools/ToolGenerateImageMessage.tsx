@@ -16,18 +16,18 @@ export const ToolGenerateImageMessage: React.FC<ToolMessageProps> = ({ toolData 
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.ui.text.highlight} bold>
-					{icon} Generate Image: {formatFilePath(toolData.path || "")}
+					{icon} 生成图片: {formatFilePath(toolData.path || "")}
 				</Text>
 				{toolData.isProtected && (
 					<Text color={theme.semantic.warning} dimColor>
 						{" "}
-						🔒 Protected
+						🔒 受保护
 					</Text>
 				)}
 				{toolData.isOutsideWorkspace && (
 					<Text color={theme.semantic.warning} dimColor>
 						{" "}
-						⚠ Outside workspace
+						⚠ 工作区外
 					</Text>
 				)}
 			</Box>
@@ -42,7 +42,7 @@ export const ToolGenerateImageMessage: React.FC<ToolMessageProps> = ({ toolData 
 					marginTop={1}
 					marginLeft={2}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						Prompt:
+						提示词:
 					</Text>
 					<Text color={theme.ui.text.primary}>{truncateText(toolData.content, 200)}</Text>
 				</Box>

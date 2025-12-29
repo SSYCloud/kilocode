@@ -26,51 +26,51 @@ const validModes = DEFAULT_MODES.map((mode) => mode.slug)
 
 program
 	.name("kilocode")
-	.description("Kilo Code Terminal User Interface - AI-powered coding assistant")
+	.description("Kilo Code 终端用户界面 - 人工智能驱动的编程助手")
 	.version(Package.version)
-	.option("-m, --mode <mode>", `Set the mode of operation (${validModes.join(", ")})`)
-	.option("-w, --workspace <path>", "Path to the workspace directory", process.cwd())
-	.option("-a, --auto", "Run in autonomous mode (non-interactive)", false)
-	.option("-j, --json", "Output messages as JSON (requires --auto)", false)
-	.option("-c, --continue", "Resume the last conversation from this workspace", false)
-	.option("-t, --timeout <seconds>", "Timeout in seconds for autonomous mode (requires --auto)", parseInt)
+	.option("-m, --mode <mode>", `设置操作模式 (${validModes.join(", ")})`)
+	.option("-w, --workspace <path>", "工作区目录的路径", process.cwd())
+	.option("-a, --auto", "以自主模式（非交互式）运行", false)
+	.option("-j, --json", "以 JSON 格式输出消息（需要使用 --auto 参数）", false)
+	.option("-c, --continue", "从此工作区继续上次对话", false)
+	.option("-t, --timeout <seconds>", "自主模式超时时间（秒）（需要使用 --auto 参数）", parseInt)
 	.option(
 		"-p, --parallel",
-		"Run in parallel mode - the agent will create a separate git branch, unless you provide the --existing-branch option",
+		"以并行模式运行——除非您提供 `--existing-branch` 选项，否则 agent 将创建一个单独的 Git 分支。",
 	)
-	.option("-eb, --existing-branch <branch>", "(Parallel mode only) Instructs the agent to work on an existing branch")
-	.option("-pv, --provider <id>", "Select provider by ID (e.g., 'kilocode-1')")
-	.option("-mo, --model <model>", "Override model for the selected provider")
-	.option("--nosplash", "Disable the welcome message and update notifications", false)
-	.argument("[prompt]", "The prompt or command to execute")
+	.option("-eb, --existing-branch <branch>", "（仅限并行模式）指示 agent 在现有分支上工作")
+	.option("-pv, --provider <id>", "按 ID 选择提供商 (如： 'shengsuanyun')")
+	.option("-mo, --model <model>", "覆盖所选提供商的模型")
+	.option("--nosplash", "禁用欢迎消息和更新通知", false)
+	.argument("[prompt]", "执行的提示或命令")
 	.action(async (prompt, options) => {
 		// Validate mode if provided
 		if (options.mode && !validModes.includes(options.mode)) {
-			console.error(`Error: Invalid mode "${options.mode}". Valid modes are: ${validModes.join(", ")}`)
+			console.error(`Error: 无效的模式 "${options.mode}". 可用模式有: ${validModes.join(", ")}`)
 			process.exit(1)
 		}
 
 		// Validate that --existing-branch requires --parallel
 		if (options.existingBranch && !options.parallel) {
-			console.error("Error: --existing-branch option requires --parallel flag to be enabled")
+			console.error("Error: --existing-branch 必须 --parallel 需启用")
 			process.exit(1)
 		}
 
 		// Validate workspace path exists
 		if (!existsSync(options.workspace)) {
-			console.error(`Error: Workspace path does not exist: ${options.workspace}`)
+			console.error(`Error: 工作目录不存在: ${options.workspace}`)
 			process.exit(1)
 		}
 
 		// Validate that piped stdin requires autonomous mode
 		if (!process.stdin.isTTY && !options.auto) {
-			console.error("Error: Piped input requires --auto flag to be enabled")
+			console.error("Error: 必须有管道输入 --auto 需启用")
 			process.exit(1)
 		}
 
 		// Validate that JSON mode requires autonomous mode
 		if (options.json && !options.auto) {
-			console.error("Error: --json option requires --auto flag to be enabled")
+			console.error("Error: --json 必须 --auto 需启用")
 			process.exit(1)
 		}
 
@@ -87,33 +87,31 @@ program
 
 		// Validate that autonomous mode requires a prompt
 		if (options.auto && !finalPrompt) {
-			console.error(
-				"Error: autonomous mode (--auto) and parallel mode (--parallel) require a prompt argument or piped input",
-			)
+			console.error("Error: 自主模式 (--auto) 和并行模式 (--parallel) 需要提示参数或管道输入")
 			process.exit(1)
 		}
 
 		// Validate that timeout requires autonomous mode
 		if (options.timeout && !options.auto) {
-			console.error("Error: --timeout option requires --auto flag to be enabled")
+			console.error("Error: --timeout 参数必须 --auto 需启用")
 			process.exit(1)
 		}
 
 		// Validate timeout is a positive number
 		if (options.timeout && (isNaN(options.timeout) || options.timeout <= 0)) {
-			console.error("Error: --timeout must be a positive number")
+			console.error("Error: --timeout 参数必须为正数")
 			process.exit(1)
 		}
 
 		// Validate that continue mode is not used with autonomous mode
 		if (options.continue && options.auto) {
-			console.error("Error: --continue option cannot be used with --auto flag")
+			console.error("Error: --continue 参数不能和 --auto 同时使用")
 			process.exit(1)
 		}
 
 		// Validate that continue mode is not used with a prompt
 		if (options.continue && finalPrompt) {
-			console.error("Error: --continue option cannot be used with a prompt argument")
+			console.error("Error: --continue 选项不能与提示参数一起使用")
 			process.exit(1)
 		}
 
@@ -125,7 +123,7 @@ program
 			const providerExists = config.providers.some((p) => p.id === options.provider)
 			if (!providerExists) {
 				const availableIds = config.providers.map((p) => p.id).join(", ")
-				console.error(`Error: Provider "${options.provider}" not found. Available providers: ${availableIds}`)
+				console.error(`Error: 供应商 "${options.provider}" 未找到. 可用供应商: ${availableIds}`)
 				process.exit(1)
 			}
 		}
@@ -143,28 +141,26 @@ program
 
 		if (!hasConfig && !hasEnvConfig) {
 			// No config file and no env config - show auth wizard
-			console.info("Welcome to the Kilo Code CLI! 🎉\n")
-			console.info("To get you started, please fill out these following questions.")
+			console.info("欢迎使用 Kilo Code CLI! 🎉\n")
+			console.info("为了帮助您开始，请填写以下问题。")
 			await authWizard()
 		} else if (!hasConfig && hasEnvConfig) {
 			// Running with env config only
-			logs.info("Running in ephemeral mode with environment variable configuration", "Index")
+			logs.info("以临时模式运行，并配置环境变量", "Index")
 
 			const providerType = process.env.KILO_PROVIDER_TYPE
 			if (providerType) {
 				const missing = getMissingEnvVars(providerType)
 				if (missing.length > 0) {
-					console.error(`\nError: Missing required environment variables for provider "${providerType}":`)
+					console.error(`\nError: 缺少提供程序所需的环境变量 "${providerType}":`)
 					console.error(`  ${missing.join("\n  ")}`)
-					console.error(
-						`\nPlease set these environment variables or run 'kilocode auth' to configure via wizard.\n`,
-					)
+					console.error(`\n请设置这些环境变量或运行“kilocode auth”通过向导进行配置。\n`)
 					process.exit(1)
 				}
 			}
 		} else if (hasConfig && hasEnvConfig) {
 			// Both exist - env vars will override config file values
-			logs.debug("Using config file with environment variable overrides", "Index")
+			logs.debug("使用带有环境变量覆盖的配置文件", "Index")
 		}
 
 		let finalWorkspace = options.workspace
@@ -188,7 +184,7 @@ program
 			)
 		}
 
-		logs.debug("Starting Kilo Code CLI", "Index", { options })
+		logs.debug("启动 Kilo Code CLI", "Index", { options })
 
 		cli = new CLI({
 			mode: options.mode,

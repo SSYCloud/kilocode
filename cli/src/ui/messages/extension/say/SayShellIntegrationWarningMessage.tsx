@@ -20,7 +20,7 @@ export const SayShellIntegrationWarningMessage: React.FC<MessageComponentProps> 
 			marginY={1}>
 			<Box>
 				<Text color={theme.semantic.warning} bold>
-					⚠ Shell Integration Warning
+					⚠ Shell 集成警告
 				</Text>
 			</Box>
 			{message.text && (
@@ -30,7 +30,7 @@ export const SayShellIntegrationWarningMessage: React.FC<MessageComponentProps> 
 			)}
 			<Box marginTop={1}>
 				<Text color={theme.ui.text.dimmed} dimColor>
-					Shell integration may be required for proper command execution.
+					要正确执行命令，可能需要进行 Shell 集成。
 				</Text>
 			</Box>
 		</Box>

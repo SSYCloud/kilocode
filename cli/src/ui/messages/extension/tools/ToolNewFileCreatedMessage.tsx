@@ -22,7 +22,7 @@ export const ToolNewFileCreatedMessage: React.FC<ToolMessageProps> = ({ toolData
 				{toolData.isProtected && (
 					<Text color={theme.semantic.warning} dimColor>
 						{" "}
-						🔒 Protected
+						🔒 受保护
 					</Text>
 				)}
 			</Box>
@@ -58,7 +58,7 @@ export const ToolNewFileCreatedMessage: React.FC<ToolMessageProps> = ({ toolData
 			{toolData.fastApplyResult && typeof toolData.fastApplyResult === "object" ? (
 				<Box marginLeft={2}>
 					<Text color={theme.semantic.success} dimColor>
-						✓ Fast apply
+						✓ 应用
 					</Text>
 				</Box>
 			) : null}

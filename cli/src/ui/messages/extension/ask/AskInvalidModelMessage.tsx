@@ -23,7 +23,7 @@ export const AskInvalidModelMessage: React.FC<MessageComponentProps> = ({ messag
 			marginY={1}>
 			<Box>
 				<Text color={theme.semantic.warning} bold>
-					{icon} Invalid Model Selection
+					{icon} 无效的模式
 				</Text>
 			</Box>
 
@@ -35,14 +35,14 @@ export const AskInvalidModelMessage: React.FC<MessageComponentProps> = ({ messag
 
 			<Box marginTop={1}>
 				<Text color={theme.ui.text.dimmed} dimColor>
-					The selected model is not available or invalid. Please choose a different model.
+					所选模式不可用或无效。请选择其他模式。
 				</Text>
 			</Box>
 
 			{message.isAnswered && (
 				<Box marginTop={1}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						✓ Answered
+						✓ 已回答
 					</Text>
 				</Box>
 			)}

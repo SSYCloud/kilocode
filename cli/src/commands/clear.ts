@@ -7,7 +7,7 @@ import type { Command } from "./core/types.js"
 export const clearCommand: Command = {
 	name: "clear",
 	aliases: ["c", "cls"],
-	description: "Clear the display without affecting the current task",
+	description: "清除显示内容而不影响当前任务",
 	usage: "/clear",
 	examples: ["/clear", "/c", "/cls"],
 	category: "system",

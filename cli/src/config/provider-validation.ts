@@ -103,6 +103,9 @@ export function getRequiredEnvVars(providerType: string): string[] {
 		case "xai":
 			required.push("KILO_XAI_API_KEY", "KILO_API_MODEL_ID")
 			break
+		case "shengsuanyun":
+			required.push("KILO_SHENGSUANYUN_API_KEY", "KILO_API_MODEL_ID")
+			break
 		default:
 			required.push("KILO_API_KEY")
 			break

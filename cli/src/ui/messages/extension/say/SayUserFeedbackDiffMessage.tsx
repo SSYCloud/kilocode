@@ -23,7 +23,7 @@ export const SayUserFeedbackDiffMessage: React.FC<MessageComponentProps> = ({ me
 			marginY={1}>
 			<Box>
 				<Text color={theme.messages.user} bold>
-					💬 User Feedback (with changes)
+					💬 用户反馈 (with changes)
 				</Text>
 			</Box>
 

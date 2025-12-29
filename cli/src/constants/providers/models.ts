@@ -259,6 +259,7 @@ export const DEFAULT_MODEL_IDS: Partial<Record<ProviderName, string>> = {
 	roo: rooDefaultModelId,
 	"gemini-cli": geminiCliDefaultModelId,
 	ovhcloud: ovhCloudAiEndpointsDefaultModelId,
+	shengsuanyun: "anthropic/claude-sonnet-4.5",
 }
 
 /**
@@ -437,6 +438,8 @@ export function getModelIdKey(provider: ProviderName): string {
 			return "vercelAiGatewayModelId"
 		case "ovhcloud":
 			return "ovhCloudAiEndpointsModelId"
+		case "shengsuanyun":
+			return "shengSuanYunModelId"
 		default:
 			return "apiModelId"
 	}

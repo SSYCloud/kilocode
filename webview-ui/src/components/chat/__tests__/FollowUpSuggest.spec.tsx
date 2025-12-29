@@ -330,7 +330,7 @@ describe("FollowUpSuggest", () => {
 		expect(screen.queryByText(/\d+s/)).not.toBeInTheDocument()
 
 		// Now advance timer past the original timeout duration
-		vi.advanceTimersByTime(1000) // Total: 3.5 seconds
+		vi.advanceTimersByTime(1000) // 共: 3.5 seconds
 
 		// onSuggestionClick should NOT have been called
 		// This verifies the fix for the race condition

@@ -18,7 +18,7 @@ export const AskResumeTaskMessage: React.FC<MessageComponentProps> = () => {
 	return (
 		<Box flexDirection="column" marginY={1}>
 			<Box>
-				<Text color={theme.semantic.info}>Task was interrupted and can be resumed.</Text>
+				<Text color={theme.semantic.info}>任务已中断，可以恢复。</Text>
 			</Box>
 		</Box>
 	)

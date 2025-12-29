@@ -24,7 +24,7 @@ export const ApprovalMenu: React.FC<ApprovalMenuProps> = ({ options, selectedInd
 	return (
 		<Box flexDirection="column" borderStyle="round" borderColor={theme.actions.pending} paddingX={1}>
 			<Text bold color={theme.actions.pending}>
-				[!] Action Required:
+				[!] 需要采取的行动:
 			</Text>
 			{options.map((option, index) => (
 				<ApprovalOptionRow

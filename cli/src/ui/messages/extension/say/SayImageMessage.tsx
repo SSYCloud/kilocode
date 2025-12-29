@@ -16,7 +16,7 @@ export const SayImageMessage: React.FC<MessageComponentProps> = ({ message }) =>
 		return (
 			<Box marginY={1}>
 				<Text color={theme.semantic.info} bold>
-					{icon} Image (invalid data)
+					{icon} 图片 (invalid data)
 				</Text>
 			</Box>
 		)
@@ -26,13 +26,13 @@ export const SayImageMessage: React.FC<MessageComponentProps> = ({ message }) =>
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.semantic.info} bold>
-					{icon} Image
+					{icon} 图片
 				</Text>
 			</Box>
 
 			{imageData.imagePath && (
 				<Box marginLeft={2} marginTop={1}>
-					<Text color={theme.ui.text.primary}>Path: {imageData.imagePath}</Text>
+					<Text color={theme.ui.text.primary}>路径: {imageData.imagePath}</Text>
 				</Box>
 			)}
 

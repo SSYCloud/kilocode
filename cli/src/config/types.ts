@@ -440,6 +440,14 @@ type FakeAIProviderConfig = BaseProviderConfig & {
 	fakeAi?: unknown
 }
 
+type ShengSuanYunProviderConfig = BaseProviderConfig & {
+	provider: "shengsuanyun"
+	shengSuanYunModelId?: string
+	shengSuanYunBaseUrl?: string
+	shengSuanYunApiKey?: string
+	shengSuanYunToken?: string
+}
+
 // Discriminated union of all provider configs
 export type ProviderConfig =
 	| KilocodeProviderConfig
@@ -484,6 +492,7 @@ export type ProviderConfig =
 	| VirtualQuotaFallbackProviderConfig
 	| HumanRelayProviderConfig
 	| FakeAIProviderConfig
+	| ShengSuanYunProviderConfig
 
 // Type guards
 export function isValidConfig(config: unknown): config is CLIConfig {

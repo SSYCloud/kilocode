@@ -22,7 +22,7 @@ export const ToolSearchFilesMessage: React.FC<ToolMessageProps> = ({ toolData })
 				{toolData.isOutsideWorkspace && (
 					<Text color={theme.semantic.warning} dimColor>
 						{" "}
-						⚠ Outside workspace
+						⚠ 工作区外
 					</Text>
 				)}
 			</Box>

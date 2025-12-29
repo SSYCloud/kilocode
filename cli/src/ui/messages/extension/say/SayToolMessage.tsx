@@ -15,7 +15,7 @@ export const SayToolMessage: React.FC<MessageComponentProps> = ({ message }) => 
 	if (!toolData) {
 		return (
 			<Box marginY={1}>
-				<Text color={theme.semantic.success}>⚙ Tool Result (invalid data)</Text>
+				<Text color={theme.semantic.success}>⚙ 工具调用结果 (invalid data)</Text>
 			</Box>
 		)
 	}

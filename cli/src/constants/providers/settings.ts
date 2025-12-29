@@ -513,6 +513,24 @@ export const FIELD_REGISTRY: Record<string, FieldMetadata> = {
 		type: "text",
 		placeholder: "Enter profiles configuration...",
 	},
+
+	// ShengSuanYun fields
+	shengSuanYunApiKey: {
+		label: "API Key",
+		type: "password",
+		placeholder: "输入胜算云 API key...",
+	},
+	shengSuanYunBaseUrl: {
+		label: "Base URL",
+		type: "text",
+		placeholder: "输入 base URL (or leave empty for default)...",
+		isOptional: true,
+	},
+	shengSuanYunModelId: {
+		label: "模型 ID",
+		type: "text",
+		placeholder: "输入模型 ID...",
+	},
 }
 
 /**
@@ -857,6 +875,13 @@ export const getProviderSettings = (provider: ProviderName, config: ProviderSett
 			return [
 				createFieldConfig("syntheticApiKey", config),
 				createFieldConfig("apiModelId", config, "synthetic-model"),
+			]
+
+		case "shengsuanyun":
+			return [
+				createFieldConfig("shengSuanYunApiKey", config),
+				createFieldConfig("shengSuanYunBaseUrl", config, "Default"),
+				createFieldConfig("shengSuanYunModelId", config, "anthropic/claude-sonnet-4.5"),
 			]
 
 		default:

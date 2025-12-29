@@ -15,7 +15,7 @@ export const SayApiReqStartedMessage: React.FC<MessageComponentProps> = ({ messa
 	if (message.partial) {
 		return (
 			<Box marginY={1}>
-				<Text color={theme.semantic.info}>⟳ API Request in progress...</Text>
+				<Text color={theme.semantic.info}>⟳ API 请求中...</Text>
 			</Box>
 		)
 	}
@@ -26,7 +26,7 @@ export const SayApiReqStartedMessage: React.FC<MessageComponentProps> = ({ messa
 			<Box flexDirection="column" marginY={1}>
 				<Box>
 					<Text color={theme.semantic.error} bold>
-						✖ API Request failed
+						✖ API 请求失败
 					</Text>
 				</Box>
 				<Box marginLeft={2} marginTop={1}>
@@ -42,12 +42,12 @@ export const SayApiReqStartedMessage: React.FC<MessageComponentProps> = ({ messa
 			<Box flexDirection="column" marginY={1}>
 				<Box>
 					<Text color={theme.semantic.warning} bold>
-						⚠ API Request cancelled
+						⚠ API 请求取消
 					</Text>
 				</Box>
 				<Box marginLeft={2} marginTop={1}>
 					<Text color={theme.ui.text.dimmed} dimColor>
-						Reason: {apiInfo.cancelReason === "user_cancelled" ? "User cancelled" : apiInfo.cancelReason}
+						推理: {apiInfo.cancelReason === "user_cancelled" ? "User cancelled" : apiInfo.cancelReason}
 					</Text>
 				</Box>
 			</Box>

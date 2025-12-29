@@ -26,12 +26,12 @@ export async function determineParallelBranch({
 }: DetermineParallelBranchInput): Promise<DetermineParallelBranchResult> {
 	const { isRepo, branch } = await getGitInfo(cwd)
 	if (!isRepo) {
-		const errorMessage = "Parallel mode requires the current working directory to be a git repository"
+		const errorMessage = "并行模式要求当前工作目录必须是 Git 仓库。"
 		logs.error(errorMessage, "ParallelMode")
 		throw new Error(errorMessage)
 	}
 	if (!branch) {
-		const errorMessage = "Could not determine current git branch"
+		const errorMessage = "无法确定当前 Git 分支"
 		logs.error(errorMessage, "ParallelMode")
 		throw new Error(errorMessage)
 	}
@@ -42,17 +42,17 @@ export async function determineParallelBranch({
 		// Check if the existing branch exists
 		const exists = await branchExists(cwd, existingBranch)
 		if (!exists) {
-			const errorMessage = `Branch "${existingBranch}" does not exist`
+			const errorMessage = `分支 "${existingBranch}" 不存在`
 			logs.error(errorMessage, "ParallelMode")
 			throw new Error(errorMessage)
 		}
 		worktreeBranch = existingBranch
-		logs.info(`Using existing branch: ${worktreeBranch}`, "ParallelMode")
+		logs.info(`使用分支: ${worktreeBranch}`, "ParallelMode")
 	} else {
 		// Generate branch name from prompt
 		worktreeBranch = generateBranchName(prompt)
 
-		logs.info(`Creating worktree with branch: ${worktreeBranch}`, "ParallelMode")
+		logs.info(`创建带有分支的工作树: ${worktreeBranch}`, "ParallelMode")
 	}
 
 	// Create worktree directory path in OS temp directory
@@ -67,9 +67,9 @@ export async function determineParallelBranch({
 			: ["worktree", "add", "-b", worktreeBranch, worktreePath]
 
 		await git.raw(args)
-		logs.info(`Created worktree at: ${worktreePath}`, "ParallelMode")
+		logs.info(`创建工作树: ${worktreePath}`, "ParallelMode")
 	} catch (error) {
-		logs.error("Failed to create worktree", "ParallelMode", { error })
+		logs.error("创建工作树失败", "ParallelMode", { error })
 		throw error
 	}
 	return { worktreeBranch, worktreePath }

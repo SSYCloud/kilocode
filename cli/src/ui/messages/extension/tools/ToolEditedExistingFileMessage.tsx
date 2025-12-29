@@ -24,7 +24,7 @@ export const ToolEditedExistingFileMessage: React.FC<ToolMessageProps> = ({ tool
 				marginY={1}>
 				<Box>
 					<Text color={theme.semantic.info} bold>
-						{icon} Edit Files ({toolData.batchDiffs!.length} files)
+						{icon} 编辑文件 ({toolData.batchDiffs!.length} )
 					</Text>
 				</Box>
 				<Box flexDirection="column" marginTop={1}>
@@ -34,7 +34,7 @@ export const ToolEditedExistingFileMessage: React.FC<ToolMessageProps> = ({ tool
 							{batchDiff.isProtected && (
 								<Text color={theme.semantic.warning} dimColor>
 									{" "}
-									🔒 Protected
+									🔒 受保护
 								</Text>
 							)}
 						</Box>
@@ -53,13 +53,13 @@ export const ToolEditedExistingFileMessage: React.FC<ToolMessageProps> = ({ tool
 				{toolData.isProtected && (
 					<Text color={theme.semantic.warning} dimColor>
 						{" "}
-						🔒 Protected
+						🔒 受保护
 					</Text>
 				)}
 				{toolData.isOutsideWorkspace && (
 					<Text color={theme.semantic.warning} dimColor>
 						{" "}
-						⚠ Outside workspace
+						⚠ 工作区外
 					</Text>
 				)}
 			</Box>
@@ -101,7 +101,7 @@ export const ToolEditedExistingFileMessage: React.FC<ToolMessageProps> = ({ tool
 			{!!toolData.fastApplyResult && (
 				<Box marginLeft={2} marginTop={1}>
 					<Text color={theme.semantic.success} dimColor>
-						✓ Fast apply
+						✓ 应用
 					</Text>
 				</Box>
 			)}

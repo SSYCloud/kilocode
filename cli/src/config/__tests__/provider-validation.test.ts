@@ -98,6 +98,11 @@ describe("getRequiredEnvVars", () => {
 		expect(required).toEqual(["KILO_XAI_API_KEY", "KILO_API_MODEL_ID"])
 	})
 
+	it("should return required vars for shengsuanyun provider", () => {
+		const required = getRequiredEnvVars("shengsuanyun")
+		expect(required).toEqual(["KILO_SHENGSUANYUN_API_KEY", "KILO_API_MODEL_ID"])
+	})
+
 	it("should return default required vars for unknown provider", () => {
 		const required = getRequiredEnvVars("unknown")
 		expect(required).toEqual(["KILO_API_KEY"])

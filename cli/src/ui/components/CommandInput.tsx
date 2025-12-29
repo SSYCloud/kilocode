@@ -32,7 +32,7 @@ interface CommandInputProps {
 
 export const CommandInput: React.FC<CommandInputProps> = ({
 	onSubmit,
-	placeholder = "Type a message or /command...",
+	placeholder = "开始会话，或 /command... 执行命令",
 	disabled = false,
 }) => {
 	// Get theme colors

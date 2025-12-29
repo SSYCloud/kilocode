@@ -1,151 +1,151 @@
 {
 	"$schema": "http://json-schema.org/draft-07/schema#",
-	"title": "Kilo Code CLI Configuration",
-	"description": "Configuration file for Kilo Code CLI",
+	"title": "Kilo Code 命令行配置",
+	"description": "Kilo Code 命令行配置文件",
 	"type": "object",
 	"required": ["version", "mode", "telemetry", "provider", "providers"],
 	"properties": {
 		"version": {
 			"type": "string",
 			"enum": ["1.0.0"],
-			"description": "Configuration schema version"
+			"description": "配置架构版本"
 		},
 		"mode": {
 			"type": "string",
 			"default": "code",
-			"description": "Default mode for the CLI"
+			"description": "默认模式"
 		},
 		"telemetry": {
 			"type": "boolean",
 			"default": false,
-			"description": "Enable or disable telemetry"
+			"description": "开关遥测"
 		},
 		"provider": {
 			"type": "string",
-			"description": "ID of the currently selected provider"
+			"description": "当前供应商 ID"
 		},
 		"providers": {
 			"type": "array",
-			"description": "List of configured providers",
+			"description": "配置的供应商列表",
 			"items": {
 				"$ref": "#/definitions/provider"
 			}
 		},
 		"autoApproval": {
 			"type": "object",
-			"description": "Auto approval configuration for CLI operations",
+			"description": "自动审批配置",
 			"properties": {
 				"enabled": {
 					"type": "boolean",
 					"default": false,
-					"description": "Global toggle for auto approval"
+					"description": "自动审批全局开关"
 				},
 				"read": {
 					"type": "object",
-					"description": "Auto approval settings for read operations",
+					"description": "读取自动审批",
 					"properties": {
 						"enabled": {
 							"type": "boolean",
 							"default": true,
-							"description": "Auto approve read operations"
+							"description": "读取自动审批"
 						},
 						"outside": {
 							"type": "boolean",
 							"default": true,
-							"description": "Auto approve reads outside workspace"
+							"description": "读取工作目录外自动审批"
 						}
 					}
 				},
 				"write": {
 					"type": "object",
-					"description": "Auto approval settings for write operations",
+					"description": "写操作自动审批",
 					"properties": {
 						"enabled": {
 							"type": "boolean",
 							"default": true,
-							"description": "Auto approve write operations"
+							"description": "写操作自动审批"
 						},
 						"outside": {
 							"type": "boolean",
 							"default": true,
-							"description": "Auto approve writes outside workspace"
+							"description": "工作目录外写操作自动审批"
 						},
 						"protected": {
 							"type": "boolean",
 							"default": false,
-							"description": "Auto approve writes to protected files"
+							"description": "自动批准写入受保护的文件"
 						}
 					}
 				},
 				"browser": {
 					"type": "object",
-					"description": "Auto approval settings for browser operations",
+					"description": "浏览器操作的自动批准设置",
 					"properties": {
 						"enabled": {
 							"type": "boolean",
 							"default": false,
-							"description": "Auto approve browser operations"
+							"description": "自动批准浏览器操作"
 						}
 					}
 				},
 				"retry": {
 					"type": "object",
-					"description": "Auto approval settings for retry operations",
+					"description": "重试操作的自动批准设置",
 					"properties": {
 						"enabled": {
 							"type": "boolean",
 							"default": false,
-							"description": "Auto approve retry operations"
+							"description": "重试操作的自动批准设置"
 						},
 						"delay": {
 							"type": "number",
 							"minimum": 0,
 							"default": 10,
-							"description": "Delay in seconds before auto-approving retry"
+							"description": "自动批准重试前的延迟时间（秒）"
 						}
 					}
 				},
 				"mcp": {
 					"type": "object",
-					"description": "Auto approval settings for MCP operations",
+					"description": "MCP 操作的自动批准设置",
 					"properties": {
 						"enabled": {
 							"type": "boolean",
 							"default": true,
-							"description": "Auto approve MCP operations"
+							"description": "自动批准 MCP 操作"
 						}
 					}
 				},
 				"mode": {
 					"type": "object",
-					"description": "Auto approval settings for mode switching",
+					"description": "模式切换的自动批准设置",
 					"properties": {
 						"enabled": {
 							"type": "boolean",
 							"default": true,
-							"description": "Auto approve mode switches"
+							"description": "自动批准模式切换"
 						}
 					}
 				},
 				"subtasks": {
 					"type": "object",
-					"description": "Auto approval settings for subtask creation",
+					"description": "子任务创建的自动批准设置",
 					"properties": {
 						"enabled": {
 							"type": "boolean",
 							"default": true,
-							"description": "Auto approve subtask creation"
+							"description": "自动批准子任务创建"
 						}
 					}
 				},
 				"execute": {
 					"type": "object",
-					"description": "Auto approval settings for command execution",
+					"description": "命令执行的自动批准设置",
 					"properties": {
 						"enabled": {
 							"type": "boolean",
 							"default": true,
-							"description": "Auto approve command execution"
+							"description": "自动批准命令执行"
 						},
 						"allowed": {
 							"type": "array",
@@ -153,7 +153,7 @@
 								"type": "string"
 							},
 							"default": [],
-							"description": "List of allowed commands (empty means all allowed)"
+							"description": "允许的命令列表（为空表示允许所有）"
 						},
 						"denied": {
 							"type": "array",
@@ -161,53 +161,53 @@
 								"type": "string"
 							},
 							"default": [],
-							"description": "List of denied commands"
+							"description": "拒绝的命令列表"
 						}
 					}
 				},
 				"question": {
 					"type": "object",
-					"description": "Auto approval settings for followup questions",
+					"description": "后续问题的自动批准设置",
 					"properties": {
 						"enabled": {
 							"type": "boolean",
 							"default": false,
-							"description": "Auto approve followup questions"
+							"description": "自动批准后续问题"
 						},
 						"timeout": {
 							"type": "number",
 							"minimum": 0,
 							"default": 60,
-							"description": "Timeout in seconds before auto-approving question"
+							"description": "自动批准问题前的超时时间（秒）"
 						}
 					}
 				},
 				"todo": {
 					"type": "object",
-					"description": "Auto approval settings for todo list updates",
+					"description": "待办事项列表更新的自动批准设置",
 					"properties": {
 						"enabled": {
 							"type": "boolean",
 							"default": true,
-							"description": "Auto approve todo list updates"
+							"description": "自动批准待办事项列表更新"
 						}
 					}
 				},
 				"limits": {
 					"type": "object",
-					"description": "Auto approval limits",
+					"description": "自动批准限制",
 					"properties": {
 						"maxRequests": {
 							"type": ["number", "null"],
 							"minimum": 1,
 							"default": null,
-							"description": "Maximum number of auto-approved requests (null for unlimited)"
+							"description": "自动批准请求的最大数量（null 表示无限制）"
 						},
 						"maxCost": {
 							"type": ["number", "null"],
 							"minimum": 0,
 							"default": null,
-							"description": "Maximum cost for auto-approved requests (null for unlimited)"
+							"description": "自动批准请求的最大成本（null 表示无限制）"
 						}
 					}
 				}
@@ -221,7 +221,7 @@
 			"properties": {
 				"id": {
 					"type": "string",
-					"description": "Unique identifier for this provider configuration"
+					"description": "此供应商配置的唯一标识符"
 				},
 				"provider": {
 					"type": "string",
@@ -298,37 +298,37 @@
 						"properties": {
 							"kilocodeToken": {
 								"type": "string",
-								"description": "Kilocode API token"
+								"description": "Kilocode API 令牌"
 							},
 							"kilocodeModel": {
 								"type": "string",
-								"description": "Kilocode model ID"
+								"description": "Kilocode 模型 ID"
 							},
 							"kilocodeOrganizationId": {
 								"type": "string",
-								"description": "Organization ID for team accounts"
+								"description": "团队账户的组织 ID"
 							},
 							"openRouterSpecificProvider": {
 								"type": "string",
-								"description": "Specific OpenRouter provider to use"
+								"description": "要使用的特定 OpenRouter 供应商"
 							},
 							"openRouterProviderDataCollection": {
 								"type": "string",
 								"enum": ["allow", "deny"],
-								"description": "OpenRouter provider data collection preference"
+								"description": "OpenRouter 供应商数据收集偏好"
 							},
 							"openRouterProviderSort": {
 								"type": "string",
 								"enum": ["price", "throughput", "latency"],
-								"description": "OpenRouter provider sorting preference"
+								"description": "OpenRouter 供应商排序偏好"
 							},
 							"openRouterZdr": {
 								"type": "boolean",
-								"description": "Enable OpenRouter Zero Data Retention"
+								"description": "启用 OpenRouter 零数据保留"
 							},
 							"kilocodeTesterWarningsDisabledUntil": {
 								"type": "number",
-								"description": "Timestamp until which tester warnings are disabled"
+								"description": "禁用测试者警告的时间戳"
 							}
 						}
 					}
@@ -369,23 +369,23 @@
 						"properties": {
 							"apiKey": {
 								"type": "string",
-								"description": "Anthropic API key"
+								"description": "Anthropic API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Anthropic model ID"
+								"description": "Anthropic 模型 ID"
 							},
 							"anthropicBaseUrl": {
 								"type": "string",
-								"description": "Custom base URL for Anthropic API requests"
+								"description": "Anthropic API 请求的自定义基础 URL"
 							},
 							"anthropicUseAuthToken": {
 								"type": "boolean",
-								"description": "Use authentication token instead of API key"
+								"description": "使用身份验证令牌而不是 API 密钥"
 							},
 							"anthropicBeta1MContext": {
 								"type": "boolean",
-								"description": "Enable beta 1M context window support"
+								"description": "启用 Beta 1M 上下文窗口支持"
 							}
 						}
 					}
@@ -426,17 +426,17 @@
 						"properties": {
 							"openAiNativeApiKey": {
 								"type": "string",
-								"description": "OpenAI Native API key"
+								"description": "OpenAI 原生 API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "OpenAI model ID"
+								"description": "OpenAI 模型 ID"
 							},
 							"openAiNativeBaseUrl": { "type": "string" },
 							"openAiNativeServiceTier": {
 								"type": "string",
 								"enum": ["auto", "default", "flex", "priority"],
-								"description": "OpenAI service tier for request prioritization and latency optimization. 'auto' lets OpenAI choose the best tier, 'default' uses standard processing, 'flex' offers cost-optimized processing with variable latency, and 'priority' provides the fastest processing with higher priority."
+								"description": "用于请求优先级和延迟优化的 OpenAI 服务层级。'auto' 让 OpenAI 选择最佳层级，'default' 使用标准处理，'flex' 提供具有可变延迟的成本优化处理，'priority' 提供具有更高优先级的最快处理。"
 							}
 						}
 					}
@@ -463,34 +463,34 @@
 						"properties": {
 							"openRouterApiKey": {
 								"type": "string",
-								"description": "OpenRouter API key"
+								"description": "OpenRouter API 密钥"
 							},
 							"openRouterModelId": {
 								"type": "string",
-								"description": "OpenRouter model ID"
+								"description": "OpenRouter 模型 ID"
 							},
 							"openRouterBaseUrl": { "type": "string" },
 							"openRouterSpecificProvider": {
 								"type": "string",
-								"description": "Specific OpenRouter provider to use for routing requests"
+								"description": "用于路由请求的特定 OpenRouter 供应商"
 							},
 							"openRouterUseMiddleOutTransform": {
 								"type": "boolean",
-								"description": "Enable middle-out transform for optimized request routing"
+								"description": "为优化请求路由启用 middle-out 转换"
 							},
 							"openRouterProviderDataCollection": {
 								"type": "string",
 								"enum": ["allow", "deny"],
-								"description": "OpenRouter provider data collection preference"
+								"description": "OpenRouter 供应商数据收集偏好"
 							},
 							"openRouterProviderSort": {
 								"type": "string",
 								"enum": ["price", "throughput", "latency"],
-								"description": "OpenRouter provider sorting preference for model selection"
+								"description": "模型选择的 OpenRouter 供应商排序偏好"
 							},
 							"openRouterZdr": {
 								"type": "boolean",
-								"description": "Enable OpenRouter Zero Data Retention for enhanced privacy"
+								"description": "为增强隐私启用 OpenRouter 零数据保留"
 							}
 						}
 					}
@@ -531,68 +531,68 @@
 						"properties": {
 							"awsAccessKey": {
 								"type": "string",
-								"description": "AWS Access Key"
+								"description": "AWS 访问密钥"
 							},
 							"awsSecretKey": {
 								"type": "string",
-								"description": "AWS Secret Key"
+								"description": "AWS 秘密密钥"
 							},
 							"awsSessionToken": {
 								"type": "string",
-								"description": "AWS Session Token (optional)"
+								"description": "AWS 会话令牌（可选）"
 							},
 							"awsRegion": {
 								"type": "string",
-								"description": "AWS Region"
+								"description": "AWS 区域"
 							},
 							"awsUseCrossRegionInference": {
 								"type": "boolean",
-								"description": "Use cross-region inference"
+								"description": "使用跨区域推理"
 							},
 							"awsUsePromptCache": {
 								"type": "boolean",
-								"description": "Enable prompt caching to reduce costs and latency for repeated prompts"
+								"description": "启用提示词缓存以降低重复提示词的成本和延迟"
 							},
 							"awsProfile": {
 								"type": "string",
-								"description": "AWS profile name from credentials file"
+								"description": "凭证文件中的 AWS 配置文件名称"
 							},
 							"awsUseProfile": {
 								"type": "boolean",
-								"description": "Use AWS profile from credentials file instead of access keys"
+								"description": "使用凭证文件中的 AWS 配置文件而不是访问密钥"
 							},
 							"awsApiKey": {
 								"type": "string",
-								"description": "AWS API key for alternative authentication"
+								"description": "用于替代身份验证的 AWS API 密钥"
 							},
 							"awsUseApiKey": {
 								"type": "boolean",
-								"description": "Use API key authentication instead of access keys"
+								"description": "使用 API 密钥身份验证而不是访问密钥"
 							},
 							"awsCustomArn": {
 								"type": "string",
-								"description": "Custom ARN for cross-account or custom model access"
+								"description": "用于跨账户或自定义模型访问的自定义 ARN"
 							},
 							"awsModelContextWindow": {
 								"type": "number",
 								"minimum": 1,
-								"description": "Override the model's default context window size"
+								"description": "覆盖模型的默认上下文窗口大小"
 							},
 							"awsBedrockEndpointEnabled": {
 								"type": "boolean",
-								"description": "Enable custom Bedrock endpoint"
+								"description": "启用自定义 Bedrock 端点"
 							},
 							"awsBedrockEndpoint": {
 								"type": "string",
-								"description": "Custom Bedrock endpoint URL"
+								"description": "自定义 Bedrock 端点 URL"
 							},
 							"awsBedrock1MContext": {
 								"type": "boolean",
-								"description": "Enable 1M token context window support for compatible models"
+								"description": "为兼容模型启用 1M 令牌上下文窗口支持"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Bedrock model ID"
+								"description": "Bedrock 模型 ID"
 							}
 						}
 					}
@@ -661,20 +661,20 @@
 						"properties": {
 							"geminiApiKey": {
 								"type": "string",
-								"description": "Gemini API key"
+								"description": "Gemini API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Gemini model ID"
+								"description": "Gemini 模型 ID"
 							},
 							"googleGeminiBaseUrl": { "type": "string" },
 							"enableUrlContext": {
 								"type": "boolean",
-								"description": "Allows the model to access and process URLs in prompts"
+								"description": "允许模型访问和处理提示词中的 URL"
 							},
 							"enableGrounding": {
 								"type": "boolean",
-								"description": "Enables Google Search grounding for factual responses"
+								"description": "为事实性回答启用 Google 搜索接地 (Grounding)"
 							}
 						}
 					}
@@ -715,31 +715,31 @@
 						"properties": {
 							"vertexJsonCredentials": {
 								"type": "string",
-								"description": "Vertex AI JSON credentials"
+								"description": "Vertex AI JSON 凭证"
 							},
 							"vertexKeyFile": {
 								"type": "string",
-								"description": "Vertex AI key file path"
+								"description": "Vertex AI 密钥文件路径"
 							},
 							"vertexProjectId": {
 								"type": "string",
-								"description": "Vertex AI project ID"
+								"description": "Vertex AI 项目 ID"
 							},
 							"vertexRegion": {
 								"type": "string",
-								"description": "Vertex AI region"
+								"description": "Vertex AI 区域"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Vertex AI model ID"
+								"description": "Vertex AI 模型 ID"
 							},
 							"enableUrlContext": {
 								"type": "boolean",
-								"description": "Allows the model to access and process URLs in prompts"
+								"description": "允许模型访问和处理提示词中的 URL"
 							},
 							"enableGrounding": {
 								"type": "boolean",
-								"description": "Enables Google Search grounding for factual responses"
+								"description": "为事实性回答启用 Google 搜索接地 (Grounding)"
 							}
 						}
 					}
@@ -794,15 +794,15 @@
 						"properties": {
 							"claudeCodePath": {
 								"type": "string",
-								"description": "Path to Claude Code executable"
+								"description": "Claude Code 可执行文件路径"
 							},
 							"claudeCodeMaxOutputTokens": {
 								"type": "string",
-								"description": "Maximum output tokens for Claude Code"
+								"description": "Claude Code 的最大输出令牌数"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Claude Code model ID"
+								"description": "Claude Code 模型 ID"
 							}
 						}
 					}
@@ -843,17 +843,17 @@
 						"properties": {
 							"ollamaBaseUrl": {
 								"type": "string",
-								"description": "Ollama base URL"
+								"description": "Ollama 基础 URL"
 							},
 							"ollamaModelId": {
 								"type": "string",
-								"description": "Ollama model ID"
+								"description": "Ollama 模型 ID"
 							},
 							"ollamaApiKey": { "type": "string" },
 							"ollamaNumCtx": {
 								"type": "number",
 								"minimum": 1,
-								"description": "Context window size for Ollama models. Controls the maximum number of tokens the model can process at once. Common values: 2048, 4096, 8192, 16384, 32768. Higher values allow processing longer conversations but require more memory."
+								"description": "Ollama 模型的上下文窗口大小。控制模型一次可以处理的最大令牌数。常用值：2048, 4096, 8192, 16384, 32768。较高的值允许处理更长的对话，但需要更多内存。"
 							}
 						}
 					}
@@ -866,19 +866,19 @@
 						"properties": {
 							"lmStudioBaseUrl": {
 								"type": "string",
-								"description": "LM Studio base URL"
+								"description": "LM Studio 基础 URL"
 							},
 							"lmStudioModelId": {
 								"type": "string",
-								"description": "LM Studio model ID"
+								"description": "LM Studio 模型 ID"
 							},
 							"lmStudioDraftModelId": {
 								"type": "string",
-								"description": "Draft model ID for speculative decoding. This smaller, faster model generates initial predictions that are verified by the main model, potentially improving inference speed."
+								"description": "投机解码的草稿模型 ID。这个更小、更快的模型生成初始预测，并由主模型进行验证，从而可能提高推理速度。"
 							},
 							"lmStudioSpeculativeDecodingEnabled": {
 								"type": "boolean",
-								"description": "Enable speculative decoding for faster inference. When enabled with a draft model, uses a two-stage generation process where a smaller model proposes tokens that are verified by the main model."
+								"description": "启用投机解码以加快推理速度。当与草稿模型一起启用时，使用两阶段生成过程，其中较小的模型建议令牌，并由主模型进行验证。"
 							}
 						}
 					}
@@ -947,11 +947,11 @@
 						"properties": {
 							"mistralApiKey": {
 								"type": "string",
-								"description": "Mistral API key"
+								"description": "Mistral API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Mistral model ID"
+								"description": "Mistral 模型 ID"
 							},
 							"mistralCodestralUrl": { "type": "string" }
 						}
@@ -993,11 +993,11 @@
 						"properties": {
 							"groqApiKey": {
 								"type": "string",
-								"description": "Groq API key"
+								"description": "Groq API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Groq model ID"
+								"description": "Groq 模型 ID"
 							}
 						}
 					}
@@ -1038,11 +1038,11 @@
 						"properties": {
 							"deepSeekApiKey": {
 								"type": "string",
-								"description": "DeepSeek API key"
+								"description": "DeepSeek API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "DeepSeek model ID"
+								"description": "DeepSeek 模型 ID"
 							}
 						}
 					}
@@ -1083,11 +1083,11 @@
 						"properties": {
 							"xaiApiKey": {
 								"type": "string",
-								"description": "xAI API key"
+								"description": "xAI API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "xAI model ID"
+								"description": "xAI 模型 ID"
 							}
 						}
 					}
@@ -1128,39 +1128,39 @@
 						"properties": {
 							"openAiApiKey": {
 								"type": "string",
-								"description": "OpenAI API key"
+								"description": "OpenAI API 密钥"
 							},
 							"openAiBaseUrl": {
 								"type": "string",
-								"description": "Custom base URL for OpenAI API requests"
+								"description": "OpenAI API 请求的自定义基础 URL"
 							},
 							"openAiModelId": {
 								"type": "string",
-								"description": "OpenAI model ID"
+								"description": "OpenAI 模型 ID"
 							},
 							"openAiLegacyFormat": {
 								"type": "boolean",
-								"description": "Use legacy API format for compatibility with older OpenAI API versions"
+								"description": "使用旧版 API 格式以兼容旧版 OpenAI API 版本"
 							},
 							"openAiR1FormatEnabled": {
 								"type": "boolean",
-								"description": "Enable R1 format for reasoning models that support extended thinking capabilities"
+								"description": "为支持扩展思考能力的推理模型启用 R1 格式"
 							},
 							"openAiUseAzure": {
 								"type": "boolean",
-								"description": "Use Azure OpenAI Service instead of standard OpenAI API"
+								"description": "使用 Azure OpenAI 服务而不是标准 OpenAI API"
 							},
 							"azureApiVersion": {
 								"type": "string",
-								"description": "Azure OpenAI API version (e.g., '2024-02-15-preview'). Required when openAiUseAzure is true"
+								"description": "Azure OpenAI API 版本（例如 '2024-02-15-preview'）。当 openAiUseAzure 为 true 时必填"
 							},
 							"openAiStreamingEnabled": {
 								"type": "boolean",
-								"description": "Enable streaming responses for real-time token generation"
+								"description": "为实时令牌生成启用流式响应"
 							},
 							"openAiHeaders": {
 								"type": "object",
-								"description": "Custom HTTP headers to include in OpenAI API requests",
+								"description": "要包含在 OpenAI API 请求中的自定义 HTTP 标头",
 								"additionalProperties": {
 									"type": "string"
 								}
@@ -1204,11 +1204,11 @@
 						"properties": {
 							"cerebrasApiKey": {
 								"type": "string",
-								"description": "Cerebras API key"
+								"description": "Cerebras API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Cerebras model ID"
+								"description": "Cerebras 模型 ID"
 							}
 						}
 					}
@@ -1249,11 +1249,11 @@
 						"properties": {
 							"glamaApiKey": {
 								"type": "string",
-								"description": "Glama API key"
+								"description": "Glama API 密钥"
 							},
 							"glamaModelId": {
 								"type": "string",
-								"description": "Glama model ID"
+								"description": "Glama 模型 ID"
 							}
 						}
 					}
@@ -1294,15 +1294,15 @@
 						"properties": {
 							"huggingFaceApiKey": {
 								"type": "string",
-								"description": "HuggingFace API key"
+								"description": "HuggingFace API 密钥"
 							},
 							"huggingFaceModelId": {
 								"type": "string",
-								"description": "HuggingFace model ID"
+								"description": "HuggingFace 模型 ID"
 							},
 							"huggingFaceInferenceProvider": {
 								"type": "string",
-								"description": "HuggingFace inference provider"
+								"description": "HuggingFace 推理供应商"
 							}
 						}
 					}
@@ -1315,19 +1315,19 @@
 						"properties": {
 							"litellmBaseUrl": {
 								"type": "string",
-								"description": "LiteLLM base URL"
+								"description": "LiteLLM 基础 URL"
 							},
 							"litellmApiKey": {
 								"type": "string",
-								"description": "LiteLLM API key"
+								"description": "LiteLLM API 密钥"
 							},
 							"litellmModelId": {
 								"type": "string",
-								"description": "LiteLLM model ID"
+								"description": "LiteLLM 模型 ID"
 							},
 							"litellmUsePromptCache": {
 								"type": "boolean",
-								"description": "Enable prompt caching to reduce costs and improve performance for repeated prompts"
+								"description": "启用提示词缓存以降低重复提示词的成本并提高性能"
 							}
 						}
 					}
@@ -1396,15 +1396,15 @@
 						"properties": {
 							"moonshotBaseUrl": {
 								"type": "string",
-								"description": "Moonshot base URL"
+								"description": "Moonshot 基础 URL"
 							},
 							"moonshotApiKey": {
 								"type": "string",
-								"description": "Moonshot API key"
+								"description": "Moonshot API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Moonshot model ID"
+								"description": "Moonshot 模型 ID"
 							}
 						}
 					}
@@ -1417,15 +1417,15 @@
 						"properties": {
 							"minimaxBaseUrl": {
 								"type": "string",
-								"description": "MiniMax base URL"
+								"description": "MiniMax 基础 URL"
 							},
 							"minimaxApiKey": {
 								"type": "string",
-								"description": "MiniMax API key"
+								"description": "MiniMax API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "MiniMax model ID"
+								"description": "MiniMax 模型 ID"
 							}
 						}
 					}
@@ -1438,11 +1438,11 @@
 						"properties": {
 							"doubaoApiKey": {
 								"type": "string",
-								"description": "Doubao API key"
+								"description": "豆包 API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Doubao model ID"
+								"description": "豆包 模型 ID"
 							}
 						}
 					}
@@ -1567,11 +1567,11 @@
 						"properties": {
 							"chutesApiKey": {
 								"type": "string",
-								"description": "Chutes API key"
+								"description": "Chutes API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Chutes model ID"
+								"description": "Chutes 模型 ID"
 							}
 						}
 					}
@@ -1612,11 +1612,11 @@
 						"properties": {
 							"sambaNovaApiKey": {
 								"type": "string",
-								"description": "SambaNova API key"
+								"description": "SambaNova API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "SambaNova model ID"
+								"description": "SambaNova 模型 ID"
 							}
 						}
 					}
@@ -1657,11 +1657,11 @@
 						"properties": {
 							"fireworksApiKey": {
 								"type": "string",
-								"description": "Fireworks API key"
+								"description": "Fireworks API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Fireworks model ID"
+								"description": "Fireworks 模型 ID"
 							}
 						}
 					}
@@ -1702,11 +1702,11 @@
 						"properties": {
 							"featherlessApiKey": {
 								"type": "string",
-								"description": "Featherless API key"
+								"description": "Featherless API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Featherless model ID"
+								"description": "Featherless 模型 ID"
 							}
 						}
 					}
@@ -1719,15 +1719,15 @@
 						"properties": {
 							"deepInfraApiKey": {
 								"type": "string",
-								"description": "DeepInfra API key"
+								"description": "DeepInfra API 密钥"
 							},
 							"deepInfraModelId": {
 								"type": "string",
-								"description": "DeepInfra model ID"
+								"description": "DeepInfra 模型 ID"
 							},
 							"deepInfraBaseUrl": {
 								"type": "string",
-								"description": "Custom base URL for DeepInfra API requests"
+								"description": "DeepInfra API 请求的自定义基础 URL"
 							}
 						}
 					}
@@ -1796,11 +1796,11 @@
 						"properties": {
 							"ioIntelligenceApiKey": {
 								"type": "string",
-								"description": "IO Intelligence API key"
+								"description": "IO Intelligence API 密钥"
 							},
 							"ioIntelligenceModelId": {
 								"type": "string",
-								"description": "IO Intelligence model ID"
+								"description": "IO Intelligence 模型 ID"
 							}
 						}
 					}
@@ -1869,11 +1869,11 @@
 						"properties": {
 							"qwenCodeOauthPath": {
 								"type": "string",
-								"description": "Qwen Code OAuth path"
+								"description": "通义灵码 OAuth 路径"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Qwen Code model ID"
+								"description": "通义灵码 模型 ID"
 							}
 						}
 					}
@@ -1886,15 +1886,15 @@
 						"properties": {
 							"geminiCliOAuthPath": {
 								"type": "string",
-								"description": "Gemini CLI OAuth path"
+								"description": "Gemini CLI OAuth 路径"
 							},
 							"geminiCliProjectId": {
 								"type": "string",
-								"description": "Gemini CLI project ID"
+								"description": "Gemini CLI 项目 ID"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Gemini CLI model ID"
+								"description": "Gemini CLI 模型 ID"
 							}
 						}
 					}
@@ -1977,15 +1977,15 @@
 						"properties": {
 							"zaiApiKey": {
 								"type": "string",
-								"description": "Zai API key"
+								"description": "Zai API 密钥"
 							},
 							"zaiApiLine": {
 								"type": "string",
-								"description": "Zai API line"
+								"description": "Zai API 线路"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Zai model ID"
+								"description": "Zai 模型 ID"
 							}
 						}
 					}
@@ -1998,11 +1998,11 @@
 						"properties": {
 							"unboundApiKey": {
 								"type": "string",
-								"description": "Unbound API key"
+								"description": "Unbound API 密钥"
 							},
 							"unboundModelId": {
 								"type": "string",
-								"description": "Unbound model ID"
+								"description": "Unbound 模型 ID"
 							}
 						}
 					}
@@ -2085,15 +2085,15 @@
 						"properties": {
 							"requestyApiKey": {
 								"type": "string",
-								"description": "Requesty API key"
+								"description": "Requesty API 密钥"
 							},
 							"requestyBaseUrl": {
 								"type": "string",
-								"description": "Requesty base URL"
+								"description": "Requesty 基础 URL"
 							},
 							"requestyModelId": {
 								"type": "string",
-								"description": "Requesty model ID"
+								"description": "Requesty 模型 ID"
 							}
 						}
 					}
@@ -2134,7 +2134,7 @@
 						"properties": {
 							"apiModelId": {
 								"type": "string",
-								"description": "Roo model ID"
+								"description": "Roo 模型 ID"
 							}
 						}
 					}
@@ -2161,11 +2161,11 @@
 						"properties": {
 							"vercelAiGatewayApiKey": {
 								"type": "string",
-								"description": "Vercel AI Gateway API key"
+								"description": "Vercel AI Gateway API 密钥"
 							},
 							"vercelAiGatewayModelId": {
 								"type": "string",
-								"description": "Vercel AI Gateway model ID"
+								"description": "Vercel AI Gateway 模型 ID"
 							}
 						}
 					}
@@ -2240,7 +2240,7 @@
 						"properties": {
 							"apiModelId": {
 								"type": "string",
-								"description": "Human relay model ID"
+								"description": "Human relay 模型 ID"
 							}
 						}
 					}
@@ -2267,7 +2267,7 @@
 						"properties": {
 							"apiModelId": {
 								"type": "string",
-								"description": "Fake AI model ID"
+								"description": "Fake AI 模型 ID"
 							}
 						}
 					}
@@ -2343,15 +2343,15 @@
 						"properties": {
 							"ovhCloudAiEndpointsApiKey": {
 								"type": "string",
-								"description": "OVHcloud AI Endpoints API key"
+								"description": "OVHcloud AI Endpoints API 密钥"
 							},
 							"ovhCloudAiEndpointsModelId": {
 								"type": "string",
-								"description": "OVHcloud AI Endpoints model ID"
+								"description": "OVHcloud AI Endpoints 模型 ID"
 							},
 							"ovhCloudAiEndpointsBaseUrl": {
 								"type": "string",
-								"description": "Custom base URL for OVHcloud AI Endpoints API requests"
+								"description": "OVHcloud AI Endpoints API 请求的自定义基础 URL"
 							}
 						}
 					}
@@ -2389,15 +2389,15 @@
 						"properties": {
 							"inceptionLabsApiKey": {
 								"type": "string",
-								"description": "Inception Labs API key"
+								"description": "Inception Labs API 密钥"
 							},
 							"inceptionLabsBaseUrl": {
 								"type": "string",
-								"description": "Inception Labs base URL"
+								"description": "Inception Labs 基础 URL"
 							},
 							"inceptionLabsModelId": {
 								"type": "string",
-								"description": "Inception Labs model ID"
+								"description": "Inception Labs 模型 ID"
 							}
 						}
 					}
@@ -2438,11 +2438,11 @@
 						"properties": {
 							"syntheticApiKey": {
 								"type": "string",
-								"description": "Synthetic API key"
+								"description": "Synthetic API 密钥"
 							},
 							"apiModelId": {
 								"type": "string",
-								"description": "Synthetic model ID"
+								"description": "Synthetic 模型 ID"
 							}
 						}
 					}

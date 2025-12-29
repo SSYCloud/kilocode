@@ -156,14 +156,14 @@ async function handleRestore(context: CommandContext, hash: string): Promise<voi
 
 	// Send request to extension to create ask message and handle approval
 	const confirmLines = [
-		`**Warning:** This will revert to checkpoint ${fullHash}`,
+		`**警告:** 这将恢复到检查点 ${fullHash}`,
 		"",
-		"This action will:",
-		`  - Perform a git hard reset (all uncommitted changes will be lost)`,
-		`  - Remove ${messagesToRemove} message${messagesToRemove === 1 ? "" : "s"} from the conversation`,
-		`  - Revert to state from ${formatTimestamp(message.ts)}`,
+		"该操作会:",
+		`  - 执行 git hard reset 命令(所有未提交的修改会丢失)`,
+		`  - 从对话种删除 ${messagesToRemove} 消息 ${messagesToRemove === 1 ? "" : "s"}`,
+		`  - 恢复到之前的状态 ${formatTimestamp(message.ts)}`,
 		"",
-		"**This cannot be undone.**",
+		"**并且不可撤销.**",
 	]
 
 	await sendWebviewMessage({
@@ -176,7 +176,7 @@ async function handleRestore(context: CommandContext, hash: string): Promise<voi
 		},
 	})
 
-	logs.info("Sent checkpoint restore approval request to extension", "checkpoint", { fullHash })
+	logs.info("已向扩展发送检查点恢复批准请求", "checkpoint", { fullHash })
 }
 
 /**
@@ -222,13 +222,13 @@ async function provideCheckpointHashes(context: ArgumentProviderContext): Promis
  */
 async function provideSubcommands(context: ArgumentProviderContext): Promise<ArgumentSuggestion[]> {
 	const subcommands = [
-		{ value: "list", description: "List all available checkpoints" },
-		{ value: "restore", description: "Revert to a checkpoint" },
+		{ value: "list", description: "列出所有可用的检查点" },
+		{ value: "restore", description: "恢复到检查点" },
 	]
 
 	const query = context.partialInput.toLowerCase()
 
-	logs.debug("Providing subcommand suggestions", "checkpoint", { query, subcommandCount: subcommands.length })
+	logs.debug("提供子命令建议", "checkpoint", { query, subcommandCount: subcommands.length })
 
 	return subcommands
 		.map((cmd) => {
@@ -258,7 +258,7 @@ async function provideSubcommands(context: ArgumentProviderContext): Promise<Arg
 export const checkpointCommand: Command = {
 	name: "checkpoint",
 	aliases: ["cp"],
-	description: "Manage and revert to saved checkpoints",
+	description: "管理和恢复到已保存的检查点",
 	usage: "/checkpoint <list|restore> [hash]",
 	examples: ["/checkpoint list", "/checkpoint restore 41db173a"],
 	category: "chat",
@@ -266,7 +266,7 @@ export const checkpointCommand: Command = {
 	arguments: [
 		{
 			name: "subcommand",
-			description: "The action to perform (list, restore)",
+			description: "要执行的操作 (list, restore)",
 			required: false,
 			provider: provideSubcommands,
 		},
@@ -287,19 +287,19 @@ export const checkpointCommand: Command = {
 				id: Date.now().toString(),
 				type: "system",
 				content: [
-					"**Checkpoint Management**",
+					"**检查点管理**",
 					"",
 					"**Usage:** /checkpoint <command> [hash]",
 					"",
 					"**Commands:**",
-					"  list           List all available checkpoints",
-					"  restore <hash> Revert to a checkpoint (destructive)",
+					"  list           列出所有可用的检查点",
+					"  恢复 <hash> 到检查点 (破坏性的)",
 					"",
-					"**Examples:**",
+					"**例如:**",
 					"  /checkpoint list",
 					"  /checkpoint restore 00d185d5020969752bc9ae40823b9d6a723696e2",
 					"",
-					"**Note:** Hash must be the full 40-character git commit hash.",
+					"**注意:** 哈希值必须是完整的 40 个字符的 Git 提交哈希值。",
 				].join("\n"),
 				ts: Date.now(),
 			})
@@ -309,7 +309,7 @@ export const checkpointCommand: Command = {
 		const subcommand = args[0].toLowerCase()
 		const hash = args[1]
 
-		logs.info("Executing checkpoint command", "checkpoint", { subcommand, hash: hash || null })
+		logs.info("执行检查点命令", "checkpoint", { subcommand, hash: hash || null })
 
 		switch (subcommand) {
 			case "list":

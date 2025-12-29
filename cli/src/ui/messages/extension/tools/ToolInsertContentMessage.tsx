@@ -17,18 +17,18 @@ export const ToolInsertContentMessage: React.FC<ToolMessageProps> = ({ toolData 
 		<Box flexDirection="column" marginY={1}>
 			<Box>
 				<Text color={theme.semantic.success} bold>
-					{icon} Insert Content: {formatFilePath(toolData.path || "")}
+					{icon} 插入上下文: {formatFilePath(toolData.path || "")}
 				</Text>
 				{toolData.isProtected && (
 					<Text color={theme.semantic.warning} dimColor>
 						{" "}
-						🔒 Protected
+						🔒 受保护
 					</Text>
 				)}
 				{toolData.isOutsideWorkspace && (
 					<Text color={theme.semantic.warning} dimColor>
 						{" "}
-						⚠ Outside workspace
+						⚠ 工作区外
 					</Text>
 				)}
 			</Box>
